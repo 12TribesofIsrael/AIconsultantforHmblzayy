@@ -1,0 +1,24 @@
+# Environment
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Output
+dist/
+output/
+out/
+
+# Assets (large files)
+assets/footage/*.mp4
+assets/footage/*.mov
+assets/footage/*.avi
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

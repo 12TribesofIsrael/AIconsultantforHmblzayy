@@ -1,0 +1,27 @@
+{
+  "name": "intro-video",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preview": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts IntroVideo out/intro-vertical.mp4",
+    "render:wide": "remotion render src/index.ts IntroVideoWide out/intro-wide.mp4",
+    "render:square": "remotion render src/index.ts IntroVideoSquare out/intro-square.mp4",
+    "render:all": "npm run render && npm run render:wide && npm run render:square"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@remotion/cli": "^4.0.446",
+    "@remotion/player": "^4.0.446",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "remotion": "^4.0.446",
+    "typescript": "^6.0.2"
+  }
+}

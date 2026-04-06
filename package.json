@@ -1,0 +1,13 @@
+{
+  "name": "zayautomations",
+  "version": "1.0.0",
+  "description": "AI automations for Minister Zay / HMBL brand",
+  "scripts": {
+    "discord:scrape": "node scripts/discord-scraper.js",
+    "discord:download": "node scripts/download-footage.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.7"
+  }
+}
