@@ -5,15 +5,29 @@
 # Dependencies
 node_modules/
 
-# Output
+# Output / Rendered videos
 dist/
 output/
 out/
+**/out/*.mp4
+**/out/*.webm
 
-# Assets (large files)
-assets/footage/*.mp4
-assets/footage/*.mov
-assets/footage/*.avi
+# Assets (large media files)
+assets/*.png
+assets/*.jpg
+assets/*.jpeg
+assets/*.gif
+assets/*.mp3
+assets/*.mp4
+assets/*.mov
+assets/*.avi
+assets/footage/
+
+# Remotion public (copied media)
+src/intro-video/public/*.png
+src/intro-video/public/*.jpg
+src/intro-video/public/*.mp3
+src/intro-video/public/*.mp4
 
 # OS
 .DS_Store
