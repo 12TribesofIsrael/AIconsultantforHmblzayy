@@ -287,15 +287,15 @@
     </div>
     <div class="stats-bar">
       <div class="stat">
-        <div class="stat-value" id="currentDay">12</div>
+        <div class="stat-value" id="currentDay">13</div>
         <div class="stat-label">Day</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="totalMiles">214</div>
+        <div class="stat-value" id="totalMiles">230</div>
         <div class="stat-label">Miles</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="remaining">2,786</div>
+        <div class="stat-value" id="remaining">2,770</div>
         <div class="stat-label">Remaining</div>
       </div>
       <div class="stat">
@@ -342,19 +342,111 @@
     const TOTAL_MILES = 3000;
 
     const CHECKPOINTS = [
-      { day: 1,  location: "Philadelphia, PA",       lat: 39.9526, lng: -75.1652, miles: 0,   date: "Mar 25, 2026" },
-      { day: 2,  location: "Norristown, PA",         lat: 40.1218, lng: -75.3399, miles: 18,  date: "Mar 26, 2026" },
-      { day: 3,  location: "Pottstown, PA",          lat: 40.2454, lng: -75.6496, miles: 36,  date: "Mar 27, 2026" },
-      { day: 4,  location: "Reading, PA",            lat: 40.3357, lng: -75.9269, miles: 55,  date: "Mar 28, 2026" },
-      { day: 5,  location: "Lebanon, PA",            lat: 40.3409, lng: -76.4114, miles: 80,  date: "Mar 29, 2026" },
-      { day: 6,  location: "Sunbury, PA",            lat: 40.8626, lng: -76.7944, miles: 108, date: "Mar 30, 2026" },
-      { day: 7,  location: "Lewisburg, PA",          lat: 40.9645, lng: -76.8844, miles: 125, date: "Mar 31, 2026" },
-      { day: 8,  location: "Mifflinburg, PA",        lat: 40.9173, lng: -77.0480, miles: 144, date: "Apr 1, 2026" },
-      { day: 9,  location: "State College, PA",      lat: 40.7934, lng: -77.8600, miles: 162, date: "Apr 2, 2026" },
-      { day: 10, location: "Boalsburg, PA",          lat: 40.7751, lng: -77.7928, miles: 175, date: "Apr 3, 2026" },
-      { day: 11, location: "Altoona, PA",            lat: 40.5187, lng: -78.3947, miles: 195, date: "Apr 5, 2026" },
-      { day: 12, location: "Tyrone, PA",             lat: 40.6706, lng: -78.2386, miles: 214, date: "Apr 6, 2026" },
-    ];
+      {
+            "day": 1,
+            "location": "Philadelphia, PA",
+            "lat": 39.9526,
+            "lng": -75.1652,
+            "miles": 0,
+            "date": "Mar 25, 2026"
+      },
+      {
+            "day": 2,
+            "location": "Norristown, PA",
+            "lat": 40.1218,
+            "lng": -75.3399,
+            "miles": 18,
+            "date": "Mar 26, 2026"
+      },
+      {
+            "day": 3,
+            "location": "Pottstown, PA",
+            "lat": 40.2454,
+            "lng": -75.6496,
+            "miles": 36,
+            "date": "Mar 27, 2026"
+      },
+      {
+            "day": 4,
+            "location": "Reading, PA",
+            "lat": 40.3357,
+            "lng": -75.9269,
+            "miles": 55,
+            "date": "Mar 28, 2026"
+      },
+      {
+            "day": 5,
+            "location": "Lebanon, PA",
+            "lat": 40.3409,
+            "lng": -76.4114,
+            "miles": 80,
+            "date": "Mar 29, 2026"
+      },
+      {
+            "day": 6,
+            "location": "Sunbury, PA",
+            "lat": 40.8626,
+            "lng": -76.7944,
+            "miles": 108,
+            "date": "Mar 30, 2026"
+      },
+      {
+            "day": 7,
+            "location": "Lewisburg, PA",
+            "lat": 40.9645,
+            "lng": -76.8844,
+            "miles": 125,
+            "date": "Mar 31, 2026"
+      },
+      {
+            "day": 8,
+            "location": "Mifflinburg, PA",
+            "lat": 40.9173,
+            "lng": -77.048,
+            "miles": 144,
+            "date": "Apr 1, 2026"
+      },
+      {
+            "day": 9,
+            "location": "State College, PA",
+            "lat": 40.7934,
+            "lng": -77.86,
+            "miles": 162,
+            "date": "Apr 2, 2026"
+      },
+      {
+            "day": 10,
+            "location": "Boalsburg, PA",
+            "lat": 40.7751,
+            "lng": -77.7928,
+            "miles": 175,
+            "date": "Apr 3, 2026"
+      },
+      {
+            "day": 11,
+            "location": "Altoona, PA",
+            "lat": 40.5187,
+            "lng": -78.3947,
+            "miles": 195,
+            "date": "Apr 5, 2026"
+      },
+      {
+            "day": 12,
+            "location": "Tyrone, PA",
+            "lat": 40.6706,
+            "lng": -78.2386,
+            "miles": 214,
+            "date": "Apr 6, 2026"
+      },
+      {
+            "day": 13,
+            "location": "Ebensburg, PA",
+            "lat": 40.4852783,
+            "lng": -78.7248434,
+            "miles": 230,
+            "date": "Apr 8, 2026"
+      }
+];
 
     // Full route waypoints (Philly to LA)
     const FULL_ROUTE = [
