@@ -102,5 +102,13 @@
     "lng": -78.7248434,
     "miles": 230,
     "date": "Apr 8, 2026"
+  },
+  {
+    "day": 14,
+    "location": "Blairsville, PA",
+    "lat": 40.4309926,
+    "lng": -79.2626157,
+    "miles": 248,
+    "date": "Apr 8, 2026"
   }
 ]
