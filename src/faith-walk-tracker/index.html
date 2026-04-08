@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMBL Faith Walk — Philly to Cali Live Tracker</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      border-bottom: 2px solid #FFD700;
+      padding: 20px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .brand h1 {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 6px;
+    }
+
+    .brand .subtitle {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFD700;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Map */
+    #map {
+      flex: 1;
+      min-height: 500px;
+      z-index: 1;
+    }
+
+    /* Progress bar */
+    .progress-section {
+      background: #111;
+      padding: 20px 30px;
+      border-top: 1px solid rgba(255,215,0,0.2);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .progress-city {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .progress-city.start { color: rgba(255,255,255,0.6); }
+    .progress-city.end { color: #FFD700; }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #FFD700, #FFA500);
+      border-radius: 3px;
+      box-shadow: 0 0 15px rgba(255,215,0,0.4);
+      transition: width 1s ease;
+    }
+
+    .progress-miles {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .progress-miles strong {
+      color: #FFD700;
+    }
+
+    /* Checkpoint list */
+    .checkpoints-section {
+      background: #0d0d0d;
+      padding: 20px 30px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .checkpoints-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 15px;
+    }
+
+    .checkpoints-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .checkpoints-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    .checkpoints-scroll::-webkit-scrollbar-track {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .checkpoints-scroll::-webkit-scrollbar-thumb {
+      background: #FFD700;
+      border-radius: 2px;
+    }
+
+    .checkpoint-card {
+      min-width: 160px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 14px;
+      flex-shrink: 0;
+      transition: border-color 0.3s;
+    }
+
+    .checkpoint-card:hover {
+      border-color: rgba(255,215,0,0.3);
+    }
+
+    .checkpoint-card.active {
+      border-color: #FFD700;
+      background: rgba(255,215,0,0.05);
+    }
+
+    .checkpoint-day {
+      font-size: 11px;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .checkpoint-location {
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 4px;
+      color: #fff;
+    }
+
+    .checkpoint-miles {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+    }
+
+    .checkpoint-date {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 6px;
+    }
+
+    /* Footer */
+    .footer {
+      background: #080808;
+      padding: 15px 30px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer a {
+      color: #FFD700;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Live pulse */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,0,0,0.15);
+      border: 1px solid rgba(255,0,0,0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ff4444;
+      letter-spacing: 2px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #ff4444;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header { padding: 15px; }
+      .brand h1 { font-size: 22px; }
+      .stats-bar { gap: 20px; }
+      .stat-value { font-size: 22px; }
+      .progress-section, .checkpoints-section { padding: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <div>
+        <h1>HMBL</h1>
+        <div class="subtitle">Faith Walk &bull; Philly &rarr; Cali</div>
+      </div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        LIVE
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-value" id="currentDay">12</div>
+        <div class="stat-label">Day</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="totalMiles">214</div>
+        <div class="stat-label">Miles</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="remaining">2,786</div>
+        <div class="stat-label">Remaining</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="states">1/10</div>
+        <div class="stat-label">States</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- Progress Bar -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span class="progress-city start">Philadelphia, PA</span>
+      <span class="progress-city end">Los Angeles, CA 🌴</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-miles">
+      <strong id="milesCompleted">214</strong> of <strong>3,000</strong> miles completed
+    </div>
+  </div>
+
+  <!-- Checkpoints -->
+  <div class="checkpoints-section">
+    <div class="checkpoints-title">Checkpoints</div>
+    <div class="checkpoints-scroll" id="checkpointsList"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Watch live on <a href="https://twitch.tv/hmblzayy" target="_blank">Twitch/hmblzayy</a> &bull; <a href="https://instagram.com/hmblzay" target="_blank">@hmblzay</a> &bull; <a href="https://stayhumblestayhungryclothing.com" target="_blank">Shop HMBL</a></p>
+    <p style="margin-top: 6px;">All Praises to The Most High &bull; Stay Humble Stay Hungry</p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // ==========================================
+    // FAITH WALK DATA — Update as walk progresses
+    // ==========================================
+    const TOTAL_MILES = 3000;
+
+    const CHECKPOINTS = [
+      { day: 1,  location: "Philadelphia, PA",       lat: 39.9526, lng: -75.1652, miles: 0,   date: "Mar 25, 2026" },
+      { day: 2,  location: "Norristown, PA",         lat: 40.1218, lng: -75.3399, miles: 18,  date: "Mar 26, 2026" },
+      { day: 3,  location: "Pottstown, PA",          lat: 40.2454, lng: -75.6496, miles: 36,  date: "Mar 27, 2026" },
+      { day: 4,  location: "Reading, PA",            lat: 40.3357, lng: -75.9269, miles: 55,  date: "Mar 28, 2026" },
+      { day: 5,  location: "Lebanon, PA",            lat: 40.3409, lng: -76.4114, miles: 80,  date: "Mar 29, 2026" },
+      { day: 6,  location: "Sunbury, PA",            lat: 40.8626, lng: -76.7944, miles: 108, date: "Mar 30, 2026" },
+      { day: 7,  location: "Lewisburg, PA",          lat: 40.9645, lng: -76.8844, miles: 125, date: "Mar 31, 2026" },
+      { day: 8,  location: "Mifflinburg, PA",        lat: 40.9173, lng: -77.0480, miles: 144, date: "Apr 1, 2026" },
+      { day: 9,  location: "State College, PA",      lat: 40.7934, lng: -77.8600, miles: 162, date: "Apr 2, 2026" },
+      { day: 10, location: "Boalsburg, PA",          lat: 40.7751, lng: -77.7928, miles: 175, date: "Apr 3, 2026" },
+      { day: 11, location: "Altoona, PA",            lat: 40.5187, lng: -78.3947, miles: 195, date: "Apr 5, 2026" },
+      { day: 12, location: "Tyrone, PA",             lat: 40.6706, lng: -78.2386, miles: 214, date: "Apr 6, 2026" },
+    ];
+
+    // Full route waypoints (Philly to LA)
+    const FULL_ROUTE = [
+      [39.9526, -75.1652],  // Philadelphia
+      [40.1218, -75.3399],  // Norristown
+      [40.2454, -75.6496],  // Pottstown
+      [40.3357, -75.9269],  // Reading
+      [40.3409, -76.4114],  // Lebanon
+      [40.8626, -76.7944],  // Sunbury
+      [40.9645, -76.8844],  // Lewisburg
+      [40.9173, -77.0480],  // Mifflinburg
+      [40.7934, -77.8600],  // State College
+      [40.7751, -77.7928],  // Boalsburg
+      [40.5187, -78.3947],  // Altoona
+      [40.6706, -78.2386],  // Tyrone (current)
+      // Future route (estimated)
+      [40.4406, -79.9959],  // Pittsburgh, PA
+      [40.0992, -82.0132],  // Columbus, OH
+      [39.7684, -86.1581],  // Indianapolis, IN
+      [38.6270, -90.1994],  // St. Louis, MO
+      [38.5767, -92.1735],  // Jefferson City, MO
+      [39.0997, -94.5786],  // Kansas City, MO
+      [39.7392, -104.9903], // Denver, CO
+      [38.8339, -104.8214], // Colorado Springs, CO
+      [35.0844, -106.6504], // Albuquerque, NM
+      [35.1983, -111.6513], // Flagstaff, AZ
+      [36.1699, -115.1398], // Las Vegas, NV
+      [34.0522, -118.2437], // Los Angeles, CA
+    ];
+
+    const currentCheckpoint = CHECKPOINTS[CHECKPOINTS.length - 1];
+    const progressPercent = (currentCheckpoint.miles / TOTAL_MILES) * 100;
+
+    // ==========================================
+    // INITIALIZE MAP
+    // ==========================================
+    const map = L.map('map', {
+      zoomControl: true,
+      scrollWheelZoom: true,
+    }).setView([39.5, -90], 5);
+
+    // Dark map tiles
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
+      maxZoom: 19,
+    }).addTo(map);
+
+    // ==========================================
+    // DRAW ROUTE
+    // ==========================================
+
+    // Full planned route (dim)
+    L.polyline(FULL_ROUTE, {
+      color: 'rgba(255, 215, 0, 0.15)',
+      weight: 3,
+      dashArray: '8, 12',
+    }).addTo(map);
+
+    // Completed route (bright gold)
+    const completedRoute = CHECKPOINTS.map(cp => [cp.lat, cp.lng]);
+    L.polyline(completedRoute, {
+      color: '#FFD700',
+      weight: 4,
+      opacity: 0.9,
+    }).addTo(map);
+
+    // Glow effect on completed route
+    L.polyline(completedRoute, {
+      color: '#FFD700',
+      weight: 12,
+      opacity: 0.15,
+    }).addTo(map);
+
+    // ==========================================
+    // MARKERS
+    // ==========================================
+
+    // Start marker (Philly)
+    const startIcon = L.divIcon({
+      html: `<div style="
+        background: #333;
+        border: 2px solid #FFD700;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+      "></div>`,
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+      className: '',
+    });
+    L.marker([39.9526, -75.1652], { icon: startIcon })
+      .addTo(map)
+      .bindPopup('<b style="color:#FFD700">START</b><br>Philadelphia, PA<br>Mar 25, 2026');
+
+    // End marker (LA)
+    const endIcon = L.divIcon({
+      html: `<div style="
+        background: rgba(255,215,0,0.2);
+        border: 2px dashed rgba(255,215,0,0.4);
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+      "></div>`,
+      iconSize: [16, 16],
+      iconAnchor: [8, 8],
+      className: '',
+    });
+    L.marker([34.0522, -118.2437], { icon: endIcon })
+      .addTo(map)
+      .bindPopup('<b style="color:#FFD700">FINISH</b><br>Los Angeles, CA 🌴');
+
+    // Checkpoint markers (small dots)
+    CHECKPOINTS.forEach((cp, i) => {
+      if (i === 0 || i === CHECKPOINTS.length - 1) return; // skip start and current
+
+      const dotIcon = L.divIcon({
+        html: `<div style="
+          background: #FFD700;
+          border-radius: 50%;
+          width: 8px;
+          height: 8px;
+          opacity: 0.6;
+        "></div>`,
+        iconSize: [8, 8],
+        iconAnchor: [4, 4],
+        className: '',
+      });
+      L.marker([cp.lat, cp.lng], { icon: dotIcon })
+        .addTo(map)
+        .bindPopup(`<b style="color:#FFD700">Day ${cp.day}</b><br>${cp.location}<br>${cp.miles} miles<br>${cp.date}`);
+    });
+
+    // Current location marker (large pulsing)
+    const currentIcon = L.divIcon({
+      html: `<div style="position:relative;">
+        <div style="
+          background: #FFD700;
+          border-radius: 50%;
+          width: 20px;
+          height: 20px;
+          border: 3px solid #fff;
+          box-shadow: 0 0 20px rgba(255,215,0,0.6);
+        "></div>
+        <div style="
+          position: absolute;
+          top: -3px;
+          left: -3px;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          border: 2px solid #FFD700;
+          animation: pulse 1.5s infinite;
+          opacity: 0.5;
+        "></div>
+      </div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+      className: '',
+    });
+    L.marker([currentCheckpoint.lat, currentCheckpoint.lng], { icon: currentIcon })
+      .addTo(map)
+      .bindPopup(`<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
+        Day ${currentCheckpoint.day} — ${currentCheckpoint.location}<br>
+        ${currentCheckpoint.miles} miles completed<br>
+        ${currentCheckpoint.date}`)
+      .openPopup();
+
+    // Fit map to show completed route with padding
+    map.fitBounds(L.polyline(FULL_ROUTE).getBounds(), { padding: [30, 30] });
+
+    // ==========================================
+    // UPDATE UI
+    // ==========================================
+
+    // Progress bar
+    document.getElementById('progressFill').style.width = progressPercent + '%';
+    document.getElementById('milesCompleted').textContent = currentCheckpoint.miles;
+    document.getElementById('remaining').textContent = (TOTAL_MILES - currentCheckpoint.miles).toLocaleString();
+
+    // Checkpoint cards
+    const checkpointsList = document.getElementById('checkpointsList');
+    CHECKPOINTS.forEach((cp, i) => {
+      const isActive = i === CHECKPOINTS.length - 1;
+      const card = document.createElement('div');
+      card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
+      card.innerHTML = `
+        <div class="checkpoint-day">Day ${cp.day}</div>
+        <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
+        <div class="checkpoint-miles">${cp.miles} miles</div>
+        <div class="checkpoint-date">${cp.date}</div>
+      `;
+      card.addEventListener('click', () => {
+        map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });
+      });
+      checkpointsList.appendChild(card);
+    });
+
+    // Scroll to active checkpoint
+    setTimeout(() => {
+      const active = document.querySelector('.checkpoint-card.active');
+      if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }, 500);
+  </script>
+</body>
+</html>
