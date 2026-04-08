@@ -4,7 +4,10 @@
   "description": "AI automations for Minister Zay / HMBL brand",
   "scripts": {
     "discord:scrape": "node scripts/discord-scraper.js",
-    "discord:download": "node scripts/download-footage.js"
+    "discord:download": "node scripts/download-footage.js",
+    "tracker:update": "node scripts/update-tracker.js",
+    "tracker:sync": "node scripts/twitch-tracker-sync.js",
+    "tracker:watch": "node scripts/twitch-tracker-sync.js --watch"
   },
   "dependencies": {
     "discord.js": "^14.16.3",
