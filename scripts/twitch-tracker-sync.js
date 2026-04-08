@@ -26,16 +26,15 @@ const CHECKPOINTS_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker',
 function fetchStreamTitle() {
   return new Promise((resolve, reject) => {
     // Use the Twitch GQL endpoint (no auth required)
-    const postData = JSON.stringify([{
-      operationName: 'StreamMetadata',
-      variables: { channelLogin: TWITCH_CHANNEL },
-      extensions: {
-        persistedQuery: {
-          version: 1,
-          sha256Hash: 'a647c2a13599e5991e175155f798ca7f1ecddde73f7f341f39009c14571c11c1'
+    const postData = JSON.stringify({
+      query: `{
+        user(login: "${TWITCH_CHANNEL}") {
+          stream { title viewersCount game { name } }
+          lastBroadcast { title startedAt }
+          broadcastSettings { title }
         }
-      }
-    }]);
+      }`,
+    });
 
     const options = {
       hostname: 'gql.twitch.tv',
@@ -54,13 +53,14 @@ function fetchStreamTitle() {
       res.on('end', () => {
         try {
           const parsed = JSON.parse(data);
-          const stream = parsed[0]?.data?.user?.stream;
+          const user = parsed?.data?.user;
+          const stream = user?.stream;
           if (stream) {
-            resolve({ title: stream.title, isLive: true });
+            resolve({ title: stream.title, isLive: true, viewers: stream.viewersCount });
           } else {
-            // Try to get last known title from channel
-            const lastTitle = parsed[0]?.data?.user?.lastBroadcast?.title;
-            resolve({ title: lastTitle || '', isLive: false });
+            // Get last broadcast or broadcast settings title when offline
+            const lastTitle = user?.lastBroadcast?.title || user?.broadcastSettings?.title || '';
+            resolve({ title: lastTitle, isLive: false, lastStreamDate: user?.lastBroadcast?.startedAt });
           }
         } catch (e) {
           reject(e);
@@ -84,17 +84,24 @@ function parseStreamTitle(title) {
   const dayMatch = title.match(/DAY\s+(\d+)/i);
   if (dayMatch) data.day = parseInt(dayMatch[1]);
 
-  // Extract miles: "214 MILES COMPLETED" or look for mile count
+  // Extract miles: "214 MILES COMPLETED" or "X MILES WALKED" etc
   const milesMatch = title.match(/(\d+)\s*MILES?\s*(COMPLETED|DONE|WALKED)/i);
   if (milesMatch) data.miles = parseInt(milesMatch[1]);
 
-  // Extract location: "LOCATION: TYRONE, PA" or "X MILES FROM ALTOONA"
-  const locationMatch = title.match(/LOCATION[:\s-]+([A-Z\s]+,\s*[A-Z]{2})/i);
+  // Extract "X MILES FROM CITY" — gives us distance to next location
+  const milesFromMatch = title.match(/(\d+)\s*MILES?\s*FROM\s+([A-Z][a-zA-Z\s]+?)(?:\s*\||$)/i);
+  if (milesFromMatch) {
+    data.milesFromNext = parseInt(milesFromMatch[1]);
+    data.nearLocation = milesFromMatch[2].trim();
+  }
+
+  // Extract location: "LOCATION: TYRONE, PA" or "LOCATION- TYRONE, PA"
+  const locationMatch = title.match(/LOCATION[:\s-]+([A-Z][a-zA-Z\s]+,\s*[A-Z]{2})/i);
   if (locationMatch) {
     data.location = locationMatch[1].trim();
-  } else {
-    // Try "FROM CITYNAME" pattern
-    const fromMatch = title.match(/FROM\s+([A-Z][a-zA-Z\s]+)/i);
+  } else if (!data.nearLocation) {
+    // Fallback: "FROM CITYNAME" pattern
+    const fromMatch = title.match(/FROM\s+([A-Z][a-zA-Z\s]+?)(?:\s*\||$)/i);
     if (fromMatch) {
       data.nearLocation = fromMatch[1].trim();
     }
@@ -110,13 +117,21 @@ async function checkAndUpdate() {
   console.log(`[${now}] Checking Twitch stream for hmblzayy...`);
 
   try {
-    const { title, isLive } = await fetchStreamTitle();
-    console.log(`  Status: ${isLive ? '🔴 LIVE' : '⚫ Offline'}`);
-    console.log(`  Title: ${title || '(none)'}`);
+    const { title, isLive, viewers, lastStreamDate } = await fetchStreamTitle();
+    console.log(`  Status: ${isLive ? `🔴 LIVE (${viewers} viewers)` : '⚫ Offline'}`);
+    if (!isLive && lastStreamDate) {
+      console.log(`  Last stream: ${new Date(lastStreamDate).toLocaleString()}`);
+    }
+    console.log(`  Title: ${title || '(no title found)'}`);
 
     const parsed = parseStreamTitle(title);
     if (!parsed) {
-      console.log(`  Could not parse Faith Walk data from title.`);
+      if (!title) {
+        console.log(`  No stream title available — will check again next cycle.`);
+      } else {
+        console.log(`  Could not parse Faith Walk data from title.`);
+        console.log(`  Manual update: npm run tracker:update -- --day X --location "City, ST" --miles X`);
+      }
       return;
     }
 
