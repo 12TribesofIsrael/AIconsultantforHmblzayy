@@ -320,6 +320,8 @@
       .powered-link .crown { font-size: 14px; }
     }
   </style>
+  <!-- GoatCounter Analytics (free, privacy-friendly, no account needed to start) -->
+  <script data-goatcounter="https://hmbl-faithwalk.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 
@@ -720,6 +722,13 @@
       const active = document.querySelector('.checkpoint-card.active');
       if (active) active.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     }, 500);
+
+    // Track YouTube link clicks
+    document.querySelector('.powered-link').addEventListener('click', () => {
+      if (window.goatcounter) {
+        window.goatcounter.count({ path: '/youtube-click', event: true });
+      }
+    });
   </script>
 </body>
 </html>
