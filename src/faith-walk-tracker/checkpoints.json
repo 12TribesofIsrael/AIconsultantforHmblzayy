@@ -110,5 +110,13 @@
     "lng": -79.2626157,
     "miles": 248,
     "date": "Apr 8, 2026"
+  },
+  {
+    "day": 15,
+    "location": "Greensburg, PA",
+    "lat": 40.3024514,
+    "lng": -79.5443274,
+    "miles": 260,
+    "date": "Apr 9, 2026"
   }
 ]
