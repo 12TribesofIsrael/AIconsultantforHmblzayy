@@ -261,6 +261,33 @@
       50% { opacity: 0.5; transform: scale(0.8); }
     }
 
+    /* Powered By Banner */
+    .powered-banner {
+      background: linear-gradient(90deg, #0a0a0a, #1a1a2e, #0a0a0a);
+      border-bottom: 1px solid rgba(255,215,0,0.3);
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    .powered-banner a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .powered-banner a:hover {
+      color: #FFD700;
+    }
+
+    .powered-banner .ai-text {
+      color: #FFD700;
+      font-weight: 900;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .header { padding: 15px; }
@@ -272,6 +299,13 @@
   </style>
 </head>
 <body>
+
+  <!-- Powered By Banner -->
+  <div class="powered-banner">
+    <a href="https://www.youtube.com/@AIBIBLEGOSPELS" target="_blank">
+      Powered by The MOST HIGH &amp; <span class="ai-text">AI Bible Gospels</span> ✝
+    </a>
+  </div>
 
   <!-- Header -->
   <div class="header">
