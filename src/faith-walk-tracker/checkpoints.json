@@ -118,5 +118,13 @@
     "lng": -79.5443274,
     "miles": 260,
     "date": "Apr 9, 2026"
+  },
+  {
+    "day": 16,
+    "location": "Vandergrift, PA",
+    "lat": 40.6028462,
+    "lng": -79.5647741,
+    "miles": 290,
+    "date": "Apr 9, 2026"
   }
 ]
