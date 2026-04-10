@@ -67,8 +67,14 @@ Every step is a prayer. All Praises to The Most High 🙏🏾
 ```
 
 ## Key Contacts
-- **ShuggC | MR.DOTCONNECTOR [CR8Z]** — Handles all tech for HMBL. Twitch: twitch.tv/shuggc | IG: @shuggc | Also owns ClubX Philly (@club_x_philly). Bringing us onto the tech team. Asked about OBS embed for tracker.
-- **Minister Zay** — DM sent to @hmblzay on IG (awaiting response)
+- **ShuggC | MR.DOTCONNECTOR [CR8Z]** — Handles all tech for HMBL. Twitch: twitch.tv/shuggc | IG: @shuggc | Also owns ClubX Philly (@club_x_philly). Bringing us onto the tech team. Asked about OBS embed for tracker. Shouted out the tracker at Town Hall (Apr 9).
+- **Minister Zay** — Linked up directly at Town Hall (Apr 9). Sending him leg compression sleeves for the walk. We're locked in.
+
+## Timeline
+- **Apr 6** — First contact with ShuggC in Discord. Pitched AI automations, shared intro video.
+- **Apr 7** — ShuggC used intro video on stream. Cautious about bot access — team still organizing.
+- **Apr 9 (morning)** — ShuggC: "Will be bringing you on the tech side. you snapped." Asked about OBS embed.
+- **Apr 9 (Town Hall 8pm)** — ShuggC shouted out the tracker publicly. Talked directly with Zay — locked in. Team said 48 hours (by Apr 11) for onboarding confirmations.
 
 ## How the Tracker Update System Works
 
