@@ -214,6 +214,24 @@
       margin-top: 6px;
     }
 
+    .checkpoint-heading-to {
+      font-size: 11px;
+      color: #FFD700;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255,215,0,0.3);
+      font-weight: 600;
+    }
+
+    .checkpoint-heading-to-label {
+      font-size: 9px;
+      color: rgba(255,215,0,0.6);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+
     /* Footer */
     .footer {
       background: #080808;
@@ -525,7 +543,9 @@
             "lat": 40.6028462,
             "lng": -79.5647741,
             "miles": 290,
-            "date": "Apr 9, 2026"
+            "date": "Apr 9, 2026",
+            "destination": "Cranberry, PA",
+            "milesToday": 35
       }
 ];
 
@@ -687,12 +707,17 @@
       iconAnchor: [10, 10],
       className: '',
     });
+    const headingToPopup = currentCheckpoint.destination
+      ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
+         <span style="color:#FFD700;font-weight:600;">Today: → ${currentCheckpoint.destination}</span><br>
+         <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesToday} mi to go</span>`
+      : '';
     L.marker([currentCheckpoint.lat, currentCheckpoint.lng], { icon: currentIcon })
       .addTo(map)
       .bindPopup(`<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
         Day ${currentCheckpoint.day} — ${currentCheckpoint.location}<br>
         ${currentCheckpoint.miles} miles completed<br>
-        ${currentCheckpoint.date}`)
+        ${currentCheckpoint.date}${headingToPopup}`)
       .openPopup();
 
     // Fit map to show completed route with padding
@@ -713,11 +738,18 @@
       const isActive = i === CHECKPOINTS.length - 1;
       const card = document.createElement('div');
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
+      const headingToHtml = (isActive && cp.destination)
+        ? `<div class="checkpoint-heading-to">
+             <span class="checkpoint-heading-to-label">Today</span>
+             → ${cp.destination.split(',')[0]} (${cp.milesToday} mi)
+           </div>`
+        : '';
       card.innerHTML = `
         <div class="checkpoint-day">Day ${cp.day}</div>
         <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
         <div class="checkpoint-miles">${cp.miles} miles</div>
         <div class="checkpoint-date">${cp.date}</div>
+        ${headingToHtml}
       `;
       card.addEventListener('click', () => {
         map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });

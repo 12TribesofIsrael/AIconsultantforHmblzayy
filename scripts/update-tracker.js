@@ -1,14 +1,15 @@
 /**
  * Manual tracker update
  *
- * Usage:
+ * Usage (new day — full checkpoint):
  *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235
  *
- * This will:
- * 1. Geocode the location to get lat/lng
- * 2. Add the checkpoint to checkpoints.json
- * 3. Rebuild the tracker HTML
- * 4. Git commit and push (auto-deploys via GitHub Pages)
+ * Usage (in-progress — mark today's destination without logging arrival):
+ *   node scripts/update-tracker.js --destination "Cranberry, PA" --miles-today 35
+ *
+ * New-day mode: geocodes, adds checkpoint, clears any stale in-progress fields.
+ * In-progress mode: mutates the latest checkpoint's destination/milesToday only.
+ * Both rebuild HTML, commit, and push.
  */
 
 const fs = require('fs');
@@ -20,17 +21,27 @@ const CHECKPOINTS_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker',
 const TRACKER_HTML_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker', 'index.html');
 const DOCS_HTML_PATH = path.join(__dirname, '..', 'docs', 'faith-walk-tracker.html');
 
-// Parse args
+// Parse args (supports --key value and --kebab-case -> camelCase)
 const args = {};
 process.argv.slice(2).forEach((arg, i, arr) => {
   if (arg.startsWith('--')) {
-    const key = arg.replace('--', '');
+    const key = arg.replace('--', '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
     args[key] = arr[i + 1];
   }
 });
 
-if (!args.day || !args.location || !args.miles) {
-  console.log('Usage: node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235');
+const isInProgress = !!args.destination;
+const isNewDay = !!(args.day && args.location && args.miles);
+
+if (!isInProgress && !isNewDay) {
+  console.log('Usage:');
+  console.log('  New day:     node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235');
+  console.log('  In-progress: node scripts/update-tracker.js --destination "Cranberry, PA" --miles-today 35');
+  process.exit(1);
+}
+
+if (isInProgress && !args.milesToday) {
+  console.log('In-progress mode requires --miles-today');
   process.exit(1);
 }
 
@@ -100,7 +111,57 @@ function buildTrackerHTML(checkpoints) {
   return html;
 }
 
+function rebuildAndPush(checkpoints, commitMessage) {
+  fs.writeFileSync(CHECKPOINTS_PATH, JSON.stringify(checkpoints, null, 2) + '\n');
+  console.log(`  Saved checkpoints.json`);
+
+  const updatedHtml = buildTrackerHTML(checkpoints);
+  fs.writeFileSync(TRACKER_HTML_PATH, updatedHtml);
+  fs.writeFileSync(DOCS_HTML_PATH, updatedHtml);
+  console.log(`  Rebuilt tracker HTML`);
+
+  console.log(`\nPushing to GitHub...`);
+  try {
+    execSync('git add src/faith-walk-tracker/ docs/faith-walk-tracker.html', { stdio: 'pipe' });
+    execSync(`git commit -m "${commitMessage}"`, { stdio: 'pipe' });
+    execSync('git push origin main', { stdio: 'pipe' });
+    console.log(`  Pushed! Site will update in ~1 minute.`);
+  } catch (err) {
+    console.log(`  Git push failed — you may need to push manually.`);
+  }
+}
+
 async function main() {
+  const checkpoints = JSON.parse(fs.readFileSync(CHECKPOINTS_PATH, 'utf8'));
+
+  if (isInProgress) {
+    const destination = args.destination;
+    const milesToday = parseInt(args.milesToday);
+
+    if (checkpoints.length === 0) {
+      console.log('No checkpoints exist yet — log a day first.');
+      process.exit(1);
+    }
+
+    const latest = checkpoints[checkpoints.length - 1];
+    latest.destination = destination;
+    latest.milesToday = milesToday;
+
+    console.log(`\nMarking in-progress from Day ${latest.day} — ${latest.location}`);
+    console.log(`  Heading to: ${destination}`);
+    console.log(`  Miles today: ${milesToday}`);
+
+    rebuildAndPush(
+      checkpoints,
+      `Faith Walk: heading to ${destination} (${milesToday} mi today)`
+    );
+
+    console.log(`\n✓ In-progress updated! → ${destination} (${milesToday} mi)`);
+    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    return;
+  }
+
+  // New-day mode
   const day = parseInt(args.day);
   const location = args.location;
   const miles = parseInt(args.miles);
@@ -112,15 +173,16 @@ async function main() {
   console.log(`  Miles: ${miles}`);
   console.log(`  Date: ${date}`);
 
-  // Geocode location
   console.log(`\nGeocoding "${location}"...`);
   const coords = await geocode(location);
   console.log(`  Coordinates: ${coords.lat}, ${coords.lng}`);
 
-  // Load and update checkpoints
-  const checkpoints = JSON.parse(fs.readFileSync(CHECKPOINTS_PATH, 'utf8'));
+  // Clear any in-progress fields from all existing checkpoints — arrival overrides heading-to
+  checkpoints.forEach(cp => {
+    delete cp.destination;
+    delete cp.milesToday;
+  });
 
-  // Check if day already exists
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
   const newCheckpoint = { day, location, lat: coords.lat, lng: coords.lng, miles, date };
 
@@ -133,27 +195,10 @@ async function main() {
     console.log(`  Added new Day ${day} checkpoint`);
   }
 
-  // Save checkpoints
-  fs.writeFileSync(CHECKPOINTS_PATH, JSON.stringify(checkpoints, null, 2) + '\n');
-  console.log(`  Saved checkpoints.json`);
-
-  // Rebuild tracker HTML
-  const updatedHtml = buildTrackerHTML(checkpoints);
-  fs.writeFileSync(TRACKER_HTML_PATH, updatedHtml);
-  fs.writeFileSync(DOCS_HTML_PATH, updatedHtml);
-  console.log(`  Rebuilt tracker HTML`);
-
-  // Git commit and push
-  console.log(`\nPushing to GitHub...`);
-  try {
-    execSync('git add src/faith-walk-tracker/ docs/faith-walk-tracker.html', { stdio: 'pipe' });
-    execSync(`git commit -m "Update Faith Walk: Day ${day} — ${location} (${miles} miles)"`, { stdio: 'pipe' });
-    execSync('git push origin main', { stdio: 'pipe' });
-    console.log(`  Pushed! Site will update in ~1 minute.`);
-  } catch (err) {
-    console.log(`  Git push failed — you may need to push manually.`);
-    console.log(`  Run: git add . && git commit -m "Day ${day} update" && git push`);
-  }
+  rebuildAndPush(
+    checkpoints,
+    `Update Faith Walk: Day ${day} — ${location} (${miles} miles)`
+  );
 
   console.log(`\n✓ Tracker updated! Day ${day}: ${location} — ${miles} miles`);
   console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
