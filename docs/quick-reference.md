@@ -19,8 +19,11 @@
 
 ## Daily Commands
 ```bash
-# Update tracker with today's checkpoint
+# Update tracker with today's checkpoint (arrival)
 npm run tracker:update -- --day 16 --location "City, PA" --miles 280
+
+# Mark mid-day in-progress (shows "heading to X" on current marker)
+npm run tracker:update -- --destination "Cranberry, PA" --miles-today 35
 
 # Auto-check Twitch for updates (one time)
 npm run tracker:sync
