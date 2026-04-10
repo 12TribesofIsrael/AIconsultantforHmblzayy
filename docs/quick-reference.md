@@ -1,7 +1,8 @@
 # Quick Reference — Links & Commands
 
 ## Live URLs
-- **Faith Walk Tracker:** https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
+- **Faith Walk Tracker:** https://tinyurl.com/y667pssw
+  - *Canonical:* https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
 - **Analytics Dashboard:** https://hmbl-faithwalk.goatcounter.com
 - **GitHub Repo:** https://github.com/12TribesofIsrael/AIconsultantforHmblzayy
 - **Your YouTube:** https://www.youtube.com/@AIBIBLEGOSPELS
@@ -48,7 +49,7 @@ npm run discord:download
 
 ### Twitch Chat
 ```
-This Faith Walk is inspiring the world 🙏🏾 I built a live tracker so everyone can follow every step — Philly to Cali in real time: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
+This Faith Walk is inspiring the world 🙏🏾 I built a live tracker so everyone can follow every step — Philly to Cali in real time: tinyurl.com/y667pssw
 ```
 
 ### TikTok (under 150 chars)
@@ -64,7 +65,7 @@ This Faith Walk has been one of the most powerful things I've ever witnessed. Wa
 
 I wanted to do my part to support the mission, so I built a live interactive Faith Walk tracker. Every checkpoint from Day 1 in Philly to wherever he is right now — updated daily on a real map.
 
-https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
+tinyurl.com/y667pssw
 
 Every step is a prayer. All Praises to The Most High 🙏🏾
 ```
