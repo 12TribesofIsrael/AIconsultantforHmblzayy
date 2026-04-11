@@ -5,21 +5,17 @@
  *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235
  *
  * Usage (in-progress — mark today's destination without logging arrival):
- *   node scripts/update-tracker.js --destination "Cranberry, PA" --miles-today 35
+ *   node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22
  *
- * New-day mode: geocodes, adds checkpoint, clears any stale in-progress fields.
- * In-progress mode: mutates the latest checkpoint's destination/milesToday only.
+ * New-day mode: geocodes, adds checkpoint, clears any stale in-progress fields,
+ * and strips the estimatedMiles flag if it was set by an auto-promotion.
+ * In-progress mode: mutates the latest checkpoint's destination/milesRemaining.
  * Both rebuild HTML, commit, and push.
  */
 
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const { execSync } = require('child_process');
-
-const CHECKPOINTS_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker', 'checkpoints.json');
-const TRACKER_HTML_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker', 'index.html');
-const DOCS_HTML_PATH = path.join(__dirname, '..', 'docs', 'faith-walk-tracker.html');
+const { syncWithRemote } = require('./lib/git-sync');
+const { geocode } = require('./lib/geo');
+const { loadCheckpoints, rebuildAndPush, formatDate } = require('./lib/tracker');
 
 // Parse args (supports --key value and --kebab-case -> camelCase)
 const args = {};
@@ -36,135 +32,22 @@ const isNewDay = !!(args.day && args.location && args.miles);
 if (!isInProgress && !isNewDay) {
   console.log('Usage:');
   console.log('  New day:     node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235');
-  console.log('  In-progress: node scripts/update-tracker.js --destination "Cranberry, PA" --miles-today 35');
+  console.log('  In-progress: node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22');
   process.exit(1);
 }
 
-if (isInProgress && !args.milesToday) {
-  console.log('In-progress mode requires --miles-today');
+if (isInProgress && !args.milesRemaining) {
+  console.log('In-progress mode requires --miles-remaining');
   process.exit(1);
-}
-
-// Geocode using OpenStreetMap Nominatim (free, no API key)
-function geocode(location) {
-  return new Promise((resolve, reject) => {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}&limit=1`;
-    https.get(url, { headers: { 'User-Agent': 'HMBLFaithWalkTracker/1.0' } }, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        const results = JSON.parse(data);
-        if (results.length > 0) {
-          resolve({ lat: parseFloat(results[0].lat), lng: parseFloat(results[0].lon) });
-        } else {
-          reject(new Error(`Could not geocode: ${location}`));
-        }
-      });
-    }).on('error', reject);
-  });
-}
-
-// Format today's date
-function formatDate() {
-  const d = new Date();
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
-// Build tracker HTML from checkpoints data
-function buildTrackerHTML(checkpoints) {
-  const current = checkpoints[checkpoints.length - 1];
-  const totalMiles = 3000;
-  const remaining = totalMiles - current.miles;
-
-  // Count unique states
-  const states = new Set(checkpoints.map(cp => cp.location.split(', ')[1])).size;
-
-  // Read template and inject data
-  let html = fs.readFileSync(TRACKER_HTML_PATH, 'utf8');
-
-  // Replace the CHECKPOINTS array in the HTML
-  const checkpointsJson = JSON.stringify(checkpoints, null, 6);
-  html = html.replace(
-    /const CHECKPOINTS = \[[\s\S]*?\];/,
-    `const CHECKPOINTS = ${checkpointsJson};`
-  );
-
-  // Update stats in header
-  html = html.replace(
-    /id="currentDay">\d+/,
-    `id="currentDay">${current.day}`
-  );
-  html = html.replace(
-    /id="totalMiles">\d+/,
-    `id="totalMiles">${current.miles}`
-  );
-  html = html.replace(
-    /id="remaining">[\d,]+/,
-    `id="remaining">${remaining.toLocaleString()}`
-  );
-  html = html.replace(
-    /id="states">\d+\/10/,
-    `id="states">${states}/10`
-  );
-
-  return html;
-}
-
-function rebuildAndPush(checkpoints, commitMessage) {
-  fs.writeFileSync(CHECKPOINTS_PATH, JSON.stringify(checkpoints, null, 2) + '\n');
-  console.log(`  Saved checkpoints.json`);
-
-  const updatedHtml = buildTrackerHTML(checkpoints);
-  fs.writeFileSync(TRACKER_HTML_PATH, updatedHtml);
-  fs.writeFileSync(DOCS_HTML_PATH, updatedHtml);
-  console.log(`  Rebuilt tracker HTML`);
-
-  console.log(`\nPushing to GitHub...`);
-  try {
-    execSync('git add src/faith-walk-tracker/ docs/faith-walk-tracker.html', { stdio: 'pipe' });
-    execSync(`git commit -m "${commitMessage}"`, { stdio: 'pipe' });
-    execSync('git push origin main', { stdio: 'pipe' });
-    console.log(`  Pushed! Site will update in ~1 minute.`);
-  } catch (err) {
-    console.log(`  Git push failed — you may need to push manually.`);
-  }
-}
-
-// Sync local main with origin before mutating files. Prevents the conflict
-// trap where the script reads stale checkpoints.json, commits a new day, and
-// then push fails because remote moved on (e.g. another machine pushed an
-// in-progress annotation, or another session logged a checkpoint).
-function syncWithRemote() {
-  console.log('Syncing with origin/main...');
-  try {
-    // Refuse to run if there are uncommitted local changes — those would
-    // either be wiped by rebase or cause a confusing conflict mid-update.
-    const dirty = execSync('git status --porcelain', { encoding: 'utf8' }).trim();
-    if (dirty) {
-      console.log('  Uncommitted local changes detected:');
-      console.log(dirty.split('\n').map(l => '    ' + l).join('\n'));
-      console.log('  Commit or stash them before running this script.');
-      process.exit(1);
-    }
-    execSync('git fetch origin main', { stdio: 'pipe' });
-    execSync('git pull --rebase origin main', { stdio: 'pipe' });
-    console.log('  Up to date with origin/main.\n');
-  } catch (err) {
-    console.log('  Failed to sync with origin/main:');
-    console.log('  ' + (err.stderr?.toString() || err.message));
-    console.log('  Resolve the git state manually before re-running.');
-    process.exit(1);
-  }
 }
 
 async function main() {
   syncWithRemote();
-  const checkpoints = JSON.parse(fs.readFileSync(CHECKPOINTS_PATH, 'utf8'));
+  const checkpoints = loadCheckpoints();
 
   if (isInProgress) {
     const destination = args.destination;
-    const milesToday = parseInt(args.milesToday);
+    const milesRemaining = parseInt(args.milesRemaining);
 
     if (checkpoints.length === 0) {
       console.log('No checkpoints exist yet — log a day first.');
@@ -173,18 +56,18 @@ async function main() {
 
     const latest = checkpoints[checkpoints.length - 1];
     latest.destination = destination;
-    latest.milesToday = milesToday;
+    latest.milesRemaining = milesRemaining;
 
     console.log(`\nMarking in-progress from Day ${latest.day} — ${latest.location}`);
     console.log(`  Heading to: ${destination}`);
-    console.log(`  Miles today: ${milesToday}`);
+    console.log(`  Miles remaining: ${milesRemaining}`);
 
     rebuildAndPush(
       checkpoints,
-      `Faith Walk: heading to ${destination} (${milesToday} mi today)`
+      `Faith Walk: heading to ${destination} (${milesRemaining} mi to go)`
     );
 
-    console.log(`\n✓ In-progress updated! → ${destination} (${milesToday} mi)`);
+    console.log(`\n✓ In-progress updated! → ${destination} (${milesRemaining} mi to go)`);
     console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
     return;
   }
@@ -205,10 +88,18 @@ async function main() {
   const coords = await geocode(location);
   console.log(`  Coordinates: ${coords.lat}, ${coords.lng}`);
 
-  // Clear any in-progress fields from all existing checkpoints — arrival overrides heading-to
+  // Clear any in-progress fields from all existing checkpoints — arrival
+  // overrides heading-to. Also strip estimatedMiles since the user is
+  // providing a confirmed number.
   checkpoints.forEach(cp => {
     delete cp.destination;
-    delete cp.milesToday;
+    delete cp.destinationLat;
+    delete cp.destinationLng;
+    delete cp.milesRemaining;
+    delete cp.milesToday; // legacy field name
+    delete cp.estimatedSegmentMiles;
+    delete cp.inProgressDay;
+    delete cp.inProgressStartedAt;
   });
 
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
@@ -216,7 +107,7 @@ async function main() {
 
   if (existingIndex !== -1) {
     checkpoints[existingIndex] = newCheckpoint;
-    console.log(`  Updated existing Day ${day} checkpoint`);
+    console.log(`  Updated existing Day ${day} checkpoint (estimate cleared if present)`);
   } else {
     checkpoints.push(newCheckpoint);
     checkpoints.sort((a, b) => a.day - b.day);

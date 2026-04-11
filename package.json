@@ -6,6 +6,7 @@
     "discord:scrape": "node scripts/discord-scraper.js",
     "discord:download": "node scripts/download-footage.js",
     "tracker:update": "node scripts/update-tracker.js",
+    "tracker:from-title": "node scripts/tracker-from-title.js",
     "tracker:sync": "node scripts/twitch-tracker-sync.js",
     "tracker:watch": "node scripts/twitch-tracker-sync.js --watch",
     "clips": "node scripts/twitch-clipper.js",

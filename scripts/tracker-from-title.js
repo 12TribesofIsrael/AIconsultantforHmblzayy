@@ -1,0 +1,205 @@
+/**
+ * Title-driven tracker update
+ *
+ * Pulls Zay's live Twitch stream title, parses out the day number,
+ * destination city, and miles remaining, then updates the tracker
+ * honestly:
+ *
+ * - In-progress days get annotated on the latest confirmed checkpoint
+ *   (the map pin stays where he last actually was — never lies about
+ *   his position).
+ * - When the day rolls over (Twitch title shows day N+2 while latest
+ *   confirmed is day N), yesterday's destination is auto-promoted to a
+ *   real Day N+1 arrival with an estimated mileage marked `estimatedMiles:
+ *   true`. Manual `update-tracker.js --day --location --miles` clears that
+ *   flag.
+ *
+ * Usage:
+ *   node scripts/tracker-from-title.js
+ *
+ * No required args. Idempotent — if nothing changed since last run, no
+ * commit and no push.
+ */
+
+const { syncWithRemote } = require('./lib/git-sync');
+const { fetchStreamTitle, parseStreamTitle } = require('./lib/twitch');
+const { geocode, estimatedRoadMiles } = require('./lib/geo');
+const { loadCheckpoints, rebuildAndPush, formatDate } = require('./lib/tracker');
+
+// Convert "Apr 11, 2026" or ISO date to display string
+function dateFromIso(iso) {
+  if (!iso) return null;
+  return formatDate(new Date(iso));
+}
+
+// Apply or update in-progress annotation on `latest`. Returns true if any
+// field actually changed (so the caller knows whether to push).
+async function annotateInProgress(latest, parsed) {
+  const changed = {};
+  let didChange = false;
+
+  // Geocode destination if missing or destination changed
+  const needGeocode =
+    !latest.destinationLat ||
+    !latest.destinationLng ||
+    latest.destination !== parsed.nearLocation;
+
+  if (needGeocode) {
+    console.log(`  Geocoding "${parsed.nearLocation}"...`);
+    const coords = await geocode(parsed.nearLocation);
+    console.log(`    ${coords.lat}, ${coords.lng}`);
+    if (latest.destinationLat !== coords.lat) didChange = true;
+    if (latest.destinationLng !== coords.lng) didChange = true;
+    latest.destinationLat = coords.lat;
+    latest.destinationLng = coords.lng;
+  }
+
+  if (latest.destination !== parsed.nearLocation) {
+    latest.destination = parsed.nearLocation;
+    didChange = true;
+  }
+  if (latest.inProgressDay !== parsed.day) {
+    latest.inProgressDay = parsed.day;
+    didChange = true;
+  }
+  if (latest.milesRemaining !== parsed.milesFromNext) {
+    latest.milesRemaining = parsed.milesFromNext;
+    didChange = true;
+  }
+
+  // Compute estimated segment miles from latest's confirmed lat/lng to
+  // the destination. Only re-compute when destination changed.
+  if (needGeocode || latest.estimatedSegmentMiles == null) {
+    const seg = Math.round(estimatedRoadMiles(
+      latest.lat, latest.lng,
+      latest.destinationLat, latest.destinationLng
+    ));
+    if (latest.estimatedSegmentMiles !== seg) {
+      latest.estimatedSegmentMiles = seg;
+      didChange = true;
+    }
+  }
+
+  if (!latest.inProgressStartedAt) {
+    latest.inProgressStartedAt = new Date().toISOString();
+    didChange = true;
+  }
+
+  return didChange;
+}
+
+async function main() {
+  syncWithRemote();
+
+  console.log('Fetching Twitch stream title...');
+  const { title, isLive, viewers } = await fetchStreamTitle();
+  console.log(`  ${isLive ? `🔴 LIVE (${viewers} viewers)` : '⚫ Offline'}`);
+  console.log(`  Title: ${title || '(none)'}\n`);
+
+  const parsed = parseStreamTitle(title);
+  if (!parsed) {
+    console.log('Could not parse Faith Walk data from title — nothing to do.');
+    return;
+  }
+
+  if (!parsed.day || !parsed.nearLocation || parsed.milesFromNext == null) {
+    console.log(`Title incomplete: day=${parsed.day} dest=${parsed.nearLocation} miles=${parsed.milesFromNext}`);
+    console.log('Need all three to update — skipping.');
+    return;
+  }
+
+  console.log(`Parsed: Day ${parsed.day}, → ${parsed.nearLocation}, ${parsed.milesFromNext} mi remaining\n`);
+
+  const checkpoints = loadCheckpoints();
+  if (checkpoints.length === 0) {
+    console.log('No checkpoints exist yet — log Day 1 first with update-tracker.js.');
+    process.exit(1);
+  }
+
+  let latest = checkpoints[checkpoints.length - 1];
+
+  // Case 1: title day matches latest arrival day exactly
+  // (e.g. Zay logged Day 17 manually, and the title still says Day 17).
+  // Nothing to update — he's already arrived.
+  if (parsed.day === latest.day) {
+    console.log(`Title day (${parsed.day}) matches latest arrival day. Nothing to update.`);
+    return;
+  }
+
+  // Case 2: title day is BEHIND latest arrival day
+  // (shouldn't happen — maybe stale title). Skip.
+  if (parsed.day < latest.day) {
+    console.log(`Title day (${parsed.day}) is behind latest arrival (${latest.day}). Skipping.`);
+    return;
+  }
+
+  // Case 3: title day is exactly latest.day + 1 — annotate in-progress
+  if (parsed.day === latest.day + 1) {
+    console.log(`In-progress: annotating Day ${latest.day} (${latest.location}) for Day ${parsed.day} → ${parsed.nearLocation}`);
+    const changed = await annotateInProgress(latest, parsed);
+    if (!changed) {
+      console.log('  No semantic change — skipping push.');
+      return;
+    }
+    console.log(`  Day ${parsed.day} → ${parsed.nearLocation} (~${latest.estimatedSegmentMiles} mi est, ${parsed.milesFromNext} mi to go)`);
+    rebuildAndPush(
+      checkpoints,
+      `Faith Walk: Day ${parsed.day} in progress — ${parsed.milesFromNext} mi to ${parsed.nearLocation}`
+    );
+    console.log(`\n✓ In-progress updated.`);
+    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    return;
+  }
+
+  // Case 4: title day is latest.day + 2 or more — day rolled over while
+  // latest was in-progress. Promote yesterday's destination to a real
+  // arrival, then annotate the new latest with the current title.
+  if (parsed.day >= latest.day + 2) {
+    if (!latest.destination || !latest.inProgressDay) {
+      console.log(`Day rollover detected (latest=${latest.day}, title=${parsed.day}) but no in-progress data to promote.`);
+      console.log(`Manual update needed: npm run tracker:update -- --day ${latest.day + 1} --location "City, ST" --miles XXX`);
+      process.exit(1);
+    }
+
+    const promoted = {
+      day: latest.inProgressDay,
+      location: latest.destination,
+      lat: latest.destinationLat,
+      lng: latest.destinationLng,
+      miles: latest.miles + Math.round(latest.estimatedSegmentMiles || 0),
+      date: dateFromIso(latest.inProgressStartedAt) || formatDate(),
+      estimatedMiles: true,
+    };
+
+    // Strip in-progress fields from old latest
+    delete latest.inProgressDay;
+    delete latest.destination;
+    delete latest.destinationLat;
+    delete latest.destinationLng;
+    delete latest.milesRemaining;
+    delete latest.estimatedSegmentMiles;
+    delete latest.inProgressStartedAt;
+
+    checkpoints.push(promoted);
+    console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
+
+    // Re-target latest to the freshly promoted checkpoint and annotate
+    // it with the current title's in-progress state.
+    latest = promoted;
+    await annotateInProgress(latest, parsed);
+
+    rebuildAndPush(
+      checkpoints,
+      `Faith Walk: promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est), Day ${parsed.day} in progress`
+    );
+    console.log(`\n✓ Rollover applied + Day ${parsed.day} annotated.`);
+    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    return;
+  }
+}
+
+main().catch(err => {
+  console.error('Error:', err.message);
+  console.error(err.stack);
+  process.exit(1);
+});
