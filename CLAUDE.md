@@ -30,8 +30,10 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 | `assets/` | Media assets (video, images, audio) |
 | `scripts/discord-scraper.js` | Pull all Discord server data |
 | `scripts/download-footage.js` | Download media from Discord |
-| `scripts/update-tracker.js` | Manual tracker update (geocodes + pushes) |
-| `scripts/twitch-tracker-sync.js` | Auto-sync tracker from Twitch stream |
+| `scripts/update-tracker.js` | Manual tracker update (confirmed arrivals — clears estimate flags) |
+| `scripts/tracker-from-title.js` | Title-driven daily updater — reads Twitch title + previous checkpoint |
+| `scripts/twitch-tracker-sync.js` | Watch wrapper — runs tracker-from-title on a 30-min loop |
+| `scripts/lib/` | Shared helpers (git-sync, twitch, geo, tracker file ops) |
 | `scripts/twitch-clipper.js` | Auto-clip stream moments for all platforms |
 | `scripts/twitch-chatbot.js` | Chatbot with custom HMBL commands |
 | `src/intro-video/` | Remotion intro video (vertical + wide + square) |
@@ -42,9 +44,10 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 ```bash
 npm run discord:scrape       # Pull all Discord server data
 npm run discord:download     # Download media from Discord
-npm run tracker:update       # Manual: --day X --location "City, ST" --miles X
-npm run tracker:sync         # One-time check Twitch for updates
-npm run tracker:watch        # Auto-check Twitch every 30 min
+npm run tracker:from-title   # DAILY: read Twitch title + update tracker (idempotent)
+npm run tracker:update       # Manual confirmed arrival: --day X --location "City, ST" --miles X
+npm run tracker:sync         # One-time check Twitch (delegates to tracker:from-title)
+npm run tracker:watch        # Run tracker:from-title every 30 min
 npm run clips                # Auto-clip stream moments (needs ffmpeg)
 npm run chatbot              # Run Twitch chatbot
 ```

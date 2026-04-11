@@ -20,16 +20,19 @@
 
 ## Daily Commands
 ```bash
-# Update tracker with today's checkpoint (arrival)
-npm run tracker:update -- --day 16 --location "City, PA" --miles 280
+# Title-driven update (RECOMMENDED) — pulls live Twitch title, annotates
+# in-progress day, auto-promotes yesterday's destination on day rollover.
+# Idempotent: no commit if nothing changed.
+npm run tracker:from-title
 
-# Mark mid-day in-progress (shows "heading to X" on current marker)
-npm run tracker:update -- --destination "Cranberry, PA" --miles-today 35
+# Manual arrival (use when you know the actual mileage Zay walked).
+# Strips any auto-estimate and treats your number as ground truth.
+npm run tracker:update -- --day 17 --location "Beaver Falls, PA" --miles 327
 
-# Auto-check Twitch for updates (one time)
-npm run tracker:sync
+# Manual in-progress (skip if tracker:from-title is doing it for you)
+npm run tracker:update -- --destination "Cranberry, PA" --miles-remaining 22
 
-# Auto-check Twitch every 30 min (leave running)
+# Watch mode — calls tracker:from-title every 30 min via Twitch sync
 npm run tracker:watch
 
 # Run auto-clipper when he's live (needs ffmpeg)
@@ -82,43 +85,55 @@ Every step is a prayer. All Praises to The Most High 🙏🏾
 
 ## How the Tracker Update System Works
 
-Two scripts work together to keep the tracker updated:
+There are three scripts. `tracker:from-title` is the daily driver; `tracker:update` is the manual override; `tracker:watch` runs `tracker:from-title` on a 30-min loop.
 
-### Step 1: `npm run tracker:sync` (The Auto-Checker)
-Reads Zay's Twitch stream title and tries to parse three things:
-- **Day number** — looks for `DAY 15` in the title
-- **Total miles** — looks for `214 MILES COMPLETED` or `MILES WALKED` (exact words needed)
-- **Location** — looks for `LOCATION: City, ST` or `FROM CITYNAME`
+### `npm run tracker:from-title` — Title-Driven Updater (Daily Driver)
 
-If it finds ALL THREE, it auto-triggers the update script. If anything is missing, it tells you what's missing and you update manually.
+Single command, no args. Reads Zay's live Twitch title and updates the tracker honestly:
 
-**Known limitation:** Zay's titles usually say `33 MILES FROM VANDERGRIFT` — the script reads the city but can't get total miles because he doesn't put "X MILES COMPLETED" in the title. So it almost always says "miles unknown" and won't auto-update.
+1. **Pulls the title** from Twitch via the public GQL endpoint (no auth)
+2. **Parses** day number, destination city, and "X MILES FROM" remaining
+3. **Decides what to do** based on how `parsed.day` compares to the latest confirmed arrival:
+   - **Same day** → he's already arrived, nothing to do
+   - **Day + 1** → he's mid-walk on the next day. Annotate the latest checkpoint with `inProgressDay`, `destination`, `destinationLat/Lng`, `milesRemaining`, and `estimatedSegmentMiles` (haversine × 1.3). Map pin stays on the last *confirmed* location with a dashed line forward to the destination — never lies about his position.
+   - **Day + 2 or more** → day rolled over while he was in-progress. Auto-promote yesterday's destination to a real arrival checkpoint with `estimatedMiles: true` and a `~` prefix on the mileage. Then annotate the freshly promoted checkpoint with the new title's in-progress state.
+4. **Idempotent**: deep-compares the parsed title against existing fields. If nothing changed, no commit, no push. Safe to run on a 30-min loop.
+5. **Sync-safe**: refuses to run on a dirty working tree, and pulls origin/main before mutating anything.
 
-### Step 2: `npm run tracker:update` (The Actual Updater)
-This is what changes the live tracker. When it runs (manually or triggered by sync):
-1. **Geocodes** the city name → gets lat/lng coordinates from OpenStreetMap
-2. **Adds** the checkpoint to `src/faith-walk-tracker/checkpoints.json`
-3. **Rebuilds** the tracker HTML (injects new data into both `src/` and `docs/` copies)
-4. **Git commits and pushes** → GitHub Pages auto-deploys in ~1 minute
+**Key invariant:** the script never creates an arrival with `estimatedMiles: false`. All confirmed mileage comes from manual `tracker:update --miles N` runs.
 
-Manual usage:
+### `npm run tracker:update` — Manual Override
+
+Use when you know the real mileage (e.g. Zay says "I walked 33 miles today" on stream). Two modes:
+
 ```bash
-npm run tracker:update -- --day 16 --location "Vandergrift, PA" --miles 293
+# Log a confirmed arrival (clears any estimate flag on that day)
+npm run tracker:update -- --day 17 --location "Beaver Falls, PA" --miles 327
+
+# Manually annotate in-progress (rare — tracker:from-title does this for you)
+npm run tracker:update -- --destination "Cranberry, PA" --miles-remaining 22
 ```
 
-### Recommended Workflow: Update Every Night
-- Zay's title changes throughout the day as he walks
-- Wait until he stops streaming for the night
-- Check Discord or stream for end-of-day total miles
-- Run the manual update with final location and miles
-- The tracker stays accurate and doesn't jump around mid-day
+When `--miles` is provided, `estimatedMiles` is stripped — your number is treated as ground truth and the `~` prefix disappears from the live tracker.
+
+### `npm run tracker:watch` — Auto-Sync Every 30 Minutes
+
+Wraps `tracker:from-title` in a 30-min interval. Leave running in a terminal to keep the tracker fresh while Zay is streaming. Each cycle is a no-op if nothing changed.
+
+### Display Conventions on the Live Tracker
+
+- **Map pin** sits on the latest *confirmed* arrival (never moves to a city Zay hasn't reached).
+- **Dashed gold line** extends forward from the pin to the destination during in-progress days.
+- **Stat bar** shows the in-progress day number (e.g. `DAY 17`) even before that day's arrival is logged. Total miles always shows the last confirmed cumulative number — never the estimate.
+- **Mileage with `~` prefix** (e.g. `~325 MI`) means it's an auto-promoted estimate. Manual `tracker:update --miles N` clears it.
 
 ### Quick Troubleshooting
 | Problem | Cause | Fix |
 |---------|-------|-----|
-| Sync says "miles unknown" | Zay's title doesn't include "MILES COMPLETED" | Update manually with total miles |
-| Sync says "Already up to date" | Same day number as last checkpoint | Wait for a new day or update manually |
-| Location is wrong on map | Geocoding picked wrong city | Re-run update with "City, ST" format (include state) |
+| `Title incomplete: ... destination unknown` | Zay's title doesn't have a parseable "X MILES FROM CITY" pattern | Wait for the title to update, or run manual `tracker:update` |
+| `Day rollover detected but no in-progress data to promote` | The day jumped 2+ without any in-progress annotation having been recorded | Run manual `tracker:update --day N --location "City, ST" --miles XXX` for the missed day |
+| `Uncommitted local changes detected` | The script refuses to run on a dirty tree | Commit or stash your local edits, then re-run |
+| Location is wrong on map | Geocoding picked the wrong city | Manual `tracker:update` with "City, ST" format (include state) |
 | Tracker didn't update online | Git push failed | Run `git push origin main` manually |
 
 ## Strategy Reminders
