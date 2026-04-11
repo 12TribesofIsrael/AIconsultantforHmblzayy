@@ -51,14 +51,27 @@
       text-transform: uppercase;
     }
 
+    /* Stats bar — its own row below the header, evenly distributed */
+    .stats-section {
+      background: linear-gradient(180deg, #0a0a0a 0%, #131322 100%);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+      padding: 16px 30px;
+    }
+
     .stats-bar {
       display: flex;
-      gap: 30px;
+      justify-content: space-around;
+      align-items: center;
+      gap: 20px;
       flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     .stat {
       text-align: center;
+      flex: 1 1 auto;
+      min-width: 80px;
     }
 
     .stat-value {
@@ -330,7 +343,9 @@
     @media (max-width: 768px) {
       .header { padding: 15px; }
       .brand h1 { font-size: 22px; }
-      .stats-bar { gap: 20px; }
+      .stats-section { padding: 12px 15px; }
+      .stats-bar { gap: 12px; }
+      .stat { min-width: 64px; }
       .stat-value { font-size: 22px; }
       .progress-section, .checkpoints-section { padding: 15px; }
       .powered-link { padding: 8px 14px; }
@@ -360,6 +375,10 @@
       <span class="powered-text">Powered by The MOST HIGH &amp; <span class="ai-text">AI Bible Gospels</span></span>
       <span class="crown">&#x1F451;</span>
     </a>
+  </div>
+
+  <!-- Stats bar (own row, evenly spaced) -->
+  <div class="stats-section">
     <div class="stats-bar">
       <div class="stat">
         <div class="stat-value" id="currentDay">17</div>
