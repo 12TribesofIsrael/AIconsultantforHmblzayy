@@ -362,7 +362,7 @@
     </a>
     <div class="stats-bar">
       <div class="stat">
-        <div class="stat-value" id="currentDay">16</div>
+        <div class="stat-value" id="currentDay">17</div>
         <div class="stat-label">Day</div>
       </div>
       <div class="stat">
@@ -543,7 +543,14 @@
             "lat": 40.6028462,
             "lng": -79.5647741,
             "miles": 290,
-            "date": "Apr 9, 2026"
+            "date": "Apr 9, 2026",
+            "destinationLat": 40.7520097,
+            "destinationLng": -80.3192295,
+            "destination": "BEAVER FALLS, PA",
+            "inProgressDay": 17,
+            "milesRemaining": 22,
+            "estimatedSegmentMiles": 53,
+            "inProgressStartedAt": "2026-04-11T23:48:58.551Z"
       }
 ];
 
@@ -618,6 +625,23 @@
       weight: 12,
       opacity: 0.15,
     }).addTo(map);
+
+    // In-progress forward line: dashed from current confirmed location toward
+    // today's destination, drawn only when latest checkpoint has destination coords.
+    if (currentCheckpoint.destination && currentCheckpoint.destinationLat != null && currentCheckpoint.destinationLng != null) {
+      L.polyline(
+        [
+          [currentCheckpoint.lat, currentCheckpoint.lng],
+          [currentCheckpoint.destinationLat, currentCheckpoint.destinationLng],
+        ],
+        {
+          color: '#FFD700',
+          weight: 3,
+          opacity: 0.6,
+          dashArray: '6, 8',
+        }
+      ).addTo(map);
+    }
 
     // ==========================================
     // MARKERS
@@ -707,14 +731,17 @@
     });
     const headingToPopup = currentCheckpoint.destination
       ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
-         <span style="color:#FFD700;font-weight:600;">Today: → ${currentCheckpoint.destination}</span><br>
-         <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesToday} mi to go</span>`
+         <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
+         <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesRemaining} mi to go</span>`
       : '';
+    const milesLabel = currentCheckpoint.estimatedMiles
+      ? `~${currentCheckpoint.miles} miles completed <span style="color:rgba(255,215,0,0.6);font-size:10px;">(est)</span>`
+      : `${currentCheckpoint.miles} miles completed`;
     L.marker([currentCheckpoint.lat, currentCheckpoint.lng], { icon: currentIcon })
       .addTo(map)
       .bindPopup(`<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
         Day ${currentCheckpoint.day} — ${currentCheckpoint.location}<br>
-        ${currentCheckpoint.miles} miles completed<br>
+        ${milesLabel}<br>
         ${currentCheckpoint.date}${headingToPopup}`)
       .openPopup();
 
@@ -727,7 +754,8 @@
 
     // Progress bar
     document.getElementById('progressFill').style.width = progressPercent + '%';
-    document.getElementById('milesCompleted').textContent = currentCheckpoint.miles;
+    document.getElementById('milesCompleted').textContent =
+      (currentCheckpoint.estimatedMiles ? '~' : '') + currentCheckpoint.miles;
     document.getElementById('remaining').textContent = (TOTAL_MILES - currentCheckpoint.miles).toLocaleString();
 
     // Checkpoint cards
@@ -738,14 +766,15 @@
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
       const headingToHtml = (isActive && cp.destination)
         ? `<div class="checkpoint-heading-to">
-             <span class="checkpoint-heading-to-label">Today</span>
-             → ${cp.destination.split(',')[0]} (${cp.milesToday} mi)
+             <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
+             → ${cp.destination.split(',')[0]} (${cp.milesRemaining} mi to go)
            </div>`
         : '';
+      const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
       card.innerHTML = `
         <div class="checkpoint-day">Day ${cp.day}</div>
         <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
-        <div class="checkpoint-miles">${cp.miles} miles</div>
+        <div class="checkpoint-miles">${milesText}</div>
         <div class="checkpoint-date">${cp.date}</div>
         ${headingToHtml}
       `;
