@@ -131,7 +131,35 @@ function rebuildAndPush(checkpoints, commitMessage) {
   }
 }
 
+// Sync local main with origin before mutating files. Prevents the conflict
+// trap where the script reads stale checkpoints.json, commits a new day, and
+// then push fails because remote moved on (e.g. another machine pushed an
+// in-progress annotation, or another session logged a checkpoint).
+function syncWithRemote() {
+  console.log('Syncing with origin/main...');
+  try {
+    // Refuse to run if there are uncommitted local changes — those would
+    // either be wiped by rebase or cause a confusing conflict mid-update.
+    const dirty = execSync('git status --porcelain', { encoding: 'utf8' }).trim();
+    if (dirty) {
+      console.log('  Uncommitted local changes detected:');
+      console.log(dirty.split('\n').map(l => '    ' + l).join('\n'));
+      console.log('  Commit or stash them before running this script.');
+      process.exit(1);
+    }
+    execSync('git fetch origin main', { stdio: 'pipe' });
+    execSync('git pull --rebase origin main', { stdio: 'pipe' });
+    console.log('  Up to date with origin/main.\n');
+  } catch (err) {
+    console.log('  Failed to sync with origin/main:');
+    console.log('  ' + (err.stderr?.toString() || err.message));
+    console.log('  Resolve the git state manually before re-running.');
+    process.exit(1);
+  }
+}
+
 async function main() {
+  syncWithRemote();
   const checkpoints = JSON.parse(fs.readFileSync(CHECKPOINTS_PATH, 'utf8'));
 
   if (isInProgress) {
