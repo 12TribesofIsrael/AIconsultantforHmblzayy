@@ -125,8 +125,14 @@
     "lat": 40.6028462,
     "lng": -79.5647741,
     "miles": 290,
-    "date": "Apr 9, 2026",
-    "destination": "Cranberry, PA",
-    "milesToday": 35
+    "date": "Apr 9, 2026"
+  },
+  {
+    "day": 17,
+    "location": "Beaver Falls, PA",
+    "lat": 40.7520097,
+    "lng": -80.3192295,
+    "miles": 303,
+    "date": "Apr 11, 2026"
   }
 ]
