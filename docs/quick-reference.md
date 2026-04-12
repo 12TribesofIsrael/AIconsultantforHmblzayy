@@ -29,6 +29,12 @@ npm run tracker:from-title
 # Strips any auto-estimate and treats your number as ground truth.
 npm run tracker:update -- --day 17 --location "Beaver Falls, PA" --miles 327
 
+# Attach a Twitch clip to a day (backfill or new)
+npm run tracker:update -- --day 16 --clip "https://www.twitch.tv/hmblzayy/clip/..."
+
+# New day with clip attached
+npm run tracker:update -- --day 18 --location "Columbiana, OH" --miles 365 --clip "https://..."
+
 # Manual in-progress (skip if tracker:from-title is doing it for you)
 npm run tracker:update -- --destination "Cranberry, PA" --miles-remaining 22
 
