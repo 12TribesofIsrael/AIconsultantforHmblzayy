@@ -3,14 +3,19 @@
  *
  * Usage (new day — full checkpoint):
  *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235
+ *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235 --clip "https://..."
+ *
+ * Usage (clip-only — attach a Twitch clip to an existing day):
+ *   node scripts/update-tracker.js --day 12 --clip "https://..."
  *
  * Usage (in-progress — mark today's destination without logging arrival):
  *   node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22
  *
  * New-day mode: geocodes, adds checkpoint, clears any stale in-progress fields,
  * and strips the estimatedMiles flag if it was set by an auto-promotion.
+ * Clip-only mode: adds/updates a clip URL on an existing checkpoint.
  * In-progress mode: mutates the latest checkpoint's destination/milesRemaining.
- * Both rebuild HTML, commit, and push.
+ * All modes rebuild HTML, commit, and push.
  */
 
 const { syncWithRemote } = require('./lib/git-sync');
@@ -27,11 +32,14 @@ process.argv.slice(2).forEach((arg, i, arr) => {
 });
 
 const isInProgress = !!args.destination;
+const isClipOnly = !!(args.day && args.clip && !args.location && !args.miles);
 const isNewDay = !!(args.day && args.location && args.miles);
 
-if (!isInProgress && !isNewDay) {
+if (!isInProgress && !isClipOnly && !isNewDay) {
   console.log('Usage:');
   console.log('  New day:     node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235');
+  console.log('  With clip:   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235 --clip "https://..."');
+  console.log('  Clip only:   node scripts/update-tracker.js --day 12 --clip "https://..."');
   console.log('  In-progress: node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22');
   process.exit(1);
 }
@@ -44,6 +52,30 @@ if (isInProgress && !args.milesRemaining) {
 async function main() {
   syncWithRemote();
   const checkpoints = loadCheckpoints();
+
+  if (isClipOnly) {
+    const day = parseInt(args.day);
+    const clip = args.clip;
+    const idx = checkpoints.findIndex(cp => cp.day === day);
+
+    if (idx === -1) {
+      console.log(`Day ${day} not found in checkpoints. Log the day first.`);
+      process.exit(1);
+    }
+
+    checkpoints[idx].clip = clip;
+    console.log(`\nAttaching clip to Day ${day} — ${checkpoints[idx].location}`);
+    console.log(`  Clip: ${clip}`);
+
+    rebuildAndPush(
+      checkpoints,
+      `Add clip to Day ${day} — ${checkpoints[idx].location}`
+    );
+
+    console.log(`\n✓ Clip added to Day ${day}!`);
+    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    return;
+  }
 
   if (isInProgress) {
     const destination = args.destination;
@@ -104,8 +136,13 @@ async function main() {
 
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
   const newCheckpoint = { day, location, lat: coords.lat, lng: coords.lng, miles, date };
+  if (args.clip) newCheckpoint.clip = args.clip;
 
   if (existingIndex !== -1) {
+    // Preserve existing clip if not being overwritten
+    if (!args.clip && checkpoints[existingIndex].clip) {
+      newCheckpoint.clip = checkpoints[existingIndex].clip;
+    }
     checkpoints[existingIndex] = newCheckpoint;
     console.log(`  Updated existing Day ${day} checkpoint (estimate cleared if present)`);
   } else {
