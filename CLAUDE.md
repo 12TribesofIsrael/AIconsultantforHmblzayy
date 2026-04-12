@@ -1,5 +1,21 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
+**Current Version: v2.0.0**
+
+## Versioning
+We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
+- **MAJOR** — big new system or breaking change (e.g. new tracker architecture)
+- **MINOR** — new feature added to existing system (e.g. in-progress display, parser fix)
+- **PATCH** — bug fix, typo, doc-only change
+
+Update the version in **both** this file (above) and `package.json` on every feature commit.
+
+### Changelog
+| Version | Date | Changes |
+|---------|------|---------|
+| v2.0.0 | Apr 12, 2026 | Title-driven auto-updater (`tracker:from-title`), in-progress "heading to" display with dashed map line, day rollover with auto-promotion, refactored scripts into `lib/` modules, parser support for "MILES TO" format, tinyurl for tracker link |
+| v1.0.0 | Apr 6, 2026 | Initial: intro video, platform research, live tracker, auto-clipper, chatbot, Discord scraper, manual tracker update |
+
 ## Project Overview
 AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder of Stay Humble Stay Hungry (HMBL) Clothing. Goal: become the main AI consultant for his brand and movement.
 
