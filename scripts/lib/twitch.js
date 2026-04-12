@@ -82,12 +82,12 @@ function parseStreamTitle(title) {
   const milesMatch = title.match(/(\d+)\s*MILES?\s*(COMPLETED|DONE|WALKED)/i);
   if (milesMatch) data.miles = parseInt(milesMatch[1]);
 
-  // "X MILES FROM CITY[, ST]" — distance remaining to next destination.
+  // "X MILES FROM/TO CITY[, ST]" — distance remaining to next destination.
   // Greedy capture stops naturally at any char outside [A-Za-z\s] (e.g.
   // pipe separator, emoji, period). Optional state code is appended via
   // a separate group so geocoding doesn't hit a same-named city in the
   // wrong state.
-  const milesFromMatch = title.match(/(\d+)\s*MILES?\s+FROM\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2})?\s*(?=\||$|[^A-Za-z\s,])/i);
+  const milesFromMatch = title.match(/(\d+)\s*MILES?\s+(?:FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2})?\s*(?=\||$|[^A-Za-z\s,])/i);
   if (milesFromMatch) {
     data.milesFromNext = parseInt(milesFromMatch[1]);
     data.nearLocation = (milesFromMatch[2].trim() + (milesFromMatch[3] || '')).trim();
