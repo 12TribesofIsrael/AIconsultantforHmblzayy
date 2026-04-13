@@ -56,6 +56,12 @@ function buildTrackerHTML(checkpoints) {
   html = html.replace(/id="currentDay">\d+/, `id="currentDay">${displayDay}`);
   html = html.replace(/id="totalMiles">~?\d+/, `id="totalMiles">${milesText}`);
   html = html.replace(/id="remaining">[\d,]+/, `id="remaining">${remaining.toLocaleString()}`);
+  // Steps (avg 2,200 per mile)
+  const totalSteps = current.miles * 2200;
+  const stepsText = totalSteps >= 1000000
+    ? (totalSteps / 1000000).toFixed(1) + 'M'
+    : Math.round(totalSteps / 1000) + 'K';
+  html = html.replace(/id="steps">[\d.]+[KM]/, `id="steps">${stepsText}`);
   html = html.replace(/id="states">\d+\/10/, `id="states">${states}/10`);
 
   return html;

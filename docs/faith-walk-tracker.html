@@ -411,6 +411,10 @@
         <div class="stat-label">Remaining</div>
       </div>
       <div class="stat">
+        <div class="stat-value" id="steps">820K</div>
+        <div class="stat-label">Steps</div>
+      </div>
+      <div class="stat">
         <div class="stat-value" id="states">2/10</div>
         <div class="stat-label">States</div>
       </div>
@@ -822,6 +826,13 @@
     document.getElementById('milesCompleted').textContent =
       (currentCheckpoint.estimatedMiles ? '~' : '') + currentCheckpoint.miles;
     document.getElementById('remaining').textContent = (TOTAL_MILES - currentCheckpoint.miles).toLocaleString();
+
+    // Steps (avg 2,200 steps per mile)
+    const totalSteps = currentCheckpoint.miles * 2200;
+    const stepsDisplay = totalSteps >= 1000000
+      ? (totalSteps / 1000000).toFixed(1) + 'M'
+      : Math.round(totalSteps / 1000) + 'K';
+    document.getElementById('steps').textContent = stepsDisplay;
 
     // Checkpoint cards
     const checkpointsList = document.getElementById('checkpointsList');
