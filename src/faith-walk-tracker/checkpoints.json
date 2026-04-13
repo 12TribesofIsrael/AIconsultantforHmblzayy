@@ -148,13 +148,15 @@
     "miles": 343,
     "date": "Apr 11, 2026",
     "estimatedMiles": true,
-    "destinationLat": 40.7787016,
-    "destinationLng": -80.7648602,
-    "destination": "COLUMBIANA, OH",
-    "inProgressDay": 18,
-    "milesRemaining": 19,
-    "estimatedSegmentMiles": 30,
-    "inProgressStartedAt": "2026-04-12T16:31:16.712Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/AssiduousSteamyStapleLitty-lH-6s-vMT1AnbgSz"
+  },
+  {
+    "day": 18,
+    "location": "Columbiana, OH",
+    "lat": 40.7787016,
+    "lng": -80.7648602,
+    "miles": 373,
+    "date": "Apr 13, 2026",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL"
   }
 ]
