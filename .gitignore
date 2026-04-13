@@ -28,6 +28,7 @@ src/intro-video/public/*.png
 src/intro-video/public/*.jpg
 src/intro-video/public/*.mp3
 src/intro-video/public/*.mp4
+src/intro-video/public/clips/
 
 # OS
 .DS_Store

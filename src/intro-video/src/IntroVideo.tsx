@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   AbsoluteFill,
-  Img,
+  OffthreadVideo,
   useCurrentFrame,
   useVideoConfig,
   interpolate,
@@ -12,57 +12,38 @@ import {
 } from 'remotion';
 
 /**
- * HMBL Faith Walk Intro Video
- * Looping intro — Zay walking state to state, Philly to Cali
- *
- * Drop images into public/ folder and update SLIDES array below.
- * Add music file as public/music.mp3
+ * HMBL Faith Walk — 90-Second Highlight Reel
+ * 15 Twitch clips from the walk, one per day, with HMBL branding overlay.
  */
 
-interface Slide {
-  image: string;
-  label: string;
-  sublabel?: string;
+interface ClipData {
+  video: string;
+  day: number;
+  location: string;
+  miles: number;
 }
 
-// Update these with actual image filenames in the public/ folder
-const SLIDES: Slide[] = [
-  {
-    image: 'Screenshot_2026-04-01_at_12.25.10.png',
-    label: 'SUNBURY',
-    sublabel: 'Route 61 South',
-  },
-  {
-    image: 'Screenshot_2026-04-01_at_16.15.52.png',
-    label: 'BUCKNELL',
-    sublabel: 'University Checkpoint',
-  },
-  {
-    image: 'Screenshot_2026-04-02_at_07.27.44.png',
-    label: 'MIFFLINBURG',
-    sublabel: 'Day 8 • 144 Miles',
-  },
-  {
-    image: 'Screenshot_2026-04-02_at_13.10.55.png',
-    label: 'STATE COLLEGE',
-    sublabel: 'Lewisburg 10 Miles',
-  },
-  {
-    image: 'IMG_1163.png',
-    label: 'BOALSBURG',
-    sublabel: 'Day 8 • Rural PA',
-  },
-  {
-    image: 'IMG_1191.png',
-    label: 'TYRONE',
-    sublabel: 'Day 12 • 214 Miles',
-  },
+const CLIPS: ClipData[] = [
+  { video: 'clips/day02-norristown.mp4', day: 2, location: 'NORRISTOWN', miles: 18 },
+  { video: 'clips/day03-pottstown.mp4', day: 3, location: 'POTTSTOWN', miles: 36 },
+  { video: 'clips/day05-lebanon.mp4', day: 5, location: 'LEBANON', miles: 80 },
+  { video: 'clips/day06-sunbury.mp4', day: 6, location: 'SUNBURY', miles: 108 },
+  { video: 'clips/day07-lewisburg.mp4', day: 7, location: 'LEWISBURG', miles: 125 },
+  { video: 'clips/day08-mifflinburg.mp4', day: 8, location: 'MIFFLINBURG', miles: 144 },
+  { video: 'clips/day09-statecollege.mp4', day: 9, location: 'STATE COLLEGE', miles: 162 },
+  { video: 'clips/day10-boalsburg.mp4', day: 10, location: 'BOALSBURG', miles: 175 },
+  { video: 'clips/day11-altoona.mp4', day: 11, location: 'ALTOONA', miles: 195 },
+  { video: 'clips/day12-tyrone.mp4', day: 12, location: 'TYRONE', miles: 214 },
+  { video: 'clips/day13-ebensburg.mp4', day: 13, location: 'EBENSBURG', miles: 230 },
+  { video: 'clips/day14-blairsville.mp4', day: 14, location: 'BLAIRSVILLE', miles: 248 },
+  { video: 'clips/day16-vandergrift.mp4', day: 16, location: 'VANDERGRIFT', miles: 290 },
+  { video: 'clips/day17-beaverfalls.mp4', day: 17, location: 'BEAVER FALLS', miles: 343 },
+  { video: 'clips/day18-columbiana.mp4', day: 18, location: 'COLUMBIANA, OH', miles: 373 },
 ];
 
-const FRAMES_PER_SLIDE = 45; // 1.5 seconds per slide at 30fps
-const TRANSITION_FRAMES = 12;
+const FRAMES_PER_CLIP = 180; // 6 seconds at 30fps
+const TRANSITION_FRAMES = 15; // 0.5s crossfade
 
-// HMBL brand colors extracted from his stream overlays
 const COLORS = {
   gold: '#FFD700',
   black: '#000000',
@@ -71,42 +52,30 @@ const COLORS = {
   overlay: 'rgba(0,0,0,0.55)',
 };
 
-const SlideComponent: React.FC<{
-  slide: Slide;
-  index: number;
-}> = ({ slide, index }) => {
+const ClipComponent: React.FC<{ clip: ClipData }> = ({ clip }) => {
   const frame = useCurrentFrame();
-  const { fps, width, height } = useVideoConfig();
+  const { fps } = useVideoConfig();
 
-  const localFrame = frame - index * FRAMES_PER_SLIDE;
-
-  // Ken Burns zoom effect
-  const scale = interpolate(localFrame, [0, FRAMES_PER_SLIDE], [1.0, 1.12], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
-
-  // Slide entrance
+  // Entrance fade
   const entrance = spring({
-    frame: localFrame,
+    frame,
     fps,
     config: { damping: 80, stiffness: 200 },
   });
-  const translateX = interpolate(entrance, [0, 1], [width * 0.3, 0]);
   const opacity = interpolate(entrance, [0, 1], [0, 1]);
 
   // Exit fade
-  const exitStart = FRAMES_PER_SLIDE - TRANSITION_FRAMES;
+  const exitStart = FRAMES_PER_CLIP - TRANSITION_FRAMES;
   const exitOpacity = interpolate(
-    localFrame,
-    [exitStart, FRAMES_PER_SLIDE],
+    frame,
+    [exitStart, FRAMES_PER_CLIP],
     [1, 0],
     { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
   );
 
   // Text entrance (staggered)
   const textEntrance = spring({
-    frame: Math.max(0, localFrame - 8),
+    frame: Math.max(0, frame - 10),
     fps,
     config: { damping: 50, stiffness: 120 },
   });
@@ -115,7 +84,7 @@ const SlideComponent: React.FC<{
 
   // Sublabel entrance
   const subEntrance = spring({
-    frame: Math.max(0, localFrame - 14),
+    frame: Math.max(0, frame - 18),
     fps,
     config: { damping: 50, stiffness: 120 },
   });
@@ -124,19 +93,16 @@ const SlideComponent: React.FC<{
 
   return (
     <AbsoluteFill style={{ opacity: opacity * exitOpacity }}>
-      {/* Image */}
-      <AbsoluteFill
-        style={{
-          transform: `translateX(${translateX}px) scale(${scale})`,
-        }}
-      >
-        <Img
-          src={staticFile(slide.image)}
+      {/* Video clip */}
+      <AbsoluteFill>
+        <OffthreadVideo
+          src={staticFile(clip.video)}
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
           }}
+          volume={0}
         />
       </AbsoluteFill>
 
@@ -145,9 +111,9 @@ const SlideComponent: React.FC<{
         style={{
           background: `linear-gradient(
             to bottom,
-            rgba(0,0,0,0.3) 0%,
-            transparent 30%,
-            transparent 50%,
+            rgba(0,0,0,0.4) 0%,
+            transparent 25%,
+            transparent 55%,
             ${COLORS.overlay} 75%,
             rgba(0,0,0,0.85) 100%
           )`,
@@ -166,37 +132,35 @@ const SlideComponent: React.FC<{
       >
         <div
           style={{
-            color: COLORS.white,
-            fontSize: 72,
+            color: COLORS.gold,
+            fontSize: 56,
             fontWeight: 900,
             fontFamily: 'Arial Black, Impact, sans-serif',
             textTransform: 'uppercase',
-            letterSpacing: 6,
-            textShadow: `0 4px 30px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.5)`,
+            letterSpacing: 4,
+            textShadow: '0 4px 30px rgba(0,0,0,0.9), 0 0 60px rgba(0,0,0,0.5)',
             transform: `translateY(${textY}px)`,
             opacity: textOpacity,
           }}
         >
-          {slide.label}
+          DAY {clip.day} — {clip.location}
         </div>
-        {slide.sublabel && (
-          <div
-            style={{
-              color: COLORS.gold,
-              fontSize: 24,
-              fontWeight: 600,
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: 4,
-              textTransform: 'uppercase',
-              marginTop: 8,
-              textShadow: '0 2px 15px rgba(0,0,0,0.8)',
-              transform: `translateY(${subY}px)`,
-              opacity: subOpacity,
-            }}
-          >
-            {slide.sublabel}
-          </div>
-        )}
+        <div
+          style={{
+            color: COLORS.white,
+            fontSize: 22,
+            fontWeight: 600,
+            fontFamily: 'Arial, sans-serif',
+            letterSpacing: 6,
+            textTransform: 'uppercase',
+            marginTop: 8,
+            textShadow: '0 2px 15px rgba(0,0,0,0.8)',
+            transform: `translateY(${subY}px)`,
+            opacity: subOpacity,
+          }}
+        >
+          {clip.miles} MILES WALKED
+        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
@@ -204,8 +168,8 @@ const SlideComponent: React.FC<{
 
 export const IntroVideo: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps, width } = useVideoConfig();
-  const totalFrames = SLIDES.length * FRAMES_PER_SLIDE;
+  const { fps } = useVideoConfig();
+  const totalFrames = CLIPS.length * FRAMES_PER_CLIP;
 
   // Overall walk progress
   const progress = interpolate(frame, [0, totalFrames], [0, 1], {
@@ -224,14 +188,14 @@ export const IntroVideo: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.darkBg }}>
-      {/* Slides */}
-      {SLIDES.map((slide, i) => (
+      {/* Clips */}
+      {CLIPS.map((clip, i) => (
         <Sequence
           key={i}
-          from={i * FRAMES_PER_SLIDE}
-          durationInFrames={FRAMES_PER_SLIDE + TRANSITION_FRAMES}
+          from={i * FRAMES_PER_CLIP}
+          durationInFrames={FRAMES_PER_CLIP + TRANSITION_FRAMES}
         >
-          <SlideComponent slide={slide} index={0} />
+          <ClipComponent clip={clip} />
         </Sequence>
       ))}
 
@@ -245,7 +209,6 @@ export const IntroVideo: React.FC = () => {
           opacity: brandIn,
         }}
       >
-        {/* HMBL text */}
         <div
           style={{
             color: COLORS.gold,
@@ -259,7 +222,6 @@ export const IntroVideo: React.FC = () => {
           HMBL
         </div>
 
-        {/* Gold accent line */}
         <div
           style={{
             width: lineWidth,
@@ -270,7 +232,6 @@ export const IntroVideo: React.FC = () => {
           }}
         />
 
-        {/* Faith Walk subtitle */}
         <div
           style={{
             color: 'rgba(255,255,255,0.75)',
@@ -297,7 +258,6 @@ export const IntroVideo: React.FC = () => {
           paddingBottom: 50,
         }}
       >
-        {/* Mile markers */}
         <div
           style={{
             display: 'flex',
@@ -306,29 +266,14 @@ export const IntroVideo: React.FC = () => {
             marginBottom: 8,
           }}
         >
-          <span
-            style={{
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: 11,
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: 2,
-            }}
-          >
+          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, fontFamily: 'Arial, sans-serif', letterSpacing: 2 }}>
             PHILLY
           </span>
-          <span
-            style={{
-              color: 'rgba(255,255,255,0.5)',
-              fontSize: 11,
-              fontFamily: 'Arial, sans-serif',
-              letterSpacing: 2,
-            }}
-          >
+          <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, fontFamily: 'Arial, sans-serif', letterSpacing: 2 }}>
             CALI
           </span>
         </div>
 
-        {/* Progress bar */}
         <div
           style={{
             width: '75%',
@@ -349,14 +294,7 @@ export const IntroVideo: React.FC = () => {
           />
         </div>
 
-        {/* Walking icon on progress bar */}
-        <div
-          style={{
-            width: '75%',
-            position: 'relative',
-            height: 20,
-          }}
-        >
+        <div style={{ width: '75%', position: 'relative', height: 20 }}>
           <div
             style={{
               position: 'absolute',
@@ -371,8 +309,8 @@ export const IntroVideo: React.FC = () => {
         </div>
       </AbsoluteFill>
 
-      {/* Music */}
-      <Audio src={staticFile('Mindset.mp3')} volume={0.8} />
+      {/* Music — loop if track is shorter than 90s */}
+      <Audio src={staticFile('Mindset.mp3')} volume={0.8} loop />
     </AbsoluteFill>
   );
 };

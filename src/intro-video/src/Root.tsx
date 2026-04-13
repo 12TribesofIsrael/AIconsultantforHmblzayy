@@ -2,10 +2,10 @@ import React from 'react';
 import { Composition } from 'remotion';
 import { IntroVideo } from './IntroVideo';
 
-// 6 slides × 45 frames each = 270 frames (9 seconds at 30fps)
-// Perfect loop length for an intro
+// 15 clips × 180 frames each = 2700 frames (90 seconds at 30fps)
+// Highlight reel of the entire Faith Walk journey
 
-const DURATION = 270;
+const DURATION = 2700;
 
 export const RemotionRoot: React.FC = () => {
   return (
