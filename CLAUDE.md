@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.2.0**
+**Current Version: v2.2.1**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.2.1 | Apr 13, 2026 | Fix intro video progress bar to show real walk progress (~12%) instead of animating to Cali, added Steps Walked counter to tracker stats bar |
 | v2.2.0 | Apr 13, 2026 | 90-second intro video highlight reel using 15 Twitch clips from the walk, Remotion OffthreadVideo, Day 18 Columbiana OH logged |
 | v2.1.0 | Apr 12, 2026 | Twitch clip per day on checkpoint cards + map popups, `--clip` flag on update-tracker.js, clip-only backfill mode, parser fix for "MILES TO" title format |
 | v2.0.0 | Apr 12, 2026 | Title-driven auto-updater (`tracker:from-title`), in-progress "heading to" display with dashed map line, day rollover with auto-promotion, refactored scripts into `lib/` modules, tinyurl for tracker link |
