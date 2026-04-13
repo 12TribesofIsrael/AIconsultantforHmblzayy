@@ -166,15 +166,31 @@ const ClipComponent: React.FC<{ clip: ClipData }> = ({ clip }) => {
   );
 };
 
+const TOTAL_JOURNEY_MILES = 3000;
+
 export const IntroVideo: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const totalFrames = CLIPS.length * FRAMES_PER_CLIP;
 
-  // Overall walk progress
-  const progress = interpolate(frame, [0, totalFrames], [0, 1], {
-    extrapolateRight: 'clamp',
-  });
+  // Walk progress reflects REAL mileage across journey, not video playback.
+  // As each clip plays, the progress bar advances to that day's actual miles
+  // walked. At the end, it stops at the most recent checkpoint's miles —
+  // NOT at Cali, because the walk isn't finished yet.
+  const currentClipIndex = Math.min(
+    Math.floor(frame / FRAMES_PER_CLIP),
+    CLIPS.length - 1
+  );
+  const clipLocalFrame = frame - currentClipIndex * FRAMES_PER_CLIP;
+  const prevMiles = currentClipIndex === 0 ? 0 : CLIPS[currentClipIndex - 1].miles;
+  const currMiles = CLIPS[currentClipIndex].miles;
+  // Smoothly interpolate within each clip from previous day's miles → current day's miles
+  const interpolatedMiles = interpolate(
+    clipLocalFrame,
+    [0, FRAMES_PER_CLIP],
+    [prevMiles, currMiles],
+    { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }
+  );
+  const progress = interpolatedMiles / TOTAL_JOURNEY_MILES;
 
   // HMBL branding fade in
   const brandIn = spring({
