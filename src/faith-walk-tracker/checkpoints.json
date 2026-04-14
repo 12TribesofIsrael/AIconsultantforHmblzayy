@@ -159,20 +159,12 @@
     "clip": "https://www.twitch.tv/hmblzayy/clip/AssiduousSteamyStapleLitty-lH-6s-vMT1AnbgSz"
   },
   {
-    "restOnly": true,
-    "date": "Apr 12, 2026",
-    "location": "BEAVER FALLS, PA",
-    "lat": 40.7520097,
-    "lng": -80.3192295,
-    "miles": 343
-  },
-  {
     "day": 18,
     "location": "Columbiana, OH",
     "lat": 40.7787016,
     "lng": -80.7648602,
     "miles": 373,
-    "date": "Apr 13, 2026",
+    "date": "Apr 12, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL",
     "inProgressDay": 19,
     "restDay": true,
