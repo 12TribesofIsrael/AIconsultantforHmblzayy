@@ -168,11 +168,19 @@
     "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL",
     "inProgressDay": 20,
     "inProgressStartedAt": "2026-04-14T01:35:14.160Z",
-    "restDayClip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV",
     "destinationLat": 40.9153362,
     "destinationLng": -81.1059309,
     "destination": "ALLIANCE, OH",
     "milesRemaining": 23,
     "estimatedSegmentMiles": 28
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 13, 2026",
+    "location": "Columbiana, OH",
+    "lat": 40.8881,
+    "lng": -80.6939,
+    "miles": 373,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV"
   }
 ]

@@ -231,9 +231,9 @@ async function main() {
   if (parsed.day >= latest.day + 2) {
     // Rest-day rollover: yesterday was a rest day, today he's walking.
     // Don't create a new arrival checkpoint — rest days don't represent
-    // travel. Just clear the rest fields and annotate the current
-    // in-progress walking state on the existing latest checkpoint.
-    // annotateInProgress itself strips restDay/restDayDate fields.
+    // travel. But DO preserve the concluded rest day as a rest-only
+    // entry so it stays visible in the card-row calendar, then clear
+    // rest fields and annotate the in-progress walking state.
     if (latest.restDay && !latest.destination) {
       if (isRestUpdate) {
         // Still rest day but day number advanced (second rest day).
@@ -244,6 +244,28 @@ async function main() {
         console.log(`\n✓ Rest day annotated.`);
         return;
       }
+
+      // Preserve concluded rest day as a rest-only entry (if not already
+      // recorded), so the card row keeps a continuous date calendar.
+      const restDate = latest.restDayDate || formatDate();
+      const alreadyRecorded = checkpoints.some(cp => cp.restOnly && cp.date === restDate);
+      if (!alreadyRecorded) {
+        const restEntry = {
+          restOnly: true,
+          date: restDate,
+          location: latest.location,
+          lat: latest.lat,
+          lng: latest.lng,
+          miles: latest.miles,
+        };
+        if (latest.restDayClip) restEntry.clip = latest.restDayClip;
+        checkpoints.push(restEntry);
+        console.log(`  Archived rest day as rest-only entry: ${restDate}`);
+      }
+      delete latest.restDayClip; // clip moved to the rest-only entry
+
+      // Find the walking checkpoint again — the rest-only entry just
+      // shifted it from "last" but the reference is still the same object.
       console.log(`Rest-day rollover: Day ${latest.inProgressDay || 'N/A'} (rest) → Day ${parsed.day} walking to ${parsed.nearLocation}`);
       const changed = await annotateInProgress(latest, parsed);
       if (!changed) { console.log('  No semantic change — skipping push.'); return; }
