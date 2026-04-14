@@ -200,6 +200,18 @@
       background: rgba(255,215,0,0.05);
     }
 
+    /* Compact rest-day-only card — fills calendar gaps between walking days */
+    .checkpoint-card.rest-only {
+      min-width: 110px;
+      padding: 12px 10px;
+      background: rgba(255,255,255,0.015);
+      border-style: dashed;
+      border-color: rgba(255,255,255,0.1);
+    }
+    .checkpoint-card.rest-only:hover {
+      border-color: rgba(255,215,0,0.2);
+    }
+
     .checkpoint-day {
       font-size: 11px;
       font-weight: 700;
@@ -493,6 +505,14 @@
             "date": "Mar 28, 2026"
       },
       {
+            "restOnly": true,
+            "date": "Mar 29, 2026",
+            "location": "Reading, PA",
+            "lat": 40.3357,
+            "lng": -75.9269,
+            "miles": 55
+      },
+      {
             "day": 5,
             "location": "Lebanon, PA",
             "lat": 40.3409,
@@ -610,6 +630,14 @@
             "clip": "https://www.twitch.tv/hmblzayy/clip/AssiduousSteamyStapleLitty-lH-6s-vMT1AnbgSz"
       },
       {
+            "restOnly": true,
+            "date": "Apr 12, 2026",
+            "location": "BEAVER FALLS, PA",
+            "lat": 40.7520097,
+            "lng": -80.3192295,
+            "miles": 343
+      },
+      {
             "day": 18,
             "location": "Columbiana, OH",
             "lat": 40.7787016,
@@ -653,7 +681,10 @@
       [34.0522, -118.2437], // Los Angeles, CA
     ];
 
-    const currentCheckpoint = CHECKPOINTS[CHECKPOINTS.length - 1];
+    // "Current" checkpoint is the latest actual walking arrival — skip
+    // rest-only entries at the end so stats reflect walking progress.
+    const walkingCheckpoints = CHECKPOINTS.filter(cp => !cp.restOnly);
+    const currentCheckpoint = walkingCheckpoints[walkingCheckpoints.length - 1];
     const progressPercent = (currentCheckpoint.miles / TOTAL_MILES) * 100;
 
     // ==========================================
@@ -681,8 +712,9 @@
       dashArray: '8, 12',
     }).addTo(map);
 
-    // Completed route (bright gold)
-    const completedRoute = CHECKPOINTS.map(cp => [cp.lat, cp.lng]);
+    // Completed route (bright gold) — skip rest-only entries (they'd
+    // duplicate the previous point and add no shape to the line).
+    const completedRoute = walkingCheckpoints.map(cp => [cp.lat, cp.lng]);
     L.polyline(completedRoute, {
       color: '#FFD700',
       weight: 4,
@@ -754,6 +786,7 @@
     // Checkpoint markers (small dots)
     CHECKPOINTS.forEach((cp, i) => {
       if (i === 0 || i === CHECKPOINTS.length - 1) return; // skip start and current
+      if (cp.restOnly) return; // rest-only entries share a map point with the prior walking day
 
       const dotIcon = L.divIcon({
         html: `<div style="
@@ -864,11 +897,30 @@
     const hasRestDayCard = !!(latestCheckpoint && latestCheckpoint.restDay);
 
     CHECKPOINTS.forEach((cp, i) => {
+      const card = document.createElement('div');
+
+      // Rest-only entries (past rest days like Mar 29, Apr 12) get a
+      // compact secondary card so the calendar stays continuous without
+      // competing visually with walking-day checkpoints.
+      if (cp.restOnly) {
+        card.className = 'checkpoint-card rest-only';
+        card.innerHTML = `
+          <div class="checkpoint-day" style="color:rgba(255,255,255,0.35);">REST</div>
+          <div class="checkpoint-location" style="color:rgba(255,255,255,0.5);">${cp.location.split(',')[0]}</div>
+          <div class="checkpoint-miles">💤</div>
+          <div class="checkpoint-date">${cp.date}</div>
+        `;
+        card.addEventListener('click', () => {
+          map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });
+        });
+        checkpointsList.appendChild(card);
+        return;
+      }
+
       const isLastArrival = i === CHECKPOINTS.length - 1;
       // When a rest-day virtual card is appended, the latest arrival is no
       // longer the "active" card — the rest-day card is.
       const isActive = isLastArrival && !hasRestDayCard;
-      const card = document.createElement('div');
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
       const headingToHtml = (isActive && cp.destination)
         ? `<div class="checkpoint-heading-to">

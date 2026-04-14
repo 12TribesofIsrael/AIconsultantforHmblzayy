@@ -35,10 +35,13 @@ function formatDate(d = new Date()) {
 // confirmed cumulative total — never the estimate — so the headline
 // number is never a guess.
 function buildTrackerHTML(checkpoints) {
-  const current = checkpoints[checkpoints.length - 1];
+  // Stats reflect walking progress only — rest-only entries share the
+  // previous walking day's position and shouldn't be treated as "current".
+  const walking = checkpoints.filter(cp => !cp.restOnly);
+  const current = walking[walking.length - 1];
   const displayDay = current.inProgressDay || current.day;
   const remaining = TOTAL_MILES - current.miles;
-  const states = new Set(checkpoints.map(cp => cp.location.split(', ')[1])).size;
+  const states = new Set(walking.map(cp => cp.location.split(', ')[1])).size;
 
   let html = fs.readFileSync(TRACKER_HTML_PATH, 'utf8');
 

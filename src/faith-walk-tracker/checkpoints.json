@@ -34,6 +34,14 @@
     "date": "Mar 28, 2026"
   },
   {
+    "restOnly": true,
+    "date": "Mar 29, 2026",
+    "location": "Reading, PA",
+    "lat": 40.3357,
+    "lng": -75.9269,
+    "miles": 55
+  },
+  {
     "day": 5,
     "location": "Lebanon, PA",
     "lat": 40.3409,
@@ -149,6 +157,14 @@
     "date": "Apr 11, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AssiduousSteamyStapleLitty-lH-6s-vMT1AnbgSz"
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 12, 2026",
+    "location": "BEAVER FALLS, PA",
+    "lat": 40.7520097,
+    "lng": -80.3192295,
+    "miles": 343
   },
   {
     "day": 18,
