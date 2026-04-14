@@ -799,29 +799,41 @@
       iconAnchor: [10, 10],
       className: '',
     });
-    const restDayClipLink = currentCheckpoint.restDayClip
-      ? `<br><a href="${currentCheckpoint.restDayClip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch rest day clip</a>`
-      : '';
-    const headingToPopup = currentCheckpoint.destination
-      ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
-         <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
-         <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesRemaining} mi to go</span>`
-      : currentCheckpoint.restDay
-        ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
-           <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span>${restDayClipLink}`
-        : '';
     const milesLabel = currentCheckpoint.estimatedMiles
       ? `~${currentCheckpoint.miles} miles completed <span style="color:rgba(255,215,0,0.6);font-size:10px;">(est)</span>`
       : `${currentCheckpoint.miles} miles completed`;
-    const clipPopup = currentCheckpoint.clip
-      ? `<br><a href="${currentCheckpoint.clip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's highlight</a>`
-      : '';
-    L.marker([currentCheckpoint.lat, currentCheckpoint.lng], { icon: currentIcon })
-      .addTo(map)
-      .bindPopup(`<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
+
+    // Popup layout depends on current state:
+    //   - Rest day: show the rest-day identity as primary (Day N — REST DAY)
+    //     with only the rest-day clip. Hide the walk clip to keep it clean.
+    //   - Walking in-progress: show arrival day + heading-to, walk clip
+    //   - Arrived (no in-progress): standard arrival view + walk clip
+    let popupBody;
+    if (currentCheckpoint.restDay) {
+      const restDayClipLink = currentCheckpoint.restDayClip
+        ? `<br><a href="${currentCheckpoint.restDayClip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's clip</a>`
+        : '';
+      popupBody = `<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
+        <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span><br>
+        ${currentCheckpoint.location}<br>
+        ${milesLabel}${restDayClipLink}`;
+    } else {
+      const headingToPopup = currentCheckpoint.destination
+        ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
+           <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
+           <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesRemaining} mi to go</span>`
+        : '';
+      const clipPopup = currentCheckpoint.clip
+        ? `<br><a href="${currentCheckpoint.clip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's highlight</a>`
+        : '';
+      popupBody = `<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
         Day ${currentCheckpoint.day} — ${currentCheckpoint.location}<br>
         ${milesLabel}<br>
-        ${currentCheckpoint.date}${headingToPopup}${clipPopup}`)
+        ${currentCheckpoint.date}${headingToPopup}${clipPopup}`;
+    }
+    L.marker([currentCheckpoint.lat, currentCheckpoint.lng], { icon: currentIcon })
+      .addTo(map)
+      .bindPopup(popupBody)
       .openPopup();
 
     // Fit map to show completed route with padding
@@ -850,29 +862,44 @@
       const isActive = i === CHECKPOINTS.length - 1;
       const card = document.createElement('div');
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
+      const isRestDayActive = isActive && cp.restDay;
       const headingToHtml = (isActive && cp.destination)
         ? `<div class="checkpoint-heading-to">
              <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
              → ${cp.destination.split(',')[0]} (${cp.milesRemaining} mi to go)
            </div>`
-        : (isActive && cp.restDay)
-          ? `<div class="checkpoint-heading-to">
-               <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
-               REST DAY 💤${cp.restDayClip ? ` <a href="${cp.restDayClip}" target="_blank" rel="noopener" class="checkpoint-clip" onclick="event.stopPropagation()" style="margin-top:6px;display:inline-block;">▶ Watch</a>` : ''}
-             </div>`
-          : '';
-      const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
-      const clipHtml = cp.clip
-        ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.day} highlight" onclick="event.stopPropagation()">▶ Watch</a>`
         : '';
-      card.innerHTML = `
-        <div class="checkpoint-day">Day ${cp.day}</div>
-        <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
-        <div class="checkpoint-miles">${milesText}</div>
-        <div class="checkpoint-date">${cp.date}</div>
-        ${clipHtml}
-        ${headingToHtml}
-      `;
+      const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
+
+      // Active rest day: card morphs to show the rest-day identity with
+      // just the rest-day clip. Walk clip is preserved in data, hidden
+      // from the card while resting (will reappear when rest day ends).
+      let cardBody;
+      if (isRestDayActive) {
+        const restClipHtml = cp.restDayClip
+          ? `<a href="${cp.restDayClip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.inProgressDay} rest day clip" onclick="event.stopPropagation()">▶ Watch</a>`
+          : '';
+        cardBody = `
+          <div class="checkpoint-day">Day ${cp.inProgressDay || cp.day}</div>
+          <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
+          <div class="checkpoint-miles">REST DAY 💤</div>
+          <div class="checkpoint-date">${cp.date}</div>
+          ${restClipHtml}
+        `;
+      } else {
+        const clipHtml = cp.clip
+          ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.day} highlight" onclick="event.stopPropagation()">▶ Watch</a>`
+          : '';
+        cardBody = `
+          <div class="checkpoint-day">Day ${cp.day}</div>
+          <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
+          <div class="checkpoint-miles">${milesText}</div>
+          <div class="checkpoint-date">${cp.date}</div>
+          ${clipHtml}
+          ${headingToHtml}
+        `;
+      }
+      card.innerHTML = cardBody;
       card.addEventListener('click', () => {
         map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });
       });
