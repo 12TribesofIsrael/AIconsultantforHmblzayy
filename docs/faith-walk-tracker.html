@@ -858,11 +858,18 @@
 
     // Checkpoint cards
     const checkpointsList = document.getElementById('checkpointsList');
+    const latestCheckpoint = CHECKPOINTS[CHECKPOINTS.length - 1];
+    // Rest day gets its own virtual card appended after the latest arrival
+    // so Day N-1 stays visible in the card row instead of being morphed away.
+    const hasRestDayCard = !!(latestCheckpoint && latestCheckpoint.restDay);
+
     CHECKPOINTS.forEach((cp, i) => {
-      const isActive = i === CHECKPOINTS.length - 1;
+      const isLastArrival = i === CHECKPOINTS.length - 1;
+      // When a rest-day virtual card is appended, the latest arrival is no
+      // longer the "active" card — the rest-day card is.
+      const isActive = isLastArrival && !hasRestDayCard;
       const card = document.createElement('div');
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
-      const isRestDayActive = isActive && cp.restDay;
       const headingToHtml = (isActive && cp.destination)
         ? `<div class="checkpoint-heading-to">
              <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
@@ -870,41 +877,43 @@
            </div>`
         : '';
       const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
-
-      // Active rest day: card morphs to show the rest-day identity with
-      // just the rest-day clip. Walk clip is preserved in data, hidden
-      // from the card while resting (will reappear when rest day ends).
-      let cardBody;
-      if (isRestDayActive) {
-        const restClipHtml = cp.restDayClip
-          ? `<a href="${cp.restDayClip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.inProgressDay} rest day clip" onclick="event.stopPropagation()">▶ Watch</a>`
-          : '';
-        cardBody = `
-          <div class="checkpoint-day">Day ${cp.inProgressDay || cp.day}</div>
-          <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
-          <div class="checkpoint-miles">REST DAY 💤</div>
-          <div class="checkpoint-date">${cp.date}</div>
-          ${restClipHtml}
-        `;
-      } else {
-        const clipHtml = cp.clip
-          ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.day} highlight" onclick="event.stopPropagation()">▶ Watch</a>`
-          : '';
-        cardBody = `
-          <div class="checkpoint-day">Day ${cp.day}</div>
-          <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
-          <div class="checkpoint-miles">${milesText}</div>
-          <div class="checkpoint-date">${cp.date}</div>
-          ${clipHtml}
-          ${headingToHtml}
-        `;
-      }
-      card.innerHTML = cardBody;
+      const clipHtml = cp.clip
+        ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.day} highlight" onclick="event.stopPropagation()">▶ Watch</a>`
+        : '';
+      card.innerHTML = `
+        <div class="checkpoint-day">Day ${cp.day}</div>
+        <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
+        <div class="checkpoint-miles">${milesText}</div>
+        <div class="checkpoint-date">${cp.date}</div>
+        ${clipHtml}
+        ${headingToHtml}
+      `;
       card.addEventListener('click', () => {
         map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });
       });
       checkpointsList.appendChild(card);
     });
+
+    // Append virtual rest-day card as the active card when today is a rest
+    // day. Uses the latest arrival's location/coords (he's resting there).
+    if (hasRestDayCard) {
+      const restCard = document.createElement('div');
+      restCard.className = 'checkpoint-card active';
+      const restClipHtml = latestCheckpoint.restDayClip
+        ? `<a href="${latestCheckpoint.restDayClip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch rest day clip" onclick="event.stopPropagation()">▶ Watch</a>`
+        : '';
+      restCard.innerHTML = `
+        <div class="checkpoint-day">Day ${latestCheckpoint.inProgressDay || latestCheckpoint.day}</div>
+        <div class="checkpoint-location">${latestCheckpoint.location.split(',')[0]}</div>
+        <div class="checkpoint-miles">REST DAY 💤</div>
+        <div class="checkpoint-date">&nbsp;</div>
+        ${restClipHtml}
+      `;
+      restCard.addEventListener('click', () => {
+        map.flyTo([latestCheckpoint.lat, latestCheckpoint.lng], 10, { duration: 1.5 });
+      });
+      checkpointsList.appendChild(restCard);
+    }
 
     // Scroll to active checkpoint
     setTimeout(() => {
