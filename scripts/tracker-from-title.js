@@ -229,6 +229,34 @@ async function main() {
   // latest was in-progress. Promote yesterday's destination to a real
   // arrival, then annotate the new latest with the current title.
   if (parsed.day >= latest.day + 2) {
+    // Rest-day rollover: yesterday was a rest day, today he's walking.
+    // Don't create a new arrival checkpoint — rest days don't represent
+    // travel. Just clear the rest fields and annotate the current
+    // in-progress walking state on the existing latest checkpoint.
+    // annotateInProgress itself strips restDay/restDayDate fields.
+    if (latest.restDay && !latest.destination) {
+      if (isRestUpdate) {
+        // Still rest day but day number advanced (second rest day).
+        console.log(`Rest-day continuation: Day ${parsed.day} still resting at ${latest.location}`);
+        const changed = applyRestDay(latest, parsed);
+        if (!changed) { console.log('  No semantic change — skipping push.'); return; }
+        rebuildAndPush(checkpoints, `Faith Walk: Day ${parsed.day} — rest day at ${latest.location}`);
+        console.log(`\n✓ Rest day annotated.`);
+        return;
+      }
+      console.log(`Rest-day rollover: Day ${latest.inProgressDay || 'N/A'} (rest) → Day ${parsed.day} walking to ${parsed.nearLocation}`);
+      const changed = await annotateInProgress(latest, parsed);
+      if (!changed) { console.log('  No semantic change — skipping push.'); return; }
+      console.log(`  Day ${parsed.day} → ${parsed.nearLocation} (~${latest.estimatedSegmentMiles} mi est, ${parsed.milesFromNext} mi to go)`);
+      rebuildAndPush(
+        checkpoints,
+        `Faith Walk: Day ${parsed.day} in progress — ${parsed.milesFromNext} mi to ${parsed.nearLocation} (after rest)`
+      );
+      console.log(`\n✓ Rest-day rollover + Day ${parsed.day} annotated.`);
+      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      return;
+    }
+
     if (!latest.destination || !latest.inProgressDay) {
       console.log(`Day rollover detected (latest=${latest.day}, title=${parsed.day}) but no in-progress data to promote.`);
       console.log(`Manual update needed: npm run tracker:update -- --day ${latest.day + 1} --location "City, ST" --miles XXX`);
