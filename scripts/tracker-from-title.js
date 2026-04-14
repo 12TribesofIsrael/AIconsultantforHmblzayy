@@ -90,6 +90,10 @@ async function annotateInProgress(latest, parsed) {
     delete latest.restDay;
     didChange = true;
   }
+  if (latest.restDayDate) {
+    delete latest.restDayDate;
+    didChange = true;
+  }
 
   return didChange;
 }
@@ -121,6 +125,14 @@ function applyRestDay(latest, parsed) {
 
   if (!latest.inProgressStartedAt) {
     latest.inProgressStartedAt = new Date().toISOString();
+    didChange = true;
+  }
+
+  // Human-readable local date for display on the rest-day card. Set once
+  // per rest day; stays stable across re-runs so multiple polls don't
+  // cause tz-dependent flicker.
+  if (!latest.restDayDate) {
+    latest.restDayDate = formatDate();
     didChange = true;
   }
 

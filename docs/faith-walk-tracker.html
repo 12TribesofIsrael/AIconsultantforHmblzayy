@@ -640,7 +640,8 @@
             "inProgressDay": 19,
             "restDay": true,
             "inProgressStartedAt": "2026-04-14T01:35:14.160Z",
-            "restDayClip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV"
+            "restDayClip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV",
+            "restDayDate": "Apr 13, 2026"
       }
 ];
 
@@ -838,9 +839,12 @@
       const restDayClipLink = currentCheckpoint.restDayClip
         ? `<br><a href="${currentCheckpoint.restDayClip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's clip</a>`
         : '';
+      const restDateLine = currentCheckpoint.restDayDate
+        ? `<span style="color:rgba(255,255,255,0.4);font-size:11px;">${currentCheckpoint.restDayDate}</span><br>`
+        : '';
       popupBody = `<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
         <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span><br>
-        ${currentCheckpoint.location}<br>
+        ${restDateLine}${currentCheckpoint.location}<br>
         ${milesLabel}${restDayClipLink}`;
     } else {
       const headingToPopup = currentCheckpoint.destination
@@ -950,7 +954,7 @@
         <div class="checkpoint-day">Day ${latestCheckpoint.inProgressDay || latestCheckpoint.day}</div>
         <div class="checkpoint-location">${latestCheckpoint.location.split(',')[0]}</div>
         <div class="checkpoint-miles">REST DAY 💤</div>
-        <div class="checkpoint-date">&nbsp;</div>
+        <div class="checkpoint-date">${latestCheckpoint.restDayDate || '&nbsp;'}</div>
         ${restClipHtml}
       `;
       restCard.addEventListener('click', () => {
