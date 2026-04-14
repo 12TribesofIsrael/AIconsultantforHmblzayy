@@ -619,7 +619,8 @@
             "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL",
             "inProgressDay": 19,
             "restDay": true,
-            "inProgressStartedAt": "2026-04-14T01:35:14.160Z"
+            "inProgressStartedAt": "2026-04-14T01:35:14.160Z",
+            "restDayClip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV"
       }
 ];
 
@@ -798,13 +799,16 @@
       iconAnchor: [10, 10],
       className: '',
     });
+    const restDayClipLink = currentCheckpoint.restDayClip
+      ? `<br><a href="${currentCheckpoint.restDayClip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch rest day clip</a>`
+      : '';
     const headingToPopup = currentCheckpoint.destination
       ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
          <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
          <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesRemaining} mi to go</span>`
       : currentCheckpoint.restDay
         ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
-           <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span>`
+           <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span>${restDayClipLink}`
         : '';
     const milesLabel = currentCheckpoint.estimatedMiles
       ? `~${currentCheckpoint.miles} miles completed <span style="color:rgba(255,215,0,0.6);font-size:10px;">(est)</span>`
@@ -854,7 +858,7 @@
         : (isActive && cp.restDay)
           ? `<div class="checkpoint-heading-to">
                <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
-               REST DAY 💤
+               REST DAY 💤${cp.restDayClip ? ` <a href="${cp.restDayClip}" target="_blank" rel="noopener" class="checkpoint-clip" onclick="event.stopPropagation()" style="margin-top:6px;display:inline-block;">▶ Watch</a>` : ''}
              </div>`
           : '';
       const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
