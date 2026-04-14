@@ -85,6 +85,45 @@ async function annotateInProgress(latest, parsed) {
     didChange = true;
   }
 
+  // Clear rest-day flag if it was set — he's walking now
+  if (latest.restDay) {
+    delete latest.restDay;
+    didChange = true;
+  }
+
+  return didChange;
+}
+
+// Apply rest-day annotation to the latest checkpoint. Strips any
+// walking-specific in-progress fields (destination, miles-remaining)
+// since today is not a walking day.
+function applyRestDay(latest, parsed) {
+  let didChange = false;
+
+  if (latest.inProgressDay !== parsed.day) {
+    latest.inProgressDay = parsed.day;
+    didChange = true;
+  }
+  if (latest.restDay !== true) {
+    latest.restDay = true;
+    didChange = true;
+  }
+
+  // Rest day = no walking destination. Clear any heading-to fields
+  // that might be left over from a previous in-progress annotation.
+  const walkingFields = ['destination', 'destinationLat', 'destinationLng', 'milesRemaining', 'estimatedSegmentMiles'];
+  for (const f of walkingFields) {
+    if (latest[f] != null) {
+      delete latest[f];
+      didChange = true;
+    }
+  }
+
+  if (!latest.inProgressStartedAt) {
+    latest.inProgressStartedAt = new Date().toISOString();
+    didChange = true;
+  }
+
   return didChange;
 }
 
@@ -102,13 +141,20 @@ async function main() {
     return;
   }
 
-  if (!parsed.day || !parsed.nearLocation || parsed.milesFromNext == null) {
-    console.log(`Title incomplete: day=${parsed.day} dest=${parsed.nearLocation} miles=${parsed.milesFromNext}`);
-    console.log('Need all three to update — skipping.');
+  const isWalkingUpdate = parsed.nearLocation && parsed.milesFromNext != null;
+  const isRestUpdate = parsed.restDay === true;
+
+  if (!parsed.day || (!isWalkingUpdate && !isRestUpdate)) {
+    console.log(`Title incomplete: day=${parsed.day} restDay=${!!parsed.restDay} dest=${parsed.nearLocation} miles=${parsed.milesFromNext}`);
+    console.log('Need day + (destination+miles OR rest-day marker) — skipping.');
     return;
   }
 
-  console.log(`Parsed: Day ${parsed.day}, → ${parsed.nearLocation}, ${parsed.milesFromNext} mi remaining\n`);
+  if (isRestUpdate) {
+    console.log(`Parsed: Day ${parsed.day}, REST DAY 💤\n`);
+  } else {
+    console.log(`Parsed: Day ${parsed.day}, → ${parsed.nearLocation}, ${parsed.milesFromNext} mi remaining\n`);
+  }
 
   const checkpoints = loadCheckpoints();
   if (checkpoints.length === 0) {
@@ -135,6 +181,22 @@ async function main() {
 
   // Case 3: title day is exactly latest.day + 1 — annotate in-progress
   if (parsed.day === latest.day + 1) {
+    if (isRestUpdate) {
+      console.log(`Rest day: annotating Day ${latest.day} (${latest.location}) as Day ${parsed.day} — REST DAY 💤`);
+      const changed = applyRestDay(latest, parsed);
+      if (!changed) {
+        console.log('  No semantic change — skipping push.');
+        return;
+      }
+      rebuildAndPush(
+        checkpoints,
+        `Faith Walk: Day ${parsed.day} — rest day at ${latest.location}`
+      );
+      console.log(`\n✓ Rest day annotated.`);
+      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      return;
+    }
+
     console.log(`In-progress: annotating Day ${latest.day} (${latest.location}) for Day ${parsed.day} → ${parsed.nearLocation}`);
     const changed = await annotateInProgress(latest, parsed);
     if (!changed) {

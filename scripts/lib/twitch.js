@@ -78,6 +78,9 @@ function parseStreamTitle(title) {
   const dayMatch = title.match(/DAY\s+(\d+)/i);
   if (dayMatch) data.day = parseInt(dayMatch[1]);
 
+  // Rest day: "REST DAY" / "REST DAY💤" / "RESTDAY"
+  if (/REST\s*DAY/i.test(title)) data.restDay = true;
+
   // Total miles walked: "214 MILES COMPLETED" / "DONE" / "WALKED"
   const milesMatch = title.match(/(\d+)\s*MILES?\s*(COMPLETED|DONE|WALKED)/i);
   if (milesMatch) data.miles = parseInt(milesMatch[1]);
