@@ -1,0 +1,5 @@
+- [MinisterZay Consulting Project](project_ministerzay_consulting.md) — AI consultant for @ministerzay, building automations + intro video
+- [User Role](user_role.md) — AI automation consultant building brand through influencer clients
+- [ShuggC Relationship](shuggc_relationship.md) — Full Discord convo history, being onboarded to HMBL tech team, OBS embed request
+- [Tracker honesty rules](feedback_tracker_honesty.md) — Map pin = last confirmed only, estimates marked with ~, never invent public totals
+- [Automation safety](feedback_automation_safety.md) — Tracker scripts: sync-first, refuse dirty tree, idempotent, use scripts/lib/ helpers

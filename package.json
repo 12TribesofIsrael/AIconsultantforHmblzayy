@@ -10,7 +10,10 @@
     "tracker:sync": "node scripts/twitch-tracker-sync.js",
     "tracker:watch": "node scripts/twitch-tracker-sync.js --watch",
     "clips": "node scripts/twitch-clipper.js",
-    "chatbot": "node scripts/twitch-chatbot.js"
+    "chatbot": "node scripts/twitch-chatbot.js",
+    "memory:status": "node scripts/memory-sync.js status",
+    "memory:push": "node scripts/memory-sync.js push",
+    "memory:pull": "node scripts/memory-sync.js pull"
   },
   "dependencies": {
     "axios": "^1.14.0",

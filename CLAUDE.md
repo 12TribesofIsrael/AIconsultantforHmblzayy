@@ -56,6 +56,8 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 | `scripts/lib/` | Shared helpers (git-sync, twitch, geo, tracker file ops) |
 | `scripts/twitch-clipper.js` | Auto-clip stream moments for all platforms |
 | `scripts/twitch-chatbot.js` | Chatbot with custom HMBL commands |
+| `scripts/memory-sync.js` | Sync Claude memory between `.claude/memory/` (git) and `~/.claude/projects/.../memory/` |
+| `.claude/memory/` | Checked-in copy of Claude's per-project auto-memory — mirrored to laptop + desktop via git |
 | `src/intro-video/` | Remotion intro video (vertical + wide + square) |
 | `src/faith-walk-tracker/` | Interactive map tracker (GitHub Pages) |
 | `docs/` | Documentation, proposals, pitch messages |
@@ -70,6 +72,9 @@ npm run tracker:sync         # One-time check Twitch (delegates to tracker:from-
 npm run tracker:watch        # Run tracker:from-title every 30 min
 npm run clips                # Auto-clip stream moments (needs ffmpeg)
 npm run chatbot              # Run Twitch chatbot
+npm run memory:status        # Compare repo memory vs local ~/.claude memory
+npm run memory:push          # Copy local ~/.claude memory INTO repo (before git commit)
+npm run memory:pull          # Copy repo memory OUT to local ~/.claude (after git pull on new machine)
 ```
 
 ## Live URLs
