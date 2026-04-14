@@ -3,3 +3,4 @@
 - [ShuggC Relationship](shuggc_relationship.md) — Full Discord convo history, being onboarded to HMBL tech team, OBS embed request
 - [Tracker honesty rules](feedback_tracker_honesty.md) — Map pin = last confirmed only, estimates marked with ~, never invent public totals
 - [Automation safety](feedback_automation_safety.md) — Tracker scripts: sync-first, refuse dirty tree, idempotent, use scripts/lib/ helpers
+- [Memory sync workflow](feedback_memory_sync.md) — Laptop/desktop: npm run memory:push before commit, memory:pull after pull

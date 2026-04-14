@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.3.0**
+**Current Version: v2.4.0**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.4.0 | Apr 14, 2026 | Memory sync across laptop/desktop via `.claude/memory/` + `scripts/memory-sync.js` (npm run memory:push/pull/status), DONT_FORGET.md reminder file at repo root, fixed 7 off-by-1/2 date errors on Days 5-10 and Day 16 verified against Twitch VOD history |
 | v2.3.0 | Apr 13, 2026 | Rest-day support: parser detects "REST DAY" in title, tracker shows "Day N — REST DAY 💤" label on active checkpoint and stat bar syncs to current Twitch day |
 | v2.2.1 | Apr 13, 2026 | Fix intro video progress bar to show real walk progress (~12%) instead of animating to Cali, added Steps Walked counter to tracker stats bar |
 | v2.2.0 | Apr 13, 2026 | 90-second intro video highlight reel using 15 Twitch clips from the walk, Remotion OffthreadVideo, Day 18 Columbiana OH logged |
