@@ -399,7 +399,7 @@
   <div class="stats-section">
     <div class="stats-bar">
       <div class="stat">
-        <div class="stat-value" id="currentDay">18</div>
+        <div class="stat-value" id="currentDay">19</div>
         <div class="stat-label">Day</div>
       </div>
       <div class="stat">
@@ -411,7 +411,7 @@
         <div class="stat-label">Remaining</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="steps">820K</div>
+        <div class="stat-value" id="steps">821K</div>
         <div class="stat-label">Steps Walked</div>
       </div>
       <div class="stat">
@@ -616,7 +616,10 @@
             "lng": -80.7648602,
             "miles": 373,
             "date": "Apr 13, 2026",
-            "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL"
+            "clip": "https://www.twitch.tv/hmblzayy/clip/WimpySuspiciousOctopusMcaT-2pzWpg89EsAdjJeL",
+            "inProgressDay": 19,
+            "restDay": true,
+            "inProgressStartedAt": "2026-04-14T01:35:14.160Z"
       }
 ];
 
@@ -799,7 +802,10 @@
       ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
          <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
          <span style="color:rgba(255,215,0,0.7);font-size:11px;">${currentCheckpoint.milesRemaining} mi to go</span>`
-      : '';
+      : currentCheckpoint.restDay
+        ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
+           <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} — REST DAY 💤</span>`
+        : '';
     const milesLabel = currentCheckpoint.estimatedMiles
       ? `~${currentCheckpoint.miles} miles completed <span style="color:rgba(255,215,0,0.6);font-size:10px;">(est)</span>`
       : `${currentCheckpoint.miles} miles completed`;
@@ -845,7 +851,12 @@
              <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
              → ${cp.destination.split(',')[0]} (${cp.milesRemaining} mi to go)
            </div>`
-        : '';
+        : (isActive && cp.restDay)
+          ? `<div class="checkpoint-heading-to">
+               <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
+               REST DAY 💤
+             </div>`
+          : '';
       const milesText = cp.estimatedMiles ? `~${cp.miles} miles (est)` : `${cp.miles} miles`;
       const clipHtml = cp.clip
         ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch Day ${cp.day} highlight" onclick="event.stopPropagation()">▶ Watch</a>`
