@@ -652,7 +652,8 @@
             "lat": 40.8881,
             "lng": -80.6939,
             "miles": 373,
-            "clip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV"
+            "clip": "https://www.twitch.tv/hmblzayy/clip/HilariousCourteousAirGuitarDxAbomb-2331vBqhlqC_S6OV",
+            "day": 19
       }
 ];
 
@@ -858,6 +859,25 @@
         ${restDateLine}${currentCheckpoint.location}<br>
         ${milesLabel}${restDayClipLink}`;
     } else {
+      // Find trailing rest-only entries with day numbers (e.g. rest day
+      // at the same location after the latest arrival). Include them in
+      // the header as "Day X-Y" so the popup reflects all days spent
+      // resting at this spot.
+      const currentIdx = CHECKPOINTS.indexOf(currentCheckpoint);
+      const trailingRestDays = [];
+      for (let k = currentIdx + 1; k < CHECKPOINTS.length; k++) {
+        if (CHECKPOINTS[k].restOnly && CHECKPOINTS[k].day) {
+          trailingRestDays.push(CHECKPOINTS[k].day);
+        } else if (CHECKPOINTS[k].restOnly) {
+          continue;
+        } else {
+          break;
+        }
+      }
+      const dayHeader = trailingRestDays.length > 0
+        ? `Day ${currentCheckpoint.day}-${trailingRestDays[trailingRestDays.length - 1]}`
+        : `Day ${currentCheckpoint.day}`;
+
       const headingToPopup = currentCheckpoint.destination
         ? `<hr style="border:0;border-top:1px dashed rgba(255,215,0,0.4);margin:6px 0;">
            <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.inProgressDay || currentCheckpoint.day} → ${currentCheckpoint.destination}</span><br>
@@ -867,7 +887,7 @@
         ? `<br><a href="${currentCheckpoint.clip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's highlight</a>`
         : '';
       popupBody = `<b style="color:#FFD700">📍 CURRENT LOCATION</b><br>
-        Day ${currentCheckpoint.day} — ${currentCheckpoint.location}<br>
+        ${dayHeader} — ${currentCheckpoint.location}<br>
         ${milesLabel}<br>
         ${currentCheckpoint.date}${headingToPopup}${clipPopup}`;
     }
@@ -921,8 +941,9 @@
         const restClipHtml = cp.clip
           ? `<a href="${cp.clip}" target="_blank" rel="noopener" class="checkpoint-clip" title="Watch rest day clip" onclick="event.stopPropagation()">▶ Watch</a>`
           : '';
+        const restDayLabel = cp.day ? `Day ${cp.day} · REST` : 'REST';
         card.innerHTML = `
-          <div class="checkpoint-day" style="color:rgba(255,255,255,0.35);">REST</div>
+          <div class="checkpoint-day" style="color:rgba(255,255,255,0.4);">${restDayLabel}</div>
           <div class="checkpoint-location" style="color:rgba(255,255,255,0.5);">${cp.location.split(',')[0]}</div>
           <div class="checkpoint-miles">💤</div>
           <div class="checkpoint-date">${cp.date}</div>

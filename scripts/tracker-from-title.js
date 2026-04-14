@@ -258,9 +258,13 @@ async function main() {
           lng: latest.lng,
           miles: latest.miles,
         };
+        // Preserve the Twitch-assigned day number (e.g. "Day 19") on
+        // the archived rest entry so its card shows "Day 19 · REST"
+        // and popups can show "Day 18-19" ranges.
+        if (latest.inProgressDay) restEntry.day = latest.inProgressDay;
         if (latest.restDayClip) restEntry.clip = latest.restDayClip;
         checkpoints.push(restEntry);
-        console.log(`  Archived rest day as rest-only entry: ${restDate}`);
+        console.log(`  Archived rest day as rest-only entry: Day ${latest.inProgressDay || '?'}, ${restDate}`);
       }
       delete latest.restDayClip; // clip moved to the rest-only entry
 
