@@ -58,23 +58,41 @@ async function main() {
     const clip = args.clip;
     const idx = checkpoints.findIndex(cp => cp.day === day);
 
-    if (idx === -1) {
-      console.log(`Day ${day} not found in checkpoints. Log the day first.`);
-      process.exit(1);
+    if (idx !== -1) {
+      checkpoints[idx].clip = clip;
+      console.log(`\nAttaching clip to Day ${day} — ${checkpoints[idx].location}`);
+      console.log(`  Clip: ${clip}`);
+
+      rebuildAndPush(
+        checkpoints,
+        `Add clip to Day ${day} — ${checkpoints[idx].location}`
+      );
+
+      console.log(`\n✓ Clip added to Day ${day}!`);
+      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      return;
     }
 
-    checkpoints[idx].clip = clip;
-    console.log(`\nAttaching clip to Day ${day} — ${checkpoints[idx].location}`);
-    console.log(`  Clip: ${clip}`);
+    // Not a real checkpoint — check if it's the current in-progress day
+    // (e.g. rest-day clip attached to Day 19 while Day 18 is the arrival).
+    const latest = checkpoints[checkpoints.length - 1];
+    if (latest && latest.inProgressDay === day && latest.restDay) {
+      latest.restDayClip = clip;
+      console.log(`\nAttaching rest-day clip to Day ${day} (resting at ${latest.location})`);
+      console.log(`  Clip: ${clip}`);
 
-    rebuildAndPush(
-      checkpoints,
-      `Add clip to Day ${day} — ${checkpoints[idx].location}`
-    );
+      rebuildAndPush(
+        checkpoints,
+        `Add rest-day clip to Day ${day} — ${latest.location}`
+      );
 
-    console.log(`\n✓ Clip added to Day ${day}!`);
-    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
-    return;
+      console.log(`\n✓ Rest-day clip added to Day ${day}!`);
+      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      return;
+    }
+
+    console.log(`Day ${day} not found in checkpoints and not a current rest day. Log the day first.`);
+    process.exit(1);
   }
 
   if (isInProgress) {
