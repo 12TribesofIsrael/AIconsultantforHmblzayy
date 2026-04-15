@@ -283,30 +283,45 @@ async function main() {
       return;
     }
 
-    if (!latest.destination || !latest.inProgressDay) {
+    // In-progress state may live on an earlier walking checkpoint if
+    // rest-only archives have been pushed since (Day 18 walking w/
+    // inProgressDay=20, then Day 19 rest-only archived → latest=rest,
+    // but the Day 20 in-progress fields are still on Day 18).
+    let ipSource = latest;
+    if (latest.restOnly || !latest.destination || !latest.inProgressDay) {
+      for (let i = checkpoints.length - 1; i >= 0; i--) {
+        const cp = checkpoints[i];
+        if (!cp.restOnly && cp.destination && cp.inProgressDay) {
+          ipSource = cp;
+          break;
+        }
+      }
+    }
+
+    if (!ipSource.destination || !ipSource.inProgressDay) {
       console.log(`Day rollover detected (latest=${latest.day}, title=${parsed.day}) but no in-progress data to promote.`);
       console.log(`Manual update needed: npm run tracker:update -- --day ${latest.day + 1} --location "City, ST" --miles XXX`);
       process.exit(1);
     }
 
     const promoted = {
-      day: latest.inProgressDay,
-      location: latest.destination,
-      lat: latest.destinationLat,
-      lng: latest.destinationLng,
-      miles: latest.miles + Math.round(latest.estimatedSegmentMiles || 0),
-      date: dateFromIso(latest.inProgressStartedAt) || formatDate(),
+      day: ipSource.inProgressDay,
+      location: ipSource.destination,
+      lat: ipSource.destinationLat,
+      lng: ipSource.destinationLng,
+      miles: ipSource.miles + Math.round(ipSource.estimatedSegmentMiles || 0),
+      date: dateFromIso(ipSource.inProgressStartedAt) || formatDate(),
       estimatedMiles: true,
     };
 
-    // Strip in-progress fields from old latest
-    delete latest.inProgressDay;
-    delete latest.destination;
-    delete latest.destinationLat;
-    delete latest.destinationLng;
-    delete latest.milesRemaining;
-    delete latest.estimatedSegmentMiles;
-    delete latest.inProgressStartedAt;
+    // Strip in-progress fields from the source checkpoint
+    delete ipSource.inProgressDay;
+    delete ipSource.destination;
+    delete ipSource.destinationLat;
+    delete ipSource.destinationLng;
+    delete ipSource.milesRemaining;
+    delete ipSource.estimatedSegmentMiles;
+    delete ipSource.inProgressStartedAt;
 
     checkpoints.push(promoted);
     console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
