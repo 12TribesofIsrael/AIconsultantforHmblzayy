@@ -179,18 +179,10 @@
   },
   {
     "day": 20,
-    "location": "ALLIANCE, OH",
+    "location": "Alliance, OH",
     "lat": 40.9153362,
     "lng": -81.1059309,
-    "miles": 401,
-    "date": "Apr 13, 2026",
-    "estimatedMiles": true,
-    "destinationLat": 40.7985464,
-    "destinationLng": -81.3749508,
-    "destination": "CANTON, OH",
-    "inProgressDay": 21,
-    "milesRemaining": 24,
-    "estimatedSegmentMiles": 21,
-    "inProgressStartedAt": "2026-04-15T12:34:21.966Z"
+    "miles": 393,
+    "date": "Apr 15, 2026"
   }
 ]
