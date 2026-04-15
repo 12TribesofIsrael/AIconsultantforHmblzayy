@@ -56,3 +56,5 @@ This is the BIGGEST content opportunity right now:
 - [Twitch Channel](https://www.twitch.tv/hmblzayy)
 - [FOX 29 Coverage](https://www.fox29.com/video/fmc-n04n7m7n46znkjco)
 - [Facebook Viral Post](https://www.facebook.com/61567825233265/videos/2031211911111254/)
+
+https://www.twitch.tv/hmblzayy/clips
