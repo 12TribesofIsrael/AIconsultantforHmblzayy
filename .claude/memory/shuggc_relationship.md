@@ -53,8 +53,37 @@ originSessionId: 6d9e3e26-aeb7-4150-92b7-f5d0095481a8
 - User's tracker is more automated and feature-rich — potential to replace ShuggC's map
 - Bot access still pending — team needs more time to organize
 
+## Apr 13, 2026 — Cierra warning #2 + ShuggC reassurance DM
+User got a second Cierra warning for posting tracker in general. DM'd ShuggC clean, no disrespect, explained he didn't know a route team existed. ShuggC replied warmly:
+> "nah hearing is respected, all good. I actually dont even know why that took place, sure it was a misunderstanding. Cause I was happy about it but mad yeah **onboarding is definitely still happening should be tomorrow honestly**. just a bit juggling his stream connection, booking interviews, managing the team, 300ppl dms etc. Once I get a chance to get everything in order (god willing) this machine will run it all ;)"
+
+User's reply leaned into the juggling angle — "that's exactly the kind of stuff I build systems to handle" — soft pitch to set up automations offloading load. No response from ShuggC since.
+
+## Apr 13-15, 2026 — Clippers Application saga (3 submissions, 1 denial)
+HMBL opened staff applications via a Discord bot (Appy). User's Discord handle: **AI Bible Gospels**. Relevant role = **Clippers** (closest lane to the tracker/clips/intro work user already did).
+
+**Submission 1 — Apr 13, 4:25 PM:** Full polished answers. Structured clip taxonomy (Faith / Milestone / Support / Struggle / Funny / Reaction), referenced tracker + Day 18 Columbiana OH, "workpreneur" identity, "All praises to The Most High."
+
+**Denied — Apr 13, 5:44 PM by @Big Kiki:**
+> "Hello, please resubmit your application with shorter answers that aren't ai generated."
+
+Deeply ironic denial: the one role where user's AI skill set directly applies, rejected for sounding "AI generated." Reviewer (@Big Kiki) = anti-polished-content gatekeeper. User's actual work (clip pipeline, tracker, automation) is exactly what Clippers role needs.
+
+**Submission 2 — Apr 13, 6:05 PM:** Much shorter, more casual. Cancelled at 6:51 PM (probably user second-guessing mid-edit).
+
+**Submission 3 — Apr 15, 8:00-8:11 AM:** Final blend — shorter answers, plain voice, still includes tracker link (tinyurl.com/y667pssw). Pending review as of Apr 15.
+
+## Current Status (as of 2026-04-15)
+- **ShuggC has gone silent** since Apr 13 DM — "should be tomorrow honestly" has been tomorrow for 2+ days.
+- **Applications submitted 2 times** (3rd after a cancelled submission). First denial was for "ai generated" phrasing — stung because user's value prop IS the AI work.
+- **User's read:** *"a lot of politics and bullshit going on"* — frustration is valid and worth respecting.
+- **@Big Kiki** = applications gatekeeper, reflexively suspicious of polished writing.
+- Formal onboarding path still blocked. Tracker continues to run as proof-of-work independent of any formal role.
+
 ## Key Lessons
-- Patience paid off — didn't push the bot, let ShuggC come to him
+- Patience paid off early — but the same patience now risks becoming indefinite string-along.
 - The intro video and tracker were the proof points that earned trust
 - User positioned himself as mission-first, skills-second
 - Zay hasn't responded to DMs — access is through ShuggC and the team
+- **New:** Polished AI-fluent writing is a liability in HMBL applications. Match the voice of the community — plain, short, faith-first, no structured formatting.
+- **New:** ShuggC's verbal commitments ≠ actual onboarding. Don't treat "should be tomorrow honestly" as a deadline — treat it as a soft signal of intent that may or may not materialize.
