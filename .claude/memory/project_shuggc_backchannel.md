@@ -44,7 +44,7 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 - Stable on custom domain, no login prompt, survives branch/preview churn
 - Old tinyurl `22sg8xhc` is now stale — preview branch deploy still auth-walled, ignore
 
-**Still open for user:** Vercel Dashboard → faithwalklive → Settings → Deployment Protection → set to Disabled (or "Only Preview Deployments"). Not blocking — production works either way — but keeps future `feat/*` preview shares from hitting the login wall.
+**Apr 18 follow-up:** Vercel Deployment Protection disabled on faithwalklive project. Future `feat/*` preview URLs are now shareable without a login wall — good for sending ShuggC in-progress overlay iterations before merging to prod.
 
 ## Strategic notes
 
@@ -61,4 +61,4 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 3. Send ShuggC the canonical production URL: `https://faithwalklive.com/obs?bare=1` (replaces old tinyurl)
 4. Follow up on IP lockdown domains (HBLUniversity.com) — mention once he's engaged with the overlay on stream
 5. Wait for him to send the "list" of what else he needs (YouTube API, etc.)
-6. (User action) Disable Vercel Deployment Protection on faithwalklive project for smoother future preview shares
+6. ~~Disable Vercel Deployment Protection on faithwalklive~~ ✅ done Apr 18 — preview URLs now shareable without auth
