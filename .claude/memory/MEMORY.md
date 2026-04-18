@@ -1,6 +1,6 @@
-- [MinisterZay Consulting Project](project_ministerzay_consulting.md) — AI consultant for @ministerzay, building automations + intro video
-- [User Role](user_role.md) — AI automation consultant building brand through influencer clients
-- [ShuggC Relationship](shuggc_relationship.md) — Full Discord convo history, being onboarded to HMBL tech team, OBS embed request
-- [Tracker honesty rules](feedback_tracker_honesty.md) — Map pin = last confirmed only, estimates marked with ~, never invent public totals
-- [Automation safety](feedback_automation_safety.md) — Tracker scripts: sync-first, refuse dirty tree, idempotent, use scripts/lib/ helpers
-- [Memory sync workflow](feedback_memory_sync.md) — Laptop/desktop: npm run memory:push before commit, memory:pull after pull
+- [Project overview](project_zayautomations.md) — AI consulting for Minister Zay / HMBL, deliverables and current onboarding state
+- [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
+- [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
+- [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
+- [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
+- [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues

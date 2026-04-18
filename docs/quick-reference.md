@@ -3,8 +3,13 @@
 ## Live URLs
 - **Faith Walk Tracker:** https://tinyurl.com/y667pssw
   - *Canonical:* https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
+- **Faith Walk Live (pivot site):** https://faithwalklive.com
+- **OBS Stream Overlay (for ShuggC):** https://faithwalklive.com/obs?bare=1
+  - Add `&brand=0` to hide the AI Bible Gospels watermark
+  - Drop `bare=1` to show Day / Miles / Percent stats panel
+- **Stream-overlay redirect (UTM attribution):** https://faithwalklive.com/live
 - **Analytics Dashboard:** https://hmbl-faithwalk.goatcounter.com
-- **GitHub Repo:** https://github.com/12TribesofIsrael/AIconsultantforHmblzayy
+- **GitHub Repos:** https://github.com/12TribesofIsrael/AIconsultantforHmblzayy · https://github.com/12TribesofIsrael/faithwalklive
 - **Your YouTube:** https://www.youtube.com/@AIBIBLEGOSPELS
 
 ## Minister Zay Socials
