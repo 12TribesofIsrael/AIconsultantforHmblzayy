@@ -218,6 +218,10 @@
     "lat": 40.3933956,
     "lng": -82.4857181,
     "miles": 494,
-    "date": "Apr 18, 2026"
+    "date": "Apr 18, 2026",
+    "inProgressDay": 25,
+    "restDay": true,
+    "restDayDate": "Apr 19, 2026",
+    "inProgressStartedAt": "2026-04-19T13:36:52.356Z"
   }
 ]
