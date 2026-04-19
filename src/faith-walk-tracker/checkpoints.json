@@ -210,13 +210,14 @@
     "lng": -81.9179198,
     "miles": 457,
     "date": "Apr 17, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/PrettyNimbleDaikonKreygasm-O9ajoexhfCamQkc8",
-    "destinationLat": 41.3867271,
-    "destinationLng": -80.5685798,
-    "destination": "VERNON, OH",
-    "inProgressDay": 24,
-    "milesRemaining": 37,
-    "estimatedSegmentMiles": 118,
-    "inProgressStartedAt": "2026-04-18T23:44:16.528Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PrettyNimbleDaikonKreygasm-O9ajoexhfCamQkc8"
+  },
+  {
+    "day": 24,
+    "location": "Mt. Vernon, OH",
+    "lat": 40.3933956,
+    "lng": -82.4857181,
+    "miles": 494,
+    "date": "Apr 18, 2026"
   }
 ]
