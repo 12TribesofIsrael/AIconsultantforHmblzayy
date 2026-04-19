@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.5.0**
+**Current Version: v2.6.0**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.6.0 | Apr 19, 2026 | Auto-sync to faithwalklive.com — every `tracker:update` / `tracker:from-title` now mirrors `checkpoints.json` to the sibling `../faithwalklivecom` repo, commits, and pushes (Vercel redeploys). Stashes unrelated WIP in the public repo before rebasing, restores after. Best-effort: failures log a warning but never block the consulting commit. New `npm run faithwalk:sync` for manual one-shot sync. Day 24 Mt. Vernon OH (494 mi) confirmed, Day 25 rest annotated. |
 | v2.5.0 | Apr 18, 2026 | OBS stream overlay shipped to production at `faithwalklive.com/obs` — merged `feat/obs-overlay` → main on sibling `faithwalklive` repo. Full-bleed dark map + gold polyline + pulsing beacon, `?bare=1` hides stats, `?brand=0` hides AI Bible Gospels watermark. Also shipped `/live` UTM redirect for stream-overlay attribution. Delivered to ShuggC for OBS browser-source use. |
 | v2.4.1 | Apr 15, 2026 | Fix rollover promotion when rest-only archives shadow in-progress source — `tracker:from-title` now walks back past rest-only entries to find the walking checkpoint holding `inProgressDay`, so Day N auto-promotes as estimated even after a rest-day archive. Day 20 Alliance OH confirmed from Route Team Discord post, Day 21 Canton OH in progress (24 mi) |
 | v2.4.0 | Apr 14, 2026 | Memory sync across laptop/desktop via `.claude/memory/` + `scripts/memory-sync.js` (npm run memory:push/pull/status), DONT_FORGET.md reminder file at repo root, fixed 7 off-by-1/2 date errors on Days 5-10 and Day 16 verified against Twitch VOD history |
@@ -56,7 +57,8 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 | `scripts/update-tracker.js` | Manual tracker update (confirmed arrivals — clears estimate flags) |
 | `scripts/tracker-from-title.js` | Title-driven daily updater — reads Twitch title + previous checkpoint |
 | `scripts/twitch-tracker-sync.js` | Watch wrapper — runs tracker-from-title on a 30-min loop |
-| `scripts/lib/` | Shared helpers (git-sync, twitch, geo, tracker file ops) |
+| `scripts/lib/` | Shared helpers (git-sync, twitch, geo, tracker file ops, faithwalklive-sync) |
+| `scripts/sync-faithwalklive.js` | Manual one-shot mirror of checkpoints.json → `../faithwalklivecom` repo |
 | `scripts/twitch-clipper.js` | Auto-clip stream moments for all platforms |
 | `scripts/twitch-chatbot.js` | Chatbot with custom HMBL commands |
 | `scripts/memory-sync.js` | Sync Claude memory between `.claude/memory/` (git) and `~/.claude/projects/.../memory/` |
@@ -73,6 +75,7 @@ npm run tracker:from-title   # DAILY: read Twitch title + update tracker (idempo
 npm run tracker:update       # Manual confirmed arrival: --day X --location "City, ST" --miles X
 npm run tracker:sync         # One-time check Twitch (delegates to tracker:from-title)
 npm run tracker:watch        # Run tracker:from-title every 30 min
+npm run faithwalk:sync       # Manual: mirror checkpoints.json → ../faithwalklivecom + push (Vercel redeploys)
 npm run clips                # Auto-clip stream moments (needs ffmpeg)
 npm run chatbot              # Run Twitch chatbot
 npm run memory:status        # Compare repo memory vs local ~/.claude memory

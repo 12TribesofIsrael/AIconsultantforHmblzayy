@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { commitAndPush } = require('./git-sync');
+const { syncToFaithWalkLive } = require('./faithwalklive-sync');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CHECKPOINTS_PATH = path.join(ROOT, 'src', 'faith-walk-tracker', 'checkpoints.json');
@@ -70,7 +71,10 @@ function buildTrackerHTML(checkpoints) {
   return html;
 }
 
-// Save checkpoints, rebuild HTML, commit and push.
+// Save checkpoints, rebuild HTML, commit and push. After the consulting
+// repo is pushed, mirror checkpoints.json to the faithwalklive Next.js
+// repo and push there too so Vercel redeploys the public site. The
+// public sync is best-effort and never blocks the consulting commit.
 function rebuildAndPush(checkpoints, commitMessage) {
   saveCheckpoints(checkpoints);
   console.log('  Saved checkpoints.json');
@@ -80,7 +84,9 @@ function rebuildAndPush(checkpoints, commitMessage) {
   fs.writeFileSync(DOCS_HTML_PATH, updatedHtml);
   console.log('  Rebuilt tracker HTML');
 
-  return commitAndPush(commitMessage);
+  const pushed = commitAndPush(commitMessage);
+  syncToFaithWalkLive(commitMessage);
+  return pushed;
 }
 
 module.exports = {
