@@ -138,6 +138,15 @@ async function main() {
   const coords = await geocode(location);
   console.log(`  Coordinates: ${coords.lat}, ${coords.lng}`);
 
+  // Before stripping in-progress fields, promote any stashed inProgressClip
+  // on the matching source entry so it can carry over to the new day.
+  let stashedClipForDay = null;
+  checkpoints.forEach(cp => {
+    if (cp.inProgressDay === day && cp.inProgressClip) {
+      stashedClipForDay = cp.inProgressClip;
+    }
+  });
+
   // Clear any in-progress fields from all existing checkpoints — arrival
   // overrides heading-to. Also strip estimatedMiles since the user is
   // providing a confirmed number.
@@ -150,11 +159,13 @@ async function main() {
     delete cp.estimatedSegmentMiles;
     delete cp.inProgressDay;
     delete cp.inProgressStartedAt;
+    delete cp.inProgressClip;
   });
 
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
   const newCheckpoint = { day, location, lat: coords.lat, lng: coords.lng, miles, date };
   if (args.clip) newCheckpoint.clip = args.clip;
+  else if (stashedClipForDay) newCheckpoint.clip = stashedClipForDay;
 
   if (existingIndex !== -1) {
     // Preserve existing clip if not being overwritten

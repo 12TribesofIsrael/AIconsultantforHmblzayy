@@ -313,6 +313,7 @@ async function main() {
       date: dateFromIso(ipSource.inProgressStartedAt) || formatDate(),
       estimatedMiles: true,
     };
+    if (ipSource.inProgressClip) promoted.clip = ipSource.inProgressClip;
 
     // Strip in-progress fields from the source checkpoint
     delete ipSource.inProgressDay;
@@ -322,6 +323,7 @@ async function main() {
     delete ipSource.milesRemaining;
     delete ipSource.estimatedSegmentMiles;
     delete ipSource.inProgressStartedAt;
+    delete ipSource.inProgressClip;
 
     checkpoints.push(promoted);
     console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
