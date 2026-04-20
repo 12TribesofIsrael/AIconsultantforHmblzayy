@@ -219,9 +219,21 @@
     "lng": -82.4857181,
     "miles": 494,
     "date": "Apr 18, 2026",
-    "inProgressDay": 25,
-    "restDay": true,
-    "restDayDate": "Apr 19, 2026",
-    "inProgressStartedAt": "2026-04-19T13:36:52.356Z"
+    "inProgressDay": 26,
+    "inProgressStartedAt": "2026-04-19T13:36:52.356Z",
+    "destinationLat": 40.2425623,
+    "destinationLng": -82.8590673,
+    "destination": "SUNBURY, OH",
+    "milesRemaining": 27,
+    "estimatedSegmentMiles": 29
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 19, 2026",
+    "location": "Mt. Vernon, OH",
+    "lat": 40.3933956,
+    "lng": -82.4857181,
+    "miles": 494,
+    "day": 25
   }
 ]
