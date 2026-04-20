@@ -1,6 +1,14 @@
 - [Project overview](project_zayautomations.md) — AI consulting for Minister Zay / HMBL, deliverables and current onboarding state
 - [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
+- [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
+- [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
+- [NOW card logic](feedback_now_card_logic.md) — Priority: active rest > archived-rest-ahead-of-walking > latest walking. Never render in-progress walking days as cards.
+- [Present only optimal](feedback_present_only_optimal.md) — Don't surface A/B menus when I already know which wins. Recommend and ship; only present options when user explicitly asks or trade-offs genuinely require their call.
+- [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
+- [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
 - [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues
+- [Book project](project_book.md) — Apr 19 Zay asked Thomas on stream to write a book; two-repo split (this = source material, `../faithwalkbook` = private book + chapters)
+- [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger

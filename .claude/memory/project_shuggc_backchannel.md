@@ -11,7 +11,7 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 - He can't remove existing admins but is restructuring (departments, team heads, chain of command).
 - Offered Thomas a direct back channel: "between us, nobody else has to know." Report to ShuggC directly, not through Kiki's application queue.
 - Acknowledged Thomas's work: "I see you did all this."
-- Thomas brought up IP protection (from his other business experience) — ShuggC didn't know about it. Thomas had already purchased HBLUniversity.com + .org + .net days prior ($200 investment) to prevent squatting.
+- Thomas brought up IP protection (from his other business experience) — ShuggC didn't know about it. Thomas had already purchased hmbluniversity across 7 TLDs (.com, .info, .net, .org, .shop, .store, .xyz) days prior to prevent squatting. .com renews Apr 12, 2029; the others renew Apr 12-13, 2027.
 - Floated PM role as the operation scales.
 - Acknowledged Cierra is intense with gatekeeping.
 - Call ended positively: "God bless you, man. Let's go."
@@ -46,6 +46,10 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 
 **Apr 18 follow-up:** Vercel Deployment Protection disabled on faithwalklive project. Future `feat/*` preview URLs are now shareable without a login wall — good for sending ShuggC in-progress overlay iterations before merging to prod.
 
+**Apr 19:** No reply from ShuggC since Apr 18 overlay delivery (~24+ hrs silence). Overlay is shipped to prod at `faithwalklive.com/obs?bare=1` regardless. Thomas holding posture — no follow-up nudge yet, letting the work sit. Day 25 was a rest day on the walk which may mean no stream usage attempt yet.
+
+**Apr 20 (Day 26 stream check):** Visited live stream — overlay is NOT in use. Layout is camera-first (chest-cam full-bleed) with text widgets (timer top-right, "REST CHECKPOINT IN..." / "MILES TO..." cards bottom). `faithwalklive.com/obs` not adopted as background or as a corner widget. Thomas's call: leave it alone, no nudge — work is shipped, ball is in ShuggC's court. Don't pitch a corner-widget variant or message ShuggC about it unless he raises it first.
+
 ## Strategic notes
 
 - Thomas attended the Apr 17 town hall, stayed calm, supported chat, didn't raise grievances. Right posture — ShuggC called right after.
@@ -59,6 +63,6 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 1. ~~ShuggC tests overlay → gives word~~ ✅ confirmed Apr 18
 2. ~~Merge feat/obs-overlay → main → live at faithwalklive.com/obs~~ ✅ shipped Apr 18
 3. Send ShuggC the canonical production URL: `https://faithwalklive.com/obs?bare=1` (replaces old tinyurl)
-4. Follow up on IP lockdown domains (HBLUniversity.com) — mention once he's engaged with the overlay on stream
+4. Follow up on IP lockdown domains (hmbluniversity.com + 6 other TLDs) — mention once he's engaged with the overlay on stream
 5. Wait for him to send the "list" of what else he needs (YouTube API, etc.)
 6. ~~Disable Vercel Deployment Protection on faithwalklive~~ ✅ done Apr 18 — preview URLs now shareable without auth
