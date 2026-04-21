@@ -1,32 +1,29 @@
 ---
-ended: 2026-04-21T00:00:00Z
+ended: 2026-04-21T01:00:00Z
 project: ZayAutomations
 branch: main
 version: v2.7.0
 originSessionId: 355f1237-d352-426b-8186-6f18564d9c4a
 ---
-# Last Session — 2026-04-21
+# Last Session — 2026-04-21 (continuation)
 
 ## What the user wanted
-Pull latest from origin safely, then formalize the unversioned book-project + Twitch-GQL work into a real release. Then a side conversation about repo architecture (is this the source of truth?) led to enabling GitHub branch protection. User is new to traditional dev/devops and explicitly asked for best-practice + ROI framing throughout.
+Close a workflow gap they noticed: session-end auto-pushes memory to GitHub, but session-start required manual `git pull && npm run memory:pull` to receive it on the other machine. They wanted single-command continuity across machines.
 
 ## What we did
-- Pulled origin (fast-forward `10050a4..0f5890a`) using stash → pull → pop because local `CLAUDE.md` + `package.json` had unstaged work. Zero overlap with incoming changes.
-- Bumped CLAUDE.md `Current Version` and `package.json` `version` from `2.6.0` → `2.7.0`. Added v2.7.0 changelog row dated Apr 21, 2026.
-- Committed everything as `d9012d4` *"v2.7.0: Book project scaffolding + Twitch GQL clip-verification doc"* — 9 files: CLAUDE.md, package.json, scripts/sync-book.js, scripts/lib/book-sync.js, book/README.md, book/source-material/{deliverables,faith-walk,strategic}-timeline.md, docs/1611KjvW_apocrypha.pdf (3.2 MB).
-- Pushed to `origin/main`.
-- Verified the sync architecture by reading `scripts/lib/book-sync.js` + grepping for write patterns in `scripts/lib/faithwalklive-sync.js` — both are **outbound only** (copy from this repo to sibling, then commit+push in the sibling's cwd; never read sibling state back).
-- Enabled GitHub branch protection on `main` via `gh api`: `allow_force_pushes=false`, `allow_deletions=false`, `enforce_admins=false` (admin can still bypass for emergency recovery). Required two attempts — first call failed with HTTP 422 because empty strings for `required_status_checks`/`required_pull_request_reviews`/`restrictions` aren't accepted; resent with explicit JSON nulls via stdin.
+- Edited `C:\Users\Deskt\.claude\skills\session-start\SKILL.md` Step 2 — replaced the "tell user to run pull manually" guidance with **automated pull chain**: `git pull --ff-only && npm run memory:pull`, guarded by a dirty-tree pre-check and only firing when project has memory-sync wiring.
+- Confirmed that session-end's auto-push was already working (last commit `c7d8f48` proves it). The asymmetry was only on the session-start side.
+- Walked the user through the new mental model: workflow on the laptop is now just `/session-start` — no manual `git pull` needed unless the skill warns about a dirty tree or origin divergence.
 
 ## Decisions worth remembering
-- **No PR-review requirement on main protection.** Solo dev — review friction outweighs benefit. Only enabled the two zero-friction destructive-op blocks (force-push, deletion). Layer in PR/CI rules when collaborators arrive.
-- **`enforce_admins=false`** by intent — keeps an emergency escape hatch for the user. The protection catches accidents, not deliberate admin recovery.
-- **One v2.7.0 commit, not two.** Bundled book scaffolding + GQL doc together rather than splitting because both were already sitting unversioned and the user prefers one cohesive feature commit (consistent with `feedback_present_only_optimal`).
+- **`--ff-only` over `--rebase` or default merge.** Refuses on divergence; never silently rewrites or merges. Safer for a non-expert dev who's still learning git mechanics.
+- **Dirty-tree skip, not stash.** session-end uses scoped staging (`git add .claude/memory/` only) so it's safe on dirty trees. session-start does a *whole-repo* `git pull`, which would touch everything — too risky to auto-stash. Skip + warn is the right tradeoff.
+- **Skill file lives at `C:\Users\Deskt\.claude\skills\session-start\SKILL.md`** — that's machine-local, NOT in this repo. The laptop's copy of the skill won't auto-pull until the same edit is applied there.
 
 ## Open threads / next session starts here
-- **Day 26 → SUNBURY, OH** is in-progress per pre-session commit `1a8a908`. Next `tracker:from-title` run after Zay's stream ends will promote it. Current commit `0f5890a` has the stashed Day 26 clip ready to auto-carry on promotion.
-- **Apocrypha PDF (3.2 MB)** is now in repo at `docs/1611KjvW_apocrypha.pdf`. Per `feedback_verse_source` memory, walk-of-the-day verses must be sourced from this file via pdftotext, not from model memory.
-- **Book sync untested end-to-end** — `npm run book:sync` has never been run yet because `../faithwalkbook` may not exist on this machine. Script is no-op-safe (logs and skips if sibling missing). User should test on whichever machine has the book repo cloned.
+- **Mirror the skill change to the laptop.** When user next works on the laptop, copy `C:\Users\Deskt\.claude\skills\session-start\SKILL.md` over (or apply the same Step 2 diff). Until then, laptop session-start still uses the old "tell user to run pull manually" behavior.
+- **Day 26 → SUNBURY, OH** still in-progress per commit `0f5890a` — unchanged from prior session-end. Will auto-promote on next `tracker:from-title` after stream ends.
+- **Book sync (`npm run book:sync`) still untested end-to-end** — sibling `../faithwalkbook` repo presence not yet verified on either machine.
 
 ## Uncommitted work
 Clean working tree.
