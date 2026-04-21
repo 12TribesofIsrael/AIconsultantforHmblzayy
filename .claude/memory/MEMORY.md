@@ -7,6 +7,7 @@
 - [Present only optimal](feedback_present_only_optimal.md) — Don't surface A/B menus when I already know which wins. Recommend and ship; only present options when user explicitly asks or trade-offs genuinely require their call.
 - [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
+- [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live at www.aibiblegospels.com, repo 12TribesofIsrael/aibiblegospelscom, Vercel auto-deploy
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
 - [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues
