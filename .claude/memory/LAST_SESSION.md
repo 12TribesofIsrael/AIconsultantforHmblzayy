@@ -1,29 +1,33 @@
 ---
-ended: 2026-04-21T01:00:00Z
-project: ZayAutomations
+ended: 2026-04-21T12:05:00Z
+project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.7.0
-originSessionId: 355f1237-d352-426b-8186-6f18564d9c4a
+originSessionId: 2f1f691c-5f59-4e1c-a2d8-7d212f513feb
 ---
-# Last Session — 2026-04-21 (continuation)
+# Last Session — 2026-04-21
 
 ## What the user wanted
-Close a workflow gap they noticed: session-end auto-pushes memory to GitHub, but session-start required manual `git pull && npm run memory:pull` to receive it on the other machine. They wanted single-command continuity across machines.
+Two things: (1) fix the Faith Walk Live steps calculation — he suspected it didn't match the original GitHub tracker page; (2) decide whether to update the tracker for Day 27 this morning given no Twitch title refresh.
 
 ## What we did
-- Edited `C:\Users\Deskt\.claude\skills\session-start\SKILL.md` Step 2 — replaced the "tell user to run pull manually" guidance with **automated pull chain**: `git pull --ff-only && npm run memory:pull`, guarded by a dirty-tree pre-check and only firing when project has memory-sync wiring.
-- Confirmed that session-end's auto-push was already working (last commit `c7d8f48` proves it). The asymmetry was only on the session-start side.
-- Walked the user through the new mental model: workflow on the laptop is now just `/session-start` — no manual `git pull` needed unless the skill warns about a dirty tree or origin divergence.
+- **Audited steps calc across both sites.** Original GitHub tracker (`docs/faith-walk-tracker.html:967`) uses `miles * 2200`. Faith Walk Live was using `2000` in two places — confirmed discrepancy.
+- **Fixed faithwalklivecom steps math** to `2200`:
+  - `src/lib/checkpoints.ts:31` — `STEPS_PER_MILE = 2200`
+  - `src/components/MapClient.tsx:28` — `miles * 2200`
+  - Committed + pushed `d76aabb` to `faithwalklive` main → Vercel redeployed.
+  - Left CHANGELOG's historical "2,000 steps per mile" line alone (frozen v0.2.0 record).
+- **Investigated Day 27 question.** Current Twitch title: **"DAY 26 | … SUNBURY, OH"** — title still says 26, not 27. Queried GQL clips for Apr 20: **19 clips, top clip "hit" at 5,033 views** (viral — ~50× typical top clip). Also saw **"CAR HIT"**, **"PRAYERS FROM SUPPORT"**, **"accidents"** in Apr 20 titles.
+- **Recommended the user WAIT on tracker update.** Rationale: Zay's own title says Day 26 → Sunbury so he appears to be resuming Day 26 after an incident cut Apr 20 short; don't contradict his own title; the incident isn't understood yet; public-copy-safety + end-of-night cadence both argue for patience.
 
 ## Decisions worth remembering
-- **`--ff-only` over `--rebase` or default merge.** Refuses on divergence; never silently rewrites or merges. Safer for a non-expert dev who's still learning git mechanics.
-- **Dirty-tree skip, not stash.** session-end uses scoped staging (`git add .claude/memory/` only) so it's safe on dirty trees. session-start does a *whole-repo* `git pull`, which would touch everything — too risky to auto-stash. Skip + warn is the right tradeoff.
-- **Skill file lives at `C:\Users\Deskt\.claude\skills\session-start\SKILL.md`** — that's machine-local, NOT in this repo. The laptop's copy of the skill won't auto-pull until the same edit is applied there.
+- Left CHANGELOG's "(2,000 steps per mile)" historical note intact on the faithwalklive repo — changelogs are frozen-in-time records of what shipped; rewriting misrepresents v0.2.0.
+- Did NOT touch the consulting repo for the steps fix — the GitHub tracker was the *source of truth* all along; Faith Walk Live was the drift.
 
 ## Open threads / next session starts here
-- **Mirror the skill change to the laptop.** When user next works on the laptop, copy `C:\Users\Deskt\.claude\skills\session-start\SKILL.md` over (or apply the same Step 2 diff). Until then, laptop session-start still uses the old "tell user to run pull manually" behavior.
-- **Day 26 → SUNBURY, OH** still in-progress per commit `0f5890a` — unchanged from prior session-end. Will auto-promote on next `tracker:from-title` after stream ends.
-- **Book sync (`npm run book:sync`) still untested end-to-end** — sibling `../faithwalkbook` repo presence not yet verified on either machine.
+- **Apr 20 incident is unresolved.** Before any Day 26 archive or Day 27 promotion, we need to understand what happened — "hit" clip with 5k views + "CAR HIT" + "PRAYERS FROM SUPPORT" + "accidents" strongly suggests a vehicle incident. User was offered a summary of top Apr 20 clips but we ended the session before pulling URLs. **First move on resume:** pull the Apr 20 top-clip titles + URLs and surface to user so he has the full picture before the next tracker update.
+- **Tracker is stale**: last confirmed Day 24 (Mt. Vernon OH, Apr 18), Day 25 rest archived (Apr 19), Day 26 in-progress → Sunbury OH (stashed Apr 19). Today (Apr 21) stream is live with title still "DAY 26 → SUNBURY, OH". Likely means Zay is resuming Day 26 after yesterday's incident. Do NOT update to Day 27 until his own title advances to Day 27 and we understand what happened Apr 20.
+- Steps-calc fix is shipped and live on faithwalklive.com — no follow-up needed there. User can eyeball homepage/map to confirm the step count jumped ~10% after Vercel redeploy.
 
 ## Uncommitted work
 Clean working tree.

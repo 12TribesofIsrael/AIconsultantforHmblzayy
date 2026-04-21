@@ -4,12 +4,15 @@ description: AIconsultantforHmblzayy is the source of truth; sibling repos are o
 type: project
 originSessionId: 355f1237-d352-426b-8186-6f18564d9c4a
 ---
-This repo (`AIconsultantforHmblzayy`) is the **source of truth**. Two sibling repos receive data from it but never push back:
+This repo (`AIconsultantforHmblzayy`) is the **source of truth**. Three sibling repos:
 
 - `../faithwalklivecom` ← receives `checkpoints.json` via `scripts/lib/faithwalklive-sync.js` (auto-fired on every `tracker:update` / `tracker:from-title`, or manually via `npm run faithwalk:sync`)
 - `../faithwalkbook` ← receives `book/source-material/` via `scripts/lib/book-sync.js` (manually via `npm run book:sync`)
+- `../aibiblegospelscom` ← **independent** parent-brand site (scaffolded Apr 21, 2026). No sync relationship with this repo. Canonical URL for the `AI Bible Gospels` `Organization` entity in the AEO schema. Stack: Next.js 16 + Tailwind v4, matches faithwalklivecom.
 
-Both sync helpers run git operations with `cwd` pointed at the *sibling* repo, so they only ever modify the target. Verified Apr 21, 2026.
+The first two sibling sync helpers run git operations with `cwd` pointed at the *sibling* repo, so they only ever modify the target. aibiblegospelscom has no sync pipeline — it's Thomas's own brand, not downstream of HMBL work.
+
+All four repos open together via `hblfaithwalk.code-workspace` (VSCode multi-root workspace file) in the parent `hblfaithwalk/` directory.
 
 GitHub branch protection on `main` (enabled Apr 21, 2026):
 - `allow_force_pushes: false`

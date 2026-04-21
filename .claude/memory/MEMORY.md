@@ -13,3 +13,5 @@
 - [Book project](project_book.md) — Apr 19 Zay asked Thomas on stream to write a book; two-repo split (this = source material, `../faithwalkbook` = private book + chapters)
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
+- [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27
+- [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
