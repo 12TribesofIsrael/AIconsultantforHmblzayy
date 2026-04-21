@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.6.0**
+**Current Version: v2.7.0**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.7.0 | Apr 21, 2026 | Book project scaffolding — `scripts/sync-book.js` + `scripts/lib/book-sync.js` mirror `book/source-material/` to private sibling `../faithwalkbook` repo (`npm run book:sync`). Apocrypha source PDF added at `docs/1611KjvW_apocrypha.pdf` for verse sourcing. CLAUDE.md gains a "Date / clip cross-reference (Twitch GQL)" section documenting the public clip query workflow for clip backfills + date verification against Twitch source-of-truth. |
 | v2.6.0 | Apr 19, 2026 | Auto-sync to faithwalklive.com — every `tracker:update` / `tracker:from-title` now mirrors `checkpoints.json` to the sibling `../faithwalklivecom` repo, commits, and pushes (Vercel redeploys). Stashes unrelated WIP in the public repo before rebasing, restores after. Best-effort: failures log a warning but never block the consulting commit. New `npm run faithwalk:sync` for manual one-shot sync. Day 24 Mt. Vernon OH (494 mi) confirmed, Day 25 rest annotated. |
 | v2.5.0 | Apr 18, 2026 | OBS stream overlay shipped to production at `faithwalklive.com/obs` — merged `feat/obs-overlay` → main on sibling `faithwalklive` repo. Full-bleed dark map + gold polyline + pulsing beacon, `?bare=1` hides stats, `?brand=0` hides AI Bible Gospels watermark. Also shipped `/live` UTM redirect for stream-overlay attribution. Delivered to ShuggC for OBS browser-source use. |
 | v2.4.1 | Apr 15, 2026 | Fix rollover promotion when rest-only archives shadow in-progress source — `tracker:from-title` now walks back past rest-only entries to find the walking checkpoint holding `inProgressDay`, so Day N auto-promotes as estimated even after a rest-day archive. Day 20 Alliance OH confirmed from Route Team Discord post, Day 21 Canton OH in progress (24 mi) |
@@ -59,6 +60,8 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 | `scripts/twitch-tracker-sync.js` | Watch wrapper — runs tracker-from-title on a 30-min loop |
 | `scripts/lib/` | Shared helpers (git-sync, twitch, geo, tracker file ops, faithwalklive-sync) |
 | `scripts/sync-faithwalklive.js` | Manual one-shot mirror of checkpoints.json → `../faithwalklivecom` repo |
+| `scripts/sync-book.js` | Manual mirror of `book/source-material/` → `../faithwalkbook` private repo |
+| `book/` | Source material for the book project (timelines mined from this repo). The book itself — outline, chapters, personal — lives in private sibling repo `../faithwalkbook`. |
 | `scripts/twitch-clipper.js` | Auto-clip stream moments for all platforms |
 | `scripts/twitch-chatbot.js` | Chatbot with custom HMBL commands |
 | `scripts/memory-sync.js` | Sync Claude memory between `.claude/memory/` (git) and `~/.claude/projects/.../memory/` |
@@ -76,6 +79,7 @@ npm run tracker:update       # Manual confirmed arrival: --day X --location "Cit
 npm run tracker:sync         # One-time check Twitch (delegates to tracker:from-title)
 npm run tracker:watch        # Run tracker:from-title every 30 min
 npm run faithwalk:sync       # Manual: mirror checkpoints.json → ../faithwalklivecom + push (Vercel redeploys)
+npm run book:sync            # Manual: mirror book/source-material/ → ../faithwalkbook (private book repo)
 npm run clips                # Auto-clip stream moments (needs ffmpeg)
 npm run chatbot              # Run Twitch chatbot
 npm run memory:status        # Compare repo memory vs local ~/.claude memory
@@ -86,6 +90,35 @@ npm run memory:pull          # Copy repo memory OUT to local ~/.claude (after gi
 ## Live URLs
 - **Tracker:** https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
 - **Repo:** https://github.com/12TribesofIsrael/AIconsultantforHmblzayy
+
+## Date / clip cross-reference (Twitch GQL)
+
+When the user states a day number, location, or date — or when a tracker update goes in without a clip — **verify against Twitch's source-of-truth** before publishing. The clips list is the most reliable date anchor (each clip is timestamped UTC; daily streams produce dozens of clips per day).
+
+**Public clip listing:** https://www.twitch.tv/hmblzayy/clips
+
+**Programmatic query** (no auth, public web client ID, same endpoint `scripts/lib/twitch.js` uses):
+```js
+// Pulls up to 100 recent clips with createdAt timestamps + view counts.
+// Filter by createdAt date prefix to find the day.
+const postData = JSON.stringify({
+  query: `{
+    user(login: "hmblzayy") {
+      clips(first: 100, criteria: { period: LAST_WEEK, sort: VIEWS_DESC }) {
+        edges { node { slug title createdAt durationSeconds viewCount url } }
+      }
+    }
+  }`
+});
+// POST to https://gql.twitch.tv/gql with header Client-ID: kimne78kx3ncx6brgo4mv6wki5h1ko
+```
+
+Use cases:
+- **Backfill missing clips**: when running `tracker:update` or after `tracker:from-title` and a day has `clip: null`, query clips for that date and pick the highest-view faith-aligned one (matches the existing pattern: Day 23 "GOD DID" 70v, Day 24 "w chrisean" 78v).
+- **Verify dates**: if the user says "Day N was at city X on date Y" and it conflicts with checkpoints.json, cross-reference clip timestamps (and stream titles via `fetchStreamTitle`) before changing anything. Don't blindly accept stated dates if Twitch contradicts them.
+- **VOD fallback**: VODs age off (~14d affiliates / 60d partners), but clips persist longer and timestamp the actual stream day.
+
+`period` accepts `LAST_DAY | LAST_WEEK | LAST_MONTH | ALL_TIME`. `sort` `VIEWS_DESC` is most reliable; `CREATED_AT_DESC` sometimes 500s.
 
 ## Deliverables
 1. **Intro Video** — Looping Faith Walk video with music (DONE — used on stream)
