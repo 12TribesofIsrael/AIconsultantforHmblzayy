@@ -9,9 +9,11 @@
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
 - [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live at www.aibiblegospels.com, repo 12TribesofIsrael/aibiblegospelscom, Vercel auto-deploy
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
+- [Anointed Bible Video Maker](user_anointed_bible_video_maker.md) — Thomas's AI product (pick scripture → generate cultural-perspective narrated video); the "play" pitched to Zay, destined for aibiblegospels.com
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
 - [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues
-- [Book project](project_book.md) — Apr 19 Zay asked Thomas on stream to write a book; two-repo split (this = source material, `../faithwalkbook` = private book + chapters)
+- [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
+- [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; Zay's Walk turned struggle → pedal-to-metal. Numbers need reconciliation before book quotes them.
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
 - [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27
