@@ -1,33 +1,29 @@
 ---
-ended: 2026-04-21T23:59:00Z
+ended: 2026-04-22T00:20:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.7.0
-originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
+originSessionId: db112ca7-b4b1-400f-8aa8-9f83b022efad
 ---
-# Last Session — 2026-04-21
+# Last Session — 2026-04-21 (late desktop)
 
 ## What the user wanted
-Create the public GitHub repo for the `aibiblegospelscom` sibling project (parent brand site for AI Bible Gospels) and get it wired into Vercel. User wanted step-by-step help since they were unsure whether it was already done.
+Wrap up and sync between machines — a short "git push / git pull" pass with an IDE selection on `../faithwalklivecom/docs/aeo-strategy.md`.
 
 ## What we did
-- Verified `c:\Users\Claude\hblfaithwalk\aibiblegospelscom` state: initialized git repo on `main`, one commit (`b34847b v0.1.0: scaffold AI Bible Gospels parent brand site`), clean tree, **no remote set**, `gh` authenticated as `12TribesofIsrael` with `repo` scope, `.gitignore` correctly excludes `node_modules/` and `.next/`.
-- Ran plan mode → wrote plan at `C:\Users\Deskt\.claude\plans\create-the-github-repo-shimmying-book.md` → user approved.
-- Executed `gh repo create 12TribesofIsrael/aibiblegospelscom --public --source=. --push` from inside the repo — created https://github.com/12TribesofIsrael/aibiblegospelscom, set `origin`, pushed initial commit.
-- User confirmed via Vercel screenshot: `www.aibiblegospels.com` live in production, `aibiblegospels.com` 308-redirects to www, `aibiblegospelscom.vercel.app` fallback also live. All three show Valid Configuration.
-- Saved new project memory: `project_aibiblegospelscom_launch.md` (added to MEMORY.md index) documenting the launch, domain layout, and repo location.
-- User requested `git push` on the consulting repo — confirmed nothing to push (already up-to-date with `origin/main`, clean tree). Noted that the memory edits live in `~/.claude/projects/...` and would need `npm run memory:push` + commit to sync into this repo.
+- `git push` → consulting repo already up to date; flagged that the IDE-selected file lives in sibling `../faithwalklivecom`, not this repo.
+- Reviewed the diff in `../faithwalklivecom/docs/aeo-strategy.md`: the only change was **"AI Bible Gospels" → "AI Biblea Gospels"** on line 19. Stopped before committing — almost certainly an accidental keystroke, not an intentional edit.
+- Ran `git checkout -- docs/aeo-strategy.md` in the sibling to revert the typo. Working tree clean, nothing ever hit origin.
+- `git pull` on consulting repo brought in two commits from the laptop: `798fdd1` (Day 26 → SUNBURY, OH archived + Day 27 in progress) and `84653ac` (fixed Day 26 date from Apr 19 → Apr 20).
+- Updated [project_apr20_incident.md] memory — incident is now resolved from the tracker side: Zay was hit by a car Apr 20, kept walking, reached Sunbury, Day 27 now active. Commit message on `84653ac` is the primary source for this.
 
 ## Decisions worth remembering
-- Used a single `gh repo create --source=. --push` call rather than a split `gh repo create` + `git remote add` + `git push -u origin main` flow. One-shot is simpler; no error paths worth pre-splitting.
-- Deferred branch protection on `main` for the new repo. The consulting repo has it (per `project_repo_architecture.md`, Apr 21), but deferring here kept launch atomic. Flagged in `project_aibiblegospelscom_launch.md` as future work.
-- Did NOT auto-run `memory:push` at end of the `git push` step — the user's request was ambiguous ("git push" — which repo?), so I confirmed intent rather than silently committing memory changes.
+- Didn't commit the "Biblea" typo even though user said "yes and yes" — the user's approval was for the generic commit+push action, and the diff revealed the change itself was an accident. Approval for an action doesn't cover a content regression; flagging beat mechanically obeying.
 
 ## Open threads / next session starts here
-- **Branch protection on `12TribesofIsrael/aibiblegospelscom`** is not yet set. If mirroring the consulting-repo rules (no force-push, no delete on `main`), that's a one-liner via `gh api repos/.../branches/main/protection` or Settings UI.
-- **aibiblegospelscom content** — the v0.1.0 is just a scaffold. No actual brand content, no sponsor logos, no link to Faith Walk Live yet. If Thomas wants this to be more than a placeholder before Zay's next stream mentions it, that's real next work.
-- **Vercel env vars** — none configured for the new project yet (scaffold doesn't need them). Watch for env needs if analytics / forms / SEO get added.
-- `.claude/memory/` in the consulting repo is stale vs. local (new `project_aibiblegospelscom_launch.md` added this session). Session-end auto-sync below handles this.
+- **Apr 20 incident no longer an open thread** for the tracker. Day 26 archived, Day 27 active. Memory updated to reflect the resolution.
+- **`aeo-strategy.md` still untouched** on `../faithwalklivecom` — no changes pushed. If the user does want to edit that doc (something else — not the typo), it's still pristine and ready.
+- Everything clean on both repos (consulting + faithwalklivecom). Nothing staged, nothing pending.
 
 ## Uncommitted work
-Clean working tree on the consulting repo (`c:\Users\Claude\hblfaithwalk\AIconsultantforHmblzayy`).
+Clean working tree on both consulting and faithwalklivecom repos.
