@@ -12,3 +12,4 @@
 - [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues
 - [Book project](project_book.md) — Apr 19 Zay asked Thomas on stream to write a book; two-repo split (this = source material, `../faithwalkbook` = private book + chapters)
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
+- [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
