@@ -1,6 +1,6 @@
 ---
 name: ShuggC back channel opened Apr 17
-description: ShuggC back channel timeline — call, DM exchange, OBS overlay SHIPPED TO PRODUCTION Apr 18 at faithwalklive.com/obs
+description: ShuggC back channel timeline — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed
 type: project
 originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 ---
@@ -49,6 +49,13 @@ originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 **Apr 19:** No reply from ShuggC since Apr 18 overlay delivery (~24+ hrs silence). Overlay is shipped to prod at `faithwalklive.com/obs?bare=1` regardless. Thomas holding posture — no follow-up nudge yet, letting the work sit. Day 25 was a rest day on the walk which may mean no stream usage attempt yet.
 
 **Apr 20 (Day 26 stream check):** Visited live stream — overlay is NOT in use. Layout is camera-first (chest-cam full-bleed) with text widgets (timer top-right, "REST CHECKPOINT IN..." / "MILES TO..." cards bottom). `faithwalklive.com/obs` not adopted as background or as a corner widget. Thomas's call: leave it alone, no nudge — work is shipped, ball is in ShuggC's court. Don't pitch a corner-widget variant or message ShuggC about it unless he raises it first.
+
+**Apr 22 — gatekeeping confirmed, direct-channel executed:** Overlay still untouched on stream 4 days after delivery. User declared "Gatekeeping again" and pivoted to go direct to Zay. Zay was at Ohio State rest day, chill on Twitch with mods present. Decision tree:
+- Stream chat in front of mods = worst channel — ShuggC almost certainly watching or is a mod; public pitch there reads as calling out gatekeeping in front of the room.
+- IG DM = chosen channel. Sent Apr 22 as AI_BIBLE_GOSPELS (handle already visible in Zay's chat). Copy framed as AI Bible Gospels delivering *to* him, "no strings", link to faithwalklive.com/obs, NO tech jargon (first draft said "for your OBS" → stripped because that routes back to ShuggC).
+- Text message on standby — user believes he has Zay's cell from past family work. Hold 24-48h before sending; second-channel too soon flips "gift" → "please respond".
+
+**Status as of Apr 22 end:** IG DM sent. Awaiting any signal (chat shoutout, overlay appearing on stream, reply). Text holstered. Dual-track fully live — ShuggC channel still open but de-prioritized; Zay-direct is now the active play.
 
 ## Strategic notes
 

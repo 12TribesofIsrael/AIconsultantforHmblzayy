@@ -11,7 +11,9 @@
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
 - [Anointed Bible Video Maker](user_anointed_bible_video_maker.md) — Thomas's AI product (pick scripture → generate cultural-perspective narrated video); the "play" pitched to Zay, destined for aibiblegospels.com
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
-- [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call + DM, Apr 18 OBS overlay shipped to prod at faithwalklive.com/obs, IP domains secured, dual-track continues
+- [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed, text on standby
+- [No tech jargon (Zay)](feedback_no_tech_jargon_zay.md) — Strip "OBS"/tech words from Zay-facing copy; routes message back to ShuggC
+- [No channel double-tap](feedback_no_channel_double_tap.md) — Wait 24-48h between outreach channels; back-to-back flips "gift" → "please respond"
 - [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
 - [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; Zay's Walk turned struggle → pedal-to-metal. Numbers need reconciliation before book quotes them.
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
