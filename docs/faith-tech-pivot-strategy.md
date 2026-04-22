@@ -1,7 +1,7 @@
 # Faith Walk Live + Faith-Tech Pivot — v1 Strategy
 
 **Created:** Apr 15, 2026
-**Owner:** Thomas (Technology Gurus LLC)
+**Owner:** Thomas (AI Bible Gospels)
 **Status:** Active — Phase 1 starting now
 
 ---
