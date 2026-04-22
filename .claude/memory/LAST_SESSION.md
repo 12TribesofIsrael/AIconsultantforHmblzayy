@@ -1,31 +1,32 @@
 ---
-ended: 2026-04-22T04:25:00Z
-project: ZayAutomations
+ended: 2026-04-22T23:00:00Z
+project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.7.0
-originSessionId: c3e99340-881e-4f1c-9b9d-53f92d7c983c
+originSessionId: da6765c0-da05-43db-aeb0-70f79f96d375
 ---
-# Last Session — 2026-04-22
+# Last Session — 2026-04-22 (Day 27 archive + Day 28 rest)
 
 ## What the user wanted
-Two quick fixes on the Faith Walk tracker: attach a specific Twitch clip for Day 27's "W COLUMBUS" Ohio milestone, and fix the missing Day 25 rest card on faithwalklive.com (it renders on GitHub Pages but disappeared on the Next.js site). Then update memory so the logic gap doesn't bite again.
+Archive Day 27 and log Day 28 as a rest day — Zay streaming "DAY 28 | OHIO STATE📍" but not walking today. Had to first close out the Day 27 in-progress state left over from the Apr 20 incident / Apr 21 Columbus push.
 
 ## What we did
-- **Day 27 clip attach.** Verified `LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX` via Twitch GQL (title: "W COLUMBUS", createdAt 2026-04-21T20:38:51Z, 25 views). Since Day 27 is still in-progress and not yet archived, stored the URL as `inProgressClip` on the Day 26 carrier checkpoint — it'll promote to Day 27's `clip` on rollover via [scripts/update-tracker.js:141-148](scripts/update-tracker.js#L141-L148). Commit `0d3dbdf` on consulting repo.
-- **Day 25 rest card fix on faithwalklive.** Root cause: [MapClient.tsx:153](../faithwalklivecom/src/components/MapClient.tsx#L153) iterated `walking` (filtered `!restOnly`), so historical `restOnly` entries vanished unless they happened to be the very last entry (caught by `restOnlyAsNow` NOW-card path). Fixed by iterating all `checkpoints`, branching on `c.restOnly` to render a compact secondary card. Count formula updated to `checkpoints.length + (hasRestDayCard ? 1 : 0)`. Commit `87c914b` on faithwalklivecom.
-- **Vercel deploy failure excavation.** Pushed the fix, user reported still broken. Queried GitHub Deployments API — every deploy since `dccd44f` (v0.6.0, ~6 hrs earlier) had been silently failing. Root cause: [twitter-image.tsx](../faithwalklivecom/src/app/twitter-image.tsx) re-exported route-segment-config fields (`runtime`, `alt`, `size`, `contentType`) from `opengraph-image.tsx`. Next 16 Turbopack statically parses those — it can't follow re-exports. Fixed by inlining explicit `export const` in twitter-image.tsx; only `default` stays re-exported. Commit `50d6ce4` on faithwalklivecom.
-- **Verified live.** `WebFetch https://faithwalklive.com/map?v=50d6ce4` now reports `Checkpoints (27)` with Day 25 · REST visible at Mt. Vernon OH Apr 19. Day 27 in-progress clip "W COLUMBUS" also now live (the stack of 3 undeployed commits all shipped in one deploy).
-- **Memory updates.** Expanded [feedback_now_card_logic.md](feedback_now_card_logic.md) into two explicit sections: (A) NOW badge priority, (B) historical restOnly rendering rule. Created [feedback_verify_vercel_deploy.md](feedback_verify_vercel_deploy.md) documenting the GitHub Deployments API polling procedure, the Next 16 route-config re-export gotcha, and the WebFetch 15-min cache pitfall. MEMORY.md hook updated. Consulting repo commit `ed1fd78`, then memory-sync follow-up `1fb0702`. All pushed.
+- Verified via Twitch GQL clips (LAST_WEEK, sort by CREATED_AT_DESC): Day 27 reached Columbus on Apr 21 — evidence clips "W COLUMBUS" 35v, "Columbus OSU" 23v, "500 miles in" 20v, "CLOSE ONE THERE LOL" 58v. Apr 20 car-hit incident did not halt the walk.
+- Promoted Day 26's in-progress Day 27 → Columbus, OH arrival. Miles = 523 + 27 (estimatedSegmentMiles) = 550, marked `estimatedMiles: true`. Clip: `LachrymoseTenuousCoyoteMau5` (W COLUMBUS, 35v, Apr 21).
+- Annotated Day 27 checkpoint with `restDay: true, inProgressDay: 28, restDayDate: "Apr 22, 2026"` per rest-day pattern.
+- One-shot via inline `node -e` (temp script was created then removed; inline avoided the uncommitted-changes guard in `syncWithRemote`).
+- Commit `5899396` "Faith Walk: Day 27 → Columbus, OH (~550 mi est), Day 28 rest day" — pushed to origin + mirrored to sibling `faithwalklivecom` (Vercel redeploying).
+- Updated memory `project_apr20_incident.md` to mark incident fully resolved — Day 27 closed, Day 28 at rest in Columbus, no route/pace impact.
 
 ## Decisions worth remembering
-- Stored the Day 27 clip as `inProgressClip` (not by creating a premature Day 27 entry, and not by extending `update-tracker.js`). Minimal change; natural promotion path on rollover.
-- Discarded an accidental `package-lock.json` mutation in faithwalklivecom (from `npm install` needed for local build verify). Only the MapClient change + the twitter-image fix got committed.
-- Did not touch the GitHub Pages tracker HTML — its rest-only rendering was already correct; faithwalklive needed to match it, not vice versa.
+- Kept `estimatedMiles: true` on Day 27 since we didn't have a confirmed arrival mileage from Zay — only geocoded segment estimate. The manual `update-tracker.js --miles` path clears that flag; we intentionally did not.
+- Title "OHIO STATE📍" is not parseable as a rest marker (no "REST DAY" text) — `tracker:from-title` would no-op. Authoritative source was the user's "not walking today" confirmation, corroborated by the Day 27 Columbus clip evidence.
 
 ## Open threads / next session starts here
-- **Day 27 archival is still pending.** As of 2026-04-21T20:15Z it was in-progress Sunbury → Columbus, 24 mi remaining. Running `npm run tracker:from-title` or `tracker:update --day 27 --location "Columbus, OH" --miles ...` will promote both the day and the stashed `inProgressClip` ("W COLUMBUS").
-- **Apr 20 incident** (see [project_apr20_incident.md](project_apr20_incident.md)) — Day 26 may involve a vehicle incident; verify before promoting Day 27 or adjusting Day 26.
-- **If faithwalklive renders break again**, the new [feedback_verify_vercel_deploy.md](feedback_verify_vercel_deploy.md) has the `gh api repos/.../deployments` polling snippet. Don't trust `git push` → live.
+- If Zay changes the Twitch title to include "REST DAY", the rest annotation is already set — `tracker:from-title` will be a no-op.
+- When Day 29 walking resumes, `tracker:from-title` will archive Day 28 as `restOnly` entry (Columbus, OH, Apr 22) and begin in-progress on the Day 27 walking checkpoint, matching the pattern used for Days 19 and 25.
+- Day 27 mileage is still estimated (~550). If Zay confirms an exact total, run `npm run tracker:update -- --day 27 --location "Columbus, OH" --miles <actual>` to clear the flag.
+- Book project (Ch 1 draft on `faithwalkbook`, weight-loss memoir pivot) was NOT touched this session — prior session's open threads (Ch 1 Thomas read, Ch 2 Lockin, Town Hall shoutout, NEED-FROM-YOU Priority 6) still stand.
 
 ## Uncommitted work
 Clean working tree.
