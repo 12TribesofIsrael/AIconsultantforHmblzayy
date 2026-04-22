@@ -3,7 +3,7 @@
 - [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
-- [NOW card logic](feedback_now_card_logic.md) — Priority: active rest > archived-rest-ahead-of-walking > latest walking. Never render in-progress walking days as cards.
+- [NOW card + restOnly rendering](feedback_now_card_logic.md) — NOW priority (active rest > restOnly-ahead-of-walking > latest walking) AND every restOnly entry MUST render as a compact card. GH Pages + faithwalklive must agree.
 - [Present only optimal](feedback_present_only_optimal.md) — Don't surface A/B menus when I already know which wins. Recommend and ship; only present options when user explicitly asks or trade-offs genuinely require their call.
 - [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
@@ -18,3 +18,4 @@
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
 - [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27
 - [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
+- [Verify Vercel deploy after push](feedback_verify_vercel_deploy.md) — Poll GitHub Deployments API to confirm Vercel build succeeded; don't trust push→live. Next 16 route-config fields can't be re-exported.
