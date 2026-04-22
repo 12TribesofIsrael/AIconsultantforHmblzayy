@@ -1,35 +1,38 @@
 ---
-ended: 2026-04-22T23:59:00Z
+ended: 2026-04-22T23:00:00Z
 project: ZayAutomations
 branch: main
 version: v2.7.0
-originSessionId: fa4be6e3-2643-4aac-b588-8c4ca0ef9554
+originSessionId: a945e8e0-f303-4cf7-a73e-fd19f212f287
 ---
 # Last Session — 2026-04-22
 
 ## What the user wanted
-Strategic read on whether to introduce Faith Walk Live to Zay directly today — he's at Ohio State rest day, chilling on Twitch with mods present — or keep waiting on ShuggC. Turned into an execution session: drafted, sent the direct-to-Zay IG DM, and set text on standby.
+Finish shipping Phase B AEO work (Google Search Console + Bing Webmaster verification and sitemap submission) for faithwalklive.com, then in the middle of it discovered the decommissioned LLC "Technology Gurus LLC" was still surfacing in public copy — pivoted to full scrub across every sibling repo before answer engines started citing the dead entity.
 
 ## What we did
-- Diagnosed the situation: overlay sitting untouched at `faithwalklive.com/obs` for 4 days despite Apr 18 delivery → gatekeeping by ShuggC confirmed.
-- Ruled out stream chat as the channel (ShuggC likely watching or is a mod — public pitch in front of mods = calling out gatekeeping in front of the room).
-- Drafted two messages: IG DM (as `AI_BIBLE_GOSPELS`, handle visible in Zay's chat) + backup text (leveraging old connection — Zay did work for Thomas's family years back, user *thinks* he has the cell number).
-- Caught + fixed "OBS" in DM draft mid-conversation — that word would have routed the message back to ShuggC (Zay's not the tech guy). Stripped to "updates real-time. It's yours."
-- User sent the IG DM. Read receipts off on Zay's end so no confirmation of read.
-- Advised HOLD on the text: 24-48h minimum before second-channel touch; back-to-back flips "gift delivered" → "please respond".
-- No code changes. `git status` clean throughout.
+- Added GSC HTML verification file at `faithwalklivecom/public/google5a916fab341fe7e9.html` (commit `3cf647e`) + apex-only caveat (www has no TLS cert). User completed GSC auto-verify; sitemap was already submitted from Apr 17 (6 pages discovered, Status: Success).
+- Bing Webmaster: user verified property + submitted `https://faithwalklive.com/sitemap.xml` (initial status: Processing, flips to Success in ~48hr).
+- Scrubbed "Technology Gurus LLC" from 3 PUBLIC repos (GitHub public → SEO-indexable):
+  - **faithwalklivecom** commit `b4a6e15` — `public/llms.txt` (highest priority, feeds answer engines directly), CLAUDE.md, 3 docs
+  - **aibiblegospelscom** commit `df9a44f` — `public/llms.txt` (had a dedicated entity entry declaring the LLC as "the legal entity behind AI Bible Gospels"), homepage footer `src/app/page.tsx` L234, README, CLAUDE.md
+  - **AIconsultantforHmblzayy** commit `65aff46` — `docs/faith-tech-pivot-strategy.md`, memory file `user_aibiblegospels.md`
+  - JSON-LD structured data in `faithwalklivecom/src/app/layout.tsx` was already clean — never referenced the LLC.
+- Swapped contact email on aibiblegospels.com from `technologygurusllc@gmail.com` → `aibiblegospels444@gmail.com` (user's temporary branded Gmail): aibiblegospelscom commit `2f68ad1` covering mailto + visible email + llms.txt contact line + CLAUDE.md.
+- Added `https://faithwalklive.com` + `https://aibiblegospels.com` to README headers of both **AIconsultantforHmblzayy** (commit `a97f522`) and **faithwalklivecom** (inside commit `c292c25`) — entity-consistency signal for AEO.
+- Closed 4 of 6 Phase B entity-consistency checklist items in `faithwalklivecom/docs/aeo-strategy.md`: GSC, Bing, GitHub READMEs, LinkedIn.
+- All Vercel deploys verified via GitHub Deployments API polling + live WebFetch cache-bust (`?v=<sha>`) confirmed each production surface updated.
 
 ## Decisions worth remembering
-- **Direct-to-Zay play is now the active track, not a backup.** After 4 days of overlay sitting untouched, the ShuggC channel is de-prioritized. Dual-track fully live: ShuggC channel stays open but we don't expect movement there.
-- **Framing: AI Bible Gospels delivers *to* Zay, not Thomas asks *from* Zay.** "It's yours, no strings" — removes catch-reflex.
-- **No tech jargon in any Zay-facing copy.** Strip OBS, browser source, etc. (new feedback memory captures this.)
-- **No double-tap across channels within same day.** New feedback memory captures this.
+- Scrubbing the LLC did NOT touch the existing `technologygurusllc@gmail.com` email inside memory or as a mailto on surfaces I hadn't been told to swap — it's the user's working inbox. Only swapped what user explicitly green-lit (aibiblegospels.com contact CTA).
+- Flagged but did NOT auto-execute a permanent `hello@aibiblegospels.com` Google Workspace alias — user chose `aibiblegospels444@gmail.com` "for now." Recommended the Workspace alias as the long-term move for entity-consistency signal.
+- When the WebFetch 15-min cache returned stale responses post-deploy, used `?v=<commit-sha>` cache-bust on the public URL instead of the Vercel preview URL (preview URLs are auth-gated behind deployment protection).
 
 ## Open threads / next session starts here
-- **Watch for DM signal:** (1) Zay shouts out AI Bible Gospels or the map in chat, (2) `faithwalklive.com/obs` appears on the stream overlay, (3) DM reply. Any of those = landed. None by ~Apr 24 = send the text as second touch with a soft excuse ("wasn't sure IG was the right channel").
-- **Text copy is already drafted and in the chat log** — pull from conversation history if needed, no need to re-draft.
-- **Cell number unconfirmed** — user said "at least I think it is." If text goes out and bounces / wrong person, that's fine; the AI Bible Gospels + faithwalklive.com mention is still a clean brand touch even to a stranger.
-- **Day 27 (Columbus, OH) logged, Day 28 rest day annotated** — no tracker work outstanding this session. Apr 20 incident memory still live; Day 26 archival verification still pending when that lands.
+- **YouTube Phase B tasks** (user said "will do youtubes later"): add `https://faithwalklive.com` to (1) @AIBIBLEGOSPELS channel About page, (2) every video description. When user confirms done, close checkboxes around `faithwalklivecom/docs/aeo-strategy.md` L89-90.
+- **Bing sitemap "Processing" → "Success"**: within 24-48hr Bing should show URL count similar to GSC (6 pages). Not blocking.
+- **Permanent branded email migration**: `aibiblegospels444@gmail.com` is stated as temporary. When user sets up Workspace or migrates to `hello@aibiblegospels.com`, update same 3 surfaces on aibiblegospelscom: `src/app/page.tsx` (mailto + visible), `public/llms.txt` contact line, `CLAUDE.md` section description.
+- **Durable memory saved**: `feedback_technology_gurus_llc_decommissioned.md` — future sessions should NEVER reintroduce the old LLC anywhere in public copy, SEO, AEO, JSON-LD, or docs.
 
 ## Uncommitted work
 Clean working tree.
