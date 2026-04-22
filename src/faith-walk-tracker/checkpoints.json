@@ -239,14 +239,20 @@
     "miles": 523,
     "date": "Apr 20, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/ConcernedLittlePandaRlyTho-k4xtSLp2FVWuAKO3",
-    "destinationLat": 39.9622601,
-    "destinationLng": -83.0007065,
-    "destination": "COLUMBUS, OH",
-    "inProgressDay": 27,
-    "milesRemaining": 24,
-    "estimatedSegmentMiles": 27,
-    "inProgressStartedAt": "2026-04-21T20:15:48.007Z",
-    "inProgressClip": "https://www.twitch.tv/hmblzayy/clip/LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ConcernedLittlePandaRlyTho-k4xtSLp2FVWuAKO3"
+  },
+  {
+    "day": 27,
+    "location": "Columbus, OH",
+    "lat": 39.9622601,
+    "lng": -83.0007065,
+    "miles": 550,
+    "date": "Apr 21, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX",
+    "restDay": true,
+    "inProgressDay": 28,
+    "inProgressStartedAt": "2026-04-22T14:57:53.563Z",
+    "restDayDate": "Apr 22, 2026"
   }
 ]
