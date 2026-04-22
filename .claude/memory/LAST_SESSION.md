@@ -1,43 +1,38 @@
 ---
-ended: 2026-04-22T01:45:00Z
-project: ZayAutomations — AI Consulting for Minister Zay / HMBL
+ended: 2026-04-22T00:00:00Z
+project: ZayAutomations / Faith Walk Live
 branch: main
-version: v2.7.0
-originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
+version: v2.7.0 (consulting) / v0.6.0 (faithwalklive)
+originSessionId: c1062ace-566c-45fc-b588-3d994800ee10
 ---
-# Last Session — 2026-04-21 (late desktop, book-project deep dive)
+# Last Session — 2026-04-22
 
 ## What the user wanted
-Two arcs, back-to-back:
-1. Stand up the GitHub repo for `aibiblegospelscom` and confirm the Vercel deploy.
-2. **Pivot the book.** Originally framed as a three-pillar "two parallel journeys" book. During the session it became the weight-loss memoir Zay specifically asked for, with the Faith Walk as the catalyzing backdrop. Ended with Ch 1 drafted and pushed to the private `faithwalkbook` repo.
+Audit current AEO/SEO state across the faith-tech properties, then ship the highest-leverage remaining technical items on faithwalklive.com before moving to the parent brand site.
 
 ## What we did
-- **aibiblegospelscom repo created and deployed.** Ran `gh repo create 12TribesofIsrael/aibiblegospelscom --public --source=. --push`; initial commit `b34847b` live. User confirmed via Vercel screenshot that www.aibiblegospels.com + apex 308 redirect + `.vercel.app` are all Valid Configuration. Memory: `project_aibiblegospelscom_launch.md`.
-- **Cross-repo pull/push sweep.** Pulled `514f163` (checkpoint sync) into faithwalklivecom. Verified all four siblings clean.
-- **Shoutout VOD retrieval attempted and ruled out.** Queried Twitch GQL for `hmblzayy` videos — Apr 18 + Apr 19 are missing from the archive (rest-day stream didn't auto-archive). Only 3 clips from Apr 19 exist, all evening, none capture the shoutout. Installed ffmpeg-static via npm (`/tmp/ff/node_modules/ffmpeg-static/ffmpeg.exe`) while investigating but didn't need it for the VOD pipeline. Memory: `project_shoutout_window.md` updated to reflect paraphrase-primary.
-- **Captured the shoutout paraphrase in Thomas's voice.** `../faithwalkbook/personal/shoutout/paraphrase.md` — Apr 19 rest-day stream, Thomas's two chat messages (the "play" + "down 10, 27 to go"), Zay's verbatim *"Yo, AI Bible Gospel — I want you to write a book, document how you lost your weight"*, Thomas's *"say less"*. Most important finding: **the misread is the core Ch 9/10 beat** — Thomas pitched the Anointed Bible Video Maker, Zay heard weight-loss book, Thomas accepted the redirect. Memory: `user_anointed_bible_video_maker.md` added (product is destined for aibiblegospels.com).
-- **Weight journey canonical numbers locked** via the context/ folder Thomas dropped: handwritten log (9/1/22 230 lb → 12/11/23 200 lb across lose-gain cycles) + 30-Day Lockin group text (Mar 25, 2026, 203 lb start, sent to ~16 brothers) + Smart Fitness Scale walkthrough video (Mar 20-Apr 20 shows 211.4 → 203.1, −8.3 lb in 31 days). Memory: `user_weight_struggle.md` rewritten as canonical source — 230 peak, 203.1 current (4/20/26), 175 goal, 26.9 down / ~28 to go; any prose cites these only.
-- **Book framing pivoted** from three-pillar parallel-journey to weight-loss memoir. Memory `project_book.md` rewritten. Thomas explicitly endorsed: *"let's go ahead and run with that."* Preserved: line 15 thesis (*"walk alongside someone on mission"*), Three Pillars (repositioned as through-lines, not structure), four-act bones. Title locked: **Three Thousand Miles, Thirty Plus Pounds Lost**.
-- **Outline v2 written** in faithwalkbook repo. 12 chapters, 4 acts (Pattern → Convergence → Naming → Finish Line). New Appendix E: the Weight Log (handwritten + scale + Lockin texts).
-- **Chapter 1 drafted** at `../faithwalkbook/chapters/ch01-the-pattern.md` (~1,700 words, first-person, five scenes, zero preachy). Opens on 9/1/22 at 230 lb with the sad face, walks the 3.5-year lose-gain on paper and scale, lands on the night before the Lockin text with Thomas at 203 lb. Hands off cleanly to Ch 2.
-- **Committed + pushed the book work.** Commit `47ccaaf` on `12TribesofIsrael/faithwalkbook` contains: outline v2, Ch 1 first draft, personal/shoutout/ (paraphrase + retrieval doc), context/ receipts (video + images + Lockin texts). Added `.gitignore` entry for `context/frames/` (derived analysis artifacts from ffmpeg).
+- Scanned all three repos. faithwalklivecom had Phase A SEO (Apr 17, v0.4.0) + Phase A AEO (Apr 21) already shipped — sitemap.ts, robots.ts, metadataBase, OG+Twitter cards, per-page metadata on 6 routes, JSON-LD entity graph (Organization/Person/WebSite/Event) in `src/app/layout.tsx`, FAQPage schema with 14 Q&As at `/faq`, `public/llms.txt`, AI crawler allowlist (GPTBot/ClaudeBot/PerplexityBot/Google-Extended/Applebot-Extended/CCBot). Strategy docs at `docs/seo-strategy.md` + `docs/aeo-strategy.md`.
+- aibiblegospels.com is only a v0.1.0 scaffold — and the repo isn't cloned on this Owner machine (it's at `c:\Users\Claude\hblfaithwalk\aibiblegospelscom` on the other laptop). Can't edit from here.
+- Shipped v0.6.0 on faithwalklivecom (commit `dccd44f`):
+  - `src/app/opengraph-image.tsx` — 1200×630 branded share card via `next/og` ImageResponse (dark navy gradient, gold beacon, "3,000 miles on faith." headline, faithwalklive.com / Built by AI Bible Gospels footer). Edge runtime.
+  - `src/app/twitter-image.tsx` — mirrors OG (later fixed — see below).
+  - `src/app/icon.tsx` (32×32) + `src/app/apple-icon.tsx` (180×180) — branded gold-beacon-on-navy, replacing the stock Next.js favicon.ico (confirmed default via git log before deletion).
+  - FAQPage JSON-LD in `src/app/(site)/faq/page.tsx` now carries `SpeakableSpecification` with `cssSelector: [".faq-q", ".faq-a"]`; `<dt>` / `<dd>` elements got matching classes.
+- Bookkeeping: bumped faithwalklivecom CLAUDE.md + CHANGELOG.md to v0.6.0, checked off OG/favicon in seo-strategy.md, moved Speakable from Phase C to Phase A in aeo-strategy.md.
+- Committed a separate pre-existing WIP on `src/app/(site)/why/page.tsx` (h3→h2 with brand-cloud styling) as `fc0a711`. Flagged first so it didn't get silently bundled into the v0.6.0 commit.
+- While off-session, user landed `50d6ce4` — critical Next 16 turbopack fix. Route-segment config fields (`runtime`, `alt`, `size`, `contentType`) cannot be re-exported via `export { ... } from "./opengraph-image"`; they must be declared as explicit `export const`. This had been silently failing EVERY Vercel build since v0.6.0 landed — meaning Day 27 clip (`353852a`) and Day 25 restOnly card fix (`87c914b`) never reached production until `50d6ce4` went in. Bug only manifests on Vercel turbopack build, not local.
 
 ## Decisions worth remembering
-- **Memoir is the book, not the parallel-journey frame.** Zay specifically said "document how you lost your weight." Thomas's lifelong weight struggle predates Zay by years; the Lockin text went out 12 days before Zay's walk started. Zay is the *catalyst*, not the *origin*. Every chapter should frame from Thomas's POV, not Zay's.
-- **Line 15 is load-bearing.** Preserve verbatim through outline rewrites: *"The book is not a hagiography of Zay and not a brag sheet for Thomas..."* Functions as the book's inside-cover sentence. Thomas's interrupted memory-save of `book_thesis_line.md` was superseded by the full outline rewrite which contains this line in the Premise section.
-- **Don't commit derived analysis artifacts.** `context/frames/` (40 PNG frames extracted from Video.mov) were gitignored + unstaged before the push — sources only, not derivatives.
-- **aibiblegospelscom branch protection deferred.** Scaffold-only, no content yet.
-- **Twitch VOD retrieval is dormant, not dead.** Pipeline docs kept in `personal/shoutout/README.md` as a fallback if ShuggC ever surfaces a local recording. Don't waste time re-attempting unless someone produces a new source.
+- Used Next.js file conventions (opengraph-image.tsx / twitter-image.tsx / icon.tsx / apple-icon.tsx) over static PNGs — zero image-generation tooling needed, auto-wires `og:image` across every page, and easy to iterate design without re-exporting assets.
+- Deleted `favicon.ico` outright (after confirming it was Next's stock 25KB default via `git log --all -- src/app/favicon.ico`) rather than keeping both favicon.ico and icon.tsx — cleaner, no precedence confusion.
+- Speakable cssSelector pair `[".faq-q", ".faq-a"]` (not a single wrapper) — voice assistants read Q and A as paired units rather than one long block.
+- Left the pre-existing `why/page.tsx` WIP unstaged rather than bundling it into the AEO/SEO commit — user confirmed the change was theirs by saying "commit" and it shipped as a separate clean commit.
 
 ## Open threads / next session starts here
-- **Ch 1 needs Thomas's read.** Voice/pacing/truthfulness check. Any invented details (bare feet on tile, the "8.60" margin note, the staircase-to-fed-up metaphor) need flagging if they don't match his real memory. Intake gap: specific past attempts, what gave out — needed before Ch 1 can go from "first draft" to "locked."
-- **Ch 2 — Thirteen Brothers and a Text** is the natural next draft. Lockin text is already a ready-made centerpiece; needs Thomas on who the 13-14 brothers are (even just how many responded in the first 48 hours, anyone who dropped out, anyone who's crushing it) + the night-before energy behind the decision.
-- **Town Hall shoutout still uncaptured.** Separate earlier event where Zay first said *"I remember who you is"* and credited Thomas for the tracker. Need: date, venue (Discord VC? Twitch? in-person?), attendees, exact words. This becomes Ch 8.
-- **NEED-FROM-YOU.md Priority 6** — positioning decisions still open: audience beyond "people trying to lose weight," format (print/ebook/audiobook), length target, publishing path (KDP self-publish vs pitch), finish timing (tied to Thomas hitting 175? or Zay hitting Cali? or standalone?), Zay's involvement level (foreword? draft review? veto?).
-- **Laptop resume:** `cd faithwalkbook && git pull` then `cd claude-memory-backup && npm run pull`. Commit `47ccaaf` is the target. If faithwalkbook isn't cloned on laptop yet, `gh repo clone 12TribesofIsrael/faithwalkbook` first.
-- **Bible Video Maker productization** is a separate track — destined for aibiblegospels.com but parked while the book is active. Don't let it bleed into book scope.
-- **Weight numbers reconciliation now locked** — no more "206 vs 203" ambiguity. Canonical source: `user_weight_struggle.md`. Any drift, pull from there.
+- **aibiblegospels.com parent brand has zero SEO/AEO**. When on the machine that has the repo cloned (`c:\Users\Claude\hblfaithwalk\aibiblegospelscom`), the natural next move is to replicate faithwalklive's Phase A foundation there — sitemap.ts, robots.ts (with AI allowlist), metadataBase, per-page metadata, OG image via `opengraph-image.tsx`, llms.txt, FAQPage with Speakable, entity JSON-LD for AI Bible Gospels. Use the Apr 22 Next 16 turbopack gotcha (explicit `export const` for route-segment config, no re-export) from day one.
+- **Remaining faithwalklive open items** from `docs/aeo-strategy.md` Phase C: `/about` page (or extend `/why`) with per-entity Person/Organization JSON-LD; per-state checkpoint pages (`/pennsylvania`, `/ohio`) once states complete, with Article schema; weekly walk-update posts with NewsArticle schema; `llms-full.txt` expanded version.
+- **Thomas-side SEO tasks** still open (he does these, not Claude): Google Search Console verify + sitemap submit, Bing Webmaster, update YouTube channel About with faithwalklive.com link, LinkedIn company page for AI Bible Gospels / Technology Gurus LLC, Reddit testimony post on r/Christianity.
+- **AEO monitoring**: run the monthly 5-prompt test suite (docs/aeo-strategy.md §"How to test AEO yourself") against ChatGPT/Claude/Perplexity/Gemini starting ~30 days post-FAQ launch, which is mid-May 2026. Log which engines cite faithwalklive.com.
 
 ## Uncommitted work
-Clean working tree on all four repos (consulting, faithwalklivecom, aibiblegospelscom, faithwalkbook).
+Clean working tree (both consulting and faithwalklivecom repos, both at origin/main).
