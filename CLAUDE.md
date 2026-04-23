@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.7.0**
+**Current Version: v2.7.1**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.7.1 | Apr 23, 2026 | Title parser accepts spelled-out state names (`LONDON, OHIO`) in addition to 2-letter codes (`LONDON, OH`). Day 29 title "26 MILES FROM LONDON, OHIO" was being rejected because the state-code group required exactly 2 uppercase letters. Regex widened to `{2,}`; Nominatim handles full state names fine. README gains a clear "Daily tracker workflow" section. |
 | v2.7.0 | Apr 21, 2026 | Book project scaffolding — `scripts/sync-book.js` + `scripts/lib/book-sync.js` mirror `book/source-material/` to private sibling `../faithwalkbook` repo (`npm run book:sync`). Apocrypha source PDF added at `docs/1611KjvW_apocrypha.pdf` for verse sourcing. CLAUDE.md gains a "Date / clip cross-reference (Twitch GQL)" section documenting the public clip query workflow for clip backfills + date verification against Twitch source-of-truth. |
 | v2.6.0 | Apr 19, 2026 | Auto-sync to faithwalklive.com — every `tracker:update` / `tracker:from-title` now mirrors `checkpoints.json` to the sibling `../faithwalklivecom` repo, commits, and pushes (Vercel redeploys). Stashes unrelated WIP in the public repo before rebasing, restores after. Best-effort: failures log a warning but never block the consulting commit. New `npm run faithwalk:sync` for manual one-shot sync. Day 24 Mt. Vernon OH (494 mi) confirmed, Day 25 rest annotated. |
 | v2.5.0 | Apr 18, 2026 | OBS stream overlay shipped to production at `faithwalklive.com/obs` — merged `feat/obs-overlay` → main on sibling `faithwalklive` repo. Full-bleed dark map + gold polyline + pulsing beacon, `?bare=1` hides stats, `?brand=0` hides AI Bible Gospels watermark. Also shipped `/live` UTM redirect for stream-overlay attribution. Delivered to ShuggC for OBS browser-source use. |

@@ -67,6 +67,7 @@ function fetchStreamTitle() {
 //   "DAY 17 | WALKING 3000 MILES → CALI 🌴 | 22 MILES FROM BEAVER FALLS, PA | FAITH WALK"
 //   "DAY 12 | 18 MILES FROM ALTOONA | FAITH WALK"
 //   "DAY 14 | LOCATION: TYRONE, PA | 214 MILES COMPLETED"
+//   "DAY 29 | 26 MILES FROM LONDON, OHIO | FAITH WALK"  (full state name also ok)
 //
 // Returns: { day, miles?, milesFromNext?, nearLocation?, location? } or null
 function parseStreamTitle(title) {
@@ -90,7 +91,7 @@ function parseStreamTitle(title) {
   // pipe separator, emoji, period). Optional state code is appended via
   // a separate group so geocoding doesn't hit a same-named city in the
   // wrong state.
-  const milesFromMatch = title.match(/(\d+)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2})?\s*(?=\||$|[^A-Za-z\s,])/i);
+  const milesFromMatch = title.match(/(\d+)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/i);
   if (milesFromMatch) {
     data.milesFromNext = parseInt(milesFromMatch[1]);
     data.nearLocation = (milesFromMatch[2].trim() + (milesFromMatch[3] || '')).trim();
@@ -102,7 +103,7 @@ function parseStreamTitle(title) {
     data.location = locationMatch[1].trim();
   } else if (!data.nearLocation) {
     // Fallback: bare "FROM CITYNAME"
-    const fromMatch = title.match(/FROM\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2})?\s*(?=\||$|[^A-Za-z\s,])/i);
+    const fromMatch = title.match(/FROM\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/i);
     if (fromMatch) {
       data.nearLocation = (fromMatch[1].trim() + (fromMatch[2] || '')).trim();
     }
