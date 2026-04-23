@@ -1,38 +1,37 @@
 ---
-ended: 2026-04-22T23:00:00Z
+ended: 2026-04-23T00:00:00Z
 project: ZayAutomations
 branch: main
 version: v2.7.0
-originSessionId: a945e8e0-f303-4cf7-a73e-fd19f212f287
+originSessionId: 35712c6b-7c63-43de-af50-b94506edbe4a
 ---
-# Last Session — 2026-04-22
+# Last Session — 2026-04-23
 
 ## What the user wanted
-Finish shipping Phase B AEO work (Google Search Console + Bing Webmaster verification and sitemap submission) for faithwalklive.com, then in the middle of it discovered the decommissioned LLC "Technology Gurus LLC" was still surfacing in public copy — pivoted to full scrub across every sibling repo before answer engines started citing the dead entity.
+Status-check on the SEO/AEO checklist for faithwalklive.com — verify what's actually live vs. what the strategy doc claims, then close any boxes that reality supports.
 
 ## What we did
-- Added GSC HTML verification file at `faithwalklivecom/public/google5a916fab341fe7e9.html` (commit `3cf647e`) + apex-only caveat (www has no TLS cert). User completed GSC auto-verify; sitemap was already submitted from Apr 17 (6 pages discovered, Status: Success).
-- Bing Webmaster: user verified property + submitted `https://faithwalklive.com/sitemap.xml` (initial status: Processing, flips to Success in ~48hr).
-- Scrubbed "Technology Gurus LLC" from 3 PUBLIC repos (GitHub public → SEO-indexable):
-  - **faithwalklivecom** commit `b4a6e15` — `public/llms.txt` (highest priority, feeds answer engines directly), CLAUDE.md, 3 docs
-  - **aibiblegospelscom** commit `df9a44f` — `public/llms.txt` (had a dedicated entity entry declaring the LLC as "the legal entity behind AI Bible Gospels"), homepage footer `src/app/page.tsx` L234, README, CLAUDE.md
-  - **AIconsultantforHmblzayy** commit `65aff46` — `docs/faith-tech-pivot-strategy.md`, memory file `user_aibiblegospels.md`
-  - JSON-LD structured data in `faithwalklivecom/src/app/layout.tsx` was already clean — never referenced the LLC.
-- Swapped contact email on aibiblegospels.com from `technologygurusllc@gmail.com` → `aibiblegospels444@gmail.com` (user's temporary branded Gmail): aibiblegospelscom commit `2f68ad1` covering mailto + visible email + llms.txt contact line + CLAUDE.md.
-- Added `https://faithwalklive.com` + `https://aibiblegospels.com` to README headers of both **AIconsultantforHmblzayy** (commit `a97f522`) and **faithwalklivecom** (inside commit `c292c25`) — entity-consistency signal for AEO.
-- Closed 4 of 6 Phase B entity-consistency checklist items in `faithwalklivecom/docs/aeo-strategy.md`: GSC, Bing, GitHub READMEs, LinkedIn.
-- All Vercel deploys verified via GitHub Deployments API polling + live WebFetch cache-bust (`?v=<sha>`) confirmed each production surface updated.
+- Headless verification of every Phase A AEO surface on https://faithwalklive.com:
+  - Homepage `@graph` JSON-LD: Organization (AI Bible Gospels) + Person (Minister Zay) + WebSite + Event all cross-referenced by `@id`, live and clean
+  - `/faq` FAQPage JSON-LD + SpeakableSpecification with `cssSelector: [".faq-q", ".faq-a"]` intact; 10 Q&As
+  - `/llms.txt` serving clean markdown, no LLC references
+  - `/robots.txt` lists all 11 AI bots (Googlebot, Google-Extended, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, PerplexityBot, Perplexity-User, Applebot-Extended, CCBot)
+  - `/sitemap.xml` 7 URLs, lastmod 2026-04-22
+  - `/google5a916fab341fe7e9.html` 200, correct GSC verification token
+- Surfaced gotcha: WebFetch strips `<script>` tags, so JSON-LD + Speakable schema need `curl --ssl-no-revoke` + grep to verify (Windows schannel requires `--ssl-no-revoke` to avoid `CRYPT_E_NO_REVOCATION_CHECK`)
+- Caught that `faithwalklivecom/docs/aeo-strategy.md` L93 claimed a "LinkedIn company page"; actual URL is a personal profile: `https://www.linkedin.com/in/ai-bible-gospels-049005353/`
+- User confirmed: YouTube @AIBIBLEGOSPELS channel About now links faithwalklive.com; per-video descriptions deferred
+- Committed `4ec4516` to faithwalklivecom/main: closed YouTube About box, corrected LinkedIn URL. Pushed. Polled GitHub Deployments API → Vercel production build `success`
 
 ## Decisions worth remembering
-- Scrubbing the LLC did NOT touch the existing `technologygurusllc@gmail.com` email inside memory or as a mailto on surfaces I hadn't been told to swap — it's the user's working inbox. Only swapped what user explicitly green-lit (aibiblegospels.com contact CTA).
-- Flagged but did NOT auto-execute a permanent `hello@aibiblegospels.com` Google Workspace alias — user chose `aibiblegospels444@gmail.com` "for now." Recommended the Workspace alias as the long-term move for entity-consistency signal.
-- When the WebFetch 15-min cache returned stale responses post-deploy, used `?v=<commit-sha>` cache-bust on the public URL instead of the Vercel preview URL (preview URLs are auth-gated behind deployment protection).
+- Skipped the "AEO baseline test loop" (5 prompts across ChatGPT/Claude/Perplexity/Gemini) — those engines are auth-gated, can't run headlessly; this stays a Thomas-executed task
+- Didn't push on the `/pennsylvania` state page build during this session — user's question was a status check, not a build request; also held back due to Apr 20 incident flag (walk posture may have changed)
 
 ## Open threads / next session starts here
-- **YouTube Phase B tasks** (user said "will do youtubes later"): add `https://faithwalklive.com` to (1) @AIBIBLEGOSPELS channel About page, (2) every video description. When user confirms done, close checkboxes around `faithwalklivecom/docs/aeo-strategy.md` L89-90.
-- **Bing sitemap "Processing" → "Success"**: within 24-48hr Bing should show URL count similar to GSC (6 pages). Not blocking.
-- **Permanent branded email migration**: `aibiblegospels444@gmail.com` is stated as temporary. When user sets up Workspace or migrates to `hello@aibiblegospels.com`, update same 3 surfaces on aibiblegospelscom: `src/app/page.tsx` (mailto + visible), `public/llms.txt` contact line, `CLAUDE.md` section description.
-- **Durable memory saved**: `feedback_technology_gurus_llc_decommissioned.md` — future sessions should NEVER reintroduce the old LLC anywhere in public copy, SEO, AEO, JSON-LD, or docs.
+- **Only remaining Phase B entity-consistency item:** link faithwalklive.com in every @AIBIBLEGOSPELS YouTube video description. When done, close checkbox at `faithwalklivecom/docs/aeo-strategy.md` L92
+- **AEO baseline test loop** not yet run: the 5 prompts in `faithwalklivecom/docs/aeo-strategy.md` L154-158 ("Who is walking 3,000 miles across America in 2026?" etc.) across ChatGPT/Claude/Perplexity/Gemini — Thomas executes
+- **Phase C buildables ready when greenlit:** (1) `/about` page or merge into `/why` with scoped Person/Organization JSON-LD, (2) `/pennsylvania` as the first per-state page (PA complete, template scales to OH/IN/IL as walk advances), (3) weekly walk-update posts w/ NewsArticle schema, (4) `llms-full.txt` — gated on prayer + subscribe backends shipping
+- **Passive waits:** Bing sitemap Processing → Success (submitted Apr 22, should have flipped by Apr 24); GSC AI Overview impressions (monitor once available)
 
 ## Uncommitted work
 Clean working tree.

@@ -22,3 +22,5 @@
 - [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
 - [Verify Vercel deploy after push](feedback_verify_vercel_deploy.md) — Poll GitHub Deployments API to confirm Vercel build succeeded; don't trust push→live. Next 16 route-config fields can't be re-exported.
 - [Technology Gurus LLC decommissioned](feedback_technology_gurus_llc_decommissioned.md) — Old LLC is dissolved; all branding uses "AI Bible Gospels" only. Never write the LLC into public copy, SEO, AEO, JSON-LD, or docs.
+- [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
+- [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
