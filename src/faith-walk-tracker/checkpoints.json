@@ -250,9 +250,21 @@
     "date": "Apr 21, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX",
-    "restDay": true,
-    "inProgressDay": 28,
+    "inProgressDay": 29,
     "inProgressStartedAt": "2026-04-22T14:57:53.563Z",
-    "restDayDate": "Apr 22, 2026"
+    "destinationLat": 39.8864493,
+    "destinationLng": -83.448253,
+    "destination": "LONDON, OHIO",
+    "milesRemaining": 26,
+    "estimatedSegmentMiles": 32
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 22, 2026",
+    "location": "Columbus, OH",
+    "lat": 39.9622601,
+    "lng": -83.0007065,
+    "miles": 550,
+    "day": 28
   }
 ]
