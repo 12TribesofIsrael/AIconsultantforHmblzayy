@@ -249,14 +249,7 @@
     "miles": 550,
     "date": "Apr 21, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX",
-    "inProgressDay": 29,
-    "inProgressStartedAt": "2026-04-22T14:57:53.563Z",
-    "destinationLat": 39.8864493,
-    "destinationLng": -83.448253,
-    "destination": "LONDON, OHIO",
-    "milesRemaining": 26,
-    "estimatedSegmentMiles": 32
+    "clip": "https://www.twitch.tv/hmblzayy/clip/LachrymoseTenuousCoyoteMau5-xWncMBvmFn7cA4bX"
   },
   {
     "restOnly": true,
@@ -266,5 +259,21 @@
     "lng": -83.0007065,
     "miles": 550,
     "day": 28
+  },
+  {
+    "day": 29,
+    "location": "LONDON, OHIO",
+    "lat": 39.8864493,
+    "lng": -83.448253,
+    "miles": 582,
+    "date": "Apr 22, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.9234046,
+    "destinationLng": -83.810138,
+    "destination": "SPRINGFIELD, OHIO",
+    "inProgressDay": 30,
+    "milesRemaining": 25,
+    "estimatedSegmentMiles": 25,
+    "inProgressStartedAt": "2026-04-24T19:57:21.102Z"
   }
 ]
