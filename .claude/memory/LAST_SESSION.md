@@ -1,37 +1,37 @@
 ---
-ended: 2026-04-23T00:00:00Z
+ended: 2026-04-24T20:00:00Z
 project: ZayAutomations
 branch: main
-version: v2.7.0
-originSessionId: 35712c6b-7c63-43de-af50-b94506edbe4a
+version: v2.8.0
+originSessionId: 69feff6c-de6b-4bfb-a262-f6d840e8b4ce
 ---
-# Last Session — 2026-04-23
+# Last Session — 2026-04-24
 
 ## What the user wanted
-Status-check on the SEO/AEO checklist for faithwalklive.com — verify what's actually live vs. what the strategy doc claims, then close any boxes that reality supports.
+Plan + blueprint the external social-distribution play for faithwalklive.com (since Zay's team isn't pushing the tracker), AND codify a standing rule so Claude doesn't skip ROI-research when Thomas introduces new concepts.
 
 ## What we did
-- Headless verification of every Phase A AEO surface on https://faithwalklive.com:
-  - Homepage `@graph` JSON-LD: Organization (AI Bible Gospels) + Person (Minister Zay) + WebSite + Event all cross-referenced by `@id`, live and clean
-  - `/faq` FAQPage JSON-LD + SpeakableSpecification with `cssSelector: [".faq-q", ".faq-a"]` intact; 10 Q&As
-  - `/llms.txt` serving clean markdown, no LLC references
-  - `/robots.txt` lists all 11 AI bots (Googlebot, Google-Extended, GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-Web, PerplexityBot, Perplexity-User, Applebot-Extended, CCBot)
-  - `/sitemap.xml` 7 URLs, lastmod 2026-04-22
-  - `/google5a916fab341fe7e9.html` 200, correct GSC verification token
-- Surfaced gotcha: WebFetch strips `<script>` tags, so JSON-LD + Speakable schema need `curl --ssl-no-revoke` + grep to verify (Windows schannel requires `--ssl-no-revoke` to avoid `CRYPT_E_NO_REVOCATION_CHECK`)
-- Caught that `faithwalklivecom/docs/aeo-strategy.md` L93 claimed a "LinkedIn company page"; actual URL is a personal profile: `https://www.linkedin.com/in/ai-bible-gospels-049005353/`
-- User confirmed: YouTube @AIBIBLEGOSPELS channel About now links faithwalklive.com; per-video descriptions deferred
-- Committed `4ec4516` to faithwalklivecom/main: closed YouTube About box, corrected LinkedIn URL. Pushed. Polled GitHub Deployments API → Vercel production build `success`
+- Mapped out the **remix / tag-back method** from `docs/remix.md` for Thomas's own use — 5 target creators (Zay @hmblzayy, Chrisean Rock, DW Flame, RG @officialreformedgangsta, Sadie Robertson Huff) with step-by-step Stitch/Duet/Remix/Quote execution per platform.
+- Ran **4-agent parallel ROI research** (Reddit, YouTube, X, case-study blogs) on driving social→external-site clicks. Findings:
+  - **Top 3 ROI tactics:** (1) IG Reels DM-automation via ManyChat = 12-18% CTR / 5-9× bio link; (2) IG Story Link Sticker mid-story w/ poll pairing = 0.5-3% CTR; (3) X video-in-body + link-in-first-reply (avoids 30-50% reach penalty — Buffer 18.8M-post study Mar 2025).
+  - **Flagged as hype:** QR codes on vertical video, remixes as direct click drivers, CTA voiceover scripts, YouTube Shorts pinned-comment links (disabled Aug 2023).
+- Reframed the funnel: remixes = FOLLOWER play (top of funnel), Story Sticker + DM flow = CLICK play (bottom). Sequential, not competing. Corrected user's assumption that remixes drive tracker clicks directly.
+- Added **Research protocol** section to CLAUDE.md. User edited it significantly: ASK-FIRST trigger ("Want me to run the 4-agent ROI check on this?"), 5 standard questions per agent, 4 separate reports stitched — not synthesized, ending with ship/reframe/skip recommendation.
+- Wrote **`docs/remix-overview.md`** — full blueprint: strategy, 5 targets, 3 ROI-ranked tactics, pre-built UTM scheme for Day 30, 5-block tomorrow-evening execution (~2.5 hrs), weekly ongoing workflow, $15/mo tool cost (ManyChat only), 6-week success metrics.
+- User committed as `b9c05a6` v2.8.0 and pushed to origin.
 
 ## Decisions worth remembering
-- Skipped the "AEO baseline test loop" (5 prompts across ChatGPT/Claude/Perplexity/Gemini) — those engines are auth-gated, can't run headlessly; this stays a Thomas-executed task
-- Didn't push on the `/pennsylvania` state page build during this session — user's question was a status check, not a build request; also held back due to Apr 20 incident flag (walk posture may have changed)
+- **ManyChat subscription on personal card** (user confirmed Apr 24).
+- **4-agent ROI check is opt-in, not auto-fire** — I ask first, user approves, then I run it. User edited the CLAUDE.md protocol to make this explicit.
+- **4-agent reports delivered stitched, not synthesized** — preserve channel-by-channel disagreement (Reddit skeptics ≠ YouTube evangelists is the feature, not the bug).
+- **Direct-to-site is NOT the highest-ROI structure** — Matt Gray / Pat Flynn funnels go short-form → DM/email capture → tracker + recap. DM-automation flow is the capture mechanism that completes the loop.
 
 ## Open threads / next session starts here
-- **Only remaining Phase B entity-consistency item:** link faithwalklive.com in every @AIBIBLEGOSPELS YouTube video description. When done, close checkbox at `faithwalklivecom/docs/aeo-strategy.md` L92
-- **AEO baseline test loop** not yet run: the 5 prompts in `faithwalklivecom/docs/aeo-strategy.md` L154-158 ("Who is walking 3,000 miles across America in 2026?" etc.) across ChatGPT/Claude/Perplexity/Gemini — Thomas executes
-- **Phase C buildables ready when greenlit:** (1) `/about` page or merge into `/why` with scoped Person/Organization JSON-LD, (2) `/pennsylvania` as the first per-state page (PA complete, template scales to OH/IN/IL as walk advances), (3) weekly walk-update posts w/ NewsArticle schema, (4) `llms-full.txt` — gated on prayer + subscribe backends shipping
-- **Passive waits:** Bing sitemap Processing → Success (submitted Apr 22, should have flipped by Apr 24); GSC AI Overview impressions (monitor once available)
+- **Execution window: Friday 2026-04-25 after Thomas gets off work.** Walk through Blocks 1-5 of `docs/remix-overview.md`: (1) UTM sheet + bio link updates, (2) first IG Story Link Sticker, (3) ManyChat DM flow setup (~60 min), (4) first Reel with "comment WALK" CTA, (5) first remix on Chrisean or Zay.
+- **Likely next-session asks:** draft specific UTM URLs for the current walk day, write the ManyChat auto-reply body, write the first Reel caption/on-screen text, pick a specific Chrisean or Zay post to remix.
+- **6-week target:** 10× @AIBibleGospels follower growth + 20+ tracker clicks/day attributed to DM flow alone. Logged weekly in Google Sheet.
+- **Carried from Apr 23 (not addressed today):** Per-video YouTube descriptions need faithwalklive.com links (closes checkbox at `faithwalklivecom/docs/aeo-strategy.md` L92). AEO baseline test loop (5 prompts × 4 engines). Phase C buildables pending greenlight. Passive waits: Bing sitemap processing, GSC AI Overview impressions.
+- **Apr 20 incident still flagged:** Day 26 potential vehicle incident — verify Twitch clips ("CAR HIT", 5033v "hit") before archiving Day 26 / promoting Day 27.
 
 ## Uncommitted work
 Clean working tree.
