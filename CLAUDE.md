@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.7.1**
+**Current Version: v2.8.0**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.8.0 | Apr 24, 2026 | New **Research protocol** — when the user introduces a new non-trivial tactic/tool/concept, Claude auto-spins up multiple sub-agents IN PARALLEL (Reddit, YouTube, X, case-study blogs) to find the highest-ROI approach with hard numbers, synthesized into ONE ranked recommendation. Hype-without-data is flagged explicitly. Best practices ≠ ROI — default to ROI. Rule persists in CLAUDE.md so future sessions follow it without being told. |
 | v2.7.1 | Apr 23, 2026 | Title parser accepts spelled-out state names (`LONDON, OHIO`) in addition to 2-letter codes (`LONDON, OH`). Day 29 title "26 MILES FROM LONDON, OHIO" was being rejected because the state-code group required exactly 2 uppercase letters. Regex widened to `{2,}`; Nominatim handles full state names fine. README gains a clear "Daily tracker workflow" section. |
 | v2.7.0 | Apr 21, 2026 | Book project scaffolding — `scripts/sync-book.js` + `scripts/lib/book-sync.js` mirror `book/source-material/` to private sibling `../faithwalkbook` repo (`npm run book:sync`). Apocrypha source PDF added at `docs/1611KjvW_apocrypha.pdf` for verse sourcing. CLAUDE.md gains a "Date / clip cross-reference (Twitch GQL)" section documenting the public clip query workflow for clip backfills + date verification against Twitch source-of-truth. |
 | v2.6.0 | Apr 19, 2026 | Auto-sync to faithwalklive.com — every `tracker:update` / `tracker:from-title` now mirrors `checkpoints.json` to the sibling `../faithwalklivecom` repo, commits, and pushes (Vercel redeploys). Stashes unrelated WIP in the public repo before rebasing, restores after. Best-effort: failures log a warning but never block the consulting commit. New `npm run faithwalk:sync` for manual one-shot sync. Day 24 Mt. Vernon OH (494 mi) confirmed, Day 25 rest annotated. |
@@ -120,6 +121,34 @@ Use cases:
 - **VOD fallback**: VODs age off (~14d affiliates / 60d partners), but clips persist longer and timestamp the actual stream day.
 
 `period` accepts `LAST_DAY | LAST_WEEK | LAST_MONTH | ALL_TIME`. `sort` `VIEWS_DESC` is most reliable; `CREATED_AT_DESC` sometimes 500s.
+
+## Research protocol — 4-agent ROI check on new concepts
+
+When the user introduces **any substantive new direction** (new tactic, tool, concept, feature, deliverable, content play, product pitch, growth loop, workflow, automation) and we don't already have research on it in this repo, **ask first**:
+
+> *"Want me to run the 4-agent ROI check on this?"*
+
+If yes, spin up **4 sub-agents in parallel** — one per source:
+
+- **Reddit** — r/marketing, r/socialmedia, r/Entrepreneur, r/CreatorEconomy, r/InfluencerMarketing + niche-specific subs. What real people say: pain points, honest reviews, what actually worked vs. flopped. Note: Reddit often blocks direct scraping; agent should report honestly when that happens and fall back to Reddit-adjacent surfaces.
+- **YouTube** — tutorials, case studies, "I tried X for 30 days" style breakdowns. Creator-economy educators / growth practitioners who publish specific A/B or conversion data (Think Media, Matt Gray, Pat Flynn, Jenny Hoyos, Dan Koe, Justin Welsh, Ali Abdaal). Prefer numbers over vibes.
+- **X / Twitter** — current discourse, who's winning with it, hot takes. Growth operators + creator threads (Buffer, Justin Welsh, Amanda Natividad, SparkToro tier).
+- **Case-study blogs** — written deep-dives, business breakdowns, hard numbers. HubSpot, Buffer, Later, Sprout Social, Ahrefs, ConvertKit, Hootsuite, Social Media Examiner, Rival IQ, Socialinsider.
+
+**Each agent answers the same five questions** for the specific use case:
+
+1. Is it worth it?
+2. What's the realistic outcome (upside + downside)?
+3. How complicated/intense is it to execute?
+4. Is there a better way to frame what we're trying to accomplish?
+5. Is there a simpler alternative that gets the same outcome?
+
+**Delivery format:** 4 separate reports, stitched together — **not** one synthesized brief. Keep each channel's distinct signal visible (Reddit skeptics often disagree with YouTube evangelists; that's the point). End with a short Thomas-facing recommendation: **ship / reframe / skip**. Flag hype-without-data explicitly so the user knows what's proven vs. asserted.
+
+**Best practices ≠ ROI.** Best practices = what the field calls "right" (convention, safety, politeness). ROI = what actually moves the needle per unit of effort, for *this* goal, measured in clicks/conversions/attention. When they diverge, default to ROI unless the user asks for best-practice compliance (security, legal, accessibility).
+
+**When to trigger:** new social-media play, new pipeline tool, new automation pattern, new funnel idea, new growth tactic, new platform strategy, new product pitch to Zay.
+**When to skip:** trivial/obvious changes, decisions with clear precedent in this repo, or user explicitly says "skip research, just ship."
 
 ## Deliverables
 1. **Intro Video** — Looping Faith Walk video with music (DONE — used on stream)
