@@ -3,30 +3,35 @@ ended: 2026-04-24T23:59:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.8.0
-originSessionId: 914ec957-121e-4464-b2ef-cae3169e5d4f
+originSessionId: 1632be09-85f0-4436-8081-cc35df308b08
 ---
 # Last Session — 2026-04-24
 
 ## What the user wanted
-Codify a permanent rule: whenever they introduce *any* substantive new direction (tactic, tool, feature, pitch) without prior research in this repo, Claude should ask before firing a 4-agent ROI pressure-test (Reddit, YouTube, X, case-study blogs), with each agent answering the same 5 decision questions and reports delivered stitched rather than synthesized — so effort only goes to plays that survive the check.
+Run the daily tracker, zoom out to the repo-wide strategy, then make the next move executable — draft Day 30 IG Story copy + ManyChat WALK flow, map what's automatable vs. manual, and lock the remix funnel into the docs so tomorrow's execution isn't starting from scratch.
 
 ## What we did
-- Discovered the v2.8.0 "Research protocol" section already existed in `CLAUDE.md` (shipped earlier today) but had 3 gaps vs. what user just confirmed: no ask-first gate, wrong output format ("ONE ranked recommendation" instead of 4 stitched reports), no explicit 5 ROI questions.
-- Refined the section in place at `CLAUDE.md:125` — added ask-first gate (*"Want me to run the 4-agent ROI check on this?"*), changed delivery to 4 separate reports stitched + short ship/reframe/skip rec, embedded the 5 ROI questions (worth it / outcome / complexity / better frame / simpler alt). Kept existing source lists (specific subs/creators/blogs) and Best-practices-≠-ROI framing.
-- Left the v2.8.0 changelog entry untouched (per `feedback_changelogs_are_frozen` memory).
-- Saved durable feedback memory `feedback_roi_check_new_concepts.md` + added MEMORY.md index pointer.
-- Staged `CLAUDE.md` + `package.json` + `docs/remix.md` + `docs/remix-overview.md` (remix docs are the concrete first artifact of running the protocol — asked user before including them, they confirmed). Commit `b9c05a6`, pushed to origin.
-- Background session-end auto-sync captured further memory updates in commit `a421f2b` (including the new `project_social_distribution.md` pointer added while I wasn't looking).
+- **Tracker updated** via `npm run tracker:from-title`: Day 29 promoted → LONDON, OHIO (~582 mi est), Day 30 in progress heading to SPRINGFIELD, OHIO (25 mi remaining). Script committed `3f83c40` and pushed. Zay was live (517 viewers) at the time.
+- **Strategy framing delivered**: three-asset play — (1) consulting wedge (Faith Walk tools as proof-of-work + branding vehicle), (2) own-brand commercial play (AI Bible Gospels + Anointed Bible Video Maker via `aibiblegospels.com`), (3) memoir. Throughline: Zay's audience is the leverage but his team isn't converting it, so external funnel is mandatory.
+- **Next-move recommendation**: execute the remix funnel Apr 25 — bottom-of-funnel (IG Story Link Sticker + ManyChat DM flow) FIRST, then top-of-funnel (first remix on one of 5 targets). Every link UTM-tagged.
+- **Day 30 deliverables drafted in chat**: IG Story headline + poll pairing + UTM'd link; ManyChat "WALK" keyword → opt-in → 2-step DM flow with quick-reply segmentation; ranked automation table (`story:today` script + UTM builder = build today; remix-target monitor = defer).
+- **Docs hardened**: created [docs/remix-playbook-day30.md](../../../../../repos/AIconsultantforHmblzayy/docs/remix-playbook-day30.md) as ready-to-ship execution pack (Story copy, ManyChat flow, UTM ref, daily log row, guardrails). Added File Map rows in [CLAUDE.md](../../../../../repos/AIconsultantforHmblzayy/CLAUDE.md) pointing at `docs/remix-overview.md` (blueprint) and the new day-30 playbook. Committed `20aebc2`, pushed.
 
 ## Decisions worth remembering
-- **Refined the existing v2.8.0 section in place rather than creating a new section.** Two rules for the same thing is worse than one good rule — and the existing source lists (specific subreddits, named YouTube creators, blog roster) were worth preserving.
-- **Did NOT edit the v2.8.0 changelog entry** even though the rule spec changed, because CHANGELOGs are frozen historical records (per memory). The rule section itself is the source of truth going forward.
-- **Did NOT bump version to v2.8.1** for the rule refinement — user didn't ask to commit a version-bump flow, and treating this as a spec tightening rather than a new feature kept the changelog readable.
+- **Per-day playbook file, not per-week.** Day-N execution packs (`remix-playbook-day30.md`, `day31.md`, …) keep the copy crisp and the UTM campaign slug right. Once the pattern is stable, collapse into `npm run story:today` that emits the same file from `checkpoints.json`.
+- **Bottom-of-funnel before top-of-funnel.** Without ManyChat + Story sticker shipped, remixes only grow followers — they don't drive tracker clicks. Sequence matters.
+- **Kept the v2.8.0 changelog entry frozen.** Per `feedback_changelogs_are_frozen` — CLAUDE.md File Map addition is a live doc update, not a changelog bump.
+- **Retraction honored.** User accidentally pasted a message meant for another chat (book release-trigger logic); immediately removed from `project_book.md` (global + repo copies), nothing was committed. Treated as never-sent for session-log purposes.
 
 ## Open threads / next session starts here
-- **Nothing blocking.** Rule is codified, committed, pushed. Both `feedback_roi_check_new_concepts.md` and `project_social_distribution.md` (added by background session-end) are in memory.
-- **First real trigger for the new rule:** next time user introduces a new play, start with *"Want me to run the 4-agent ROI check on this?"* before building. `docs/remix-overview.md` is the reference example of what a good output looks like.
-- **Faith Walk day rollover** — Day 29 still marked in-progress (26 mi to LONDON, OHIO) per commit `4614391`. If user mentions Day 30 next session, run `npm run tracker:from-title` and cross-ref Twitch clip timestamps per `feedback_clip_lookup_and_date_verify`.
+- **Apr 25 execution window — DO THIS FIRST NEXT SESSION:**
+  1. Build the ManyChat "WALK" flow in ManyChat web UI per the spec in `docs/remix-playbook-day30.md`.
+  2. Ship today's IG Story (headline + poll + UTM link) from the playbook.
+  3. Record + post the first remix on one of the 5 targets.
+  4. Log impressions/clicks/DM opens in the weekly Google Sheet.
+- **Optional automation build (~40 min)**: `scripts/story-today.js` — reads `checkpoints.json`, pulls today's top Twitch clip via `scripts/lib/twitch.js` GQL pattern, emits Story copy + poll options + UTM'd link. Centralizes the UTM scheme. Defer the remix-target monitor (IG scraping is fragile — do week 1 manually).
+- **Tracker rollover**: if Zay mentions Day 31 on stream, run `npm run tracker:from-title` — the same script handles Day 30 promotion. Cross-ref clip timestamps per `feedback_clip_lookup_and_date_verify`.
+- **No new signal yet from**: Zay IG DM (Apr 22) or ShuggC (overlay adoption). No nudges — wait.
 
 ## Uncommitted work
-Clean working tree.
+Clean working tree. All session work committed to `main` (commits `3f83c40` tracker, `20aebc2` docs) and pushed.
