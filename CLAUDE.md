@@ -71,6 +71,8 @@ AI automation consulting project for **Isaiah "Minister Zay" Thomas**, founder o
 | `src/intro-video/` | Remotion intro video (vertical + wide + square) |
 | `src/faith-walk-tracker/` | Interactive map tracker (GitHub Pages) |
 | `docs/` | Documentation, proposals, pitch messages |
+| `docs/remix-overview.md` | Full external-distribution funnel blueprint — remix targets + Story sticker + ManyChat DM capture + UTM scheme. Active strategy (v2.8.0, Apr 24) for driving tracker traffic since Zay's team isn't. |
+| `docs/remix-playbook-day30.md` | Day-specific ready-to-ship execution pack: Story sticker copy + ManyChat "WALK" flow spec for the current tracker day. Recreate per day when shipping. |
 
 ## Commands
 ```bash
