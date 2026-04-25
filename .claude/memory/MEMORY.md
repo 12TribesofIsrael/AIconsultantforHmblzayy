@@ -1,6 +1,7 @@
 - [Project overview](project_zayautomations.md) — AI consulting for Minister Zay / HMBL, deliverables and current onboarding state
 - [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
 - [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
+- [Clip backfill mandatory](feedback_clip_backfill_mandatory.md) — Every tracker:from-title / tracker:update must end with a clip attached for the affected day; tracker:from-title doesn't auto-attach
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
 - [NOW card logic](feedback_now_card_logic.md) — Priority: active rest > archived-rest-ahead-of-walking > latest walking. Never render in-progress walking days as cards.
