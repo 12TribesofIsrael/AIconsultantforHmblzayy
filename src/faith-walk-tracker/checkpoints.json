@@ -269,13 +269,22 @@
     "miles": 582,
     "date": "Apr 22, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.9234046,
-    "destinationLng": -83.810138,
-    "destination": "SPRINGFIELD, OHIO",
-    "inProgressDay": 30,
-    "milesRemaining": 25,
-    "estimatedSegmentMiles": 25,
-    "inProgressStartedAt": "2026-04-24T19:57:21.102Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/ResilientExquisiteToothDogFace-X8a32qT7RKsdC_GU"
+  },
+  {
+    "day": 30,
+    "location": "SPRINGFIELD, OHIO",
+    "lat": 39.9234046,
+    "lng": -83.810138,
+    "miles": 607,
+    "date": "Apr 24, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.7589478,
+    "destinationLng": -84.1916069,
+    "destination": "DAYTON, OHIO",
+    "inProgressDay": 31,
+    "milesRemaining": 26,
+    "estimatedSegmentMiles": 30,
+    "inProgressStartedAt": "2026-04-25T16:05:13.668Z"
   }
 ]
