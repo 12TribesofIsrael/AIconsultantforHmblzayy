@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.9.0**
+**Current Version: v2.9.1**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.9.1 | Apr 24, 2026 | **Clip backfill is now a documented standard step** of the daily tracker workflow (CLAUDE.md "Standard daily tracker workflow" section). `tracker:from-title` archives days but does not auto-attach clips — they're curated, not auto-picked, so they have to be attached in the same session via `update-tracker.js --day N --clip "..."`. Without it, the clip archive at faithwalklive.com/clips silently lags the map. Backfilled Day 28 (rest at Columbus, OH — "SUPPORT FLIES OUT THE CAR TO MEET ZAY" 18v) and Day 29 (London, OH arrival — "Another Milestone!!!" 16v) which had been missing. Added an audit one-liner so any future gap is one command away. |
 | v2.9.0 | Apr 24, 2026 | **Multi-clip "Love Wall" schema + render** — checkpoints can now carry a `clips: []` array + optional `clipsTitle` for milestone days where multiple Twitch clips deserve the same card (e.g. Day 30 one-month-in support wave). Backward-compatible: `clip` still works for single-clip days; `clips` takes priority when present, with `clip` set to the first entry as a legacy fallback for older renderers. Updates: `update-tracker.js` accepts `--clips "url1,url2,url3"` + `--clips-title "..."`; consulting tracker (`src/faith-walk-tracker/index.html`) renders the wall as a titled pill row in the card + condensed inline links in the map popup; faithwalklive (sibling repo) gets matching support via shared `clipsFor()` helper in `src/lib/checkpoints.ts` — wall pills under the metric row in `MapClient.tsx`, popup links via `ClipLinks` in `TrackerMap.tsx`, and the `/clips` archive page flattens multi-clip days so each clip becomes its own card. Day 30 Love Wall slugs vetted but parked in `docs/day30-love-wall-pending.md` until the team updates the Twitch title tomorrow and the standard archive workflow runs. |
 | v2.8.0 | Apr 24, 2026 | New **Research protocol** — when the user introduces a new non-trivial tactic/tool/concept, Claude auto-spins up multiple sub-agents IN PARALLEL (Reddit, YouTube, X, case-study blogs) to find the highest-ROI approach with hard numbers, synthesized into ONE ranked recommendation. Hype-without-data is flagged explicitly. Best practices ≠ ROI — default to ROI. Rule persists in CLAUDE.md so future sessions follow it without being told. |
 | v2.7.1 | Apr 23, 2026 | Title parser accepts spelled-out state names (`LONDON, OHIO`) in addition to 2-letter codes (`LONDON, OH`). Day 29 title "26 MILES FROM LONDON, OHIO" was being rejected because the state-code group required exactly 2 uppercase letters. Regex widened to `{2,}`; Nominatim handles full state names fine. README gains a clear "Daily tracker workflow" section. |
@@ -96,6 +97,64 @@ npm run memory:pull          # Copy repo memory OUT to local ~/.claude (after gi
 ## Live URLs
 - **Tracker:** https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
 - **Repo:** https://github.com/12TribesofIsrael/AIconsultantforHmblzayy
+
+## Standard daily tracker workflow (do not skip the clip step)
+
+Every tracker update — title-driven OR manual — has **two halves**, and both must run for the public site to stay in sync. The clip archive (faithwalklive.com/clips) sources its entries from `checkpoints.json`'s `clip` / `clips` fields; if a day archives without a clip attached, the archive silently falls behind the map.
+
+**The rule:** *every promoted day, including rest days, must end up with a clip before the workflow is considered done.* If you can't find one, attach a placeholder note in the commit so the gap is obvious.
+
+### Half 1 — promote / archive the day (location + miles)
+
+```bash
+# Title-driven (preferred — runs idempotently from Twitch title):
+npm run tracker:from-title
+
+# Manual confirmed arrival (clears estimate flags):
+node scripts/update-tracker.js --day N --location "City, ST" --miles XXX
+```
+
+`tracker:from-title` handles in-progress annotation, day rollover (auto-promotes yesterday's destination as `estimatedMiles: true`), and rest-day annotation. Manual `tracker:update` is for confirmed arrivals or corrections.
+
+### Half 2 — attach the day's clip (do this in the same session)
+
+`tracker:from-title` does NOT auto-attach clips — clips are curated, not auto-picked. After Half 1 promotes a day, immediately run:
+
+```bash
+# 1. Find candidates for that date (use LAST_WEEK; LAST_DAY only covers ~24h):
+node -e "
+const https=require('https');
+const q=JSON.stringify({query:'{user(login:\"hmblzayy\"){clips(first:100,criteria:{period:LAST_WEEK,sort:VIEWS_DESC}){edges{node{slug title createdAt viewCount url}}}}}'});
+const r=https.request({hostname:'gql.twitch.tv',path:'/gql',method:'POST',headers:{'Client-ID':'kimne78kx3ncx6brgo4mv6wki5h1ko','Content-Type':'application/json','Content-Length':Buffer.byteLength(q)}},res=>{let d='';res.on('data',c=>d+=c);res.on('end',()=>{const e=JSON.parse(d).data.user.clips.edges;e.filter(x=>x.node.createdAt.startsWith('2026-MM-DD')).slice(0,10).forEach(x=>console.log(x.node.viewCount+'v | '+x.node.title+' | '+x.node.url))})});
+r.write(q);r.end();
+"
+# (replace 2026-MM-DD with the day's UTC date)
+
+# 2. Pick the highest-view faith/support/milestone-aligned clip
+#    (per memory: pattern is "Day 23 'GOD DID' 70v, Day 24 'w chrisean' 78v" —
+#    highest view among themed clips, not the absolute top by views).
+
+# 3. Attach it:
+node scripts/update-tracker.js --day N --clip "https://www.twitch.tv/hmblzayy/clip/SLUG-XYZ"
+
+# Or for milestone days with a "Love Wall" of multiple clips:
+node scripts/update-tracker.js --day N --clips "url1,url2,url3" --clips-title "Caption"
+```
+
+Both halves auto-rebuild HTML, commit, push, and mirror to faithwalklive (Vercel redeploys). Two pushes per day = two ~1-min Vercel builds.
+
+### Audit the gap any time
+
+```bash
+node -e "
+const cps=require('./src/faith-walk-tracker/checkpoints.json');
+const missing=cps.filter(c=>!c.clip&&!(c.clips&&c.clips.length));
+console.log('Days missing clips:',missing.length);
+missing.forEach(c=>console.log('  Day '+(c.day||'?')+(c.restOnly?' (rest)':'')+' — '+c.location+' — '+c.date));
+"
+```
+
+If anything shows up, backfill before doing any other tracker work.
 
 ## Date / clip cross-reference (Twitch GQL)
 
