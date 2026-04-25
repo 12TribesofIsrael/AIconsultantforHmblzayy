@@ -1,35 +1,38 @@
 ---
-ended: 2026-04-25T17:00:00Z
+ended: 2026-04-25T23:50:00Z
 project: ZayAutomations
 branch: main
-version: v2.9.1
-originSessionId: c2a5ae61-2ee7-4dfd-8e43-dbcc91affa1c
+version: v2.9.0
+originSessionId: 4aa3a849-bfc3-4e22-a92f-92fdd75963c3
 ---
 # Last Session — 2026-04-25
 
 ## What the user wanted
-Run the daily tracker workflow (Half 1 promote + Half 2 clip attach), then commit the leftover untracked remix-playbook docs.
+Thomas wanted to actually start executing the IG remix funnel — not just have the blueprint, but know the literal taps to make tonight, on a Reel he was already mid-edit on (Philly FAME clip about Minister Zay). My first pass was too complex; he pushed back and we boiled it down to a single dead-simple playbook he can follow today.
 
 ## What we did
-- Stashed two untracked docs blocking rebase (`docs/faithwalklive-utm-log.csv`, `docs/remix-playbook-today.md`), ran `npm run tracker:from-title`, restored stash cleanly.
-- **Day 30 archived → SPRINGFIELD, OHIO** (~607 mi est). **Day 31 in-progress → DAYTON, OHIO** (26 mi remaining). Commit `2563755`.
-- Re-queried Twitch GQL for 2026-04-24 clips per the pending file's own instruction. Top-3 shifted overnight: "Dawg" 32v overtook "W Tyler" 29v. Attached new top-3 to Day 30 as Love Wall:
-  1. 62v — *YOU MIGHT SEE SOME WEIRD THINGS* — `KawaiiRelievedJaguarTBTacoLeft-OX2AJJYXcMm3rXTg`
-  2. 32v — *W support* — `BrightResourcefulGiraffeKAPOW-mAJH78SKnh4o2dcX`
-  3. 32v — *Dawg* — `FaintGleamingPoxKappaClaus-X2zXdqN6dkWcqUhw`
-  Title: "One Month In · The Love Wall". Commit `4649966`.
-- Committed the stashed docs as a new feature: remix playbook + UTM log for the daily IG Story/Reel distribution play. Commit `23f96f9`.
+- First answer pointed him at the existing 5-block 2.5-hour blueprint in `docs/remix-overview.md`. He said "that looks super complicated i dont know how to non of that" — flagged this as a tactical-execution overwhelm signal.
+- Stripped to a single 2-min IG Story sticker action. He asked "is that a remix" — caught me conflating funnel stages (Story sticker = bottom-of-funnel click play, NOT a remix). Clarified the two-stage model.
+- He asked about monetization if Zay isn't on X. Per `research/twitter-x/profile.md`, Zay has @minister_zay but it's brand-only. Walked him through the actual revenue chain: remix → @AIBibleGospels followers → tracker/site clicks → Anointed Bible Video Maker / consulting sale. Pivoted recommendation off X to IG Reels Remix (where Zay's audience actually lives).
+- He shared 3 screenshots mid-edit on the Philly FAME Reel and asked for: (a) exact button-by-button on the screen, (b) 4-agent ROI check on top-creator remix workflow.
+- Generated `docs/faithwalklive-utm-log.csv` with 8 pre-filled UTM URLs for Day 30. Bio links use `faithwalk-evergreen`, all per-day surfaces use `faithwalk-day-30`.
+- Fired 4 ROI agents in parallel (Reddit / YouTube / X / case-study blogs). All 4 returned. **Verdict: REFRAME.** Three of four said native IG Remix split-screen > re-upload; Reddit dissented saying the new Aug 2025 native **Repost button** beats both. ALL FOUR agreed the bigger lever is the CTA — link-in-bio CTR is ~0.004% (Reddit hard data), Story link sticker is the actual click path.
+- Findings saved as `project_remix_roi_check.md` + indexed in MEMORY.md.
+- Wrote final clean playbook `docs/remix-playbook-today.md` — single doc, today's facts at top, one-time bio setup, 3 paths for the Reel (Repost → Remix → re-upload last resort), Story link sticker tap-by-tap, caption ready to copy-paste, don'ts, tomorrow's update instructions.
+- Committed as `23f96f9 Add remix playbook + UTM log for daily Story/Reel distribution` (already pushed to origin/main; memory swept up in `a903a5a`).
 
 ## Decisions worth remembering
-- Followed the pending file's "re-query before running" instruction rather than blindly executing yesterday's vetted command — view counts shifted, top-3 changed. Reinforces why the pending-file workflow includes a re-query step.
-- Used `update-tracker.js --day 30 --clips ... --clips-title ...` WITHOUT `--location/--miles` to avoid clobbering the auto-promote's "SPRINGFIELD, OHIO" casing with the pending file's lowercase "Springfield, OH".
+- **CSV bio rows use `faithwalk-evergreen`, not per-day campaigns.** Updating bio every day would dilute attribution across 100+ campaign IDs. Only the 6 per-post surfaces rotate `faithwalk-day-N`.
+- **Did not push ManyChat "Comment WALK → DM" play despite it scoring strongest in 3 agents.** Reason: ~60-min setup + $15/mo + Thomas already overwhelmed. Captured in project_remix_roi_check.md as deferred — revisit when Reels cadence is steady.
+- **Path C (re-upload with text overlay) intentionally documented in the playbook as last resort,** not deleted. Reason: Repost button may not be in his account yet (Aug 2025 rollout uneven), and Remix requires face-on-camera. Better to give him a working fallback than leave him stranded.
+- **Flipped advice twice mid-session** (bottom-third text → upper-middle, and Path C → Path A). Owned both flips honestly. Better to whipsaw before posting than ship the wrong thing.
 
 ## Open threads / next session starts here
-- **Delete `docs/day30-love-wall-pending.md`** — it has served its purpose. Left intact this session in case the user wants to update memory/version-bump alongside the deletion.
-- **5 historical clip gaps remain** — Days 1, 4, rest after 4, 15, 20. Predate Twitch's affiliate clip retention window (~14d), likely unrecoverable. Audit one-liner in CLAUDE.md "Audit the gap any time" section if user wants to retry.
-- **Day 31 archive will run tomorrow** when the title flips past Dayton. Standard workflow: `npm run tracker:from-title` then attach a Day 31 clip via GQL query for 2026-04-25 UTC date.
-- **Remix playbook is live** — full ready-to-execute IG Story + Reel + UTM-log doc at `docs/remix-playbook-today.md`. Tomorrow's update path: change Day 30 → 31 and `faithwalk-day-30` → `faithwalk-day-31` (per the doc's own instructions).
-- **Day 29 date bug from prior session still un-fixed** — `tracker-from-title.js:313` inherits prior day's in-progress timestamp; not blocking.
+- **Thomas hasn't shipped yet.** The playbook at `docs/remix-playbook-today.md` is ready but he hasn't run through it. First check next session: did he post the Reel + Story today? Ask before assuming.
+- **If he did ship:** check Vercel Analytics for `utm_campaign=faithwalk-day-30` clicks, log into the CSV, and use the data to inform Day 31's playbook regeneration.
+- **If he didn't ship:** ask what blocked him at which step — that tells us what to simplify in the doc.
+- **Day 30 still in-progress on tracker** (Springfield, OH, 25 mi remaining as of last `tracker:from-title`). When Day 30 archives + Day 31 starts, the `Today's facts` block at top of `docs/remix-playbook-today.md` needs updating + 4 places where `faithwalk-day-30` appears need to become `faithwalk-day-31`.
+- **ManyChat upgrade is the next funnel layer** when Reels cadence is steady. Don't pitch unprompted — wait for him to ask "what else can I do?"
 
 ## Uncommitted work
 Clean working tree.

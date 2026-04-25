@@ -6,6 +6,7 @@
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
 - [NOW card logic](feedback_now_card_logic.md) — Priority: active rest > archived-rest-ahead-of-walking > latest walking. Never render in-progress walking days as cards.
 - [Present only optimal](feedback_present_only_optimal.md) — Don't surface A/B menus when I already know which wins. Recommend and ship; only present options when user explicitly asks or trade-offs genuinely require their call.
+- [Simplify tactical execution](feedback_simplify_tactical_execution.md) — For "how do I do X" on a platform, lead with ONE 2-min action with named buttons, not the full blueprint. Layer up only when asked.
 - [4-agent ROI check](feedback_roi_check_new_concepts.md) — Any substantive new direction without prior repo research: ask "run the 4-agent ROI check?" then fire Reddit/YouTube/X/blogs in parallel, 5 questions each, 4 separate reports stitched
 - [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
