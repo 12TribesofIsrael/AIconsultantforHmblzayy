@@ -1,6 +1,6 @@
 # ZayAutomations — AI Consulting for Minister Zay / HMBL
 
-**Current Version: v2.8.0**
+**Current Version: v2.9.0**
 
 ## Versioning
 We use semver (MAJOR.MINOR.PATCH). Bump on every feature/fix:
@@ -13,6 +13,7 @@ Update the version in **both** this file (above) and `package.json` on every fea
 ### Changelog
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.9.0 | Apr 24, 2026 | **Multi-clip "Love Wall" schema + render** — checkpoints can now carry a `clips: []` array + optional `clipsTitle` for milestone days where multiple Twitch clips deserve the same card (e.g. Day 30 one-month-in support wave). Backward-compatible: `clip` still works for single-clip days; `clips` takes priority when present, with `clip` set to the first entry as a legacy fallback for older renderers. Updates: `update-tracker.js` accepts `--clips "url1,url2,url3"` + `--clips-title "..."`; consulting tracker (`src/faith-walk-tracker/index.html`) renders the wall as a titled pill row in the card + condensed inline links in the map popup; faithwalklive (sibling repo) gets matching support via shared `clipsFor()` helper in `src/lib/checkpoints.ts` — wall pills under the metric row in `MapClient.tsx`, popup links via `ClipLinks` in `TrackerMap.tsx`, and the `/clips` archive page flattens multi-clip days so each clip becomes its own card. Day 30 Love Wall slugs vetted but parked in `docs/day30-love-wall-pending.md` until the team updates the Twitch title tomorrow and the standard archive workflow runs. |
 | v2.8.0 | Apr 24, 2026 | New **Research protocol** — when the user introduces a new non-trivial tactic/tool/concept, Claude auto-spins up multiple sub-agents IN PARALLEL (Reddit, YouTube, X, case-study blogs) to find the highest-ROI approach with hard numbers, synthesized into ONE ranked recommendation. Hype-without-data is flagged explicitly. Best practices ≠ ROI — default to ROI. Rule persists in CLAUDE.md so future sessions follow it without being told. |
 | v2.7.1 | Apr 23, 2026 | Title parser accepts spelled-out state names (`LONDON, OHIO`) in addition to 2-letter codes (`LONDON, OH`). Day 29 title "26 MILES FROM LONDON, OHIO" was being rejected because the state-code group required exactly 2 uppercase letters. Regex widened to `{2,}`; Nominatim handles full state names fine. README gains a clear "Daily tracker workflow" section. |
 | v2.7.0 | Apr 21, 2026 | Book project scaffolding — `scripts/sync-book.js` + `scripts/lib/book-sync.js` mirror `book/source-material/` to private sibling `../faithwalkbook` repo (`npm run book:sync`). Apocrypha source PDF added at `docs/1611KjvW_apocrypha.pdf` for verse sourcing. CLAUDE.md gains a "Date / clip cross-reference (Twitch GQL)" section documenting the public clip query workflow for clip backfills + date verification against Twitch source-of-truth. |

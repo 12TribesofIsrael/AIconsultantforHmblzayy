@@ -5,8 +5,16 @@
  *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235
  *   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235 --clip "https://..."
  *
- * Usage (clip-only — attach a Twitch clip to an existing day):
+ * Usage (multi-clip "Love Wall" — comma-separated clips + optional title):
+ *   node scripts/update-tracker.js --day 30 --location "Springfield, OH" --miles 607 \
+ *     --clips "https://...,https://...,https://..." \
+ *     --clips-title "One Month In · The Love Wall"
+ *
+ * Usage (clip-only — attach a single Twitch clip to an existing day):
  *   node scripts/update-tracker.js --day 12 --clip "https://..."
+ *
+ * Usage (clips-only — attach multiple clips + title retroactively):
+ *   node scripts/update-tracker.js --day 30 --clips "url1,url2,url3" --clips-title "..."
  *
  * Usage (in-progress — mark today's destination without logging arrival):
  *   node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22
@@ -31,15 +39,22 @@ process.argv.slice(2).forEach((arg, i, arr) => {
   }
 });
 
+// Parse --clips "url1,url2,url3" into an array of trimmed URLs
+const clipsArray = args.clips
+  ? args.clips.split(',').map(s => s.trim()).filter(Boolean)
+  : null;
+
 const isInProgress = !!args.destination;
-const isClipOnly = !!(args.day && args.clip && !args.location && !args.miles);
+const isClipOnly = !!(args.day && (args.clip || clipsArray) && !args.location && !args.miles);
 const isNewDay = !!(args.day && args.location && args.miles);
 
 if (!isInProgress && !isClipOnly && !isNewDay) {
   console.log('Usage:');
   console.log('  New day:     node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235');
   console.log('  With clip:   node scripts/update-tracker.js --day 13 --location "Johnstown, PA" --miles 235 --clip "https://..."');
+  console.log('  Multi-clip:  node scripts/update-tracker.js --day 30 --location "Springfield, OH" --miles 607 --clips "url1,url2,url3" --clips-title "One Month In · The Love Wall"');
   console.log('  Clip only:   node scripts/update-tracker.js --day 12 --clip "https://..."');
+  console.log('  Clips only:  node scripts/update-tracker.js --day 30 --clips "url1,url2,url3" --clips-title "..."');
   console.log('  In-progress: node scripts/update-tracker.js --destination "Cranberry, PA" --miles-remaining 22');
   process.exit(1);
 }
@@ -59,16 +74,30 @@ async function main() {
     const idx = checkpoints.findIndex(cp => cp.day === day);
 
     if (idx !== -1) {
-      checkpoints[idx].clip = clip;
-      console.log(`\nAttaching clip to Day ${day} — ${checkpoints[idx].location}`);
-      console.log(`  Clip: ${clip}`);
+      let summary;
+      if (clipsArray && clipsArray.length > 1) {
+        checkpoints[idx].clips = clipsArray;
+        // Keep `clip` as the first one for legacy renderers (faithwalklive
+        // will be updated in a follow-up; meanwhile single-clip code paths
+        // still see a working clip URL).
+        checkpoints[idx].clip = clipsArray[0];
+        if (args.clipsTitle) checkpoints[idx].clipsTitle = args.clipsTitle;
+        summary = `${clipsArray.length} clips${args.clipsTitle ? ` (${args.clipsTitle})` : ''}`;
+        console.log(`\nAttaching ${summary} to Day ${day} — ${checkpoints[idx].location}`);
+        clipsArray.forEach((u, i) => console.log(`  Clip ${i + 1}: ${u}`));
+      } else {
+        checkpoints[idx].clip = clip || (clipsArray && clipsArray[0]);
+        summary = `clip`;
+        console.log(`\nAttaching clip to Day ${day} — ${checkpoints[idx].location}`);
+        console.log(`  Clip: ${checkpoints[idx].clip}`);
+      }
 
       rebuildAndPush(
         checkpoints,
-        `Add clip to Day ${day} — ${checkpoints[idx].location}`
+        `Add ${summary} to Day ${day} — ${checkpoints[idx].location}`
       );
 
-      console.log(`\n✓ Clip added to Day ${day}!`);
+      console.log(`\n✓ ${clipsArray && clipsArray.length > 1 ? 'Clips' : 'Clip'} added to Day ${day}!`);
       console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
       return;
     }
@@ -164,14 +193,26 @@ async function main() {
 
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
   const newCheckpoint = { day, location, lat: coords.lat, lng: coords.lng, miles, date };
-  if (args.clip) newCheckpoint.clip = args.clip;
-  else if (stashedClipForDay) newCheckpoint.clip = stashedClipForDay;
+
+  // Clip handling — multi-clip Love Wall takes priority over single --clip.
+  if (clipsArray && clipsArray.length > 1) {
+    newCheckpoint.clips = clipsArray;
+    newCheckpoint.clip = clipsArray[0]; // legacy single-clip fallback
+    if (args.clipsTitle) newCheckpoint.clipsTitle = args.clipsTitle;
+  } else if (args.clip) {
+    newCheckpoint.clip = args.clip;
+  } else if (clipsArray && clipsArray.length === 1) {
+    newCheckpoint.clip = clipsArray[0];
+  } else if (stashedClipForDay) {
+    newCheckpoint.clip = stashedClipForDay;
+  }
 
   if (existingIndex !== -1) {
-    // Preserve existing clip if not being overwritten
-    if (!args.clip && checkpoints[existingIndex].clip) {
-      newCheckpoint.clip = checkpoints[existingIndex].clip;
-    }
+    // Preserve existing clip(s) if not being overwritten
+    const ex = checkpoints[existingIndex];
+    if (!newCheckpoint.clip && ex.clip) newCheckpoint.clip = ex.clip;
+    if (!newCheckpoint.clips && ex.clips) newCheckpoint.clips = ex.clips;
+    if (!newCheckpoint.clipsTitle && ex.clipsTitle) newCheckpoint.clipsTitle = ex.clipsTitle;
     checkpoints[existingIndex] = newCheckpoint;
     console.log(`  Updated existing Day ${day} checkpoint (estimate cleared if present)`);
   } else {
