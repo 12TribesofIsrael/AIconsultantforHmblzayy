@@ -285,6 +285,13 @@
     "inProgressDay": 31,
     "milesRemaining": 26,
     "estimatedSegmentMiles": 30,
-    "inProgressStartedAt": "2026-04-25T16:05:13.668Z"
+    "inProgressStartedAt": "2026-04-25T16:05:13.668Z",
+    "clips": [
+      "https://www.twitch.tv/hmblzayy/clip/KawaiiRelievedJaguarTBTacoLeft-OX2AJJYXcMm3rXTg",
+      "https://www.twitch.tv/hmblzayy/clip/BrightResourcefulGiraffeKAPOW-mAJH78SKnh4o2dcX",
+      "https://www.twitch.tv/hmblzayy/clip/FaintGleamingPoxKappaClaus-X2zXdqN6dkWcqUhw"
+    ],
+    "clip": "https://www.twitch.tv/hmblzayy/clip/KawaiiRelievedJaguarTBTacoLeft-OX2AJJYXcMm3rXTg",
+    "clipsTitle": "One Month In · The Love Wall"
   }
 ]
