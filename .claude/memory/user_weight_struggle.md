@@ -10,7 +10,7 @@ originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
 |---|---|---|
 | **All-time peak** | **230 lb** (Sept 1, 2022) | Handwritten log page 1 |
 | **Smart Fitness Scale era begins** | ~207-213 range | App history starts March 2025 visible |
-| **30-Day Lockin start weight** | **203 lb** (Mar 25, 2026) | Group text screenshot, 11:05 AM |
+| **30-Day Lockin start weight** | **~211.4 lb** (Mar 25, 2026) | Mar 20 scale peak still in effect; no fresh weigh-in logged Mar 25. Confirmed by Thomas 2026-04-26 against the screen-recording of the founding chat. |
 | **Mar 20, 2026 scale peak** | **211.4 lb** | Scale app, Mar 20-Apr 20 chart |
 | **Current (Apr 20, 2026)** | **203.1 lb**, BMI 33.8, BF 33.3%, VF 16 | Scale app, 07:07 AM reading |
 | **Convergence-window drop** | **−8.3 lb** in 31 days (3/20 → 4/20) | Scale app chart |
@@ -22,7 +22,7 @@ originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
 ## How "down 10, 27 to go" resolves
 
 Thomas said this Apr 21. Both halves square with the data:
-- **"Down 10"** = rounded verbal for the 8.3 lb drop during the Convergence window (3/20 peak → 4/20 current)
+- **"Down 10"** = rounded verbal for the 8.3 lb drop during the Convergence window (3/20 peak 211.4 → 4/20 current 203.1). The Lockin began at the same ~211.4 (Mar 20 peak still effectively in force on Mar 25), so "down 10 since the Lockin started" and "down 10 since the peak" describe the same drop.
 - **"27 to go"** = distance to 175 goal (~28 lb, rounded down)
 - *Alternate reading:* 26.9 lb down from all-time peak (230 → 203.1). Both the "10" and the "27" hold as symmetric halves — 27 down from peak, 27 to go to target. The symmetry is accidental but useful for the book.
 
