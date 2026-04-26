@@ -1,38 +1,37 @@
 ---
-ended: 2026-04-25T23:50:00Z
+ended: 2026-04-26T22:00:00Z
 project: ZayAutomations
 branch: main
-version: v2.9.0
-originSessionId: 4aa3a849-bfc3-4e22-a92f-92fdd75963c3
+version: v2.10.0
+originSessionId: 658350e4-0c5c-414d-bf11-3cdbafb30c35
 ---
-# Last Session — 2026-04-25
+# Last Session — 2026-04-26
 
 ## What the user wanted
-Thomas wanted to actually start executing the IG remix funnel — not just have the blueprint, but know the literal taps to make tonight, on a Reel he was already mid-edit on (Philly FAME clip about Minister Zay). My first pass was too complex; he pushed back and we boiled it down to a single dead-simple playbook he can follow today.
+Day 31 distribution day. Thomas wanted (1) AI Bible Gospels bio updated across his socials before reposting today, then (2) the actual TT/IG posts to repost for max ROI today, and (3) a 10-day plan he could follow Days 31–40 instead of regenerating the playbook every morning.
 
 ## What we did
-- First answer pointed him at the existing 5-block 2.5-hour blueprint in `docs/remix-overview.md`. He said "that looks super complicated i dont know how to non of that" — flagged this as a tactical-execution overwhelm signal.
-- Stripped to a single 2-min IG Story sticker action. He asked "is that a remix" — caught me conflating funnel stages (Story sticker = bottom-of-funnel click play, NOT a remix). Clarified the two-stage model.
-- He asked about monetization if Zay isn't on X. Per `research/twitter-x/profile.md`, Zay has @minister_zay but it's brand-only. Walked him through the actual revenue chain: remix → @AIBibleGospels followers → tracker/site clicks → Anointed Bible Video Maker / consulting sale. Pivoted recommendation off X to IG Reels Remix (where Zay's audience actually lives).
-- He shared 3 screenshots mid-edit on the Philly FAME Reel and asked for: (a) exact button-by-button on the screen, (b) 4-agent ROI check on top-creator remix workflow.
-- Generated `docs/faithwalklive-utm-log.csv` with 8 pre-filled UTM URLs for Day 30. Bio links use `faithwalk-evergreen`, all per-day surfaces use `faithwalk-day-30`.
-- Fired 4 ROI agents in parallel (Reddit / YouTube / X / case-study blogs). All 4 returned. **Verdict: REFRAME.** Three of four said native IG Remix split-screen > re-upload; Reddit dissented saying the new Aug 2025 native **Repost button** beats both. ALL FOUR agreed the bigger lever is the CTA — link-in-bio CTR is ~0.004% (Reddit hard data), Story link sticker is the actual click path.
-- Findings saved as `project_remix_roi_check.md` + indexed in MEMORY.md.
-- Wrote final clean playbook `docs/remix-playbook-today.md` — single doc, today's facts at top, one-time bio setup, 3 paths for the Reel (Repost → Remix → re-upload last resort), Story link sticker tap-by-tap, caption ready to copy-paste, don'ts, tomorrow's update instructions.
-- Committed as `23f96f9 Add remix playbook + UTM log for daily Story/Reel distribution` (already pushed to origin/main; memory swept up in `a903a5a`).
+- Confirmed AI Bible Gospels handle inventory: he uses "AI Bible Gospels" on every platform but I had no current bio text. Shipped him a unified bio line + per-platform UTM-rotated bio link (`utm_source=ig_bio|tt_bio|x_bio|fb_bio`, `utm_campaign=faithwalk-evergreen`). YouTube channel "About" intentionally untouched (description-driven funnel, not bio).
+- Used the `browser` skill to scout live posts. **Important handle discovery:** Zay is `@hmblzayy` on TikTok/Twitch but `@ministerzay` on Instagram (130K). I burned one scrape pass on `instagram.com/hmblzayy` getting "Profile isn't available" before checking `research/instagram/profile.md`. Saved as `reference_zay_handles.md` so the next instance skips the trip-up.
+- TT scout (logged-out, public): pulled top 10 posts on @hmblzayy. Headline: **2M-view "walk from Philly to Cali" + Yeshua the Messiah worship instrumental** (`/video/7623225855002545439`) — locked in as the Day 31 TT repost target. Backups at 641K and 83K.
+- IG scout: @ministerzay reels grid yielded **DXiQJWtkuha at 269K views** (newest walk-era Reel) as Day 31 IG target. Bonus discovery: NBC4 Columbus tagged him in `DXaWDn2ErjA` — flagged as high social-proof remix candidate but parked behind Day 40.
+- ROI tradeoff settled: **Repost beats Remix Days 31-39** because the click driver is the Story link sticker (per Apr 25 4-agent verdict), Repost rides Zay's existing 2M-view algo wave, takes 30 sec vs. 90 sec, and skips face-on-cam friction. Remix earns its 90 seconds only on Day 40 (biblical wilderness number).
+- Rewrote `docs/remix-playbook-today.md` from a single-day Day 30 doc into the full 10-day Days 31–40 playbook: Today's Facts block at top + 3-step daily flow (TT Repost → IG Repost → IG Story sticker) + every-morning self-serve refresh recipe + Day 40 Remix appendix with biblical 40-day verse anchors (verses to be pulled at runtime from `docs/1611KjvW_apocrypha.pdf` per `feedback_verse_source` rule, not from memory) + Cali-arrival bio-swap-back checklist.
+- Bumped to v2.10.0. Gitignored `scout-*.json/.png` so future browser scouting doesn't pollute git status.
+- Committed `9d71f4c` and pushed to origin/main.
 
 ## Decisions worth remembering
-- **CSV bio rows use `faithwalk-evergreen`, not per-day campaigns.** Updating bio every day would dilute attribution across 100+ campaign IDs. Only the 6 per-post surfaces rotate `faithwalk-day-N`.
-- **Did not push ManyChat "Comment WALK → DM" play despite it scoring strongest in 3 agents.** Reason: ~60-min setup + $15/mo + Thomas already overwhelmed. Captured in project_remix_roi_check.md as deferred — revisit when Reels cadence is steady.
-- **Path C (re-upload with text overlay) intentionally documented in the playbook as last resort,** not deleted. Reason: Repost button may not be in his account yet (Aug 2025 rollout uneven), and Remix requires face-on-camera. Better to give him a working fallback than leave him stranded.
-- **Flipped advice twice mid-session** (bottom-third text → upper-middle, and Path C → Path A). Owned both flips honestly. Better to whipsaw before posting than ship the wrong thing.
+- **Day 40 specifically as the Remix moment** — not Day 35, not "first chance you get." The biblical 40-day number (Moses, Israel, Elijah, Christ) is the emotional anchor that earns face-on-camera for that one reaction. Documented in playbook + below as project memory.
+- **Bios are temporary, not permanent.** During the walk: hijack to `faithwalklive.com` evergreen UTM. After Cali arrival: revert to `youtube.com/@AIBIBLEGOSPELS`. Don't re-pitch a "permanent rebrand" if Thomas asks about bios in a future session.
+- **YouTube About untouched.** YouTube funnel runs through video descriptions per `docs/aeo-youtube-description-spec.md` + `project_aeo_strategy.md`, not the channel bio.
+- **ManyChat still deferred** (per Apr 25 ROI check); not re-pitched this session.
 
 ## Open threads / next session starts here
-- **Thomas hasn't shipped yet.** The playbook at `docs/remix-playbook-today.md` is ready but he hasn't run through it. First check next session: did he post the Reel + Story today? Ask before assuming.
-- **If he did ship:** check Vercel Analytics for `utm_campaign=faithwalk-day-30` clicks, log into the CSV, and use the data to inform Day 31's playbook regeneration.
-- **If he didn't ship:** ask what blocked him at which step — that tells us what to simplify in the doc.
-- **Day 30 still in-progress on tracker** (Springfield, OH, 25 mi remaining as of last `tracker:from-title`). When Day 30 archives + Day 31 starts, the `Today's facts` block at top of `docs/remix-playbook-today.md` needs updating + 4 places where `faithwalk-day-30` appears need to become `faithwalk-day-31`.
-- **ManyChat upgrade is the next funnel layer** when Reels cadence is steady. Don't pitch unprompted — wait for him to ask "what else can I do?"
+- **Did Thomas actually post today (Day 31)?** Ask before assuming. If yes → check Vercel Analytics for `utm_campaign=faithwalk-day-31` clicks vs. yesterday's `faithwalk-day-30`, and use the delta to pressure-test whether Repost is actually outperforming the Day 30 re-upload. If no → ask what blocked him at which step in the new playbook.
+- **Bios are updated** per Thomas ("bios updated" — confirmed). If he reports any platform's analytics looking weird, double-check that the per-platform `utm_source=tt_bio|x_bio|fb_bio` rotations actually got pasted (not just `ig_bio` everywhere).
+- **Top-post URLs in `docs/remix-playbook-today.md` will go stale by Day 32+.** Section "EVERY MORNING — Refresh Today's Facts" tells him how to self-serve, but on Day 32+ check whether he's actually doing the refresh or whether the playbook URLs are still pointing at Day 31 posts.
+- **Day 40 (~2026-05-05) is the next big milestone.** When tracker hits Day 40, switch the daily flow into the Remix appendix. Pull a wilderness verse from `docs/1611KjvW_apocrypha.pdf` via pdftotext (don't quote from memory — `feedback_verse_source`).
+- **NBC4 Columbus tagged Zay** (IG `DXaWDn2ErjA`) — parked as a Day 40 social-proof remix candidate in case Day 40's organic post is weak.
 
 ## Uncommitted work
 Clean working tree.
