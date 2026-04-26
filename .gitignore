@@ -37,3 +37,7 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+# Browser-skill scout scaffolding (live post-discovery for remix playbook refresh)
+scout-*.json
+scout-*.png
