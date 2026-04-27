@@ -305,6 +305,13 @@
     "lng": -84.1916069,
     "miles": 633,
     "day": 32,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/KnottyGiftedCardNotLikeThis-xm-rdaBUsx6e-SDg"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/KnottyGiftedCardNotLikeThis-xm-rdaBUsx6e-SDg",
+    "destinationLat": 39.8286897,
+    "destinationLng": -84.8898521,
+    "destination": "RICHMOND, IN",
+    "inProgressDay": 33,
+    "milesRemaining": 40,
+    "estimatedSegmentMiles": 49,
+    "inProgressStartedAt": "2026-04-27T12:30:48.822Z"
   }
 ]
