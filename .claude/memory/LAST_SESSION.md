@@ -1,37 +1,44 @@
 ---
-ended: 2026-04-26T22:00:00Z
+ended: 2026-04-26T23:00:00Z
 project: ZayAutomations
 branch: main
 version: v2.10.0
-originSessionId: 658350e4-0c5c-414d-bf11-3cdbafb30c35
+originSessionId: 0eebffbd-c669-466f-94e8-7ede0c42d02f
 ---
-# Last Session — 2026-04-26
+# Last Session — 2026-04-26 (evening)
 
 ## What the user wanted
-Day 31 distribution day. Thomas wanted (1) AI Bible Gospels bio updated across his socials before reposting today, then (2) the actual TT/IG posts to repost for max ROI today, and (3) a 10-day plan he could follow Days 31–40 instead of regenerating the playbook every morning.
+Day 31 distribution — Thomas wanted to take a screen recording of the faithwalklive.com tracker and post it as a Reel, then asked whether to also do the Story link sticker (yes — different jobs: Reel = reach, Story = clicks). He needed help producing platform-formatted cuts from a single OBS source recording.
 
 ## What we did
-- Confirmed AI Bible Gospels handle inventory: he uses "AI Bible Gospels" on every platform but I had no current bio text. Shipped him a unified bio line + per-platform UTM-rotated bio link (`utm_source=ig_bio|tt_bio|x_bio|fb_bio`, `utm_campaign=faithwalk-evergreen`). YouTube channel "About" intentionally untouched (description-driven funnel, not bio).
-- Used the `browser` skill to scout live posts. **Important handle discovery:** Zay is `@hmblzayy` on TikTok/Twitch but `@ministerzay` on Instagram (130K). I burned one scrape pass on `instagram.com/hmblzayy` getting "Profile isn't available" before checking `research/instagram/profile.md`. Saved as `reference_zay_handles.md` so the next instance skips the trip-up.
-- TT scout (logged-out, public): pulled top 10 posts on @hmblzayy. Headline: **2M-view "walk from Philly to Cali" + Yeshua the Messiah worship instrumental** (`/video/7623225855002545439`) — locked in as the Day 31 TT repost target. Backups at 641K and 83K.
-- IG scout: @ministerzay reels grid yielded **DXiQJWtkuha at 269K views** (newest walk-era Reel) as Day 31 IG target. Bonus discovery: NBC4 Columbus tagged him in `DXaWDn2ErjA` — flagged as high social-proof remix candidate but parked behind Day 40.
-- ROI tradeoff settled: **Repost beats Remix Days 31-39** because the click driver is the Story link sticker (per Apr 25 4-agent verdict), Repost rides Zay's existing 2M-view algo wave, takes 30 sec vs. 90 sec, and skips face-on-cam friction. Remix earns its 90 seconds only on Day 40 (biblical wilderness number).
-- Rewrote `docs/remix-playbook-today.md` from a single-day Day 30 doc into the full 10-day Days 31–40 playbook: Today's Facts block at top + 3-step daily flow (TT Repost → IG Repost → IG Story sticker) + every-morning self-serve refresh recipe + Day 40 Remix appendix with biblical 40-day verse anchors (verses to be pulled at runtime from `docs/1611KjvW_apocrypha.pdf` per `feedback_verse_source` rule, not from memory) + Cali-arrival bio-swap-back checklist.
-- Bumped to v2.10.0. Gitignored `scout-*.json/.png` so future browser scouting doesn't pollute git status.
-- Committed `9d71f4c` and pushed to origin/main.
+- **Diagnosed the email round-trip problem.** First file (`Video.mov`) was 220×480 — Gmail attachment compression had crushed it from native iPhone resolution. Recommended he ditch email for phone↔PC transfers; deferred decision until later.
+- **Helped him re-record via OBS.** First OBS attempt landed at `.claude/memory/obs.mp4` (wrong dir — auto-synced to global memory + central backup); moved it to `assets/footage/obs-tracker-day31.mp4`. Frames showed unloaded map tiles ("Loading map…" at 5s, gray tiles throughout). Asked him to re-record with full tile-load + canvas size at 1080×1920.
+- **Second OBS attempt** (`assets/obs1.mp4`) — 1920×1080 landscape (he couldn't get OBS to vertical canvas, said "best I can do"), 1:15.8, map tiles loaded properly this time. Accepted that constraint and split the asset across all 6 social surfaces instead of fighting it.
+- **Rendered 7 cuts via ffmpeg** to `assets/footage/cuts/`:
+  - `landscape-full-1920x1080.mp4` — Twitter/X + YouTube long-form, native aspect
+  - `square-1080x1080.mp4` — IG square feed (cleanest cut, fills frame)
+  - `vertical-full-1080x1920.mp4` + `vertical-60s` — un-branded vertical (content padded with black bands; user adds text in IG/TT editor)
+  - `vertical-branded-full-1080x1920.mp4` + `vertical-branded-60s` — **branded vertical** with "DAY 31" / "607 MILES WALKED" / "LIVE TRACKER · link in bio" baked into the 400px top/bottom bands using Windows Arial fonts copied to `.tmp/`. This was the winning template — empty space looks intentional, not lazy.
+  - `story-bg-10s-1080x1920.mp4` — 10-sec snippet (65-75s of source) for Story link-sticker background
+- **Delivered the deployment plan** — which file → which platform, with platform-specific captions and tagging rules (`@ministerzay` on IG, `@hmblzayy` on TT/Twitch per `reference_zay_handles`).
+- **Picked Google Drive over OneDrive** for PC↔iPhone transfers after Thomas asked why I'd defaulted to OneDrive. Real answer: Google Drive is the better fit for HIS stack (already authenticated everywhere via `aibiblegospels444@gmail.com`, 15GB vs 5GB free, native shareable links). Saved as `feedback_file_transfer_google_drive.md` so future sessions don't drift back.
+- **Committed `1fed484`** — new memory + MEMORY.md index + `.tmp/` added to `.gitignore`. Pushed to origin/main.
+- **All 7 cuts confirmed in place locally** (`assets/footage/cuts/`, gitignored as expected — `assets/footage/` rule), Thomas confirmed "all videos are in place."
 
 ## Decisions worth remembering
-- **Day 40 specifically as the Remix moment** — not Day 35, not "first chance you get." The biblical 40-day number (Moses, Israel, Elijah, Christ) is the emotional anchor that earns face-on-camera for that one reaction. Documented in playbook + below as project memory.
-- **Bios are temporary, not permanent.** During the walk: hijack to `faithwalklive.com` evergreen UTM. After Cali arrival: revert to `youtube.com/@AIBIBLEGOSPELS`. Don't re-pitch a "permanent rebrand" if Thomas asks about bios in a future session.
-- **YouTube About untouched.** YouTube funnel runs through video descriptions per `docs/aeo-youtube-description-spec.md` + `project_aeo_strategy.md`, not the channel bio.
-- **ManyChat still deferred** (per Apr 25 ROI check); not re-pitched this session.
+- **Branded vertical > un-branded vertical from a 16:9 source.** When forced to letterbox 1920×1080 into 1080×1920, drawing branded text into the 400px top/bottom bands with ffmpeg drawtext makes the empty space look intentional. Recipe: `crop=1040:1080:440:0,scale=1080:-2,pad=1080:1920:0:(1920-ih)/2:black` then 4 drawtext layers (DAY N headline + miles subhead + LIVE TRACKER footer + "link in bio" in HMBL gold #fcc500).
+- **Don't re-record when the user says "best I can do."** I almost pushed for a third OBS attempt at vertical canvas; instead I leaned into the 1920×1080 source and split it across surfaces, which actually unlocked MORE coverage (Twitter/X + YouTube long-form become free additional surfaces with the landscape master).
+- **Tracker timing rule held.** Thomas finished distribution at ~6:30 PM; I told him don't run `tracker:from-title` tonight per `feedback_tracker_timing.md` (Zay's safety rule — never mid-day, only end-of-night/morning).
+- **Auto-sync hygiene.** Caught the OBS file dropped into `.claude/memory/` (would've polluted the central backup repo across all machines) and moved it to `assets/footage/` before it got synced.
 
 ## Open threads / next session starts here
-- **Did Thomas actually post today (Day 31)?** Ask before assuming. If yes → check Vercel Analytics for `utm_campaign=faithwalk-day-31` clicks vs. yesterday's `faithwalk-day-30`, and use the delta to pressure-test whether Repost is actually outperforming the Day 30 re-upload. If no → ask what blocked him at which step in the new playbook.
-- **Bios are updated** per Thomas ("bios updated" — confirmed). If he reports any platform's analytics looking weird, double-check that the per-platform `utm_source=tt_bio|x_bio|fb_bio` rotations actually got pasted (not just `ig_bio` everywhere).
-- **Top-post URLs in `docs/remix-playbook-today.md` will go stale by Day 32+.** Section "EVERY MORNING — Refresh Today's Facts" tells him how to self-serve, but on Day 32+ check whether he's actually doing the refresh or whether the playbook URLs are still pointing at Day 31 posts.
-- **Day 40 (~2026-05-05) is the next big milestone.** When tracker hits Day 40, switch the daily flow into the Remix appendix. Pull a wilderness verse from `docs/1611KjvW_apocrypha.pdf` via pdftotext (don't quote from memory — `feedback_verse_source`).
-- **NBC4 Columbus tagged Zay** (IG `DXaWDn2ErjA`) — parked as a Day 40 social-proof remix candidate in case Day 40's organic post is weak.
+- **Tomorrow morning analytics check is the actual ROI test.** Pull Vercel Analytics for `utm_campaign=faithwalk-day-31` clicks vs. `faithwalk-day-30` baseline. If Day 31 (Repost + branded video Reel + Story sticker) outperforms Day 30 (Repost-only) → keep the branded-video upgrade in the playbook for Days 32-39. If it underperforms → revert to pure Repost or test NBC4 Columbus tag for social proof.
+- **`tracker:from-title` + clip backfill** for Day 31 first thing tomorrow. Wherever Day 31 ended up, archive it and attach a Twitch clip per the standard daily workflow Half 1 + Half 2 (clip backfill is mandatory per `feedback_clip_backfill_mandatory`).
+- **Refresh `docs/remix-playbook-today.md`** "Today's Facts" block for Day 32 (new day number, new total miles, new TT/IG top-post URLs per the EVERY MORNING recipe in the doc).
+- **Day 32 distribution** — same 6-surface approach with a fresh OBS recording + branded ffmpeg pipeline. Pipeline is now reproducible — just swap source file + change "DAY 31" / "607 MILES WALKED" text in the drawtext args.
+- **Pre-stage Day 40 (~May 5)** Remix script + verse pull from `docs/1611KjvW_apocrypha.pdf` via pdftotext (per `feedback_verse_source` — never quote from memory). Anchor verses: Exodus 24:18, Numbers 14:34, 1 Kings 19:8, Matthew 4:2.
+- **NBC4 Columbus tag** (IG `DXaWDn2ErjA`) parked as Day 40 social-proof backup if Day 40's organic post is weak.
+- **Drive for Desktop install** — Thomas needs to install it on PC once, then `feedback_file_transfer_google_drive` will route all future renders through there.
 
 ## Uncommitted work
 Clean working tree.
