@@ -20,6 +20,7 @@
 - [No tech jargon (Zay)](feedback_no_tech_jargon_zay.md) — Strip "OBS"/tech words from Zay-facing copy; routes message back to ShuggC
 - [No channel double-tap](feedback_no_channel_double_tap.md) — Wait 24-48h between outreach channels; back-to-back flips "gift" → "please respond"
 - [File transfer = Google Drive](feedback_file_transfer_google_drive.md) — PC↔iPhone file moves default to Google Drive (not OneDrive); Thomas's whole stack runs on Google account `aibiblegospels444@gmail.com`
+- [Branded vertical recipe](feedback_video_branded_vertical.md) — When OBS records 1920x1080 landscape, render branded vertical with text in letterbox bands; reusable ffmpeg pipeline + multi-surface split for daily distribution
 - [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
 - [Never touch book repo from here](feedback_book_repo_no_edits.md) — A dedicated Claude instance handles `../faithwalkbook`; this instance must never edit/commit/push there to avoid colliding with that workflow
 - [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; Zay's Walk turned struggle → pedal-to-metal. Numbers need reconciliation before book quotes them.
