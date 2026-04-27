@@ -33,6 +33,7 @@
 - [Technology Gurus LLC decommissioned](feedback_technology_gurus_llc_decommissioned.md) — Old LLC is dissolved; all branding uses "AI Bible Gospels" only. Never write the LLC into public copy, SEO, AEO, JSON-LD, or docs.
 - [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
+- [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
