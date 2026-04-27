@@ -40,7 +40,12 @@ function buildTrackerHTML(checkpoints) {
   // previous walking day's position and shouldn't be treated as "current".
   const walking = checkpoints.filter(cp => !cp.restOnly);
   const current = walking[walking.length - 1];
-  const displayDay = current.inProgressDay || current.day;
+  // In-progress fields can sit on either the latest walking checkpoint
+  // or a trailing rest-only entry archived after a rest-day rollover.
+  // Walk tail-first so the rest-only entry's inProgressDay wins when it
+  // exists, keeping the stat bar in sync with the map's "heading-to" card.
+  const inProgressEntry = [...checkpoints].reverse().find(cp => cp.inProgressDay);
+  const displayDay = (inProgressEntry && inProgressEntry.inProgressDay) || current.day;
   const remaining = TOTAL_MILES - current.miles;
   const states = new Set(walking.map(cp => cp.location.split(', ')[1])).size;
 

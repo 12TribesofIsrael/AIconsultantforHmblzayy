@@ -1,6 +1,6 @@
 {
   "name": "zayautomations",
-  "version": "2.10.0",
+  "version": "2.10.1",
   "description": "AI automations for Minister Zay / HMBL brand",
   "scripts": {
     "discord:scrape": "node scripts/discord-scraper.js",
