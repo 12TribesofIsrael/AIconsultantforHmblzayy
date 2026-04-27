@@ -19,6 +19,7 @@
 - [Remix funnel ROI check (Apr 25)](project_remix_roi_check.md) — 4-agent verdict REFRAME: native Repost > native Remix > re-upload; Story link sticker is the click path, link-in-bio CTR is 0.004%; ManyChat deferred
 - [No tech jargon (Zay)](feedback_no_tech_jargon_zay.md) — Strip "OBS"/tech words from Zay-facing copy; routes message back to ShuggC
 - [No channel double-tap](feedback_no_channel_double_tap.md) — Wait 24-48h between outreach channels; back-to-back flips "gift" → "please respond"
+- [File transfer = Google Drive](feedback_file_transfer_google_drive.md) — PC↔iPhone file moves default to Google Drive (not OneDrive); Thomas's whole stack runs on Google account `aibiblegospels444@gmail.com`
 - [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
 - [Never touch book repo from here](feedback_book_repo_no_edits.md) — A dedicated Claude instance handles `../faithwalkbook`; this instance must never edit/commit/push there to avoid colliding with that workflow
 - [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; Zay's Walk turned struggle → pedal-to-metal. Numbers need reconciliation before book quotes them.

@@ -41,3 +41,6 @@ Thumbs.db
 # Browser-skill scout scaffolding (live post-discovery for remix playbook refresh)
 scout-*.json
 scout-*.png
+
+# Scratch / frame extraction working dir
+.tmp/
