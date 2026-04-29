@@ -39,3 +39,5 @@
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
 - [Prayer wall — Discord-routed](project_prayer_wall_passed.md) — `/prayer` routes to HMBL Discord (v2.12.2, Apr 29). No custom wall on faithwalklive. Don't re-pitch a built wall.
+- [Route, don't rebuild](feedback_route_dont_rebuild.md) — Before building a feature that duplicates an existing community surface (Discord, group chat, etc.), default to routing INTO it instead. Confirmed on prayer-wall pivot.
+- [HMBL Discord invite](reference_hmbl_discord.md) — Permanent invite `discord.gg/MzWAdRbDqu`. Default route target for any "where do prayers/community go?" question.

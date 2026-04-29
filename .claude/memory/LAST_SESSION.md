@@ -1,40 +1,38 @@
 ---
-ended: 2026-04-29T20:00:00Z
+ended: 2026-04-29T23:00:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.12.2
-originSessionId: 78873a64-228e-49f3-8cd9-924beb67d254
+originSessionId: 4e12cfa8-726c-4dbd-8fe0-64166b26b985
 ---
-# Last Session — 2026-04-29 (afternoon)
+# Last Session — 2026-04-29
 
 ## What the user wanted
-Anointed app just launched live at the anointed.app domain (Thomas's own AI video production product, Modal-deployed v13, Cloudflare Worker proxy). He wanted it featured on the AI Bible Gospels parent brand site (aibiblegospels.com) as the second flagship product, sitting next to Faith Walk Live, presented tastefully.
+Capitalize on the Day 34 paused-walk news cycle (TMZ + Shade Room covering Zay's Apr 28 vehicle strike + hospitalization) to channel the surge of attention into something durable, without looking opportunistic. Initially asked about a custom prayer wall; pivoted mid-session to routing the existing Discord prayer section instead.
 
 ## What we did
-- Cross-read the Anointed source repo at `C:\Users\Claude\ai-bible-gospels` (README + CLAUDE.md) to ground the description: KJV scripture or any custom script → Claude AI scenes → FLUX + Kling + JSON2Video → narrated, scored, subtitled cinematic MP4 in 16:9 / 1:1 / 9:16. Two production workflows (Scripture Mode + Custom Script Mode) on a unified app, live at anointed.app via a tiny Cloudflare Worker reverse-proxy fronting a Modal upstream.
-- Built a new "Flagship — currently live · Anointed" section on `c:\Users\Claude\hblfaithwalk\aibiblegospelscom\src\app\page.tsx` directly under the Faith Walk Live section. Same eyebrow / h2 / 4-bullet / 2-CTA structure for visual symmetry. Tagline: *"A video production platform for ministers and creators. Paste in text — scripture or your own script — and get back a narrated, cinematic video, ready to post."* CTAs: "Visit anointed.app →" (primary) + "See videos made with it" → @AIBIBLEGOSPELS (secondary).
-- Hero CTA pluralized: "See the flagship" → "See the flagships". Section anchor `#flagship` → `#flagships`.
-- Footer link row gained an Anointed entry between Faith Walk Live and YouTube.
-- `layout.tsx` updated: `Organization.sameAs` JSON-LD now includes `https://anointed.app`; `metadata.description`, `openGraph.description`, `twitter.description`, and `WebSite.description` all switched from "Flagship: Faith Walk Live" → "Flagships: Faith Walk Live and Anointed".
-- Voice-checked against aibiblegospelscom CLAUDE.md rules: testimony-not-tech, no "AI-powered/revolutionize/disrupt", plain and direct. Copy stays on-brand without leaning into AI-product hype.
-- **First push attempt rejected** — remote (origin/main) had 4 commits I didn't have locally, including `df9a44f Scrub decommissioned LLC references` (which had already done my pre-emptive LLC fix), `2f68ad1 Swap contact email to aibiblegospels444@gmail.com`, and the Privacy/Terms additions for TikTok app review. Reset HEAD~1, pulled --ff-only, re-applied only the Anointed bits cleanly on top of the new state, rebuilt, recommitted as `9af3fcb`, pushed, verified live: `>Anointed<`, `See the flagships`, `See videos made with it`, and `anointed.app` all present in production HTML at https://aibiblegospels.com/.
-- Build verified clean both times with `npm run build` before each push (Next.js 16.2.3 / Turbopack).
+- Recommended first-comment camp on TMZ + Shade Room posts as the highest-ROI move; named brand-safety guardrails (no re-narrating the strike, pause the Days 33-40 Stitch playbook's *walk-progress* framing).
+- User initially said "build the prayer wall." Gave realistic timeline (~4-5h MVP) with moderation flagged as the real cost. User then realized HMBL University Discord already has a prayer section → pivot to routing.
+- Shipped v2.12.2 — `/prayer` on faithwalklive routes to HMBL University Discord (`https://discord.gg/MzWAdRbDqu`, permanent invite confirmed by Thomas):
+  - **faithwalklive `ca50167`**: rewrote `src/app/(site)/prayer/page.tsx` from disabled-form stub to single-CTA Discord landing. Updated `faq/page.tsx` — "How can I support the walk?", "How can I pray for Minister Zay?" answers no longer say "submit a prayer / prayers are moderated"; "What is Faith Walk Live?" swaps "prayer wall" for "prayer hub that points to HMBL University Discord". JSON-LD `FAQPage` + `SpeakableSpecification` schema preserved (clean answer strings).
+  - **consulting `961c06c`**: package.json 2.12.1 → 2.12.2; CLAUDE.md changelog entry added.
+  - Vercel production deploy verified via Deployments API (state: success).
+  - Live page verified via curl — heading, CTA button, Discord URL all serving on `faithwalklive.com/prayer`.
+- Updated `project_prayer_wall_passed.md` memory — was "passed indefinitely / don't re-pitch", now "Discord-routed (v2.12.2) / don't re-pitch a built wall." MEMORY.md index entry retitled accordingly.
+- Drafted first-comment copy for TMZ TikTok (2 variants), Shade Room IG (2 variants), and a universal short. Execution notes covered: post from `@AI_BIBLE_GOSPELS`, one comment per post, stagger platforms 30-60 min, no URL shorteners, don't drop on Zay's team's own posts.
 
 ## Decisions worth remembering
-- **Two stacked flagship sections, not a 2-column grid.** The existing design uses full-width single-column sections with lots of breathing room — collapsing both flagships into a tight grid would have crunched the bullet copy. "Next to" reads cleanly as the section directly below in page flow.
-- **Repeated "Flagship — currently live" eyebrow** on both sections instead of differentiating ("Flagship I" / "Flagship II", or "Flagship · Faith Walk Live" / "Flagship · Anointed"). Each h2 differentiates them; the eyebrow is the category label and parity reads as parity, not redundancy.
-- **Did NOT ship the LLC scrub I had drafted.** When I rebased on origin, that change was already in `df9a44f` from a different machine session. Saved a redundant diff. Useful signal: `feedback_technology_gurus_llc_decommissioned.md` is being honored elsewhere in the workflow too.
-- **Did NOT bump aibiblegospelscom version (`v0.1.0` → `v0.2.0`) or update its CLAUDE.md.** That repo's CLAUDE.md doesn't have the strict "bump version on every feature" rule that this consulting repo does, and "Don't add features beyond what the task requires" applies. Worth flagging for follow-up but skipped per scope.
+- **Discord routing over custom wall** — saved ~4-5h of build, eliminated moderation burden during a TMZ-driven traffic surge, routed prayer into Zay's actual community. Apr 25 ROI verdict (don't build a custom wall) is preserved; this just confirms the alternative shape that does work.
+- **`/prayer` URL kept as the public surface** instead of a direct-to-Discord redirect. Gives Vercel Analytics on the click + preserves the v2.12.1 FAQ "Drop a prayer for Zay" link target + provides a Discord-newcomer explainer for non-Discord users.
+- **No re-narration of the strike** in any new public copy — matches the v2.12.0/v2.12.1 stance ("accident on the route"). TMZ + SR are the only authoritative public sources cited.
+- **Pause Days 33-40 Stitch playbook for walk-progress framing**, but the Stitch on Zay's "Yeshua the Messiah" 2M-view post is still fine for prayer/recovery framing. Don't tear up the playbook; just retune.
 
 ## Open threads / next session starts here
-- **Anointed user memory + project memory now stale on status field**: existing `user_anointed_bible_video_maker.md` says "Built. Wants to take it public / market it commercially. Not yet launched." Updated this session to reflect LIVE at anointed.app. If you re-read this, it's already current.
-- **aibiblegospelscom repo CLAUDE.md is stale**: still says "Status: Scaffolded Apr 21, 2026. Not yet deployed." (it IS deployed, has been since Apr 21 per `project_aibiblegospelscom_launch.md`). Also section count is now 7 not 6 (added Anointed). Phase 2 item "Case study template + second case study (once second project ships)" is now partially achieved — Anointed is the second project on the page. Worth a small docs cleanup PR there.
-- **Pre-paused playbook (`docs/playbook-days-33-40.md`) still stale** — TT Stitch / comment-camp built for an active walk; do NOT pitch executing it. Walk is still paused (Day 34, Lewisville, IN since Apr 28 strike).
-- **Walk-resume swap-back** still queued: when Zay returns, strip `paused`/`pausedNote` from the latest checkpoint, and rewrite or remove the FAQ "Why is the walk paused?" entry on faithwalklive.com.
-- **Day 34 actual mile count** still `703` with `estimatedMiles: true`; needs team confirmation on whether full ~30 mi was completed before the strike.
-- **Days 26-33 backfill in book timeline** still queued for the dedicated book Claude instance.
-- **Memory backup repo divergence** confirmed again at session-start: `../claude-memory-backup` still fails `git pull --ff-only` on the desktop. Manual reconcile still needed there. Non-blocking.
-- **NEW commit since prior session log**: `961c06c v2.12.2: Prayer wall pivots to HMBL Discord routing` was committed between sessions (not this session). Already reflected in MEMORY.md `project_prayer_wall_passed.md` description.
+- **Thomas hasn't dropped the first-comment copy yet** — still needs to post on TMZ TikTok, Shade Room IG, plus any universal X/FB/IG drops. Variants are ready in this conversation transcript.
+- **IG Story sticker on `@AI_BIBLE_GOSPELS`** offered but not drafted — Thomas can ask anytime; ~2 min to publish.
+- **Days 33-40 playbook needs a quick retune doc** for the paused-walk window — currently `docs/playbook-days-33-40.md` reads as if walk is in progress. Either an addendum or a "paused-walk variant" section would be the next tracker-side touch.
+- **Discord-newcomer onboarding** — current `/prayer` page has one footer line about Discord. If conversion data shows non-Discord users bouncing, expand that into a "what you'll find inside" block (was sketched as Option B in this session, deferred to ship-now Option A).
+- **Day 34 paused-state is still the active state** — no clip backfill or new tracker work pending until Zay's team signals resume.
 
 ## Uncommitted work
-Clean working tree (this consulting repo). aibiblegospelscom also clean and up-to-date with origin/main. Anointed source repo (`C:\Users\Claude\ai-bible-gospels`) has 3 untracked runtime state files (`pipeline_state.json`, `usage_log.json`, `custom_render_history.json`) — local render state, not source; should probably be gitignored over there but out of scope for this session.
+Clean working tree.
