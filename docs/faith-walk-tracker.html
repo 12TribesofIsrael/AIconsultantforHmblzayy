@@ -339,6 +339,50 @@
       animation: pulse 1.5s infinite;
     }
 
+    /* Paused-state badge replaces LIVE when the walk is on hold */
+    .prayers-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 2px;
+    }
+
+    /* Top-of-page paused banner: somber, gold-on-dark, never red. */
+    .paused-banner {
+      background: linear-gradient(180deg, #131322 0%, #0a0a0a 100%);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+      padding: 18px 30px;
+      text-align: center;
+    }
+    .paused-banner-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .paused-banner-text {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 720px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+    @media (max-width: 768px) {
+      .paused-banner { padding: 14px 18px; }
+      .paused-banner-title { font-size: 12px; letter-spacing: 3px; }
+      .paused-banner-text { font-size: 13px; }
+    }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.5; transform: scale(0.8); }
@@ -417,9 +461,12 @@
         <h1>HMBL</h1>
         <div class="subtitle">Faith Walk &bull; Philly &rarr; Cali</div>
       </div>
-      <div class="live-badge">
+      <div class="live-badge" id="liveBadge">
         <div class="live-dot"></div>
         LIVE
+      </div>
+      <div class="prayers-badge" id="prayersBadge" style="display:none;">
+        🙏 PRAYERS FOR ZAY
       </div>
     </div>
     <a href="https://www.youtube.com/@AIBIBLEGOSPELS" target="_blank" class="powered-link">
@@ -429,19 +476,25 @@
     </a>
   </div>
 
+  <!-- Paused-state banner (shown only when latest checkpoint has paused: true) -->
+  <div class="paused-banner" id="pausedBanner" style="display:none;">
+    <div class="paused-banner-title" id="pausedBannerTitle">🙏 Walk Paused</div>
+    <div class="paused-banner-text" id="pausedBannerText"></div>
+  </div>
+
   <!-- Stats bar (own row, evenly spaced) -->
   <div class="stats-section">
     <div class="stats-bar">
       <div class="stat">
-        <div class="stat-value" id="currentDay">33</div>
+        <div class="stat-value" id="currentDay">34</div>
         <div class="stat-label">Day</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="totalMiles">673</div>
+        <div class="stat-value" id="totalMiles">~703</div>
         <div class="stat-label">Miles</div>
       </div>
       <div class="stat">
-        <div class="stat-value" id="remaining">2,327</div>
+        <div class="stat-value" id="remaining">2,297</div>
         <div class="stat-label">Remaining</div>
       </div>
       <div class="stat">
@@ -808,6 +861,17 @@
             "miles": 673,
             "date": "Apr 27, 2026",
             "clip": "https://www.twitch.tv/hmblzayy/clip/BashfulGiftedOwlOhMyDog-onq1lG06jnunWLpy"
+      },
+      {
+            "day": 34,
+            "location": "Lewisville, IN",
+            "lat": 39.8456,
+            "lng": -85.358,
+            "miles": 703,
+            "date": "Apr 28, 2026",
+            "estimatedMiles": true,
+            "paused": true,
+            "pausedNote": "Walk paused — Zay is recovering after an accident on the route. He's safe and in good hands. Please keep him in your prayers. Updates to follow when the team is ready."
       }
 ];
 
@@ -845,6 +909,10 @@
     const walkingCheckpoints = CHECKPOINTS.filter(cp => !cp.restOnly);
     const currentCheckpoint = walkingCheckpoints[walkingCheckpoints.length - 1];
     const progressPercent = (currentCheckpoint.miles / TOTAL_MILES) * 100;
+    // Walk-paused state: latest walking checkpoint carries paused: true.
+    // Swaps the LIVE badge for a prayers badge, shows a banner above stats,
+    // and softens the current-location marker (no pulsing).
+    const isPaused = currentCheckpoint.paused === true;
 
     // ==========================================
     // INITIALIZE MAP
@@ -977,44 +1045,74 @@
         .bindPopup(`<b style="color:#FFD700">Day ${cp.day}</b><br>${cp.location}<br>${cp.miles} miles<br>${cp.date}${dotClipPopup}`);
     });
 
-    // Current location marker (large pulsing)
-    const currentIcon = L.divIcon({
-      html: `<div style="position:relative;">
-        <div style="
-          background: #FFD700;
-          border-radius: 50%;
-          width: 20px;
-          height: 20px;
-          border: 3px solid #fff;
-          box-shadow: 0 0 20px rgba(255,215,0,0.6);
-        "></div>
-        <div style="
-          position: absolute;
-          top: -3px;
-          left: -3px;
-          width: 26px;
-          height: 26px;
-          border-radius: 50%;
-          border: 2px solid #FFD700;
-          animation: pulse 1.5s infinite;
-          opacity: 0.5;
-        "></div>
-      </div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
-      className: '',
-    });
+    // Current location marker. Paused state uses a softer non-pulsing
+    // marker (a steady gold ring with a 🙏 glyph) so the map doesn't
+    // animate over a real safety event.
+    const currentIcon = isPaused
+      ? L.divIcon({
+          html: `<div style="
+            background: rgba(255, 215, 0, 0.15);
+            border: 2px solid #FFD700;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
+          ">🙏</div>`,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+          className: '',
+        })
+      : L.divIcon({
+          html: `<div style="position:relative;">
+            <div style="
+              background: #FFD700;
+              border-radius: 50%;
+              width: 20px;
+              height: 20px;
+              border: 3px solid #fff;
+              box-shadow: 0 0 20px rgba(255,215,0,0.6);
+            "></div>
+            <div style="
+              position: absolute;
+              top: -3px;
+              left: -3px;
+              width: 26px;
+              height: 26px;
+              border-radius: 50%;
+              border: 2px solid #FFD700;
+              animation: pulse 1.5s infinite;
+              opacity: 0.5;
+            "></div>
+          </div>`,
+          iconSize: [20, 20],
+          iconAnchor: [10, 10],
+          className: '',
+        });
     const milesLabel = currentCheckpoint.estimatedMiles
       ? `~${currentCheckpoint.miles} miles completed <span style="color:rgba(255,215,0,0.6);font-size:10px;">(est)</span>`
       : `${currentCheckpoint.miles} miles completed`;
 
     // Popup layout depends on current state:
+    //   - Paused: walk halted by an off-route event (e.g. accident). Show
+    //     somber pausedNote, no clip, no heading-to.
     //   - Rest day: show the rest-day identity as primary (Day N — REST DAY)
     //     with only the rest-day clip. Hide the walk clip to keep it clean.
     //   - Walking in-progress: show arrival day + heading-to, walk clip
     //   - Arrived (no in-progress): standard arrival view + walk clip
     let popupBody;
-    if (currentCheckpoint.restDay) {
+    if (isPaused) {
+      popupBody = `<b style="color:#FFD700">🙏 WALK PAUSED</b><br>
+        <span style="color:#FFD700;font-weight:600;">Day ${currentCheckpoint.day} — ${currentCheckpoint.location}</span><br>
+        <span style="color:rgba(255,255,255,0.5);font-size:11px;">${currentCheckpoint.date}</span>
+        <hr style="border:0;border-top:1px solid rgba(255,215,0,0.25);margin:8px 0;">
+        <span style="color:rgba(255,255,255,0.85);font-size:12px;line-height:1.45;">
+          ${currentCheckpoint.pausedNote || "Walk paused. Please keep Zay in your prayers."}
+        </span>`;
+    } else if (currentCheckpoint.restDay) {
       const restDayClipLink = currentCheckpoint.restDayClip
         ? `<br><a href="${currentCheckpoint.restDayClip}" target="_blank" style="color:#FFD700;font-size:11px;">▶ Watch today's clip</a>`
         : '';
@@ -1140,6 +1238,21 @@
       // longer the "active" card — the rest-day card is.
       const isActive = isLastWalking && !hasRestDayCard;
       card.className = `checkpoint-card ${isActive ? 'active' : ''}`;
+      // Paused checkpoints (off-route events) render the prayers state in
+      // place of miles/clip and never carry a heading-to.
+      if (cp.paused) {
+        card.innerHTML = `
+          <div class="checkpoint-day">Day ${cp.day}</div>
+          <div class="checkpoint-location">${cp.location.split(',')[0]}</div>
+          <div class="checkpoint-miles" style="color:#FFD700;font-weight:700;">🙏 WALK PAUSED</div>
+          <div class="checkpoint-date">${cp.date}</div>
+        `;
+        card.addEventListener('click', () => {
+          map.flyTo([cp.lat, cp.lng], 10, { duration: 1.5 });
+        });
+        checkpointsList.appendChild(card);
+        return;
+      }
       const headingToHtml = (isActive && cp.destination)
         ? `<div class="checkpoint-heading-to">
              <span class="checkpoint-heading-to-label">Day ${cp.inProgressDay || cp.day}</span>
@@ -1207,6 +1320,22 @@
         window.goatcounter.count({ path: '/youtube-click', event: true });
       }
     });
+
+    // Paused-state UI toggle: swap LIVE for the prayers badge and reveal
+    // the somber pausedNote banner above the stats bar.
+    if (isPaused) {
+      const liveBadge = document.getElementById('liveBadge');
+      const prayersBadge = document.getElementById('prayersBadge');
+      if (liveBadge) liveBadge.style.display = 'none';
+      if (prayersBadge) prayersBadge.style.display = 'inline-flex';
+      const banner = document.getElementById('pausedBanner');
+      const bannerText = document.getElementById('pausedBannerText');
+      if (banner && bannerText) {
+        bannerText.textContent = currentCheckpoint.pausedNote
+          || 'Walk paused. Please keep Zay in your prayers. Updates to follow when the team is ready.';
+        banner.style.display = 'block';
+      }
+    }
   </script>
 </body>
 </html>

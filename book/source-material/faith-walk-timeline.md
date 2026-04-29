@@ -73,3 +73,27 @@ Canonical data source: `src/faith-walk-tracker/checkpoints.json`. Supplemental c
 - Day 19 — whether the Day 19 slot was a rest day followed by Day 20 Alliance OH on Apr 15, or whether a walking Day 19 exists and is unlogged (CLAUDE.md v2.4.1 notes rest-only archives shadowing in-progress source).
 - Day 21 and Day 22 sharing the Apr 16 date — confirm whether Canton and Wilmot were the same calendar day (unlikely at 22 mi each) or if one should be Apr 15/17.
 - Weather, chat moments, prayer moments, guest walkers, raids, donations — none of these are captured in the repo and must be pulled from Twitch VOD, Discord, or direct interview with Zay.
+- **Days 26–33 backfill** — this timeline currently stops at Day 25; the consulting tracker has confirmed checkpoints through Day 33 (Richmond, IN, ~673 mi, Apr 27, 2026). Crossing into Indiana on Day 33 is a state-line beat worth its own anchor. Pull from `src/faith-walk-tracker/checkpoints.json` when extending this table.
+
+## Apr 28, 2026 — Day 34: The Lewisville Stop
+
+On Apr 28, 2026 — Day 34 of the Faith Walk — Zay was struck by a vehicle on the route between Richmond, IN and Lewisville, IN. The walk was paused. The Twitch livestream stopped. Zay was taken to the hospital. He is safe and recovering.
+
+This is the **second** documented vehicle incident on the route — the first was Apr 20, 2026 (Day 26) en route to Sunbury, OH, after which Zay kept walking. This second incident is qualitatively different: the walk halted on the day of the strike, the stream ended mid-day, and care escalated to hospital admission rather than continuation on foot.
+
+**Context for the chapter:**
+
+- **Day 33 (Apr 27, 2026)** — Zay completed a 40-mile push from Dayton, OH into Richmond, IN, his largest single day in the Indiana stretch and the day he crossed the OH→IN state line. Discord title: "DAY 33 COMPLETE!! NEW RECORD! 40 MILES COMPLETED AND CROSSED INTO INDIANA". Cumulative ~673 mi.
+- **Day 34 (Apr 28, 2026)** — Planned 30 mi from Richmond, IN to Lewisville, IN. Discord title: "FAITH WALK CONTINUES — DAY 34 — Richmond, IN → Lewisville, IN ~30 MILES". Walk halted at/near Lewisville after the strike. Cumulative recorded at ~703 mi (estimated; final actual mile count of the day to be reconciled with VOD/team report).
+- **Public copy** on the tracker reads: "Walk paused — Zay is recovering after an accident on the route. He's safe and in good hands. Please keep him in your prayers. Updates to follow when the team is ready." The tracker's live badge has been replaced with a prayers badge; the current-location marker has been swapped from a pulsing beacon to a steady gold ring. No vehicle, hospital, or accident-spot specifics are narrated in public copy per the project's public-copy-safety rule.
+- **Faith framing** — the pattern of striking → continuing (Day 26) and now striking → being taken off the road (Day 34) is its own narrative arc. The "40-day wilderness" framing that was being prepared for Day 40 (planned May 4) — Moses, Israel, Elijah, Christ — now intersects in real time with a forced wilderness rather than a chosen one. Worth a chapter anchor.
+
+**Open items for the book:**
+
+- Actual mile count walked Apr 28 before the strike (was the full ~30 mi covered, or did the strike happen earlier on the route?).
+- Specific location of the strike (street/county) — for the timeline only; not for public copy.
+- Hospital admission details (which hospital, length of stay, injuries) — direct from Zay or family, not inferred from public posts.
+- Twitch stream end timestamp on Apr 28 — anchors the moment the broadcast halted.
+- Day-of and day-after Discord/IG/TT post archive — Zay's team statements, the visual treatment, fan response volume.
+- Weather and route conditions on Apr 28.
+- Anchor moments from Day 33 (state-line crossing into Indiana, the 40-mile record) for the chapter that ends just before Day 34.

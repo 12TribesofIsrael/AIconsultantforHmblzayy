@@ -315,5 +315,16 @@
     "miles": 673,
     "date": "Apr 27, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/BashfulGiftedOwlOhMyDog-onq1lG06jnunWLpy"
+  },
+  {
+    "day": 34,
+    "location": "Lewisville, IN",
+    "lat": 39.8456,
+    "lng": -85.358,
+    "miles": 703,
+    "date": "Apr 28, 2026",
+    "estimatedMiles": true,
+    "paused": true,
+    "pausedNote": "Walk paused — Zay is recovering after an accident on the route. He's safe and in good hands. Please keep him in your prayers. Updates to follow when the team is ready."
   }
 ]
