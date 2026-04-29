@@ -21,3 +21,11 @@ When writing helper text, legends, tooltips, or any explainer copy for **public-
 **Why:** The underlying data (city, miles, stream) is already public — but copy that *narrates* real-time movement makes the page friendlier to someone scanning aggregators or search results for his current physical position. Same protective posture as the existing tracker-timing rule (only update end-of-night/morning, never mid-day). The data layer can't be hidden while running a live tracker, but the *prose layer* can stay neutral. Caught this when the verbose "new viewer" explainer on /map was reviewed and the user flagged it as too revealing of intent.
 
 **How to apply:** Before shipping any public-facing copy on faithwalklive or its peers, read it as if you were a stranger looking for Zay. If a single sentence pairs his name + a present-tense motion verb + a recognizable place, rewrite. Use neutral marker labels. The neutral version still gives new viewers the disambiguation they need (which "Day N" matches which UI element) without amplifying real-time-tracking signal.
+
+**Refinement (Apr 29, 2026 — Day 34 incident)**: this rule is about not broadcasting **ahead of** the public record, not refusing to acknowledge what's already in it. When a major external outlet (TMZ, The Shade Room, mainstream press) has independently published the story, faithwalklive can:
+
+- Acknowledge the underlying event in plain factual language (e.g. on the FAQ "Why is the walk paused?" → "struck by a vehicle on the route... hospitalized, recovering").
+- Link the external coverage by URL so curious visitors get verified context elsewhere instead of inventing it.
+- Still avoid adding specifics those outlets didn't publish (location of strike, hospital name, injuries, etc. — those stay in book source material only).
+
+What we don't do, even after public-record breaks: narrate Zay's *current real-time* movement, location updates beyond the once-per-day checkpoint, or anything that doxxes him beyond what he/his team is actively publishing themselves.

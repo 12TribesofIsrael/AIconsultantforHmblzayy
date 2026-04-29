@@ -28,6 +28,7 @@
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
 - [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27
+- [Apr 28 incident — walk paused](project_apr28_incident.md) — Day 34 vehicle strike on Richmond → Lewisville, hospitalized, walk + stream paused. Schema gained `paused`/`pausedNote`; render wired across both repos; TMZ + Shade Room covered it
 - [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
 - [Verify Vercel deploy after push](feedback_verify_vercel_deploy.md) — Poll GitHub Deployments API to confirm Vercel build succeeded; don't trust push→live. Next 16 route-config fields can't be re-exported.
 - [Technology Gurus LLC decommissioned](feedback_technology_gurus_llc_decommissioned.md) — Old LLC is dissolved; all branding uses "AI Bible Gospels" only. Never write the LLC into public copy, SEO, AEO, JSON-LD, or docs.
