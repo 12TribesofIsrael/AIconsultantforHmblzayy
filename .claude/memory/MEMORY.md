@@ -11,9 +11,9 @@
 - [4-agent ROI check](feedback_roi_check_new_concepts.md) — Any substantive new direction without prior repo research: ask "run the 4-agent ROI check?" then fire Reddit/YouTube/X/blogs in parallel, 5 questions each, 4 separate reports stitched
 - [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
-- [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live at www.aibiblegospels.com, repo 12TribesofIsrael/aibiblegospelscom, Vercel auto-deploy
+- [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live; Apr 29 added Anointed as second flagship next to Faith Walk Live
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
-- [Anointed Bible Video Maker](user_anointed_bible_video_maker.md) — Thomas's AI product (pick scripture → generate cultural-perspective narrated video); the "play" pitched to Zay, destined for aibiblegospels.com
+- [Anointed (anointed.app)](user_anointed_bible_video_maker.md) — Thomas's AI video product; LIVE Apr 29 at anointed.app (Modal + Cloudflare Worker proxy); second flagship on aibiblegospels.com
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
 - [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed, text on standby
 - [Social distribution play](project_social_distribution.md) — Remix + IG DM/Story external-traffic drive to faithwalklive.com (team not promoting); blueprint docs/remix-overview.md
@@ -31,10 +31,11 @@
 - [Apr 28 incident — walk paused](project_apr28_incident.md) — Day 34 vehicle strike on Richmond → Lewisville, hospitalized, walk + stream paused. Schema gained `paused`/`pausedNote`; render wired across both repos; TMZ + Shade Room covered it
 - [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
 - [Verify Vercel deploy after push](feedback_verify_vercel_deploy.md) — Poll GitHub Deployments API to confirm Vercel build succeeded; don't trust push→live. Next 16 route-config fields can't be re-exported.
+- [aibiblegospelscom — pull before editing](feedback_aibiblegospelscom_pull_first.md) — That repo gets edits from multiple machines; always `git pull --ff-only` before working in it to avoid push rejection
 - [Technology Gurus LLC decommissioned](feedback_technology_gurus_llc_decommissioned.md) — Old LLC is dissolved; all branding uses "AI Bible Gospels" only. Never write the LLC into public copy, SEO, AEO, JSON-LD, or docs.
 - [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
 - [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
-- [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
+- [Prayer wall — Discord-routed](project_prayer_wall_passed.md) — `/prayer` routes to HMBL Discord (v2.12.2, Apr 29). No custom wall on faithwalklive. Don't re-pitch a built wall.

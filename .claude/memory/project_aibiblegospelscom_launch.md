@@ -16,7 +16,14 @@ On 2026-04-21, the AI Bible Gospels parent brand site launched:
 
 **Why:** The brand that sponsors/builds Faith Walk Live (faithwalklive.com) now has its own parent-brand home page — separate from the walk, anchoring the broader faith-tech portfolio (YouTube channel @AIBIBLEGOSPELS feeds here). This is the audience/SEO hub for the AI Bible Gospels brand independent of any single campaign.
 
+**Flagships featured on the home page:**
+1. **Faith Walk Live** (faithwalklive.com) — the consulting deliverable built for Minister Zay
+2. **Anointed** (anointed.app) — Thomas's own AI video production product (added 2026-04-29, commit `9af3fcb`)
+
+Both render as full-width "Flagship — currently live" sections on `/` with parallel structure. Hero CTA "See the flagships" anchors to `#flagships`. JSON-LD `Organization.sameAs` includes both faithwalklive.com and anointed.app.
+
 **How to apply:**
 - Treat this repo like faithwalklivecom: pushes to `main` auto-deploy via Vercel; Vercel redeploys on commit.
-- When referring to "AI Bible Gospels" going forward, it now means both the YouTube channel AND this website — check context.
+- When referring to "AI Bible Gospels" going forward, it now means the YouTube channel AND this website AND both flagship products — check context.
+- **Always `git pull` before editing** — this repo gets edits from multiple machines (laptop + desktop). On 2026-04-29 a push attempt was rejected because the remote had 4 commits the local machine hadn't seen (LLC scrub, contact email swap, Privacy/Terms additions). Reset + pull-ff-only + re-apply on top is the recovery pattern.
 - Future work: branch protection on `main` (not yet set — deferred from launch), any UI/content changes should be made in the sibling repo, not this consulting repo.
