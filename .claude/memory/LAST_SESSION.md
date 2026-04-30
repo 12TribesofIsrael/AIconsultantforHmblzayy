@@ -1,38 +1,49 @@
 ---
-ended: 2026-04-29T23:00:00Z
-project: ZayAutomations — AI Consulting for Minister Zay / HMBL
+ended: 2026-04-30T18:00:00Z
+project: ZayAutomations
 branch: main
-version: v2.12.2
-originSessionId: 4e12cfa8-726c-4dbd-8fe0-64166b26b985
+version: v2.13.1
+originSessionId: c2c6c7b5-6590-4750-8837-8caa2cfbc2e3
 ---
-# Last Session — 2026-04-29
+# Last Session — 2026-04-30
 
 ## What the user wanted
-Capitalize on the Day 34 paused-walk news cycle (TMZ + Shade Room covering Zay's Apr 28 vehicle strike + hospitalization) to channel the surge of attention into something durable, without looking opportunistic. Initially asked about a custom prayer wall; pivoted mid-session to routing the existing Discord prayer section instead.
+"The accident has been everywhere on social media but the tracker isn't getting commensurate visits — fix that, before any competitor tracker emerges." Two halves: (a) understand WHY traffic isn't flowing, (b) ship the fix. Mid-session pivot: also keep the day counter visibly advancing during pause so the tracker stays alive even though Zay isn't walking.
 
 ## What we did
-- Recommended first-comment camp on TMZ + Shade Room posts as the highest-ROI move; named brand-safety guardrails (no re-narrating the strike, pause the Days 33-40 Stitch playbook's *walk-progress* framing).
-- User initially said "build the prayer wall." Gave realistic timeline (~4-5h MVP) with moderation flagged as the real cost. User then realized HMBL University Discord already has a prayer section → pivot to routing.
-- Shipped v2.12.2 — `/prayer` on faithwalklive routes to HMBL University Discord (`https://discord.gg/MzWAdRbDqu`, permanent invite confirmed by Thomas):
-  - **faithwalklive `ca50167`**: rewrote `src/app/(site)/prayer/page.tsx` from disabled-form stub to single-CTA Discord landing. Updated `faq/page.tsx` — "How can I support the walk?", "How can I pray for Minister Zay?" answers no longer say "submit a prayer / prayers are moderated"; "What is Faith Walk Live?" swaps "prayer wall" for "prayer hub that points to HMBL University Discord". JSON-LD `FAQPage` + `SpeakableSpecification` schema preserved (clean answer strings).
-  - **consulting `961c06c`**: package.json 2.12.1 → 2.12.2; CLAUDE.md changelog entry added.
-  - Vercel production deploy verified via Deployments API (state: success).
-  - Live page verified via curl — heading, CTA button, Discord URL all serving on `faithwalklive.com/prayer`.
-- Updated `project_prayer_wall_passed.md` memory — was "passed indefinitely / don't re-pitch", now "Discord-routed (v2.12.2) / don't re-pitch a built wall." MEMORY.md index entry retitled accordingly.
-- Drafted first-comment copy for TMZ TikTok (2 variants), Shade Room IG (2 variants), and a universal short. Execution notes covered: post from `@AI_BIBLE_GOSPELS`, one comment per post, stagger platforms 30-60 min, no URL shorteners, don't drop on Zay's team's own posts.
+- **Diagnosed the gap** via 2 parallel Explore agents (faithwalklive site state + audit of existing distribution playbooks). Two findings: (1) site had pastoral copy but no search machinery — `eventStatus` hardcoded `EventScheduled`, no `/updates` page, no `NewsArticle` schema, root metadata silent on accident; (2) all four distribution playbooks (`docs/playbook-days-33-40.md`, `docs/remix-playbook-today.md`, `docs/remix-overview.md`, faith-tech pivot) were dead — every one assumed Zay streaming + team posting.
+- **Fired 4-agent ROI check in parallel** (Reddit / YouTube / X / case-study blogs) — all four returned **REFRAME**: comment-camping is third-tier, structured-data ownership of an incident page is the headline play. Specifically: AI Overviews hit <6% on breaking-news queries (the suppression is the opening), Discover (not Search) is where third-party news sites win 86% of clicks, FAQPage schema gives 3.2× AIO citation lift. Reports stitched at `docs/roi-news-capture-apr28.md` + 4 channel reports.
+- **WebSearch revealed scope**: not just TMZ + Shade Room — Fox-network syndicated (Fox 29 Philly, Fox 59 Indy, Fox 5 NY, Fox 5 Atlanta, KTVU, Fox 32 Chicago, Fox 35 Orlando) + Daily Voice + Express Tribune + Lokmat Times. 11 outlets total.
+- **Shipped v2.13.0 to faithwalklive (commit `a67449b`):**
+  - New `/updates/april-28-incident` page — `NewsArticle` + `FAQPage` + `SpeakableSpecification` + `BreadcrumbList` JSON-LD; `citation` array linking all 11 outlets; OG image; recovery timeline driven by `src/data/updates.ts` (`aprilTwentyEightRecovery`, daily appends are 1-line additions).
+  - New `/updates` chronological index.
+  - Root `layout.tsx` Event JSON-LD now flips to `EventPostponed` + `previousStartDate` when `getStats().isPaused`. Root metadata description + keywords lead with paused-state queries.
+  - `getStats()` extended with `pausedSince` + `pausedDate` (drives schema state from `checkpoints.json`).
+  - `sitemap.ts` is dynamic — `lastModified` from `checkpoints.json` for tracker pages, latest recovery entry for incident page.
+  - FAQ Q7 expanded (Fox 29, Fox 59, TMZ, Shade Room links + "Read full update" CTA). FAQ + Why pages get `BreadcrumbList`.
+  - `Footer.tsx` press contact `aibiblegospels444@gmail.com`. `public/llms.txt` rewritten for AI answer engines.
+- **Verified live** via `curl --ssl-no-revoke` + grep (per `feedback_live_schema_verification.md`): all schema types present on `/updates/april-28-incident`, `EventPostponed` on `/`, sitemap includes both new routes.
+- **Shipped v2.13.1 (commits `845f81d` faithwalklive + `5ce15d5` consulting):**
+  - `getStats()` extended with `recoveryDay` (calendar days since paused day) + `displayDay` (currentDay + recoveryDay during pause). Homepage stat bar reads "Day 36 · Recovery Day 2" today (Apr 28 + 2 days). MapClient paused-banner gets matching pill.
+  - New `scripts/recovery-append.js` + `npm run recovery:append` — 30-second nightly helper. Reads today's date UTC, prompts for body (or `--body`/`--dry-run`/`--force` flags), idempotency-checks for duplicate, inserts into `aprilTwentyEightRecovery`, then pulls --rebase / commits / pushes the sibling repo. Stashes unrelated WIP per the existing faithwalk-sync pattern.
+- **Consulting deliverables (commit `24f004b`):** `docs/comment-camp-apr28.md` (Track B1 surface playbook with Tier 1-5 UTM URLs), `docs/bio-link-audit-apr28.md` (Track B2 + ShuggC escalation gated to T+48h Vercel data), `docs/roi-news-capture-apr28.md` + 4 channel reports, 16 apr28-campaign rows appended to `docs/faithwalklive-utm-log.csv`.
 
 ## Decisions worth remembering
-- **Discord routing over custom wall** — saved ~4-5h of build, eliminated moderation burden during a TMZ-driven traffic surge, routed prayer into Zay's actual community. Apr 25 ROI verdict (don't build a custom wall) is preserved; this just confirms the alternative shape that does work.
-- **`/prayer` URL kept as the public surface** instead of a direct-to-Discord redirect. Gives Vercel Analytics on the click + preserves the v2.12.1 FAQ "Drop a prayer for Zay" link target + provides a Discord-newcomer explainer for non-Discord users.
-- **No re-narration of the strike** in any new public copy — matches the v2.12.0/v2.12.1 stance ("accident on the route"). TMZ + SR are the only authoritative public sources cited.
-- **Pause Days 33-40 Stitch playbook for walk-progress framing**, but the Stitch on Zay's "Yeshua the Messiah" 2M-view post is still fine for prayer/recovery framing. Don't tear up the playbook; just retune.
+- **Skipped `LiveBlogPosting` schema** despite YouTube agent recommending it — X agent (citing Glenn Gabe) flagged it requires Google News publisher-policy compliance that we don't have. Used `NewsArticle` + `FAQPage` + `Speakable` instead.
+- **Manual-but-assisted over full-cron** for daily recovery appends. User explicitly chose manual after I recommended it; reasoning was tone-sensitivity (boilerplate auto-entries during recovery cycles read pageview-farmy) + short window (~7 days, automation overhead doesn't pay back). Captured as `feedback_manual_assisted_over_autocron.md`.
+- **Press contact line uses `aibiblegospels444@gmail.com`** (Thomas's main Google Workspace), NOT `technologygurusllc@gmail.com` even though that's listed in his profile — the LLC string is decommissioned per `feedback_technology_gurus_llc_decommissioned.md` and the email itself leaks the dead brand.
+- **Plan agent hallucinated "Glendale, AZ"** as the accident location during Phase 2 of plan mode. Caught it during file verification (FAQ already had correct copy: Richmond, IN → Lewisville, IN; Fox 59 specifies US-40). Lesson reinforces: trust-but-verify Plan-agent output before writing it into code.
+- **Used calendar-day delta in `getStats()` for recoveryDay** (rebuild refreshes the counter) rather than runtime/ISR. Daily push from `recovery:append` triggers Vercel rebuild → counter advances. If Thomas misses a day, counter freezes — which is the right behavior (no display drift, only advances when there's content).
 
 ## Open threads / next session starts here
-- **Thomas hasn't dropped the first-comment copy yet** — still needs to post on TMZ TikTok, Shade Room IG, plus any universal X/FB/IG drops. Variants are ready in this conversation transcript.
-- **IG Story sticker on `@AI_BIBLE_GOSPELS`** offered but not drafted — Thomas can ask anytime; ~2 min to publish.
-- **Days 33-40 playbook needs a quick retune doc** for the paused-walk window — currently `docs/playbook-days-33-40.md` reads as if walk is in progress. Either an addendum or a "paused-walk variant" section would be the next tracker-side touch.
-- **Discord-newcomer onboarding** — current `/prayer` page has one footer line about Discord. If conversion data shows non-Discord users bouncing, expand that into a "what you'll find inside" block (was sketched as Option B in this session, deferred to ship-now Option A).
-- **Day 34 paused-state is still the active state** — no clip backfill or new tracker work pending until Zay's team signals resume.
+- **Tonight (and each night for ~7 days):** Thomas runs `npm run recovery:append`, types the one body line. Each push bumps `dateModified` + sitemap freshness.
+- **T+48h Vercel Analytics check** (Friday May 1 morning): pull traffic on `/updates/april-28-incident`, check UTM-attributed sessions, kill any source <10 sessions, double down on top performer. Per the X agent, expect 76% of news traffic to show as "direct" referrer (dark-social stripping) — don't index on UTM-only. Documented as a `/schedule` offer Thomas hasn't accepted yet — re-offer if he wants.
+- **GUI-only Thomas actions** (5 min, documented in `docs/comment-camp-apr28.md`):
+  - Google Search Console: Request Indexing on `/updates/april-28-incident`, `/updates`, `/`, `/faq`.
+  - Bing Webmaster: same 4 URLs (verify domain first if not done — `public/google5a916fab341fe7e9.html` confirms Google is verified, Bing TBD).
+- **Comment-camp Tier 1**: Thomas to provide the TMZ TikTok URL (currently TBD in `docs/comment-camp-apr28.md`); plus run the Tier 1-2 surfaces per the cadence in that doc.
+- **Bio-link audit**: `docs/bio-link-audit-apr28.md` lists Twitch panel / IG `@ministerzay` / TT `@hmblzayy` as TBD eyeballs — Thomas to manually check each. ShuggC backchannel ask gated to T+48h Vercel data showing comment-camping insufficient.
+- **Daily recovery-entry append cadence**: 7 days from Apr 28 = through May 5. After that, recovery cadence likely tapers; pivot to event-driven entries (resume day, new news beat, etc.).
 
 ## Uncommitted work
 Clean working tree.

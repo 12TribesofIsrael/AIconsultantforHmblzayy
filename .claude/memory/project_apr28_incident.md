@@ -25,3 +25,18 @@ On Apr 28, 2026 (Day 34 of the Faith Walk), Zay was struck by a vehicle on the r
 - **Day 34 actual mile count is unconfirmed** — I used 703 (Day 33's 673 + ~30 mi planned) with `estimatedMiles: true`. Whether the full 30 mi was completed before the strike is unknown; needs Thomas / team confirmation if it ever matters for the book.
 - **Days 26–33 backfill** in `book/source-material/faith-walk-timeline.md` is still open. The Day-34 section calls it out. Dedicated book Claude instance can pull from `checkpoints.json`.
 - **Day 33-40 distribution playbook** (`docs/playbook-days-33-40.md`) is now stale. Don't pitch executing it. If/when walk resumes, the playbook needs a re-think because the cultural moment changed (national news = audience awareness of Zay just spiked, separate from the prior 2M-view Yeshua dynamics).
+
+**Apr 30 update — v2.13.0 + v2.13.1 news-capture pivot shipped:**
+
+By Apr 30, coverage had widened beyond TMZ + Shade Room to **Fox-network syndication** (Fox 29 Philly, Fox 59 Indianapolis, Fox 5 NY, Fox 5 Atlanta, KTVU, Fox 32 Chicago, Fox 35 Orlando) + Daily Voice + Express Tribune + Lokmat Times. 11 outlets total. Massive social surge (TT + IG) but faithwalklive.com wasn't capturing the search traffic. 4-agent ROI check (Reddit / YouTube / X / case-study blogs) returned **unanimous REFRAME**: comment-camping is third-tier; structured-data ownership of an incident page is the headline play (see `feedback_news_cycle_capture.md`).
+
+- **v2.13.0** (faithwalklive `a67449b` + consulting `24f004b`): New `/updates/april-28-incident` page — `NewsArticle` + `FAQPage` + `Speakable` + `BreadcrumbList` JSON-LD with `citation` array linking all 11 outlets. New `/updates` chronological index. Root Event JSON-LD pivots to `EventPostponed` + `previousStartDate` when `getStats().isPaused`. Root metadata description + keywords lead with paused-state queries. `sitemap.ts` is dynamic. FAQ Q7 expanded with all-outlet links. `Footer.tsx` press contact `aibiblegospels444@gmail.com`. `public/llms.txt` rewritten for AI answer engines.
+- **v2.13.1** (faithwalklive `845f81d` + consulting `5ce15d5`): `getStats()` exposes `recoveryDay` (calendar days since paused day) + `displayDay` (currentDay + recoveryDay during pause). Homepage stat bar reads "Day 36 · Recovery Day 2" past the paused day, falls back to "Day 34 · PAUSED" only on the paused day itself. New `scripts/recovery-append.js` + `npm run recovery:append` for nightly 1-line recovery-entry append.
+
+**Apr 28 actual accident specifics published by Fox 59 / Fox 29** (now public-record, OK to reference): U.S. 40 in Indiana, just before 3 p.m. ET, Buick LeSabre rear-ended a Mazda CX-5 support vehicle which then made contact with Zay walking westbound. Driver was 82. Condition stable, not life-threatening. Zay said he intends to finish the walk after recovery. Walk also raising awareness for **HMBL University** (trade school for underprivileged youth) — that fundraising framing is now public.
+
+**Open Thomas actions** (documented in `docs/comment-camp-apr28.md` + `docs/bio-link-audit-apr28.md`):
+- Run `npm run recovery:append` nightly through ~May 5.
+- Search Console + Bing Webmaster URL submissions (GUI-only).
+- Tier 1-2 comment-camp surfaces (Shade Room IG, TMZ TikTok URL TBD, Fox affiliate articles).
+- T+48h Vercel Analytics pull (Friday May 1) for go/no-go on tactics.
