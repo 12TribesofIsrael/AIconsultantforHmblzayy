@@ -1,6 +1,6 @@
 {
   "name": "zayautomations",
-  "version": "2.13.0",
+  "version": "2.13.1",
   "description": "AI automations for Minister Zay / HMBL brand",
   "scripts": {
     "discord:scrape": "node scripts/discord-scraper.js",
@@ -10,6 +10,7 @@
     "tracker:sync": "node scripts/twitch-tracker-sync.js",
     "tracker:watch": "node scripts/twitch-tracker-sync.js --watch",
     "faithwalk:sync": "node scripts/sync-faithwalklive.js",
+    "recovery:append": "node scripts/recovery-append.js",
     "book:sync": "node scripts/sync-book.js",
     "clips": "node scripts/twitch-clipper.js",
     "chatbot": "node scripts/twitch-chatbot.js",
