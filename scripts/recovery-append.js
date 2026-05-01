@@ -171,7 +171,7 @@ async function main() {
       git(['stash', 'push', '-u', '-m', 'recovery-append-auto-stash', '--', '.', ':!src/data/updates.ts']);
       stashed = true;
     }
-    git(['pull', '--rebase', 'origin', 'main']);
+    git(['pull', '--rebase', '--autostash', 'origin', 'main']);
     git(['add', 'src/data/updates.ts']);
     const rDay = recoveryDay('2026-04-28', date);
     const message = `Recovery Day ${rDay} (${date}): append /updates/april-28-incident timeline entry`;
