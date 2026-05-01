@@ -15,7 +15,7 @@
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
 - [Anointed (anointed.app)](user_anointed_bible_video_maker.md) — Thomas's AI video product; LIVE Apr 29 at anointed.app (Modal + Cloudflare Worker proxy); second flagship on aibiblegospels.com
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
-- [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed, text on standby
+- [ShuggC back channel — CLOSED](project_shuggc_backchannel.md) — May 1 Thomas decision: done routing through ShuggC. Never suggest ShuggC-mediated plays. Active surfaces: direct-to-Zay DM, Discord as community member, Twitch chat.
 - [Social distribution play](project_social_distribution.md) — Remix + IG DM/Story external-traffic drive to faithwalklive.com (team not promoting); blueprint docs/remix-overview.md
 - [Remix funnel ROI check (Apr 25)](project_remix_roi_check.md) — 4-agent verdict REFRAME: native Repost > native Remix > re-upload; Story link sticker is the click path, link-in-bio CTR is 0.004%; ManyChat deferred
 - [No tech jargon (Zay)](feedback_no_tech_jargon_zay.md) — Strip "OBS"/tech words from Zay-facing copy; routes message back to ShuggC

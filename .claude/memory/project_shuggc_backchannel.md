@@ -1,9 +1,22 @@
 ---
-name: ShuggC back channel opened Apr 17
-description: ShuggC back channel timeline — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed
+name: ShuggC back channel — CLOSED May 1
+description: ShuggC relay closed. Apr 17 call → Apr 18 overlay shipped → Apr 22 gatekeeping confirmed → IG DM to Zay → ShuggC silent for weeks → May 1 Thomas decision: done routing through ShuggC.
 type: project
 originSessionId: e1c03f75-0330-4b63-9c81-59a81703428c
 ---
+
+## Current status (May 1, 2026): RELAY CLOSED
+
+**Thomas's decision May 1:** done with ShuggC as a routing path. Gatekeeping confirmed permanent (silent ~weeks since the Apr 22 IG DM to Zay). **Do not suggest** "DM ShuggC first," "send to ShuggC and let him surface," or any ShuggC-mediated play in future sessions.
+
+**Active surfaces going forward:**
+1. **Direct to Zay** — IG DM (sent Apr 22 as AI_BIBLE_GOSPELS), text on standby
+2. **HMBL University Discord** — Thomas posts as community member; tone matters extra since this is now a primary surface, not a fallback
+3. **Twitch chat as AI_BIBLE_GOSPELS** — incidental presence, not a pitch surface
+
+**Watermark stays.** AI Bible Gospels / faithwalklive.com attribution on `/obs` overlay does not depend on ShuggC permission and was never going to. If Zay or his team adopts /obs at any point, the brand stays unless they specifically ask otherwise.
+
+
 ## Timeline
 
 **Apr 17, ~10:23 PM:** ShuggC called Thomas on Discord (11 min, pinned).
