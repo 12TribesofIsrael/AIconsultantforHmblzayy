@@ -44,3 +44,7 @@
 - [Prayer wall — Discord-routed](project_prayer_wall_passed.md) — `/prayer` routes to HMBL Discord (v2.12.2, Apr 29). No custom wall on faithwalklive. Don't re-pitch a built wall.
 - [Route, don't rebuild](feedback_route_dont_rebuild.md) — Before building a feature that duplicates an existing community surface (Discord, group chat, etc.), default to routing INTO it instead. Confirmed on prayer-wall pivot.
 - [HMBL Discord invite](reference_hmbl_discord.md) — Permanent invite `discord.gg/MzWAdRbDqu`. Default route target for any "where do prayers/community go?" question.
+- [HMBL Discord — #general is the chat](reference_hmbl_discord_general.md) — Thomas's community posts default to #general; #announcements is Zay-only.
+- [youtubeoptermizer repo](reference_youtubeoptermizer_repo.md) — Production IG Business / FB Page / YT Data v3 / X plumbing at `C:/Users/Claude/youtubeoptermizer`. Check before building any new IG/FB/YT automation.
+- [No third-party auto-engagement](feedback_no_third_party_auto_engagement.md) — Never propose auto-comment/like/reply on Zay's or any third-party posts. Meta TOS §5b + token revocation risk. Manual first-comment camp + ManyChat-on-own-account are the legit alternatives.
+- [Deposit before withdrawal in others' communities](feedback_community_post_deposit_first.md) — In someone else's community (Discord, Slack, Twitch), first post must be pure community service. Self-link posts only land cleanly after a deposit turn.
