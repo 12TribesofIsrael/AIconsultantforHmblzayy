@@ -97,3 +97,22 @@ This is the **second** documented vehicle incident on the route — the first wa
 - Day-of and day-after Discord/IG/TT post archive — Zay's team statements, the visual treatment, fan response volume.
 - Weather and route conditions on Apr 28.
 - Anchor moments from Day 33 (state-line crossing into Indiana, the 40-mile record) for the chapter that ends just before Day 34.
+
+## May 2, 2026 — Day 39: The 40-Day Wilderness Inversion
+
+On May 2, 2026 — calendar Day 39 of the Faith Walk — the walk remained paused. Zay continues to recover from the Apr 28 (Day 34) strike. The tracker at faithwalklive.com is still live; the prayers badge and steady gold-ring location marker remain in place. No new walking miles since Day 33's 40-mile Indiana push (~703 mi cumulative).
+
+The date is significant for the book's parallel arc — *Thomas's side* of the walk hit its first hard sub-200 lb scale reading.
+
+**Context for the chapter:**
+
+- **Thomas's parallel — May 2, 2026.** First hard sub-200 lb in 3-4 years pinned at **197.7 lb** (scale-app captured, 09:07 AM). Saturday early-weigh, one day before the protocol's planned Sunday photo-drop. 5 days clean since breaking the 48-hour water fast Thomas started 2026-04-28 — the day Zay was hit. The receipt cleared 200 by 2.3 lb, not a squeak. Detail in `faithwalkbook/personal/weight-log.md` and `faithwalkbook/personal/journal/2026-05-02.md`.
+- **40-day wilderness framing inverted.** The "40-day wilderness" arc (Moses 40 days, Israel 40 years, Elijah 40 days, Christ 40 days) was being prepared upstream for **Zay's Day 40 (planned May 4, 2026)**. The Day 34 strike turned that arc from a *chosen* wilderness into a *forced* one for Zay — but the body the arc was prepared for was no longer the body completing it on schedule. **The arc landed on Thomas's body instead — one day early, on Day 39.** When the Walker can't walk, the Witness still walks. The Witness's arc completed early; the Walker's was paused at 34. The 40-day frame still lands — just not on the body it was prepared for.
+- **Public copy on tracker** unchanged from Day 34 — walk paused, recovery posture. Thomas's parallel is private to the book; it does not surface in public tracker copy.
+
+**Open items for the book:**
+
+- Zay's recovery posture and any return-to-walk timeline (informs whether Day 39 anchors a long pause or a brief one in the Ch 11 spine).
+- Voice-memo capture from Thomas for May 2, 2026 — `faithwalkbook/personal/journal/2026-05-02.md` has the anchor facts and harvest map; verbatim entry block awaits backfill.
+- Confirm the "Walker can't walk, Witness still walks" framing as a Ch 11 anchor.
+- Reconcile the Day 33 (40 mi push) → Day 34 (strike) → Day 39 (Thomas's receipt) sequence as the parallel-arc spine for **Ch 11 — The Scale and the Mile**.
