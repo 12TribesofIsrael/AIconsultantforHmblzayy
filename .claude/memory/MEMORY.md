@@ -48,3 +48,4 @@
 - [youtubeoptermizer repo](reference_youtubeoptermizer_repo.md) — Production IG Business / FB Page / YT Data v3 / X plumbing at `C:/Users/Claude/youtubeoptermizer`. Check before building any new IG/FB/YT automation.
 - [No third-party auto-engagement](feedback_no_third_party_auto_engagement.md) — Never propose auto-comment/like/reply on Zay's or any third-party posts. Meta TOS §5b + token revocation risk. Manual first-comment camp + ManyChat-on-own-account are the legit alternatives.
 - [Deposit before withdrawal in others' communities](feedback_community_post_deposit_first.md) — In someone else's community (Discord, Slack, Twitch), first post must be pure community service. Self-link posts only land cleanly after a deposit turn.
+- [Creator no-show ≠ engagement opportunity](feedback_creator_no_show_restraint.md) — Default to silence on missed promises / no-shows. If team posts a clarification, window closes — emoji-react only, no original post.
