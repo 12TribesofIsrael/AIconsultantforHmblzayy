@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HMBL Faith Walk — RV Route Plan (Lewisville, IN → California)</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- GoatCounter Analytics (matches the live tracker) -->
+  <script data-goatcounter="https://hmbl-faithwalk.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
@@ -810,6 +812,15 @@
     const defaultHTML = infoPanel.innerHTML;
 
     function showSegment(seg) {
+      // Track which segments get opened — way more useful than pageview counts.
+      if (window.goatcounter) {
+        const slug = seg.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+        window.goatcounter.count({
+          path: `/rv-route/segment-${seg.id}-${slug}`,
+          title: `Segment ${seg.id}: ${seg.name} (${seg.mode})`,
+          event: true
+        });
+      }
       const modeLabel = { trail: 'Trail-mode', mixed: 'Mixed (trail + leapfrog)', leapfrog: 'Leapfrog only' };
       infoPanel.innerHTML = `
         <div class="segment-detail">
