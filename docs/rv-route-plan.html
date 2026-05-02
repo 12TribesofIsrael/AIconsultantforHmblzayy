@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMBL Faith Walk — RV Route Plan (Lewisville, IN → California)</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      border-bottom: 2px solid #FFD700;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 22px;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 4px;
+    }
+
+    .brand .subtitle {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .header-cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-cta a {
+      color: #FFD700;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,215,0,0.4);
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+
+    .header-cta a:hover {
+      background: #FFD700;
+      color: #0a0a0a;
+    }
+
+    /* Legend bar */
+    .legend-bar {
+      background: linear-gradient(180deg, #0a0a0a 0%, #131322 100%);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.25);
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .legend-items {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .legend-swatch {
+      width: 26px;
+      height: 4px;
+      border-radius: 2px;
+    }
+
+    .swatch-trail { background: #4ade80; }
+    .swatch-mixed { background: #fbbf24; }
+    .swatch-leapfrog { background: #f87171; }
+    .swatch-past { background: rgba(255,215,0,0.4); }
+
+    .legend-item strong {
+      color: #fff;
+    }
+
+    .legend-item .desc {
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+      margin-left: 4px;
+    }
+
+    .decision-rule {
+      font-size: 11px;
+      color: rgba(255,215,0,0.85);
+      letter-spacing: 0.5px;
+      max-width: 520px;
+      line-height: 1.5;
+    }
+
+    /* Main split: map + info panel */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      min-height: 0;
+    }
+
+    #map {
+      height: calc(100vh - 180px);
+      min-height: 500px;
+      background: #0a0a0a;
+    }
+
+    .info-panel {
+      background: linear-gradient(180deg, #131322 0%, #0a0a0a 100%);
+      border-left: 1px solid rgba(255,215,0,0.2);
+      padding: 22px;
+      overflow-y: auto;
+      height: calc(100vh - 180px);
+      min-height: 500px;
+    }
+
+    .info-default h2 {
+      color: #FFD700;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .info-default p {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .info-default p strong {
+      color: #FFD700;
+    }
+
+    .info-default .rule-box {
+      background: rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.25);
+      border-radius: 8px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .info-default .rule-box strong {
+      display: block;
+      color: #FFD700;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .info-default .tools {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,215,0,0.15);
+    }
+
+    .info-default .tools h3 {
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .info-default .tools .tool {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .info-default .tools .tool strong {
+      color: #FFD700;
+    }
+
+    /* Segment detail */
+    .segment-detail .segment-id {
+      font-size: 11px;
+      color: rgba(255,215,0,0.7);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .segment-detail h2 {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .segment-detail .mode-pill {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .mode-pill.trail {
+      background: rgba(74,222,128,0.15);
+      color: #4ade80;
+      border: 1px solid rgba(74,222,128,0.4);
+    }
+
+    .mode-pill.mixed {
+      background: rgba(251,191,36,0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(251,191,36,0.4);
+    }
+
+    .mode-pill.leapfrog {
+      background: rgba(248,113,113,0.15);
+      color: #f87171;
+      border: 1px solid rgba(248,113,113,0.4);
+    }
+
+    .segment-detail .stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 16px;
+      padding: 12px 0;
+      border-top: 1px solid rgba(255,215,0,0.15);
+      border-bottom: 1px solid rgba(255,215,0,0.15);
+    }
+
+    .segment-detail .stat {
+      flex: 1;
+    }
+
+    .segment-detail .stat-value {
+      color: #FFD700;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .segment-detail .stat-label {
+      color: rgba(255,255,255,0.5);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .segment-detail .summary {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .segment-detail .rec-block {
+      background: rgba(255,215,0,0.06);
+      border-left: 3px solid #FFD700;
+      padding: 12px 14px;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .segment-detail .rec-block strong {
+      display: block;
+      color: #FFD700;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .segment-detail .rec-block p {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .segment-detail .back-btn {
+      margin-top: 18px;
+      background: transparent;
+      border: 1px solid rgba(255,215,0,0.4);
+      color: #FFD700;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .segment-detail .back-btn:hover {
+      background: #FFD700;
+      color: #0a0a0a;
+    }
+
+    /* Footer summary */
+    .summary-bar {
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255,215,0,0.2);
+      padding: 12px 24px;
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .summary-stat {
+      text-align: center;
+    }
+
+    .summary-stat .value {
+      color: #FFD700;
+      font-size: 20px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .summary-stat .label {
+      color: rgba(255,255,255,0.5);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .summary-stat.trail .value { color: #4ade80; }
+    .summary-stat.mixed .value { color: #fbbf24; }
+    .summary-stat.leapfrog .value { color: #f87171; }
+
+    /* Leaflet popup styling */
+    .leaflet-popup-content-wrapper {
+      background: #131322;
+      color: #fff;
+      border: 1px solid rgba(255,215,0,0.4);
+      border-radius: 8px;
+    }
+    .leaflet-popup-tip { background: #131322; }
+    .leaflet-popup-content { font-family: 'Inter', sans-serif; font-size: 12px; }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+      }
+      #map {
+        height: 55vh;
+        min-height: 380px;
+      }
+      .info-panel {
+        height: auto;
+        min-height: 0;
+        max-height: 50vh;
+      }
+      .brand h1 { font-size: 18px; letter-spacing: 3px; }
+      .legend-bar { flex-direction: column; align-items: flex-start; }
+      .decision-rule { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand">
+      <h1>RV ROUTE PLAN</h1>
+      <div class="subtitle">Faith Walk · Lewisville, IN → California</div>
+    </div>
+    <div class="header-cta">
+      <a href="./faith-walk-tracker.html">← Live Tracker</a>
+    </div>
+  </header>
+
+  <div class="legend-bar">
+    <div class="legend-items">
+      <div class="legend-item">
+        <div class="legend-swatch swatch-trail"></div>
+        <strong>TRAIL</strong>
+        <span class="desc">RV follows behind</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-mixed"></div>
+        <strong>MIXED</strong>
+        <span class="desc">trail + leapfrog same day</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-leapfrog"></div>
+        <strong>LEAPFROG</strong>
+        <span class="desc">RV jumps ahead, meets you</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-swatch swatch-past"></div>
+        <strong>WALKED</strong>
+        <span class="desc">Days 1–34</span>
+      </div>
+    </div>
+    <div class="decision-rule">
+      <strong style="color:#FFD700">Real-time call:</strong> wide shoulder + light traffic → trail OK · city, bridge, construction, mountain pass → always leapfrog.
+    </div>
+  </div>
+
+  <div class="main">
+    <div id="map"></div>
+    <aside class="info-panel" id="infoPanel">
+      <div class="info-default">
+        <h2>How to use this map</h2>
+        <p>Tap any colored line on the map to see the recommended setup for that stretch — distance, mode, and where the RV should stage.</p>
+
+        <div class="rule-box">
+          <strong>The default play</strong>
+          Default to <strong>leapfrog</strong>: RV drives 10–15 mi ahead, parks at a rest area / Walmart / truck stop, Zay walks up to it, RV jumps ahead again. Switch to <strong>trail-mode only</strong> on wide-shoulder rural stretches with light traffic.
+        </div>
+
+        <p><strong>Why default leapfrog:</strong> RV creeping behind on busy roads creates close calls. Leapfrog gives you a known meet point a few miles up, and the crew can rest/cook/restock between hops instead of crawling at 3 mph all day.</p>
+
+        <div class="tools">
+          <h3>Tools the route team should run</h3>
+          <div class="tool"><strong>RV LIFE Pro</strong> — RV-safe GPS routing + campground/rest-area database. Plan tomorrow's stage points the night before.</div>
+          <div class="tool"><strong>AllStays Camp & RV</strong> — Walmart / Cracker Barrel / truck stop overnight + day-park database, state by state.</div>
+          <div class="tool"><strong>iExit / Trucker Path</strong> — what's at the next exit (gas, food, RV-friendly parking) so the RV can stage on short notice.</div>
+        </div>
+
+        <div class="tools">
+          <h3>Caveat</h3>
+          <div class="tool" style="color:rgba(255,255,255,0.6);font-size:11px;">
+            Segments and modes are <em>planning recommendations</em> based on road type, terrain, and typical shoulder conditions. Confirm conditions day-of with the route team — construction, weather, or local detours can flip a trail-OK segment to leapfrog.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="summary-bar">
+    <div class="summary-stat">
+      <div class="value" id="totalRemaining">~2,300</div>
+      <div class="label">Miles Remaining</div>
+    </div>
+    <div class="summary-stat trail">
+      <div class="value" id="trailMiles">0</div>
+      <div class="label">Trail-OK Miles</div>
+    </div>
+    <div class="summary-stat mixed">
+      <div class="value" id="mixedMiles">0</div>
+      <div class="label">Mixed Miles</div>
+    </div>
+    <div class="summary-stat leapfrog">
+      <div class="value" id="leapfrogMiles">0</div>
+      <div class="label">Leapfrog Miles</div>
+    </div>
+    <div class="summary-stat">
+      <div class="value" id="segmentCount">19</div>
+      <div class="label">Segments</div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    // ==========================================
+    // PAST ROUTE — confirmed checkpoints, drawn faded
+    // ==========================================
+    const PAST_ROUTE = [
+      [39.9526,-75.1652], // Philadelphia, PA
+      [39.95,-75.45],     // suburbs west
+      [40.04,-76.31],     // Lancaster
+      [40.27,-76.88],     // Harrisburg
+      [40.32,-78.92],     // Altoona
+      [40.44,-79.99],     // Pittsburgh
+      [40.51,-80.65],     // PA/OH border
+      [40.65,-80.78],     // E Liverpool
+      [40.92,-80.86],     // Columbiana, OH
+      [40.91,-81.11],     // Alliance
+      [40.80,-81.37],     // Canton
+      [40.50,-82.50],     // Mt Vernon area
+      [40.10,-83.05],     // Columbus, OH
+      [39.89,-83.45],     // London, OH
+      [39.76,-84.19],     // Dayton, OH
+      [39.83,-84.89],     // Richmond, IN
+      [39.85,-85.36],     // Lewisville, IN — CURRENT (paused)
+    ];
+
+    const CURRENT_LOC = [39.8456, -85.358];
+
+    // ==========================================
+    // FUTURE SEGMENTS — Lewisville → CA
+    // Each segment has a mode (trail/mixed/leapfrog) and a coords path.
+    // Recommendations baked in, click to see in info panel.
+    // ==========================================
+    const SEGMENTS = [
+      {
+        id: 1,
+        name: "Lewisville → Indianapolis",
+        miles: 45,
+        mode: "mixed",
+        road: "US-40",
+        coords: [[39.85,-85.36],[39.82,-85.55],[39.79,-85.85],[39.77,-86.16]],
+        summary: "Rural US-40 with wide shoulders for ~30 mi, then Indianapolis metro.",
+        rec: "Trail-OK from Lewisville through Greenfield / Cumberland (~35 mi). Switch to leapfrog about 10 mi out from downtown Indy. RV stages east-side Walmart, Zay walks the metro on surface streets, RV picks up west-side stage."
+      },
+      {
+        id: 2,
+        name: "Indianapolis → Terre Haute",
+        miles: 75,
+        mode: "trail",
+        road: "US-40",
+        coords: [[39.77,-86.16],[39.73,-86.50],[39.65,-86.85],[39.55,-87.15],[39.47,-87.41]],
+        summary: "Rural US-40 across western Indiana farmland.",
+        rec: "Trail-OK most of the day. Wide shoulders, light traffic between Plainfield, Greencastle, Brazil. RV can shadow at slow speed without backing up cars."
+      },
+      {
+        id: 3,
+        name: "Terre Haute → Effingham, IL",
+        miles: 95,
+        mode: "trail",
+        road: "US-40",
+        coords: [[39.47,-87.41],[39.40,-87.80],[39.30,-88.20],[39.12,-88.55]],
+        summary: "US-40 across Illinois prairie — historic National Road corridor.",
+        rec: "Trail-OK. Big sky, wide shoulder, very low traffic between Marshall, Casey, and Effingham. One of the easier multi-day stretches of the whole walk."
+      },
+      {
+        id: 4,
+        name: "Effingham → Vandalia → East St. Louis",
+        miles: 100,
+        mode: "trail",
+        road: "US-40 / IL-140",
+        coords: [[39.12,-88.55],[38.96,-89.10],[38.80,-89.60],[38.62,-90.15]],
+        summary: "US-40 west; suburbanizes around Highland / Collinsville before St. Louis.",
+        rec: "Trail-OK until Highland (~30 mi out from St. Louis). After that, traffic and lanes tighten — switch to leapfrog. RV stages at Collinsville Walmart for the metro crossing."
+      },
+      {
+        id: 5,
+        name: "St. Louis Metro Crossing",
+        miles: 30,
+        mode: "leapfrog",
+        road: "US-40 / I-64 corridor",
+        coords: [[38.62,-90.15],[38.63,-90.20],[38.64,-90.30],[38.65,-90.45]],
+        summary: "Mississippi River bridge + downtown + western suburbs.",
+        rec: "LEAPFROG ONLY. Bridges, dense urban, heavy truck traffic. RV stages east-side at Collinsville/Caseyville Walmart, Zay crosses the river via the Eads or MLK pedestrian-accessible bridge, RV picks up west-side at Earth City or Chesterfield. Plan the river crossing for a low-traffic window (early morning Sun/Mon)."
+      },
+      {
+        id: 6,
+        name: "St. Louis → Jefferson City → Kansas City",
+        miles: 250,
+        mode: "trail",
+        road: "US-50",
+        coords: [[38.65,-90.45],[38.70,-91.20],[38.58,-92.17],[38.85,-93.22],[38.96,-93.80],[39.10,-94.58]],
+        summary: "US-50 across Missouri — parallels I-70 but is pedestrian-accessible.",
+        rec: "Trail-OK most of this stretch. Multi-day route through Union, Sedalia, Warrensburg. Leapfrog the small towns where US-50 narrows to two lanes through the business district. Big rest stops at Sedalia (Walmart) and Warrensburg."
+      },
+      {
+        id: 7,
+        name: "Kansas City Metro",
+        miles: 30,
+        mode: "leapfrog",
+        road: "Surface streets + state-line",
+        coords: [[39.10,-94.58],[39.10,-94.70],[39.09,-94.85]],
+        summary: "Urban KC + Missouri/Kansas state-line crossing + western suburbs.",
+        rec: "LEAPFROG. Same logic as St. Louis. RV stages east-side near Independence, Zay crosses downtown KC and the state line on surface streets (avoid I-70 — pedestrians prohibited), RV picks up at Olathe or Lenexa Walmart west-side."
+      },
+      {
+        id: 8,
+        name: "Kansas City → Topeka → Emporia",
+        miles: 130,
+        mode: "trail",
+        road: "US-56 / US-50",
+        coords: [[39.09,-94.85],[39.05,-95.68],[38.70,-95.95],[38.40,-96.18]],
+        summary: "Open eastern-Kansas plains.",
+        rec: "Trail-OK between towns. Leapfrog the Topeka metro itself (~10 mi). After Topeka, US-56 / US-50 opens up wide and quiet."
+      },
+      {
+        id: 9,
+        name: "Emporia → Hutchinson → Dodge City",
+        miles: 200,
+        mode: "trail",
+        road: "US-50",
+        coords: [[38.40,-96.18],[38.20,-97.10],[38.06,-97.93],[37.90,-98.95],[37.75,-100.02]],
+        summary: "Classic central / western Kansas plains — Santa Fe Trail terrain.",
+        rec: "Trail-OK across the entire stretch. Wide shoulders, near-empty highway, RV can stay back 100m and easily catch up. Big multi-day push possible if heat allows."
+      },
+      {
+        id: 10,
+        name: "Dodge City → KS/CO Border → La Junta",
+        miles: 200,
+        mode: "trail",
+        road: "US-50",
+        coords: [[37.75,-100.02],[37.95,-100.85],[38.05,-102.13],[38.00,-102.85],[37.99,-103.55]],
+        summary: "US-50 across western Kansas and into eastern Colorado.",
+        rec: "Trail-OK. Same prairie pattern — light traffic, wide shoulder, simple staging. Watch for late-afternoon thunderstorms in summer; RV should have room to flank Zay through any cells."
+      },
+      {
+        id: 11,
+        name: "La Junta → Pueblo → Colorado Springs",
+        miles: 150,
+        mode: "mixed",
+        road: "US-50 / I-25 frontage",
+        coords: [[37.99,-103.55],[38.10,-104.10],[38.25,-104.61],[38.55,-104.72],[38.83,-104.82]],
+        summary: "US-50 west into Front Range foothills; transitions to I-25 corridor approach.",
+        rec: "Trail-OK on rural stretches between La Junta and Pueblo outskirts. Leapfrog Pueblo metro and Colorado Springs metro — both have heavy traffic and narrow road shoulders through the urban core."
+      },
+      {
+        id: 12,
+        name: "Colorado Springs → Denver",
+        miles: 75,
+        mode: "leapfrog",
+        road: "I-25 corridor / CO-83",
+        coords: [[38.83,-104.82],[39.10,-104.85],[39.40,-104.92],[39.74,-104.99]],
+        summary: "Front Range corridor — heavy traffic + dense suburbs Castle Rock to Denver.",
+        rec: "LEAPFROG. I-25 bans pedestrians; CO-83 surface alternative is busy too. RV stages mid-route at Castle Rock Walmart and again at Centennial / south-Denver. Daily mileage will drop here from urban friction."
+      },
+      {
+        id: 13,
+        name: "Denver → Berthoud Pass → Glenwood Springs",
+        miles: 175,
+        mode: "leapfrog",
+        road: "US-40 + I-70 (mountain)",
+        coords: [[39.74,-104.99],[39.77,-105.50],[39.77,-105.69],[39.57,-106.10],[39.55,-107.32]],
+        summary: "Continental Divide crossing — switchbacks, altitude, narrow shoulders.",
+        rec: "LEAPFROG ONLY. Mountain passes have no shoulder, fast-moving traffic, switchbacks. RV runs ahead to Empire / Winter Park / Frisco / Vail / Glenwood Springs and stages overnight. Daily walking mileage drops to 12–15 mi at altitude. Chase support recommended if attempting any walking on the pass itself."
+      },
+      {
+        id: 14,
+        name: "Glenwood Springs → Grand Junction → Green River, UT",
+        miles: 250,
+        mode: "mixed",
+        road: "US-6 / I-70 corridor",
+        coords: [[39.55,-107.32],[39.40,-107.80],[39.06,-108.55],[39.00,-109.30],[38.99,-110.16]],
+        summary: "I-70 corridor with US-6 and frontage-road alternates through canyon country.",
+        rec: "Mixed. Frontage roads where they exist = trail OK. No-shoulder I-70 stretches through Glenwood Canyon and the De Beque cuts = leapfrog. RV uses I-70 directly between stage points; Zay uses surface alternatives where available."
+      },
+      {
+        id: 15,
+        name: "Green River → Salina → Delta → NV Border",
+        miles: 250,
+        mode: "trail",
+        road: "US-50",
+        coords: [[38.99,-110.16],[38.96,-111.86],[39.35,-112.58],[39.30,-113.30],[39.25,-114.04]],
+        summary: "US-50 across the Utah desert — long, empty, wide-shouldered.",
+        rec: "Trail-OK. Almost no traffic between Salina, Delta, and the NV border. RV can shadow easily. The constraint here isn't the road — it's water, fuel, and 70-mile gaps between gas stations. Plan staging around the gas-station gaps, not the road geometry."
+      },
+      {
+        id: 16,
+        name: "NV Border → Ely → Eureka → Austin → Fallon",
+        miles: 410,
+        mode: "trail",
+        road: "US-50 (Loneliest Road)",
+        coords: [[39.25,-114.04],[39.25,-114.88],[39.51,-115.96],[39.49,-117.07],[39.47,-118.78]],
+        summary: 'US-50 "Loneliest Road in America" — Nevada Basin & Range.',
+        rec: "Trail-OK across the entire stretch. This is the most trail-friendly part of the whole walk — wide shoulders, basically zero traffic between towns. Constraint is heat exposure + water + 70–100 mile gaps between gas stops. Big multi-day RV-shadow days possible."
+      },
+      {
+        id: 17,
+        name: "Fallon → Carson City → S. Lake Tahoe",
+        miles: 110,
+        mode: "mixed",
+        road: "US-50",
+        coords: [[39.47,-118.78],[39.30,-119.50],[39.16,-119.77],[38.94,-119.97]],
+        summary: "US-50 climbing into the Sierra foothills + the Tahoe basin.",
+        rec: "Trail-OK to Carson City outskirts. Leapfrog through Carson and the Tahoe basin — tourist traffic, narrow lake-side road, no shoulder in spots. RV stages at South Lake Tahoe before the Sierra crossing."
+      },
+      {
+        id: 18,
+        name: "Tahoe → Sierra Crossing → Placerville → Sacramento",
+        miles: 130,
+        mode: "leapfrog",
+        road: "US-50",
+        coords: [[38.94,-119.97],[38.85,-120.05],[38.73,-120.80],[38.65,-121.10],[38.58,-121.49]],
+        summary: "Echo Summit / Sierra Nevada crossing on US-50.",
+        rec: "LEAPFROG ONLY for the Sierra crossing — switchbacks, no shoulder, fast traffic, weather. RV stages at South Lake Tahoe and again at Placerville. Below Placerville, US-50 opens back up into trail-OK foothills down to Sacramento."
+      },
+      {
+        id: 19,
+        name: "Sacramento → Final Destination (TBD)",
+        miles: 0,
+        mode: "mixed",
+        road: "TBD by route team",
+        coords: [[38.58,-121.49],[37.77,-122.42]],
+        summary: "Final segment depends on planned endpoint (LA / SF Bay / San Diego).",
+        rec: "TBD per route team. If LA: ~400 mi south through Central Valley (mostly trail-OK on US-99 frontage). If SF Bay: ~90 mi west across Yolo / Solano (mixed urban/rural). If San Diego: ~500 mi south. Distance shown above is placeholder; actual mileage flips this segment when endpoint locks in."
+      }
+    ];
+
+    // ==========================================
+    // INIT MAP
+    // ==========================================
+    const map = L.map('map', {
+      center: [39.5, -100],
+      zoom: 5,
+      zoomControl: true,
+      preferCanvas: true
+    });
+
+    // Dark basemap matching the live tracker
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© OpenStreetMap · © CARTO',
+      subdomains: 'abcd',
+      maxZoom: 18
+    }).addTo(map);
+
+    // ==========================================
+    // DRAW PAST ROUTE (faded gold)
+    // ==========================================
+    L.polyline(PAST_ROUTE, {
+      color: '#FFD700',
+      weight: 3,
+      opacity: 0.35,
+      dashArray: '4, 6'
+    }).addTo(map);
+
+    // Past-route start marker (Philly)
+    L.circleMarker(PAST_ROUTE[0], {
+      radius: 5, color: '#FFD700', weight: 1, fillColor: '#FFD700', fillOpacity: 0.6
+    }).addTo(map).bindPopup('<b>Day 1 — Philadelphia, PA</b><br>Walk start · Mar 26, 2026');
+
+    // Current location marker (Lewisville, paused)
+    const currentIcon = L.divIcon({
+      className: 'current-paused',
+      html: '<div style="width:18px;height:18px;border-radius:50%;background:#FFD700;border:3px solid #fff;box-shadow:0 0 10px rgba(255,215,0,0.8);display:flex;align-items:center;justify-content:center;font-size:10px;">🙏</div>',
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+    L.marker(CURRENT_LOC, { icon: currentIcon }).addTo(map)
+      .bindPopup('<b style="color:#FFD700">🙏 Day 34 — Lewisville, IN</b><br>Walk paused since Apr 28. Resumes Sun May 3 at noon ET from this point.');
+
+    // ==========================================
+    // DRAW SEGMENTS — colored by mode
+    // ==========================================
+    const MODE_COLORS = { trail: '#4ade80', mixed: '#fbbf24', leapfrog: '#f87171' };
+
+    const segmentLayers = SEGMENTS.map(seg => {
+      const color = MODE_COLORS[seg.mode];
+      const line = L.polyline(seg.coords, {
+        color,
+        weight: 5,
+        opacity: 0.85,
+        lineCap: 'round'
+      }).addTo(map);
+
+      // Hover effect
+      line.on('mouseover', () => line.setStyle({ weight: 8, opacity: 1 }));
+      line.on('mouseout', () => line.setStyle({ weight: 5, opacity: 0.85 }));
+
+      // Click → info panel
+      line.on('click', () => showSegment(seg));
+
+      // Popup label
+      line.bindPopup(`<b style="color:${color}">${seg.name}</b><br>` +
+        `<span style="color:rgba(255,255,255,0.8);">${seg.miles} mi · ${seg.mode.toUpperCase()}</span><br>` +
+        `<span style="color:rgba(255,255,255,0.6);font-size:11px;">Click line for full plan</span>`);
+
+      // Stage marker at the end of each segment (except final)
+      if (seg.id < SEGMENTS.length) {
+        const endpoint = seg.coords[seg.coords.length - 1];
+        L.circleMarker(endpoint, {
+          radius: 4,
+          color: color,
+          weight: 2,
+          fillColor: '#0a0a0a',
+          fillOpacity: 1
+        }).addTo(map).bindPopup(
+          `<b style="color:${color}">Stage point: ${seg.name.split('→')[1].trim()}</b><br>` +
+          `<span style="color:rgba(255,255,255,0.7);font-size:11px;">End of segment ${seg.id}</span>`
+        );
+      }
+
+      return { seg, line };
+    });
+
+    // ==========================================
+    // INFO PANEL — segment detail / default
+    // ==========================================
+    const infoPanel = document.getElementById('infoPanel');
+    const defaultHTML = infoPanel.innerHTML;
+
+    function showSegment(seg) {
+      const modeLabel = { trail: 'Trail-mode', mixed: 'Mixed (trail + leapfrog)', leapfrog: 'Leapfrog only' };
+      infoPanel.innerHTML = `
+        <div class="segment-detail">
+          <div class="segment-id">Segment ${seg.id} of ${SEGMENTS.length}</div>
+          <h2>${seg.name}</h2>
+          <span class="mode-pill ${seg.mode}">${modeLabel[seg.mode]}</span>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-value">${seg.miles ? seg.miles + ' mi' : 'TBD'}</div>
+              <div class="stat-label">Distance</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value" style="font-size:14px;">${seg.road}</div>
+              <div class="stat-label">Primary Road</div>
+            </div>
+          </div>
+          <p class="summary">${seg.summary}</p>
+          <div class="rec-block">
+            <strong>Recommended setup</strong>
+            <p>${seg.rec}</p>
+          </div>
+          <button class="back-btn" onclick="resetInfo()">← Back to overview</button>
+        </div>
+      `;
+      // Pan map to segment
+      const bounds = L.polyline(seg.coords).getBounds();
+      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 8 });
+    }
+
+    function resetInfo() {
+      infoPanel.innerHTML = defaultHTML;
+      // Fit full route again
+      const allCoords = PAST_ROUTE.concat(SEGMENTS.flatMap(s => s.coords));
+      map.fitBounds(L.polyline(allCoords).getBounds(), { padding: [40, 40] });
+    }
+    window.resetInfo = resetInfo;
+
+    // ==========================================
+    // SUMMARY STATS
+    // ==========================================
+    function sumMiles(mode) {
+      return SEGMENTS.filter(s => s.mode === mode).reduce((a, s) => a + s.miles, 0);
+    }
+    document.getElementById('trailMiles').textContent = sumMiles('trail').toLocaleString();
+    document.getElementById('mixedMiles').textContent = sumMiles('mixed').toLocaleString();
+    document.getElementById('leapfrogMiles').textContent = sumMiles('leapfrog').toLocaleString();
+    const totalSeg = SEGMENTS.reduce((a, s) => a + s.miles, 0);
+    document.getElementById('totalRemaining').textContent = '~' + totalSeg.toLocaleString();
+    document.getElementById('segmentCount').textContent = SEGMENTS.length;
+
+    // ==========================================
+    // INITIAL VIEW — fit full route
+    // ==========================================
+    const allCoords = PAST_ROUTE.concat(SEGMENTS.flatMap(s => s.coords));
+    map.fitBounds(L.polyline(allCoords).getBounds(), { padding: [40, 40] });
+  </script>
+</body>
+</html>
