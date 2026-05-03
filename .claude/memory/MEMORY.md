@@ -11,11 +11,11 @@
 - [4-agent ROI check](feedback_roi_check_new_concepts.md) — Any substantive new direction without prior repo research: ask "run the 4-agent ROI check?" then fire Reddit/YouTube/X/blogs in parallel, 5 questions each, 4 separate reports stitched
 - [Verse source](feedback_verse_source.md) — Quote walk-of-the-day verses directly from `docs/1611KjvW_apocrypha.pdf` via pdftotext, not from memory
 - [Faith Walk Live launch](project_faithwalklive_launch.md) — faithwalklive.com live on Vercel Apr 17, AI Bible Gospels branding, checkpoint sync workflow
-- [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live; Apr 29 added Anointed as second flagship next to Faith Walk Live
+- [aibiblegospels.com launch](project_aibiblegospelscom_launch.md) — Apr 21 parent brand site live at www.aibiblegospels.com, repo 12TribesofIsrael/aibiblegospelscom, Vercel auto-deploy
 - [AI Bible Gospels](user_aibiblegospels.md) — User's YouTube channel @AIBIBLEGOSPELS, faith-tech brand and sponsor across Faith Walk Live
-- [Anointed (anointed.app)](user_anointed_bible_video_maker.md) — Thomas's AI video product; LIVE Apr 29 at anointed.app (Modal + Cloudflare Worker proxy); second flagship on aibiblegospels.com
+- [Anointed Bible Video Maker](user_anointed_bible_video_maker.md) — Thomas's AI product (pick scripture → generate cultural-perspective narrated video); the "play" pitched to Zay, destined for aibiblegospels.com
 - [Twitch handle](user_twitch_handle.md) — Thomas chats as `AI_BIBLE_GOSPELS` in Zay's streams
-- [ShuggC back channel — CLOSED](project_shuggc_backchannel.md) — May 1 Thomas decision: done routing through ShuggC. Never suggest ShuggC-mediated plays. Active surfaces: direct-to-Zay DM, Discord as community member, Twitch chat.
+- [ShuggC back channel](project_shuggc_backchannel.md) — Apr 17 call, Apr 18 overlay shipped, Apr 22 gatekeeping confirmed → direct-to-Zay IG DM executed, text on standby
 - [Social distribution play](project_social_distribution.md) — Remix + IG DM/Story external-traffic drive to faithwalklive.com (team not promoting); blueprint docs/remix-overview.md
 - [Remix funnel ROI check (Apr 25)](project_remix_roi_check.md) — 4-agent verdict REFRAME: native Repost > native Remix > re-upload; Story link sticker is the click path, link-in-bio CTR is 0.004%; ManyChat deferred
 - [No tech jargon (Zay)](feedback_no_tech_jargon_zay.md) — Strip "OBS"/tech words from Zay-facing copy; routes message back to ShuggC
@@ -28,27 +28,12 @@
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
 - [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27
-- [Apr 28 incident — walk paused](project_apr28_incident.md) — Day 34 vehicle strike on US-40 IN, hospitalized, walk + stream paused. v2.13.0/v2.13.1 added news-capture infrastructure (`/updates/april-28-incident` NewsArticle hub + recoveryDay counter + `npm run recovery:append`). 11-outlet syndication.
-- [News-cycle traffic capture](feedback_news_cycle_capture.md) — Default to structured-data ownership (NewsArticle + FAQPage + Speakable) of an incident page during news cycles, not comment-camping. Comment-camp is third-tier. Skip LiveBlogPosting (publisher-policy).
-- [News-driven traffic = "direct"](feedback_news_attribution_dark_social.md) — ~76% of news-driven traffic shows as direct referrer (dark-social stripping). Watch destination-page total traffic, not UTM-attributed slice, when evaluating news-cycle tactics.
-- [Manual-assisted > auto-cron](feedback_manual_assisted_over_autocron.md) — For ≤14-day daily cadence with tone-sensitive content (recovery cycles, breaking-news follow-ups), build a 30-sec helper script — not a scheduled agent. Boilerplate auto-entries read pageview-farmy.
 - [CHANGELOGs are frozen](feedback_changelogs_are_frozen.md) — When fixing drifted values, update live code only; leave prior CHANGELOG entries alone as historical records
 - [Verify Vercel deploy after push](feedback_verify_vercel_deploy.md) — Poll GitHub Deployments API to confirm Vercel build succeeded; don't trust push→live. Next 16 route-config fields can't be re-exported.
-- [aibiblegospelscom — pull before editing](feedback_aibiblegospelscom_pull_first.md) — That repo gets edits from multiple machines; always `git pull --ff-only` before working in it to avoid push rejection
 - [Technology Gurus LLC decommissioned](feedback_technology_gurus_llc_decommissioned.md) — Old LLC is dissolved; all branding uses "AI Bible Gospels" only. Never write the LLC into public copy, SEO, AEO, JSON-LD, or docs.
 - [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
 - [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
-- [Prayer wall — Discord-routed](project_prayer_wall_passed.md) — `/prayer` routes to HMBL Discord (v2.12.2, Apr 29). No custom wall on faithwalklive. Don't re-pitch a built wall.
-- [Route, don't rebuild](feedback_route_dont_rebuild.md) — Before building a feature that duplicates an existing community surface (Discord, group chat, etc.), default to routing INTO it instead. Confirmed on prayer-wall pivot.
-- [HMBL Discord invite](reference_hmbl_discord.md) — Permanent invite `discord.gg/MzWAdRbDqu`. Default route target for any "where do prayers/community go?" question.
-- [HMBL Discord — #general is the chat](reference_hmbl_discord_general.md) — Thomas's community posts default to #general; #announcements is Zay-only.
-- [youtubeoptermizer repo](reference_youtubeoptermizer_repo.md) — Production IG Business / FB Page / YT Data v3 / X plumbing at `C:/Users/Claude/youtubeoptermizer`. Check before building any new IG/FB/YT automation.
-- [No third-party auto-engagement](feedback_no_third_party_auto_engagement.md) — Never propose auto-comment/like/reply on Zay's or any third-party posts. Meta TOS §5b + token revocation risk. Manual first-comment camp + ManyChat-on-own-account are the legit alternatives.
-- [Deposit before withdrawal in others' communities](feedback_community_post_deposit_first.md) — In someone else's community (Discord, Slack, Twitch), first post must be pure community service. Self-link posts only land cleanly after a deposit turn.
-- [Creator no-show ≠ engagement opportunity](feedback_creator_no_show_restraint.md) — Default to silence on missed promises / no-shows. If team posts a clarification, window closes — emoji-react only, no original post.
-- [Concept-first, then ship rough](feedback_concept_first_then_ship_rough.md) — For substantive build deliverables: propose the concept/wireframe before coding, get sign-off, THEN ship rough draft fast (especially during live-audience windows). No gold-plating.
-- [Post-deposit silence](feedback_post_deposit_silence.md) — After dropping a deliverable into someone else's community, go totally silent on that thread until the community reacts first. No double-tap, no "check in", no re-pitch.
-- [GoatCounter dashboard (tracker pages)](reference_goatcounter_dashboard.md) — `hmbl-faithwalk.goatcounter.com` covers both `docs/faith-walk-tracker.html` and `docs/rv-route-plan.html`. Per-segment events under `/rv-route/segment-*` paths.
+- [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.

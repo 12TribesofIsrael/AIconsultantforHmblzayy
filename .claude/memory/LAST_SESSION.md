@@ -1,59 +1,34 @@
 ---
-ended: 2026-05-02T18:00:00Z
+ended: 2026-05-03T22:00:00Z
 project: ZayAutomations
 branch: main
-version: v2.14.1
-originSessionId: eb63ec03-396e-4fc3-89b9-6f10519cb912
+version: v2.15.1
+originSessionId: e1529539-ae12-4822-8449-d92fcefca6f1
 ---
-# Last Session — 2026-05-02 (Recovery Day 4)
+# Last Session — 2026-05-03
 
 ## What the user wanted
-Two arcs in one session: (1) ship Recovery Day 4 entry on faithwalklive with the bystander TikTok citation, then (2) seize a live audience moment — Zay was actively asking in HMBL Discord whether the RV could trail him on the resumed walk vs. always meet at planned stops, and Thomas wanted us to give him an actual interactive route-planning map.
+Started with "Zay is back walking, what should I put in Twitch chat" (Day 39 — first walking day after the Apr 28 strike + 4-day recovery). Migrated to fixing a wrong-attribution bug Thomas spotted on faithwalklive.com/clips: 3 Day 39 resume clips were rendering as "Day 34 · Apr 28 · Lewisville · Indiana Welcomed Him" — the strike day's date and location. Fix the immediate render, then ship the structural fix so this class of bug can't recur.
 
 ## What we did
-
-### Recovery Day 4 (May 2) — faithwalklivecom
-- Edited `src/app/(site)/updates/april-28-incident/page.tsx` to add a "Bystander video (TikTok)" entry to the `outlets` array — the bystander TikTok of the vehicle (`https://www.tiktok.com/@kokie_luv43/video/7635070760310082830`) flows into the NewsArticle JSON-LD `citation` array for search-engine pickup
-- Appended May 2 entry to `aprilTwentyEightRecovery` in `src/data/updates.ts`: "A bystander TikTok of the vehicle has circulated publicly; no further information posted by Zay or his team. Walk still set to resume Sunday at 12 noon ET — Zay returns to the spot of the accident to pray and continue from there."
-- One combined commit `3328b69` (faithwalklive). Vercel deploy confirmed via gh API + curl content verification (TikTok handle, May 2 date, "bystander TikTok" all live)
-- Skipped the `recovery:append` script and did the manual two-file commit because the script only handles updates.ts and would have stashed the page.tsx edit — single push = single Vercel build
-
-### RV route plan map — v2.14.0 → v2.14.1 (consulting repo)
-- Built `docs/rv-route-plan.html` — self-contained Leaflet page, 870 lines, dark-theme matching the live tracker (CartoDB Dark Matter basemap, gold accents, Inter font)
-- 19 future segments hand-coded from Lewisville IN westward to Sacramento CA, color-coded TRAIL (green) / MIXED (yellow) / LEAPFROG (red); each click → sidebar fills with mode pill, mileage, primary road, plain-English staging recommendation
-- Past 700 mi rendered as faded gold dotted polyline for context; gold 🙏 marker at paused Lewisville
-- Footer summary surfaces miles-by-mode + segment count
-- Default sidebar shows the decision rule (default leapfrog, switch to trail on wide-shoulder rural stretches) + three RV tools (RV LIFE Pro, AllStays Camp & RV, iExit / Trucker Path)
-- Final segment 19 (Sacramento → CA endpoint) flagged TBD per route team — endpoint LA/SF/SD not confirmed
-- Commits: `b06399f` (page) + `842723b` (version bump). Live verified at https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/rv-route-plan.html
-- Thomas shortened to https://tinyurl.com/257ddner (verified 301 → page) and dropped in HMBL #general at 1:04 PM
-- v2.14.1 patch: forgot GoatCounter on the v2.14.0 ship — added the same site (`hmbl-faithwalk.goatcounter.com`) the live tracker uses, plus per-segment event tracking firing as `/rv-route/segment-N-slug` so the dashboard shows WHICH segments get clicked, not just total opens. Commits `f94e153` + `9013993`
-
-### Process correction
-Thomas's mid-build pushback ("or an exaple what do you think before you build") corrected a real mistake — I jumped to building without showing concept first. Then he said "push it live rough draft real quick while zay is in the chat if he wants more we can polish it up". Both halves saved as one durable feedback memory.
-
-### Discord outcome (so far)
-Map dropped at 1:04 PM. Community pivoted onto Blessed1730's stepfather (real RV-route practitioner offering contact) + MiMi Tranquility's police-escort idea (county-by-county, leverage Zay's hospital-visit officer). DeeJayOnTHAT said he'd reach out to Blessed for the stepfather contact. **Zero direct reactions on the map post.** GoatCounter dashboard at end of session showed exactly 1 visit to the RV map (probably Thomas himself verifying). Thomas: "Let's just let it sit, bake, and wait" — explicit standdown. Saved as durable feedback.
+- Welcome-back chat copy for `AI_BIBLE_GOSPELS` handle: top pick was `🙏 DAY 39. HE'S BACK ON THE ROAD. "Be strong and of a good courage… he will not fail thee, nor forsake thee" — Deut 31:6. Welcome back Minister Zay 💛`. Day 39 verse from `docs/walk-verses.json` confirmed = Deuteronomy 31:6 (Moses charging Joshua before the crossing — fits resume-day perfectly).
+- Recurring info-routing chat line for newcomers: `Updates → HMBL Discord https://discord.gg/MzWAdRbDqu 🙏 No Discord? faithwalklive.com tracks the walk live`. Discord invite verified against `../faithwalklivecom/src/app/(site)/prayer/page.tsx:7`.
+- Diagnosed the /clips bug (3 Apr 28 cards with wrong title): clips were attached to the Day 34 record (the strike day, walking checkpoint with `inProgressDay: 39` annotation) because `update-tracker.js --day N` matches by `cp.day === N` and Day 39 has no walking checkpoint yet. Render side (`../faithwalklivecom/src/app/(site)/clips/page.tsx`) reads parent metadata blindly. Plus violated `feedback_now_card_logic` (no in-progress cards public).
+- **`d40b089`** — detached `clip` / `clips` / `clipsTitle` from Day 34, parked URLs in `docs/day39-pending-clips.md` for tomorrow re-attach. Vercel deploy `4564373101` confirmed live (`success`).
+- **`8701965` (v2.15.1)** — structural fix in `scripts/update-tracker.js` (new walking-in-progress branch in clip-only path; multi-clip stash extraction + strip + clip-handling priority extension in new-day mode) and `scripts/tracker-from-title.js` (rollover Case 4 promotes `inProgressClips` → `clips`/`clip`/`clipsTitle`, then strips). Bumped CLAUDE.md + package.json. Dry-tested both stash and rollover via node -e simulation before shipping.
+- **`2eb74fb`** — re-stashed the 3 Day 39 URLs via the new path. Verified they land on Day 34 record under `inProgressClips` + `inProgressClipsTitle` (NOT clips), and 0 of the 3 URLs leak into public `clip`/`clips` fields.
+- **`9461ade`** — deleted `docs/day39-pending-clips.md` (stash IS the parking lot now, with auto-promotion guaranteed by the rollover code). Vercel deploy `4564595232` confirmed live (`success`).
 
 ## Decisions worth remembering
-- **Recovery Day 4 done as manual two-file commit, not via `recovery:append` script** — script only commits `src/data/updates.ts` and would have stashed the page.tsx citation edit. Single combined commit = single Vercel build. The script remains correct when only updates.ts is touched
-- **RV route map shipped to GitHub Pages, NOT faithwalklive.com** — public-copy-safety rule prohibits surfacing Zay's planned future location on the storytelling site. The consulting docs/ surface is the operational hand-off URL
-- **Bystander TikTok added to NewsArticle citation array** (not a separate "additional posts" section) — fits the existing pattern (TMZ TikTok, Shade Room IG already in citations) and gets schema benefits
-- **No ROI check before building the map** — explicit skip per CLAUDE.md ("trivial/obvious changes... or user explicitly says skip research"). Zay had asked, Thomas had directed, the build was the deliverable not a strategic tactic
-- **Per-segment event tracking** chosen over plain pageview counts — segment opens are the high-signal data; pageviews alone are noisy
+- Detach BEFORE structural fix: shipped the data rollback first (`d40b089`) so the wrong cards came down within ~1 min, then took time on the v2.15.1 code with proper dry-tests. Two distinct "fix the symptom" + "fix the cause" commits, not one all-or-nothing.
+- Multi-clip > single-clip priority in promotion (mirroring `--clips` over `--clip` semantics in update-tracker.js). Symmetrical with the explicit-args branches so the rollover behaves the way the human-facing flag ordering suggests.
+- Rejected: re-attach manually tomorrow via `--day 39 --clips ...`. The structural fix removes the manual step entirely AND prevents the next in-progress-clip moment from breaking the same way.
+- Day 35 misanchor at start: I quoted Isaiah 40:31 from the v2.15.0 changelog narration ("Day 35 = Isaiah 40:31 lands as the resume-day verse") without checking actual current state. Thomas corrected with "this is day 39 did you git pull". Confirms the existing rule: read `checkpoints.json` first when asked about current walk state, don't recall from a frozen-in-time changelog entry.
 
 ## Open threads / next session starts here
-- **Map traction unknown** — only 1 GoatCounter visit at session end (likely Thomas's own verification). Check the dashboard tomorrow morning to see if Zay or the route team opened it overnight. If still <5 visits, the map didn't land. If it picks up, the per-segment events will reveal which stretches concern them most
-- **CA endpoint still TBD** — Segment 19 placeholder. If Zay confirms the destination (LA / SF Bay / SD), wire it in as a v2.14.x patch
-- **Polish list (only if Zay engages)**: county-line + state-line markers (would serve MiMi's police-escort county-by-county ask), specific Walmart / truck-stop pins as named staging points, suggested day-by-day stage points for the next 5-7 days as a literal route-team checklist
-- **Walk resumes Sunday May 3 at 12 noon ET** from Lewisville, IN — Zay returns to the accident spot, prays over it, continues. After noon Sunday: recovery counter freezes, `tracker:from-title` resumes daily handling Day 35+. Standard daily workflow per CLAUDE.md applies (Half 1 promote + Half 2 attach clip)
-- **Discord intel from this session**: Blessed1730's stepfather contact (DeeJay handling), MiMi's police-escort idea (county-by-county) — community-driven and likely to come back through the team without our involvement, but worth checking if they surface as actionable
+- **Tomorrow morning workflow:** when Zay's Day 40 stream title posts and `npm run tracker:from-title` runs, the rollover code in `scripts/tracker-from-title.js` (Case 4, around lines 307-340) should auto-create a Day 39 archived entry at Greenfield, IN with the 3 clips + "Indiana welcomed him" title attached. /clips will render them as **Day 39 · May 3 · Greenfield, IN · ~732 mi · "Indiana welcomed him"**. NO manual re-attach needed. Verify after the rollover by checking Day 39 record for `clips: [3]` + `clipsTitle: "Indiana welcomed him"` and that the in-progress fields on Day 34 are stripped.
+- **If the rollover fails:** the 3 URLs are stashed under `inProgressClips` on the Day 34 record. Manual fallback is a one-shot edit: copy them to a new Day 39 entry's `clips` field and run `npm run faithwalk:sync`.
+- **Watch for further Day 39 mid-day clips:** if Thomas adds more clips during today's stream (still in-progress), use `node scripts/update-tracker.js --day 39 --clip "URL"` (or `--clips`) — the new branch will append-via-stash correctly. Note: the multi-clip stash currently OVERWRITES `inProgressClips` rather than appending. If Thomas needs to add a 4th clip to the existing 3, currently he'd have to pass all 4 URLs in one `--clips` call. Append semantics could be a v2.15.2 follow-up if it comes up.
 
 ## Uncommitted work
-Clean working tree — both consulting repo and faithwalklivecom in sync with origin/main.
-
-## Live URLs touched this session
-- https://faithwalklive.com/updates/april-28-incident — Recovery Day 4 entry + bystander TikTok citation live
-- https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/rv-route-plan.html — RV route plan map live (v2.14.1 with analytics)
-- https://tinyurl.com/257ddner — Thomas's tinyurl for the RV map (used in Discord)
-- https://hmbl-faithwalk.goatcounter.com — GoatCounter dashboard for both tracker pages
+Clean working tree.
