@@ -324,7 +324,48 @@
     "miles": 703,
     "date": "Apr 28, 2026",
     "estimatedMiles": true,
-    "paused": true,
-    "pausedNote": "Walk paused — Zay is recovering after an accident on the route. He's safe and in good hands. Please keep him in your prayers. Updates to follow when the team is ready."
+    "destination": "Greenfield, IN",
+    "destinationLat": 39.7855096,
+    "destinationLng": -85.7681979,
+    "inProgressDay": 39,
+    "milesRemaining": 39,
+    "estimatedSegmentMiles": 29,
+    "inProgressStartedAt": "2026-05-03T18:53:46.548Z"
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 29, 2026",
+    "location": "Lewisville, IN",
+    "lat": 39.8456,
+    "lng": -85.358,
+    "miles": 703,
+    "day": 35
+  },
+  {
+    "restOnly": true,
+    "date": "Apr 30, 2026",
+    "location": "Lewisville, IN",
+    "lat": 39.8456,
+    "lng": -85.358,
+    "miles": 703,
+    "day": 36
+  },
+  {
+    "restOnly": true,
+    "date": "May 1, 2026",
+    "location": "Lewisville, IN",
+    "lat": 39.8456,
+    "lng": -85.358,
+    "miles": 703,
+    "day": 37
+  },
+  {
+    "restOnly": true,
+    "date": "May 2, 2026",
+    "location": "Lewisville, IN",
+    "lat": 39.8456,
+    "lng": -85.358,
+    "miles": 703,
+    "day": 38
   }
 ]
