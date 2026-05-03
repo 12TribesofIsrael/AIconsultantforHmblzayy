@@ -313,7 +313,18 @@ async function main() {
       date: dateFromIso(ipSource.inProgressStartedAt) || formatDate(),
       estimatedMiles: true,
     };
-    if (ipSource.inProgressClip) promoted.clip = ipSource.inProgressClip;
+    // Promote stashed clip data to the new entry. Multi (inProgressClips)
+    // takes priority over single (inProgressClip) — symmetrical with the
+    // explicit --clips vs --clip handling in update-tracker.js.
+    if (ipSource.inProgressClips && ipSource.inProgressClips.length > 1) {
+      promoted.clips = ipSource.inProgressClips;
+      promoted.clip = ipSource.inProgressClips[0]; // legacy single-clip fallback
+      if (ipSource.inProgressClipsTitle) promoted.clipsTitle = ipSource.inProgressClipsTitle;
+    } else if (ipSource.inProgressClips && ipSource.inProgressClips.length === 1) {
+      promoted.clip = ipSource.inProgressClips[0];
+    } else if (ipSource.inProgressClip) {
+      promoted.clip = ipSource.inProgressClip;
+    }
 
     // Strip in-progress fields from the source checkpoint
     delete ipSource.inProgressDay;
@@ -324,6 +335,8 @@ async function main() {
     delete ipSource.estimatedSegmentMiles;
     delete ipSource.inProgressStartedAt;
     delete ipSource.inProgressClip;
+    delete ipSource.inProgressClips;
+    delete ipSource.inProgressClipsTitle;
 
     checkpoints.push(promoted);
     console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);

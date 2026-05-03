@@ -21,7 +21,12 @@
  *
  * New-day mode: geocodes, adds checkpoint, clears any stale in-progress fields,
  * and strips the estimatedMiles flag if it was set by an auto-promotion.
- * Clip-only mode: adds/updates a clip URL on an existing checkpoint.
+ * Clip-only mode: adds/updates a clip URL on an existing checkpoint. When --day N
+ * matches an in-progress walking source (cp.inProgressDay === N), the clip(s) are
+ * stashed in inProgressClip / inProgressClips / inProgressClipsTitle on that source
+ * and auto-promote to clip / clips / clipsTitle on the new entry when Day N
+ * archives. Until promotion, stashed clips do NOT render on the public archive
+ * (matches the no-in-progress-cards rule).
  * In-progress mode: mutates the latest checkpoint's destination/milesRemaining.
  * All modes rebuild HTML, commit, and push.
  */
@@ -120,7 +125,46 @@ async function main() {
       return;
     }
 
-    console.log(`Day ${day} not found in checkpoints and not a current rest day. Log the day first.`);
+    // Walking in-progress day — fields might live on the latest walking
+    // checkpoint OR on an earlier one shadowed by trailing rest-only entries
+    // (recovery cycle, etc.). Walk tail-first to find the in-progress source.
+    let ipSource = null;
+    for (let i = checkpoints.length - 1; i >= 0; i--) {
+      const cp = checkpoints[i];
+      if (cp.inProgressDay === day && !cp.restOnly && !cp.restDay && cp.destination) {
+        ipSource = cp;
+        break;
+      }
+    }
+
+    if (ipSource) {
+      let summary;
+      if (clipsArray && clipsArray.length > 1) {
+        ipSource.inProgressClips = clipsArray;
+        if (args.clipsTitle) ipSource.inProgressClipsTitle = args.clipsTitle;
+        summary = `${clipsArray.length} clips${args.clipsTitle ? ` (${args.clipsTitle})` : ''}`;
+        console.log(`\nStashing ${summary} for in-progress Day ${day} (walking ${ipSource.location} → ${ipSource.destination})`);
+        clipsArray.forEach((u, i) => console.log(`  Clip ${i + 1}: ${u}`));
+      } else {
+        const single = clip || (clipsArray && clipsArray[0]);
+        ipSource.inProgressClip = single;
+        summary = `clip`;
+        console.log(`\nStashing in-progress clip for Day ${day} (walking ${ipSource.location} → ${ipSource.destination})`);
+        console.log(`  Clip: ${single}`);
+      }
+      console.log(`  Will promote on rollover when Day ${day} archives.`);
+
+      rebuildAndPush(
+        checkpoints,
+        `Stash ${summary} for in-progress Day ${day} (promotes on rollover to ${ipSource.destination})`
+      );
+
+      console.log(`\n✓ ${clipsArray && clipsArray.length > 1 ? 'Clips' : 'Clip'} stashed for Day ${day}!`);
+      console.log(`  Public archive will surface them once Day ${day} archives.`);
+      return;
+    }
+
+    console.log(`Day ${day} not found in checkpoints and not a current rest day or in-progress walking day. Log the day first.`);
     process.exit(1);
   }
 
@@ -167,12 +211,16 @@ async function main() {
   const coords = await geocode(location);
   console.log(`  Coordinates: ${coords.lat}, ${coords.lng}`);
 
-  // Before stripping in-progress fields, promote any stashed inProgressClip
-  // on the matching source entry so it can carry over to the new day.
+  // Before stripping in-progress fields, capture any stashed clip data on the
+  // matching source entry so it carries over to the new day.
   let stashedClipForDay = null;
+  let stashedClipsForDay = null;
+  let stashedClipsTitleForDay = null;
   checkpoints.forEach(cp => {
-    if (cp.inProgressDay === day && cp.inProgressClip) {
-      stashedClipForDay = cp.inProgressClip;
+    if (cp.inProgressDay === day) {
+      if (cp.inProgressClip) stashedClipForDay = cp.inProgressClip;
+      if (cp.inProgressClips) stashedClipsForDay = cp.inProgressClips;
+      if (cp.inProgressClipsTitle) stashedClipsTitleForDay = cp.inProgressClipsTitle;
     }
   });
 
@@ -189,12 +237,14 @@ async function main() {
     delete cp.inProgressDay;
     delete cp.inProgressStartedAt;
     delete cp.inProgressClip;
+    delete cp.inProgressClips;
+    delete cp.inProgressClipsTitle;
   });
 
   const existingIndex = checkpoints.findIndex(cp => cp.day === day);
   const newCheckpoint = { day, location, lat: coords.lat, lng: coords.lng, miles, date };
 
-  // Clip handling — multi-clip Love Wall takes priority over single --clip.
+  // Clip handling — explicit args win, then stashed multi, then stashed single.
   if (clipsArray && clipsArray.length > 1) {
     newCheckpoint.clips = clipsArray;
     newCheckpoint.clip = clipsArray[0]; // legacy single-clip fallback
@@ -203,6 +253,12 @@ async function main() {
     newCheckpoint.clip = args.clip;
   } else if (clipsArray && clipsArray.length === 1) {
     newCheckpoint.clip = clipsArray[0];
+  } else if (stashedClipsForDay && stashedClipsForDay.length > 1) {
+    newCheckpoint.clips = stashedClipsForDay;
+    newCheckpoint.clip = stashedClipsForDay[0];
+    if (stashedClipsTitleForDay) newCheckpoint.clipsTitle = stashedClipsTitleForDay;
+  } else if (stashedClipsForDay && stashedClipsForDay.length === 1) {
+    newCheckpoint.clip = stashedClipsForDay[0];
   } else if (stashedClipForDay) {
     newCheckpoint.clip = stashedClipForDay;
   }
