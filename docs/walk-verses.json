@@ -1,0 +1,11 @@
+{
+  "_source": "docs/1611KjvW_apocrypha.pdf — verses pulled via pdftotext per feedback_verse_source. Reference is the load-bearing field; text is cached for tweet rendering and must be verified against the PDF at script runtime (scripts/x-daily-post.js does this on every call).",
+  "33": { "ref": "Galatians 6:9", "text": "And let us not be weary in well doing: for in due season we shall reap, if we faint not." },
+  "34": { "ref": "Hebrews 12:1", "text": "Wherefore seeing we also are compassed about with so great a cloud of witnesses, let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us." },
+  "35": { "ref": "Isaiah 40:31", "text": "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint." },
+  "36": { "ref": "2 Corinthians 5:7", "text": "For we walk by faith, not by sight." },
+  "37": { "ref": "Psalm 119:105", "text": "Thy word is a lamp unto my feet, and a light unto my path." },
+  "38": { "ref": "James 1:12", "text": "Blessed is the man that endureth temptation: for when he is tried, he shall receive the crown of life, which the Lord hath promised to them that love him." },
+  "39": { "ref": "Deuteronomy 31:6", "text": "Be strong and of a good courage, fear not, nor be afraid of them: for the LORD thy God, he it is that doth go with thee; he will not fail thee, nor forsake thee." },
+  "40": { "ref": "1 Kings 19:8", "text": "And he arose, and did eat and drink, and went in the strength of that meat forty days and forty nights unto Horeb the mount of God." }
+}
