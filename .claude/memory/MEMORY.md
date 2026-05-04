@@ -35,6 +35,8 @@
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
 - [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
 - [Twitch chat forever post](reference_twitch_chat_forever_post.md) — Validated end-of-stream chat drop template (May 3, Day 39 resume); reverent register, self-routes Discord vs faithwalklive; full kit at docs/twitch-chat-forever-post.md
+- [Sensitive days stay clipless](feedback_sensitive_days_stay_clipless.md) — Paused/incident days get NO clip backfill on /clips; cards render as confirmed arrivals + create misleading framing. Day 34 strike-day backfill mistake of May 3 is the precedent.
+- [Post-pause day numbering](feedback_post_pause_day_numbering.md) — Walk resumes use calendar-cumulative day number (paused day + calendar days elapsed) + restOnly backfill for the gap, not next-sequential walking index. Honors Zay's stream-title convention.
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
