@@ -1,47 +1,46 @@
 ---
-ended: 2026-05-04T19:50:00Z
+ended: 2026-05-05T17:05:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.15.1
-originSessionId: 5a586fd2-bf6b-4fe7-9e8a-af8183881524
+originSessionId: 73a5b2ff-0bf7-4450-9f80-5ded95cda1d5
 ---
-# Last Session — 2026-05-04 (Day 40 — rollover + parser bug surfaced)
+# Last Session — 2026-05-05 (Day 41 — Indianapolis arrival archive + REST DAY annotation)
 
 ## What the user wanted
-Catch up after 6-day gap via `git pull` + `/session-start`, then run today's tracker rollover (overdue from last night) so Day 39's "Back on the road" clip wall lands on the public archive. Mid-session, get an incremented forever-post for Twitch chat that works mid-walk while Zay was still on the road to Indianapolis.
+Catch up via `/session-start`, run today's tracker update (overdue from yesterday), and discuss whether to automate the nightly tracker run (he keeps forgetting). Asked my honest take on automated vs. manual; I recommended manual-assisted helper + reminder; he accepted.
 
 ## What we did
 
 ### Catch-up
-- `git pull` brought 25-file laptop session work down (`9b8827c..75c713d` fast-forward): v2.15.0 X+HARO bundle, v2.15.1 in-progress clip stash, Day 39 resume push, twitch-chat-forever-post doc, 3 new memories. Session-start delivered tight catch-up; central memory backup repo flagged as diverged (manual reconcile needed, not blocking).
+- `/session-start` ran cleanly. Repo `git pull` no-op (already at `efc340e`). Memory pull copied 65 files repo→global. Central memory backup repo (`claude-memory-backup`) **still diverged** from origin — `npm run pull` failed fast-forward, same as yesterday. Not blocking; manual reconcile when convenient.
 
-### Tracker rollover (commit `9cf82f9`)
-- `npm run tracker:from-title` ran v2.15.1's auto-promote logic correctly: Day 34's in-progress fields stripped, Day 39 record created at Greenfield IN (~732 mi est) with `clips: [3]` + `clipsTitle: "Back on the road"` + `clip` legacy fallback, all auto-promoted from the stashed `inProgressClips`. Public `/clips` archive now shows Day 39 as "Back on the road" Love Wall.
-- Vercel sync triggered, both repos pushed.
+### Today's tracker update (3 commits)
+Twitch title was `WALKING 3000 MILES TO CALI 🌴| DAY 41 | REST DAY | INDIANAPOLIS, IN📍`. That meant: **Day 40 = Indianapolis arrival yesterday (May 4), Day 41 = REST DAY today at Indianapolis**.
 
-### Parser misparse → corrective strip (commit `225f42a`)
-- Same `tracker:from-title` run also annotated Day 40 in-progress with `destination: "CALI"` + `milesRemaining: 3000` instead of "Indianapolis, IN" + 20 mi. Twitch title was `WALKING 3000 MILES TO CALI 🌴| DAY 40 | 20 MILES FROM INDIANAPOLIS, IN📍` — parser grabbed the headline "TO CALI / 3000 mi" instead of "FROM INDIANAPOLIS / 20 mi". Map would've drawn dashed line across the continent.
-- Also: it's mid-day (3:20 PM EDT), so Day 40 in-progress annotation violates `feedback_tracker_timing.md`.
-- Stripped `destination` / `destinationLat` / `destinationLng` / `inProgressDay` / `milesRemaining` / `estimatedSegmentMiles` / `inProgressStartedAt` from Day 39 entry via inline node script. Rebuilt HTML via `rebuildAndPush()`. Day 39 stays archived clean, no Day 40 real-time location.
+Latest checkpoint going in was Day 39 Greenfield (732 mi) with **no in-progress fields** (we stripped them yesterday after the parser misparse). So `tracker:from-title` couldn't auto-promote — Case 4 rollover errors out without an `ipSource`. Verified by re-reading `scripts/tracker-from-title.js` lines 290-305 before running anything.
 
-### Forever-post for Twitch chat (no commit — chat-only)
-- Day 40 increment per `docs/twitch-chat-forever-post.md` template:
-  - `41 miles back` → `20 miles to Indianapolis`
-  - `Day 1 of the comeback` → `Day 2 of the comeback`
-  - `Welcome back Zay` → `Way to go Zay` (resume-specific phrasing only fits Day 1)
-- User asked for a mid-walk-safe variant since Zay hadn't confirmed stopping. Drafted no-mileage / no-destination version: `🙏🏾 Day 2 of the comeback. Cover Zay in prayer 🌴 For those on Discord ➡️ discord.gg/MzWAdRbDqu — For those not on Discord ➡️ faithwalklive.com`. User went with that.
+Two-step path used:
+1. **`bbea6b0` — Manual Day 40 archive.** `node scripts/update-tracker.js --day 40 --location "Indianapolis, IN" --miles 752 --date "May 4, 2026" --clip "<auntie-indianapolis-love>"`. Mileage = 732 (Greenfield) + 20 (yesterday's "20 mi from Indianapolis" title) = 752. Clip pick: **"WWW AUNTIE INDIANAPOLIS LOVE🙏🏾🙏🏾🙏🏾🙏🏾"** (slug `YawningCrepuscularDonutKreygasm-PEbHBmiNWUVwXjZK`, 19v) — milestone-named (Indianapolis) + faith register, matches the prior-day pattern (Day 23 "GOD DID" 70v, Day 24 "w chrisean" 78v) of highest-views among themed clips. Used `--date "May 4, 2026"` per `feedback_update_tracker_date_default.md` (Day N happened yesterday).
+2. **`8a9e035` — Mark Day 40 `estimatedMiles: true`.** Inline node script + `rebuildAndPush()`. Matches Day 39 convention (title-derived not odometer-confirmed → flagged estimated).
+3. **`e837632` — `npm run tracker:from-title`** then resolved cleanly: Case 3 (parsed.day === latest.day + 1) rest-day branch ran `applyRestDay`, which only uses `parsed.day` and ignores `nearLocation`/`milesFromNext` → safe in spite of the parser bug. Day 41 REST DAY annotated on the Day 40 entry. Both repos synced; Vercel + GitHub Pages redeployed.
+
+### Automation discussion
+User asked: "automate nightly at 8pm — would you prefer manual?" I gave a direct **don't-fully-automate** recommendation citing three reasons: (a) parser bug active (open thread #2 from yesterday — fired again today on Day 41 title, only got rescued by the rest-day code path); (b) clip selection is human-judgment per `feedback_clip_backfill_mandatory.md` + `feedback_clip_selection.md`; (c) sensitive days stay clipless per `feedback_sensitive_days_stay_clipless.md` and a cron has no way to detect them. Proposed three-piece path: (1) ship v2.15.2 parser fix first, (2) build `npm run tracker:nightly` helper that does Half 1 + queries clip candidates + prompts human pick, (3) Windows Task Scheduler popup or ntfy.sh push at 8pm as the reminder. Pattern mirrors `recovery:append`. User didn't pick a next step yet — left it as "commit/push" for today's update + thinking on the helper.
 
 ## Decisions worth remembering
-- **Two-commit pattern preferred when a single rollover does one right thing + one wrong thing.** Rather than amending or rolling back the rollover wholesale, kept commit `9cf82f9` (the legitimate Day 39 archive + clip-wall promotion) and shipped a separate corrective commit `225f42a` (Day 40 strip). Mirrors the v2.15.1 lesson — symptom rollback then root cause, two distinct commits.
-- **Mid-walk forever-post is possible if you drop the location/distance bits.** The doc's "never post mid-walk" hard rule is specifically about narrating real-time location. A reverent prayer-direction variant with no mileage and no destination doesn't violate the spirit — it just routes audiences without narrating Zay's whereabouts. The current doc doesn't codify this variant; should be added.
+- **Manual-assisted recommendation extended to the nightly tracker case** even though the cadence is months long (walk has ~2,300 mi remaining ≈ ~92 days), past the ~14-day inflection point in `feedback_manual_assisted_over_autocron.md`. The override reasons: clip selection is human judgment, sensitive-day detection isn't mechanical, and the parser is unreliable until v2.15.2 ships. Reminder + helper still beats cron for this workload.
+- **Two-commit pattern again** — separated the Day 40 archive (`bbea6b0`) from the estimated-mileage flip (`8a9e035`) instead of editing the JSON before the first commit. Each commit is one logical change. This now matches yesterday's pattern (`9cf82f9` legitimate work + `225f42a` corrective strip). Becoming the project's standard.
+- **Parser bug only got rescued by the rest-day branch today.** If today were a walking title (`X MILES FROM SOMEWHERE`), the bug would have fired and required corrective action. Day 41 is the second consecutive day the bug surfaced; it will keep surfacing as long as Zay's title format includes "WALKING 3000 MILES TO CALI" (which appears to be the standard headline). v2.15.2 is no longer "nice to have."
 
 ## Open threads / next session starts here
-- **End-of-night Day 40 rollover** — tonight when Indianapolis arrival confirms (or wherever he actually stops), run `npm run tracker:from-title`. Day 39 record will get `inProgressDay: 40` written then auto-archive Day 40 with whatever destination the title resolves to. Verify the parser handles the title format correctly THIS time (see next thread).
-- **v2.15.2 parser fix** — `scripts/lib/twitch.js` (or `scripts/tracker-from-title.js` parsing path) needs to prefer `X MILES FROM {CITY, ST}` over `X MILES TO {ENDPOINT}` when both appear in the title. Today's title `WALKING 3000 MILES TO CALI 🌴| DAY 40 | 20 MILES FROM INDIANAPOLIS, IN📍` triggered the bug. Likely a regex precedence issue — "TO CALI" matches first and short-circuits the "FROM INDIANAPOLIS" clause. Will misfire every day until fixed.
-- **Codify mid-walk-safe variant in `docs/twitch-chat-forever-post.md`** — add a new "Mid-walk safe (no real-time location)" section under Variants with the prayer-direction template: `🙏🏾 Day {N} of the comeback. Cover Zay in prayer 🌴 For those on Discord ➡️ discord.gg/MzWAdRbDqu — For those not on Discord ➡️ faithwalklive.com`. Note explicitly: this is the only variant that's safe while Zay is actively walking (title still says "X miles to {city}").
-- **`/updates/april-28-incident` page is STILL present-tense** — carried over from prior session log. Page body, meta description, NewsArticle JSON-LD all read "is paused" / "while he heals". Needs past-tense rewrite + "Walk resumed May 3" topline. Multi-section edit, plan dedicated session.
+- **v2.15.2 parser fix** — *Highest priority.* `scripts/lib/twitch.js` line 94 `milesFromMatch` regex matches "TO CALI" before "FROM INDIANAPOLIS". Need precedence: prefer `X MILES FROM {city,ST}` over `X MILES TO {endpoint}` when both appear. Likely two-pass: try the FROM form first, only fall back to TO if no FROM match. Blocks any automation; will misfire every walking day.
+- **`npm run tracker:nightly` helper script** — proposed but not built. Should: run `tracker:from-title`, then query Twitch GQL clips for today's date, print top 5-10 ranked by views with date/time, prompt user to pick (or accept `--clip URL` flag), then attach + push. Pattern mirrors `scripts/recovery-append.js`.
+- **Windows nightly reminder at 8pm** — not set up. Two options on the table: Windows Task Scheduler popup OR ntfy.sh phone push. User's call which.
+- **`/updates/april-28-incident` page is STILL present-tense** — carried over from prior two session logs. Page body, meta description, NewsArticle JSON-LD all read "is paused" / "while he heals". Multi-section edit; plan dedicated session.
 - **X poster + HARO bundle still not run live.** Both shipped (v2.15.0), neither activated. Thomas's call when to flip switch.
-- **Central memory backup repo is diverged** — `(cd $BACKUP/claude-memory-backup && git pull)` failed fast-forward this morning. Local memory still fine, this only affects cross-machine memory sync via the central backup. Manual reconcile when convenient (likely both machines committed independently).
+- **Central memory backup repo is diverged** — `claude-memory-backup` `git pull --ff-only` refused two days running. Probably both machines committed independently. Manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/` when convenient. Not blocking — local memory still fine.
+- **Codify mid-walk-safe forever-post variant** in `docs/twitch-chat-forever-post.md` — carried over from yesterday. Add the no-mileage / no-destination prayer-direction template under Variants.
 
 ## Uncommitted work
 Clean working tree.
