@@ -376,5 +376,14 @@
     ],
     "clip": "https://www.twitch.tv/hmblzayy/clip/SarcasticIncredulousSrirachaRitzMitz-5fBoiuxl0P90xSo9",
     "clipsTitle": "Back on the road"
+  },
+  {
+    "day": 40,
+    "location": "Indianapolis, IN",
+    "lat": 39.7683331,
+    "lng": -86.1583502,
+    "miles": 752,
+    "date": "May 4, 2026",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/YawningCrepuscularDonutKreygasm-PEbHBmiNWUVwXjZK"
   }
 ]
