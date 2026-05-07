@@ -39,4 +39,5 @@
 - [Post-pause day numbering](feedback_post_pause_day_numbering.md) — Walk resumes use calendar-cumulative day number (paused day + calendar days elapsed) + restOnly backfill for the gap, not next-sequential walking index. Honors Zay's stream-title convention.
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
+- [Press kit](reference_press_kit.md) — faithwalklive.com/press is canonical press URL since May 7; spec in youtubeoptermizer; §6 assets still mailto-CTA fallback
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.

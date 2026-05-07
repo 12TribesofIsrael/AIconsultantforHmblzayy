@@ -1,38 +1,65 @@
 ---
-ended: 2026-05-06T17:30:00Z
+ended: 2026-05-07T22:00:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
-version: v2.15.1
-originSessionId: 8de3280e-f389-4ccd-8537-5676f53c50bd
+version: v2.16.0
+originSessionId: 1cbcb0e8-73bf-4326-a11f-dd8ba1ddcd85
 ---
-# Last Session — 2026-05-06 (Day 42 — second consecutive REST DAY at Indianapolis)
+# Last Session — 2026-05-07 (Press kit shipped at faithwalklive.com/press)
 
 ## What the user wanted
-Daily tracker update for Day 42 + rest-day clip backfill. Wrap with `/session-end`.
+Implement the press kit page from a complete spec authored by the youtubeoptermizer Claude — `c:\Users\Claude\youtubeoptermizer\docs\press-kit-faithwalklive-spec.md` — at `faithwalklive.com/press`. User explicitly said "Spec is complete; nothing else needed from this side." No tracker work today (Day 43 was not touched — see Open threads).
 
 ## What we did
-Twitch title was a Day 42 REST DAY at Indianapolis, IN. Latest walking checkpoint going in was Day 40 Indianapolis (752 mi est) already annotated with Day 41 REST DAY from yesterday's session.
 
-Two commits landed today on a clean tree:
+**Read the spec, then shipped /press to faithwalklivecom in one commit.** Vercel deploy succeeded; live verification passed.
 
-1. **`d69d6da` — `npm run tracker:from-title`** annotated Day 42 as rest day on the Day 40 checkpoint. Diff: `inProgressDay: 41 → 42`. **`restDayDate` was NOT updated** — still reads `"May 5, 2026"` (yesterday). That looks like a bug or intentional preservation; either way it's stale on the Day 42 rest-day card. Verify `applyRestDay` / Case 3 rest-day branch in `scripts/tracker-from-title.js` and `scripts/lib/tracker.js` to see whether `restDayDate` is meant to refresh per consecutive rest day.
-2. **`3f05652` — Rest-day clip backfill.** Added `restDayClip: "https://www.twitch.tv/hmblzayy/clip/AttractivePeppyMeatloafStoneLightning-N2qKwcCCsqdF9jbW"` on Day 40's entry alongside the existing arrival `clip` (the WWW AUNTIE INDIANAPOLIS LOVE Day 40 arrival pick). Honors `feedback_clip_backfill_mandatory` (rest days still get a clip) and the `restDayClip` pattern documented in `feedback_tracker_honesty.md` (clip lives on Day N-1's checkpoint, persists historically). Render path is wired — `restDayClip` is referenced in `scripts/tracker-from-title.js`, `scripts/update-tracker.js`, `src/faith-walk-tracker/index.html`, and `docs/faith-walk-tracker.html`.
+1. **`faithwalklivecom efed0fa`** ([https://github.com/12TribesofIsrael/faithwalklive/commit/efed0fa](https://github.com/12TribesofIsrael/faithwalklive/commit/efed0fa)) — 7 files, +618/-55:
+   - `src/app/(site)/press/page.tsx` (new) — hero + 3-CTA bar (request assets / press contact / latest update), 8-row fast-facts table with Day + mileage from `getStats()` (refreshes per tracker push), 3 boilerplate lengths (40/80/160 words), Zay bio (~120w), AI Bible Gospels bio (~100w), assets-on-request callout, coverage list, contact card, "What we're not" footer
+   - `src/app/(site)/press/opengraph-image.tsx` (new) — gold-on-dark OG, edge runtime, matches /updates/april-28-incident OG pattern
+   - `src/data/outlets.ts` (new) — 12-outlet single source of truth; `/updates/april-28-incident` refactored to import from it (was inline before)
+   - `src/app/sitemap.ts` — `/press` added (priority 0.85, weekly, lastModified bound to latest recovery-entry date)
+   - `src/components/Nav.tsx` — "Press" link added (between Prayer Wall and Subscribe)
+   - `src/components/Footer.tsx` — press-kit link alongside the existing press email
+   - `src/app/(site)/updates/april-28-incident/page.tsx` — outlets refactor + bottom cross-link to /press
 
-Both commits auto-pushed and mirrored to `../faithwalklivecom`. Tree clean at session end.
+2. **Vercel deploy `4615003421` ✓** — polled the GitHub Deployments API per `feedback_verify_vercel_deploy.md`; `state=success` after ~1 min.
+
+3. **Live schema verification** — `curl --ssl-no-revoke https://faithwalklive.com/press`: HTTP 200 / 70KB; confirmed in rendered HTML: `WebPage`, `BreadcrumbList`, `Organization`, `Person`, `WebSite`, `Event` (6 JSON-LD `<script>` tags total — 2 page-level, 4 inherited from root layout via `@id` references). Page heading + email + Fox 59 outlet link + sitemap entry all present.
+
+4. **`AIconsultantforHmblzayy b3303ba`** — v2.16.0 changelog row in `CLAUDE.md` + `package.json` version bump. Per the changelogs-are-frozen rule, only the new entry was added; prior rows untouched.
 
 ## Decisions worth remembering
-- **Day 42 = second consecutive rest day at Indianapolis.** Day 41 (yesterday) was the first; Day 42 layered on top. The Day 40 arrival entry now carries TWO rest days' worth of metadata (`inProgressDay: 42`, original `restDay: true`, `restDayDate`). Whether `restDayDate` should track the *latest* rest day or *first* rest day in a streak is undefined behavior. Need policy call before Day 43 if Zay rests a third day.
-- **Parser bug (v2.15.2) didn't fire today** — rest-day branch ignored the `MILES TO CALI` parse failure, same rescue mechanism as Day 41 yesterday. Bug still active for any walking-day title.
+
+- **Spec said "Started March 26, 2026" — used March 25 throughout** the press page. `checkpoints.json` Day 1 + the existing root-layout `Event` JSON-LD both say `2026-03-25`, so flipping the press page to match the spec would have created a 1-day inconsistency on the live site. Flagged for the youtubeoptermizer Claude to patch the spec doc on their side.
+
+- **Spec §6 listed file-based assets at `/press/assets/...` URLs that don't exist on disk** (logos, hero photos, route map, b-roll, ZIP). Shipping 404 download links would be worse than no-link. Per the spec's own static-fallback principle, §6 ships as a "Request assets" CTA → `mailto:aibiblegospels444@gmail.com?subject=Asset%20request%20—%20Faith%20Walk%20Live` with a 24h SLA + brief inventory of what's available + editorial-credit string. When the asset bundle is produced (logos exported, photos cleared with Zay, ZIP packaged), §6 becomes a one-section swap.
+
+- **Outlets list factored into `src/data/outlets.ts`** rather than duplicated between /press and /updates/april-28-incident. This is the kind of refactor the "don't introduce abstractions beyond what the task requires" rule warns against, but here both pages need the same list and adding a future outlet should be a one-line edit in one place. Kept the abstraction shallow (just an array, no helpers).
+
+- **Page-level JSON-LD references existing `@id`s** (`https://faithwalklive.com/#aibiblegospels`, `#ministerzay`, `#faithwalk`) rather than re-declaring Organization/Person/Event. Schema graph stays connected; no duplication.
 
 ## Open threads / next session starts here
-- **`restDayDate` stale on consecutive rest days** — Day 42 rest-day annotation rolled `inProgressDay` from 41 → 42 but left `restDayDate: "May 5, 2026"` untouched. If the public tracker renders restDayDate on the rest-day card, the May 5 string will show on a May 6 rest day. Read the rest-day code path + verify the live `/clips` and homepage; patch if it's actually rendering wrong.
-- **v2.15.2 parser fix** — *Still highest priority.* `scripts/lib/twitch.js` line 94 `milesFromMatch` regex matches "TO CALI" before "FROM INDIANAPOLIS". Two-pass fix: try `X MILES FROM {city,ST}` first, fall back to `X MILES TO {endpoint}` only if no FROM match. Blocks automation; will misfire next walking day. Carried over from prior two sessions.
-- **`npm run tracker:nightly` helper script** — proposed, not built. Should run `tracker:from-title`, query Twitch GQL for today's clips, print top 5-10 ranked by views, prompt human pick (or accept `--clip URL`), then attach + push. Pattern mirrors `scripts/recovery-append.js`. Carried over.
+
+- **Day 43 was not touched today.** Today (2026-05-07) is calendar-day 43 of the walk; if Zay walked or is walking, no `tracker:from-title` ran. v2.15.2 parser bug (still active — `milesFromMatch` regex matches "TO CALI" before "FROM INDIANAPOLIS" in `scripts/lib/twitch.js:94`) will misfire on the next walking-day title. **Two-pass fix:** try `X MILES FROM {city,ST}` first, fall back to `X MILES TO {endpoint}` only if no FROM match. Carried over four sessions now — should be the next priority before any more tracker pushes.
+
+- **`restDayDate` stale on consecutive rest days** — Day 42 rest-day annotation rolled `inProgressDay: 41 → 42` but left `restDayDate: "May 5, 2026"` untouched. Verify rest-day code path in `scripts/tracker-from-title.js` + `scripts/lib/tracker.js`; patch if homepage / `/clips` actually shows "May 5" on a May 6/7 card. Carried over from yesterday.
+
+- **Cross-doc updates owed by the youtubeoptermizer Claude** (per the spec's hand-off section): swap placeholder press-kit references in `docs/journalist-outreach-apr28-followup.md` and `faith-walk-live/anchor-doc/publish-plan.md` for the live URL `https://faithwalklive.com/press`; add a one-liner reference memory ("faithwalklive.com/press is the canonical press kit URL — link from journalist outreach + YT descriptions"). Also patch the spec's "March 26" → "March 25". Cross-machine note: leave for the youtubeoptermizer Claude to do; this side's work is done.
+
+- **Press kit asset bundle not produced.** When/if the user wants the §6 grid to be real download links rather than the email CTA: needs Faith Walk Live logo exports (gold/black variants, 2048×2048 transparent PNG), AI Bible Gospels brand mark, hero photos (4000px, 300dpi — pulled from Twitch clips per spec, with Zay's permission for portrait), route-map PNGs, 60–90 sec b-roll reel, and a packaged ZIP. Then it's a one-section swap in `src/app/(site)/press/page.tsx` (replace the "Request assets" callout with an asset-card grid).
+
+- **`npm run tracker:nightly` helper script** — proposed, not built. Carried over.
+
 - **Windows nightly reminder at 8pm** — not set up. Task Scheduler popup OR ntfy.sh push, user's call. Carried over.
-- **`/updates/april-28-incident` page is STILL present-tense** — body, meta description, NewsArticle JSON-LD all read "is paused" / "while he heals". Day 39 was resume day (May 3); now four days into the resume and this page is increasingly inaccurate. Multi-section edit; plan dedicated session.
+
+- **`/updates/april-28-incident` page is STILL present-tense** — body, meta description, NewsArticle JSON-LD all read "is paused" / "while he heals". Day 39 was resume day (May 3); now five days into the resume and this page is increasingly inaccurate. Today's work refactored the outlets imports + added a /press cross-link but did NOT rewrite the body copy. Multi-section edit; plan dedicated session.
+
 - **X poster + HARO bundle still not run live** — both shipped (v2.15.0 May 3), neither activated. Thomas's call when to flip switch.
-- **Central memory backup repo diverged** — `claude-memory-backup` `git pull --ff-only` has refused several days running. Both machines committed independently. Manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/`. Not blocking.
-- **Codify mid-walk-safe forever-post variant** in `docs/twitch-chat-forever-post.md` — carried over. Add the no-mileage / no-destination prayer-direction template under Variants.
+
+- **Central memory backup repo diverged** — `claude-memory-backup` `git pull --ff-only` refused this morning (yet again). Both machines committed independently. Manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/`. Not blocking — local memory:pull runs fine.
+
+- **Codify mid-walk-safe forever-post variant** in `docs/twitch-chat-forever-post.md` — carried over.
 
 ## Uncommitted work
 Clean working tree.
