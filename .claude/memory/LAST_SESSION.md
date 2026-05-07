@@ -1,5 +1,5 @@
 ---
-ended: 2026-05-07T22:00:00Z
+ended: 2026-05-07T22:30:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.16.0
@@ -29,6 +29,10 @@ Implement the press kit page from a complete spec authored by the youtubeoptermi
 
 4. **`AIconsultantforHmblzayy b3303ba`** — v2.16.0 changelog row in `CLAUDE.md` + `package.json` version bump. Per the changelogs-are-frozen rule, only the new entry was added; prior rows untouched.
 
+5. **Durable memory added:** `reference_press_kit.md` (canonical URL, spec location, asset-section status). Indexed in `MEMORY.md`. Pushed via memory-sync as commit `f29feb6`.
+
+6. **Meta-Q from user after the first /session-end** ("so what was the purpose of that?") — answered honestly: handoff file is the main payoff (open threads carry forward), one durable memory was incremental, git push is plumbing. No action items from this turn.
+
 ## Decisions worth remembering
 
 - **Spec said "Started March 26, 2026" — used March 25 throughout** the press page. `checkpoints.json` Day 1 + the existing root-layout `Event` JSON-LD both say `2026-03-25`, so flipping the press page to match the spec would have created a 1-day inconsistency on the live site. Flagged for the youtubeoptermizer Claude to patch the spec doc on their side.
@@ -57,7 +61,7 @@ Implement the press kit page from a complete spec authored by the youtubeoptermi
 
 - **X poster + HARO bundle still not run live** — both shipped (v2.15.0 May 3), neither activated. Thomas's call when to flip switch.
 
-- **Central memory backup repo diverged** — `claude-memory-backup` `git pull --ff-only` refused this morning (yet again). Both machines committed independently. Manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/`. Not blocking — local memory:pull runs fine.
+- **Central memory backup repo diverged** — `claude-memory-backup` `git pull --ff-only` refused this morning AND `git push` rejected as non-fast-forward at the 22:00 session-end (commit `b03e3b8` is local-only). Both machines have committed independently; manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/` before next push will succeed. Not blocking — local memory:pull and the per-project in-repo sync both work fine.
 
 - **Codify mid-walk-safe forever-post variant** in `docs/twitch-chat-forever-post.md` — carried over.
 
