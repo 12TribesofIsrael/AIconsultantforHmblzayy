@@ -386,10 +386,22 @@
     "date": "May 4, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/YawningCrepuscularDonutKreygasm-PEbHBmiNWUVwXjZK",
     "estimatedMiles": true,
-    "inProgressDay": 42,
-    "restDay": true,
+    "inProgressDay": 44,
     "inProgressStartedAt": "2026-05-05T16:52:47.040Z",
-    "restDayDate": "May 5, 2026",
-    "restDayClip": "https://www.twitch.tv/hmblzayy/clip/AttractivePeppyMeatloafStoneLightning-N2qKwcCCsqdF9jbW"
+    "destinationLat": 3.4519988,
+    "destinationLng": -76.5325259,
+    "destination": "CALI",
+    "milesRemaining": 3000,
+    "estimatedSegmentMiles": 3355
+  },
+  {
+    "restOnly": true,
+    "date": "May 5, 2026",
+    "location": "Indianapolis, IN",
+    "lat": 39.7683331,
+    "lng": -86.1583502,
+    "miles": 752,
+    "day": 42,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/AttractivePeppyMeatloafStoneLightning-N2qKwcCCsqdF9jbW"
   }
 ]
