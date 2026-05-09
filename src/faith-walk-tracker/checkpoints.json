@@ -400,17 +400,9 @@
   {
     "day": 44,
     "location": "Camby, IN",
-    "lat": 39.6536,
-    "lng": -86.3033,
-    "miles": 1519,
-    "date": "May 5, 2026",
-    "estimatedMiles": true,
-    "destinationLat": 3.4519988,
-    "destinationLng": -76.5325259,
-    "destination": "CALI",
-    "inProgressDay": 45,
-    "milesRemaining": 3000,
-    "estimatedSegmentMiles": 3348,
-    "inProgressStartedAt": "2026-05-09T09:51:53.866Z"
+    "lat": 39.661472,
+    "lng": -86.3120233,
+    "miles": 767,
+    "date": "May 9, 2026"
   }
 ]
