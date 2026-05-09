@@ -1,37 +1,39 @@
 ---
-ended: 2026-05-09T15:50:00Z
+ended: 2026-05-09T10:15:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
 version: v2.17.0
-originSessionId: 871eb9bf-6c1d-4751-ae46-0df4f8e8b73f
+originSessionId: fad5cf25-c0e8-4d64-9c5b-99bbcfa4d103
 ---
 # Last Session — 2026-05-09
 
 ## What the user wanted
-Two arcs in one session: (1) capture Zay's May 8 RV-tour announcement on faithwalklive.com as a structured news beat that absorbs related search queries, and (2) solve the IG-login-wall problem so the browser skill can read login-walled posts without copy-paste, in a way that propagates across all of Thomas's repos.
+"Update the tracker zay stopped walking" — Zay finished Day 44 yesterday at Camby, IN (stream ended ~8 PM EDT May 8 with "HOME FOR THE NIGHT" clip). Tracker was carrying corrupt state from the CALI-prefix parser bug and needed cleanup before Day 45 begins.
 
 ## What we did
-- **Strategic SEO clarification (opening exchange)**: owning the bare phrase "faith walk" against centuries of Christian-publishing incumbents is unrealistic; owning the *event* (Minister Zay variants, Apr 28 incident, RV announcement) is realistic and largely already shipped via Person/Event/NewsArticle JSON-LD. No code changes — verbal framing only.
-- **Surfaced the youtubeoptermizer sibling repo** (`C:\Users\Claude\youtubeoptermizer`) as a read-only API resource (live YouTube/Meta/X/TikTok/Anthropic creds + ~30 Python scripts). Codified rules — never edit, ask before every API call. Added "Sibling repos with API access" section to [CLAUDE.md](CLAUDE.md) (v2.16.1 commit `89e68df`). Saved as `reference_youtubeoptermizer_apis.md` + `feedback_youtubeoptermizer_no_edits.md`.
-- **Tested Meta Graph Business Discovery** to read @ministerzay's IG Reel caption — Graph returned `(#10) Application does not have permission for this action`. AI Bible Gospels Meta app lacks `business_discovery` scope; expansion is a separate Meta-dev-console task.
-- **Built /updates/rv-rolling-support page** on faithwalklivecom (commit `5beba0c`) — full structured-data: NewsArticle + FAQPage + BreadcrumbList + SpeakableSpecification, citation to the IG Reel, OG image, sitemap entry. Verified live via `curl --ssl-no-revoke`. Vercel deploys `4623020931` + `4623056058` both ✓.
-- **Tracker hit a bad parser run mid-session**: `tracker:from-title` grabbed "CALI" from the new "WALKING 3000 MILES TO CALI" title prefix instead of "CAMBY, IN" from the daily-leg portion → shipped Cali-Colombia coords + 3000-mi-to-go to production for ~5 min before manual fix (v2.16.1 patch `2e3dda4`). Saved as `feedback_title_parser_cali_prefix.md`.
-- **The bug returned next day** on Day 44→45 rollover. **Parallel session (between turns) shipped v2.17.0** (commit `6ae11d2`): structural fix in `scripts/lib/twitch.js parseStreamTitle` — discards CALI matches as branding prefix, adds bare `DAY N | CITY, ST` fallback regex. Memory file updated to "Resolved" status.
-- **Recommended persistent-profile login** (one-time interactive `wait_for_user` in browser skill, NOT stored .env creds) as the right pattern for IG/FB/Twitch/etc. login walls. Saved as `feedback_persistent_profile_login.md`.
-- **Final commits**: memory sync (`0d6d5ea`) — pushed three new memory entries + MEMORY.md index update from global memory into the repo's `.claude/memory/`. Working tree clean, in sync with origin.
+- Ran `npm run tracker:from-title` — parser hit the CALI prefix bug AGAIN: wrote Day 44 with `miles: 1519` and Day 45 in-progress to "CALI" with 3000 mi remaining + Cali, Colombia coords.
+- Confirmed Day 44 arrival via `update-tracker.js --day 44 --location "Camby, IN" --miles 767` — strips CALI in-progress junk + sets correct Indy + ~15 mi mileage. Commit `9b5caa1`.
+- Patched Day 44 `date` from script-default "May 9, 2026" → "May 8, 2026" (per `feedback_update_tracker_date_default` — Day 44 actually walked May 8 per commit `ac6e82c` timestamp). Commit `68c5a02`.
+- Attached Day 44 clip — `FEET ON GROUND ROUTE !FAITHWALK` 33v, May 8 14:17 UTC (highest-view walk-content clip from Day 44 stream session). Commit `ddb50c0`.
+- **Structural parser fix in `scripts/lib/twitch.js parseStreamTitle`** (commit `081b23b`):
+  1. MILES FROM/TO regex now discards matches where city is `CALI` (overall walk goal, never a daily leg)
+  2. New fallback regex `DAY\s+\d+\s*\|\s*([A-Z][A-Za-z\s]+,\s*[A-Z]{2,})` handles bare `DAY N | CITY, ST` post-resume title shape
+  3. Regression-tested on classic `MILES FROM` titles + full-state-name `LONDON, OHIO` — all still parse
+- Set Day 45 in-progress manually (`116f408`) via inline `geocode + estimatedRoadMiles + rebuildAndPush` — destination DANVILLE, IN, 17 mi est. Bare format gives no `milesFromNext` so `tracker-from-title` skips in-progress (line 156 requires both fields).
+- Bumped version to v2.17.0 (CLAUDE.md + package.json) with full changelog entry. Commit `6ae11d2`.
+- Updated `feedback_title_parser_cali_prefix.md` memory — bug now structurally fixed, but bare-format caveat documented.
 
 ## Decisions worth remembering
-- **Persistent-profile login over .env-stored creds** — security + fragility tradeoffs. Saved as durable feedback memory.
-- **Canonical doc placement for cross-repo browser-skill rules** = `~/.claude/CLAUDE.md` (user-level, merged into every project session) NOT per-repo CLAUDE.md duplication. Path noted in `feedback_persistent_profile_login.md`.
-- **RV announcement got its own /updates page rather than a recovery-timeline append** — the recovery timeline naturally closed May 2 (walk resumed May 3); the RV is a *new* news beat, structurally a sibling to /updates/april-28-incident. Both now live in `src/data/updates.ts`.
-- **Day numbering**: today's data uses Day 44 = May 8 / Day 45 = May 9, matching the IG graphic and Twitch title. Existing post-pause numbering convention (`feedback_post_pause_day_numbering`) holds.
+- **Parser fix was MINOR not PATCH** — per CLAUDE.md versioning rule, "parser fix" is explicitly called out as MINOR. Bumped 2.16.1 → 2.17.0.
+- **Did NOT confirm Day 45 arrival** — at session start it was 5:55 AM EDT and Zay had just woken / stream LIVE but no walking yet. Set Day 45 as in-progress destination instead. Day 45 will get confirmed via the normal `tracker:from-title` rollover when title shows Day 46.
+- **Did NOT touch Day 42 date** ("May 5" likely off by ≥1 day too per same default-of-today bug, but not what the user asked for; CHANGELOG-frozen rule applies to past entries by extension — leave dates alone unless explicitly asked).
+- **Day 44 clip pick**: chose `FEET ON GROUND ROUTE !FAITHWALK` 33v over `Day 44 🙏🏽` 16v despite the latter's explicit Day-44 framing — higher view + walk-content theme aligned with the past pattern (`feedback_clip_selection`).
 
 ## Open threads / next session starts here
-1. **Persistent-profile login walk-through is queued but not done.** Thomas confirmed "I need to do the login persistence thing for all of my socials" — site list proposed (IG, FB, YouTube, Twitch, TikTok, X, Discord) — he didn't commit/decline before "commit"/"push" wrap-up. Resume by asking whether to launch the browser skill with the proposed site list. Action plan in `feedback_persistent_profile_login.md`.
-2. **`~/.claude/CLAUDE.md` doesn't exist yet.** That's where the canonical browser-skill persistent-profile rule should land once the interactive walk-through is done. File path: `C:\Users\Deskt\.claude\CLAUDE.md`. Fresh write, no merge needed.
-3. **Day 45 (today, May 9) destination = Danville, IN, ~17 mi** per v2.17.0 manual in-progress set. After resume, verify whether walk completed — clip backfill + arrival confirmation may be due.
-4. **Title-parser caveat (v2.17.0)**: bare `DAY N | CITY, ST` format leaves `milesFromNext` null, so `tracker-from-title.js` line 156 skips in-progress annotation. For days where Zay's title omits the "X MILES TO" qualifier, manual in-progress set via inline `geocode + estimatedRoadMiles + rebuildAndPush` is still required. Logged in `feedback_title_parser_cali_prefix.md`.
-5. **Meta Graph business_discovery scope expansion** — separate Meta-dev-console workflow if Thomas wants to enable scripted IG-post reads as a backup to the persistent-profile route. Not urgent.
+- **Day 45 confirmation** — when Zay arrives at Danville, IN today (or title flips to Day 46), `tracker:from-title` will roll Day 45 → estimated arrival. Verify after run: destination should be the daily leg, not "CALI" or undefined.
+- **Day 45 clip needs attaching** post-rollover — query Twitch GQL for May 9 EDT clips (will appear as May 9 13:00 UTC onward in `LAST_DAY` queries). `clipsTitle: "..."` if multi-clip wall warranted.
+- **Date drift on older entries** — Day 42 (rest, currently May 5) and possibly others may carry the same `update-tracker date default` bug. Not user-flagged. Don't proactively fix unless asked.
+- **Parser caveat to watch:** when title uses bare `DAY N | CITY, ST` shape (no "X MILES TO" qualifier), `tracker-from-title` will skip in-progress. Pattern for manual set already shipped — see commit `116f408` for the inline `geocode + rebuildAndPush` recipe.
 
 ## Uncommitted work
-Clean working tree. In sync with origin.
+Clean working tree.
