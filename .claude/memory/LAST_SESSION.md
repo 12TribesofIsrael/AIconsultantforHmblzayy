@@ -1,69 +1,37 @@
 ---
-ended: 2026-05-07T22:30:00Z
+ended: 2026-05-09T15:50:00Z
 project: ZayAutomations — AI Consulting for Minister Zay / HMBL
 branch: main
-version: v2.16.0
-originSessionId: 1cbcb0e8-73bf-4326-a11f-dd8ba1ddcd85
+version: v2.17.0
+originSessionId: 871eb9bf-6c1d-4751-ae46-0df4f8e8b73f
 ---
-# Last Session — 2026-05-07 (Press kit shipped at faithwalklive.com/press)
+# Last Session — 2026-05-09
 
 ## What the user wanted
-Implement the press kit page from a complete spec authored by the youtubeoptermizer Claude — `c:\Users\Claude\youtubeoptermizer\docs\press-kit-faithwalklive-spec.md` — at `faithwalklive.com/press`. User explicitly said "Spec is complete; nothing else needed from this side." No tracker work today (Day 43 was not touched — see Open threads).
+Two arcs in one session: (1) capture Zay's May 8 RV-tour announcement on faithwalklive.com as a structured news beat that absorbs related search queries, and (2) solve the IG-login-wall problem so the browser skill can read login-walled posts without copy-paste, in a way that propagates across all of Thomas's repos.
 
 ## What we did
-
-**Read the spec, then shipped /press to faithwalklivecom in one commit.** Vercel deploy succeeded; live verification passed.
-
-1. **`faithwalklivecom efed0fa`** ([https://github.com/12TribesofIsrael/faithwalklive/commit/efed0fa](https://github.com/12TribesofIsrael/faithwalklive/commit/efed0fa)) — 7 files, +618/-55:
-   - `src/app/(site)/press/page.tsx` (new) — hero + 3-CTA bar (request assets / press contact / latest update), 8-row fast-facts table with Day + mileage from `getStats()` (refreshes per tracker push), 3 boilerplate lengths (40/80/160 words), Zay bio (~120w), AI Bible Gospels bio (~100w), assets-on-request callout, coverage list, contact card, "What we're not" footer
-   - `src/app/(site)/press/opengraph-image.tsx` (new) — gold-on-dark OG, edge runtime, matches /updates/april-28-incident OG pattern
-   - `src/data/outlets.ts` (new) — 12-outlet single source of truth; `/updates/april-28-incident` refactored to import from it (was inline before)
-   - `src/app/sitemap.ts` — `/press` added (priority 0.85, weekly, lastModified bound to latest recovery-entry date)
-   - `src/components/Nav.tsx` — "Press" link added (between Prayer Wall and Subscribe)
-   - `src/components/Footer.tsx` — press-kit link alongside the existing press email
-   - `src/app/(site)/updates/april-28-incident/page.tsx` — outlets refactor + bottom cross-link to /press
-
-2. **Vercel deploy `4615003421` ✓** — polled the GitHub Deployments API per `feedback_verify_vercel_deploy.md`; `state=success` after ~1 min.
-
-3. **Live schema verification** — `curl --ssl-no-revoke https://faithwalklive.com/press`: HTTP 200 / 70KB; confirmed in rendered HTML: `WebPage`, `BreadcrumbList`, `Organization`, `Person`, `WebSite`, `Event` (6 JSON-LD `<script>` tags total — 2 page-level, 4 inherited from root layout via `@id` references). Page heading + email + Fox 59 outlet link + sitemap entry all present.
-
-4. **`AIconsultantforHmblzayy b3303ba`** — v2.16.0 changelog row in `CLAUDE.md` + `package.json` version bump. Per the changelogs-are-frozen rule, only the new entry was added; prior rows untouched.
-
-5. **Durable memory added:** `reference_press_kit.md` (canonical URL, spec location, asset-section status). Indexed in `MEMORY.md`. Pushed via memory-sync as commit `f29feb6`.
-
-6. **Meta-Q from user after the first /session-end** ("so what was the purpose of that?") — answered honestly: handoff file is the main payoff (open threads carry forward), one durable memory was incremental, git push is plumbing. No action items from this turn.
+- **Strategic SEO clarification (opening exchange)**: owning the bare phrase "faith walk" against centuries of Christian-publishing incumbents is unrealistic; owning the *event* (Minister Zay variants, Apr 28 incident, RV announcement) is realistic and largely already shipped via Person/Event/NewsArticle JSON-LD. No code changes — verbal framing only.
+- **Surfaced the youtubeoptermizer sibling repo** (`C:\Users\Claude\youtubeoptermizer`) as a read-only API resource (live YouTube/Meta/X/TikTok/Anthropic creds + ~30 Python scripts). Codified rules — never edit, ask before every API call. Added "Sibling repos with API access" section to [CLAUDE.md](CLAUDE.md) (v2.16.1 commit `89e68df`). Saved as `reference_youtubeoptermizer_apis.md` + `feedback_youtubeoptermizer_no_edits.md`.
+- **Tested Meta Graph Business Discovery** to read @ministerzay's IG Reel caption — Graph returned `(#10) Application does not have permission for this action`. AI Bible Gospels Meta app lacks `business_discovery` scope; expansion is a separate Meta-dev-console task.
+- **Built /updates/rv-rolling-support page** on faithwalklivecom (commit `5beba0c`) — full structured-data: NewsArticle + FAQPage + BreadcrumbList + SpeakableSpecification, citation to the IG Reel, OG image, sitemap entry. Verified live via `curl --ssl-no-revoke`. Vercel deploys `4623020931` + `4623056058` both ✓.
+- **Tracker hit a bad parser run mid-session**: `tracker:from-title` grabbed "CALI" from the new "WALKING 3000 MILES TO CALI" title prefix instead of "CAMBY, IN" from the daily-leg portion → shipped Cali-Colombia coords + 3000-mi-to-go to production for ~5 min before manual fix (v2.16.1 patch `2e3dda4`). Saved as `feedback_title_parser_cali_prefix.md`.
+- **The bug returned next day** on Day 44→45 rollover. **Parallel session (between turns) shipped v2.17.0** (commit `6ae11d2`): structural fix in `scripts/lib/twitch.js parseStreamTitle` — discards CALI matches as branding prefix, adds bare `DAY N | CITY, ST` fallback regex. Memory file updated to "Resolved" status.
+- **Recommended persistent-profile login** (one-time interactive `wait_for_user` in browser skill, NOT stored .env creds) as the right pattern for IG/FB/Twitch/etc. login walls. Saved as `feedback_persistent_profile_login.md`.
+- **Final commits**: memory sync (`0d6d5ea`) — pushed three new memory entries + MEMORY.md index update from global memory into the repo's `.claude/memory/`. Working tree clean, in sync with origin.
 
 ## Decisions worth remembering
-
-- **Spec said "Started March 26, 2026" — used March 25 throughout** the press page. `checkpoints.json` Day 1 + the existing root-layout `Event` JSON-LD both say `2026-03-25`, so flipping the press page to match the spec would have created a 1-day inconsistency on the live site. Flagged for the youtubeoptermizer Claude to patch the spec doc on their side.
-
-- **Spec §6 listed file-based assets at `/press/assets/...` URLs that don't exist on disk** (logos, hero photos, route map, b-roll, ZIP). Shipping 404 download links would be worse than no-link. Per the spec's own static-fallback principle, §6 ships as a "Request assets" CTA → `mailto:aibiblegospels444@gmail.com?subject=Asset%20request%20—%20Faith%20Walk%20Live` with a 24h SLA + brief inventory of what's available + editorial-credit string. When the asset bundle is produced (logos exported, photos cleared with Zay, ZIP packaged), §6 becomes a one-section swap.
-
-- **Outlets list factored into `src/data/outlets.ts`** rather than duplicated between /press and /updates/april-28-incident. This is the kind of refactor the "don't introduce abstractions beyond what the task requires" rule warns against, but here both pages need the same list and adding a future outlet should be a one-line edit in one place. Kept the abstraction shallow (just an array, no helpers).
-
-- **Page-level JSON-LD references existing `@id`s** (`https://faithwalklive.com/#aibiblegospels`, `#ministerzay`, `#faithwalk`) rather than re-declaring Organization/Person/Event. Schema graph stays connected; no duplication.
+- **Persistent-profile login over .env-stored creds** — security + fragility tradeoffs. Saved as durable feedback memory.
+- **Canonical doc placement for cross-repo browser-skill rules** = `~/.claude/CLAUDE.md` (user-level, merged into every project session) NOT per-repo CLAUDE.md duplication. Path noted in `feedback_persistent_profile_login.md`.
+- **RV announcement got its own /updates page rather than a recovery-timeline append** — the recovery timeline naturally closed May 2 (walk resumed May 3); the RV is a *new* news beat, structurally a sibling to /updates/april-28-incident. Both now live in `src/data/updates.ts`.
+- **Day numbering**: today's data uses Day 44 = May 8 / Day 45 = May 9, matching the IG graphic and Twitch title. Existing post-pause numbering convention (`feedback_post_pause_day_numbering`) holds.
 
 ## Open threads / next session starts here
-
-- **Day 43 was not touched today.** Today (2026-05-07) is calendar-day 43 of the walk; if Zay walked or is walking, no `tracker:from-title` ran. v2.15.2 parser bug (still active — `milesFromMatch` regex matches "TO CALI" before "FROM INDIANAPOLIS" in `scripts/lib/twitch.js:94`) will misfire on the next walking-day title. **Two-pass fix:** try `X MILES FROM {city,ST}` first, fall back to `X MILES TO {endpoint}` only if no FROM match. Carried over four sessions now — should be the next priority before any more tracker pushes.
-
-- **`restDayDate` stale on consecutive rest days** — Day 42 rest-day annotation rolled `inProgressDay: 41 → 42` but left `restDayDate: "May 5, 2026"` untouched. Verify rest-day code path in `scripts/tracker-from-title.js` + `scripts/lib/tracker.js`; patch if homepage / `/clips` actually shows "May 5" on a May 6/7 card. Carried over from yesterday.
-
-- **Cross-doc updates owed by the youtubeoptermizer Claude** (per the spec's hand-off section): swap placeholder press-kit references in `docs/journalist-outreach-apr28-followup.md` and `faith-walk-live/anchor-doc/publish-plan.md` for the live URL `https://faithwalklive.com/press`; add a one-liner reference memory ("faithwalklive.com/press is the canonical press kit URL — link from journalist outreach + YT descriptions"). Also patch the spec's "March 26" → "March 25". Cross-machine note: leave for the youtubeoptermizer Claude to do; this side's work is done.
-
-- **Press kit asset bundle not produced.** When/if the user wants the §6 grid to be real download links rather than the email CTA: needs Faith Walk Live logo exports (gold/black variants, 2048×2048 transparent PNG), AI Bible Gospels brand mark, hero photos (4000px, 300dpi — pulled from Twitch clips per spec, with Zay's permission for portrait), route-map PNGs, 60–90 sec b-roll reel, and a packaged ZIP. Then it's a one-section swap in `src/app/(site)/press/page.tsx` (replace the "Request assets" callout with an asset-card grid).
-
-- **`npm run tracker:nightly` helper script** — proposed, not built. Carried over.
-
-- **Windows nightly reminder at 8pm** — not set up. Task Scheduler popup OR ntfy.sh push, user's call. Carried over.
-
-- **`/updates/april-28-incident` page is STILL present-tense** — body, meta description, NewsArticle JSON-LD all read "is paused" / "while he heals". Day 39 was resume day (May 3); now five days into the resume and this page is increasingly inaccurate. Today's work refactored the outlets imports + added a /press cross-link but did NOT rewrite the body copy. Multi-section edit; plan dedicated session.
-
-- **X poster + HARO bundle still not run live** — both shipped (v2.15.0 May 3), neither activated. Thomas's call when to flip switch.
-
-- **Central memory backup repo diverged** — `claude-memory-backup` `git pull --ff-only` refused this morning AND `git push` rejected as non-fast-forward at the 22:00 session-end (commit `b03e3b8` is local-only). Both machines have committed independently; manual `git pull --rebase` (or merge) needed inside `~/.../claude-memory-backup/` before next push will succeed. Not blocking — local memory:pull and the per-project in-repo sync both work fine.
-
-- **Codify mid-walk-safe forever-post variant** in `docs/twitch-chat-forever-post.md` — carried over.
+1. **Persistent-profile login walk-through is queued but not done.** Thomas confirmed "I need to do the login persistence thing for all of my socials" — site list proposed (IG, FB, YouTube, Twitch, TikTok, X, Discord) — he didn't commit/decline before "commit"/"push" wrap-up. Resume by asking whether to launch the browser skill with the proposed site list. Action plan in `feedback_persistent_profile_login.md`.
+2. **`~/.claude/CLAUDE.md` doesn't exist yet.** That's where the canonical browser-skill persistent-profile rule should land once the interactive walk-through is done. File path: `C:\Users\Deskt\.claude\CLAUDE.md`. Fresh write, no merge needed.
+3. **Day 45 (today, May 9) destination = Danville, IN, ~17 mi** per v2.17.0 manual in-progress set. After resume, verify whether walk completed — clip backfill + arrival confirmation may be due.
+4. **Title-parser caveat (v2.17.0)**: bare `DAY N | CITY, ST` format leaves `milesFromNext` null, so `tracker-from-title.js` line 156 skips in-progress annotation. For days where Zay's title omits the "X MILES TO" qualifier, manual in-progress set via inline `geocode + estimatedRoadMiles + rebuildAndPush` is still required. Logged in `feedback_title_parser_cali_prefix.md`.
+5. **Meta Graph business_discovery scope expansion** — separate Meta-dev-console workflow if Thomas wants to enable scripted IG-post reads as a backup to the persistent-profile route. Not urgent.
 
 ## Uncommitted work
-Clean working tree.
+Clean working tree. In sync with origin.
