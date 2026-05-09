@@ -24,6 +24,8 @@
 - [Branded vertical recipe](feedback_video_branded_vertical.md) — When OBS records 1920x1080 landscape, render branded vertical with text in letterbox bands; reusable ffmpeg pipeline + multi-surface split for daily distribution
 - [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
 - [Never touch book repo from here](feedback_book_repo_no_edits.md) — A dedicated Claude instance handles `../faithwalkbook`; this instance must never edit/commit/push there to avoid colliding with that workflow
+- [youtubeoptermizer APIs available](reference_youtubeoptermizer_apis.md) — Sibling repo at C:\Users\Claude\youtubeoptermizer has live YouTube/Meta/X/TikTok/Anthropic creds + scripts
+- [youtubeoptermizer — read-only, ask first](feedback_youtubeoptermizer_no_edits.md) — Never edit that repo; explicit ask required before any API call or script run there, every time
 - [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; Zay's Walk turned struggle → pedal-to-metal. Numbers need reconciliation before book quotes them.
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
@@ -40,4 +42,5 @@
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
 - [Press kit](reference_press_kit.md) — faithwalklive.com/press is canonical press URL since May 7; spec in youtubeoptermizer; §6 assets still mailto-CTA fallback
+- [Title parser CALI prefix bug](feedback_title_parser_cali_prefix.md) — tracker:from-title grabs "CALI" from "WALKING 3000 MILES TO CALI" prefix instead of daily-leg destination; verify in-progress fields after every run
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
