@@ -385,14 +385,7 @@
     "miles": 752,
     "date": "May 4, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/YawningCrepuscularDonutKreygasm-PEbHBmiNWUVwXjZK",
-    "estimatedMiles": true,
-    "inProgressDay": 44,
-    "inProgressStartedAt": "2026-05-05T16:52:47.040Z",
-    "destinationLat": 39.6536,
-    "destinationLng": -86.3033,
-    "destination": "Camby, IN",
-    "milesRemaining": 15,
-    "estimatedSegmentMiles": 767
+    "estimatedMiles": true
   },
   {
     "restOnly": true,
@@ -403,5 +396,21 @@
     "miles": 752,
     "day": 42,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AttractivePeppyMeatloafStoneLightning-N2qKwcCCsqdF9jbW"
+  },
+  {
+    "day": 44,
+    "location": "Camby, IN",
+    "lat": 39.6536,
+    "lng": -86.3033,
+    "miles": 1519,
+    "date": "May 5, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 3.4519988,
+    "destinationLng": -76.5325259,
+    "destination": "CALI",
+    "inProgressDay": 45,
+    "milesRemaining": 3000,
+    "estimatedSegmentMiles": 3348,
+    "inProgressStartedAt": "2026-05-09T09:51:53.866Z"
   }
 ]
