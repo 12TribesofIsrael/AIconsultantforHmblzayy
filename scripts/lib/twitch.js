@@ -90,11 +90,22 @@ function parseStreamTitle(title) {
   // Greedy capture stops naturally at any char outside [A-Za-z\s] (e.g.
   // pipe separator, emoji, period). Optional state code is appended via
   // a separate group so geocoding doesn't hit a same-named city in the
-  // wrong state.
+  // wrong state. CALI is the overall walk goal ("WALKING 3000 MILES TO CALI"
+  // branding prefix), never a daily leg destination — skip and fall through.
   const milesFromMatch = title.match(/(\d+)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/i);
-  if (milesFromMatch) {
+  if (milesFromMatch && milesFromMatch[2].trim().toUpperCase() !== 'CALI') {
     data.milesFromNext = parseInt(milesFromMatch[1]);
     data.nearLocation = (milesFromMatch[2].trim() + (milesFromMatch[3] || '')).trim();
+  }
+
+  // Bare destination after "DAY N |" — modern post-resume title format,
+  //   "DAY 45 | DANVILLE, IN📍" (no "MILES FROM/TO" qualifier).
+  // Only used as a fallback when the MILES FROM/TO match didn't fire.
+  if (!data.nearLocation) {
+    const bareLocMatch = title.match(/DAY\s+\d+\s*\|\s*([A-Z][A-Za-z\s]+,\s*[A-Z]{2,})/i);
+    if (bareLocMatch) {
+      data.nearLocation = bareLocMatch[1].trim();
+    }
   }
 
   // Explicit "LOCATION: CITY, ST"
