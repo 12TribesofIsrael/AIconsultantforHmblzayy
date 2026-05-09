@@ -404,6 +404,13 @@
     "lng": -86.3120233,
     "miles": 767,
     "date": "May 8, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/TenaciousAmazonianTruffleDAESuppy-NlipWiqAtg0tljqU"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/TenaciousAmazonianTruffleDAESuppy-NlipWiqAtg0tljqU",
+    "destination": "DANVILLE, IN",
+    "destinationLat": 39.7606013,
+    "destinationLng": -86.5263879,
+    "inProgressDay": 45,
+    "milesRemaining": 17,
+    "estimatedSegmentMiles": 17,
+    "inProgressStartedAt": "2026-05-09T09:58:33.468Z"
   }
 ]
