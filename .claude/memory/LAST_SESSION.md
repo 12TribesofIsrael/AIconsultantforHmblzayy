@@ -1,39 +1,31 @@
 ---
-ended: 2026-05-09T10:15:00Z
-project: ZayAutomations — AI Consulting for Minister Zay / HMBL
+ended: 2026-05-11T00:00:00Z
+project: ZayAutomations (AI consulting for Minister Zay / HMBL)
 branch: main
-version: v2.17.0
-originSessionId: fad5cf25-c0e8-4d64-9c5b-99bbcfa4d103
+version: v2.17.1
+originSessionId: d943abf6-9ec1-4ea9-9ccd-849dcb9f3e08
 ---
-# Last Session — 2026-05-09
+# Last Session — 2026-05-10/11
 
 ## What the user wanted
-"Update the tracker zay stopped walking" — Zay finished Day 44 yesterday at Camby, IN (stream ended ~8 PM EDT May 8 with "HOME FOR THE NIGHT" clip). Tracker was carrying corrupt state from the CALI-prefix parser bug and needed cleanup before Day 45 begins.
+Daily tracker update for Day 46. A surfaced bug in the v2.17.0 title parser blocked the run, so the session expanded into a v2.17.1 patch + the actual tracker workflow.
 
 ## What we did
-- Ran `npm run tracker:from-title` — parser hit the CALI prefix bug AGAIN: wrote Day 44 with `miles: 1519` and Day 45 in-progress to "CALI" with 3000 mi remaining + Cali, Colombia coords.
-- Confirmed Day 44 arrival via `update-tracker.js --day 44 --location "Camby, IN" --miles 767` — strips CALI in-progress junk + sets correct Indy + ~15 mi mileage. Commit `9b5caa1`.
-- Patched Day 44 `date` from script-default "May 9, 2026" → "May 8, 2026" (per `feedback_update_tracker_date_default` — Day 44 actually walked May 8 per commit `ac6e82c` timestamp). Commit `68c5a02`.
-- Attached Day 44 clip — `FEET ON GROUND ROUTE !FAITHWALK` 33v, May 8 14:17 UTC (highest-view walk-content clip from Day 44 stream session). Commit `ddb50c0`.
-- **Structural parser fix in `scripts/lib/twitch.js parseStreamTitle`** (commit `081b23b`):
-  1. MILES FROM/TO regex now discards matches where city is `CALI` (overall walk goal, never a daily leg)
-  2. New fallback regex `DAY\s+\d+\s*\|\s*([A-Z][A-Za-z\s]+,\s*[A-Z]{2,})` handles bare `DAY N | CITY, ST` post-resume title shape
-  3. Regression-tested on classic `MILES FROM` titles + full-state-name `LONDON, OHIO` — all still parse
-- Set Day 45 in-progress manually (`116f408`) via inline `geocode + estimatedRoadMiles + rebuildAndPush` — destination DANVILLE, IN, 17 mi est. Bare format gives no `milesFromNext` so `tracker-from-title` skips in-progress (line 156 requires both fields).
-- Bumped version to v2.17.0 (CLAUDE.md + package.json) with full changelog entry. Commit `6ae11d2`.
-- Updated `feedback_title_parser_cali_prefix.md` memory — bug now structurally fixed, but bare-format caveat documented.
+- **Caught v2.17.0 parser regression.** Today's title `WALKING 3000 MILES TO CALI 🌴| DAY 46 | 18 MILES FROM MONTEZUMA, IN📍| FAITH WALK🙏🏾` parsed `dest=MONTEZUMA, IN miles=undefined` and `tracker:from-title` skipped. Root cause: `String.match()` returns only the first hit — v2.17.0's CALI guard discarded `3000 MILES TO CALI` but never iterated past it to the real `18 MILES FROM MONTEZUMA, IN` later in the string.
+- **Shipped v2.17.1** (commit `20c9854`): `scripts/lib/twitch.js parseStreamTitle` switched the MILES FROM/TO regex to global + `title.matchAll()` with `continue` past CALI hits. First non-CALI match wins. Regression-tested on Day 17 (Beaver Falls, PA), Day 29 (full-state-name LONDON, OHIO), Day 45 (bare DANVILLE, IN) — all still pass. CLAUDE.md changelog + `package.json` version bumped.
+- **Day 45 archived** (commit `9f6c265`): rollover promoted DANVILLE, IN at ~784 mi est. Day 46 in-progress to MONTEZUMA, IN with 18 mi remaining — now annotated automatically since the parser produces both fields.
+- **Day 45 clip attached** (commit `e760844`): `SHUGG - WE MADE IT TO THE CAMPSITE - 32 MILES NO FOOD JUST GOD` (13v, 22:07 UTC May 9, 3 min before stream-end). Picked the milestone-arrival narrative over the higher-view `day 45 end` 55v marker — matches the Day 28/29 low-view-but-high-narrative precedent.
+- All three commits auto-pushed by the tracker scripts (origin/main + faithwalklive sibling repo). Working tree clean.
+- Audited clip gaps: 10 days missing, all historical or deliberately clipless (Days 1/4/15/20 = pre-workflow gaps; Days 34-38 = strike + recovery per `feedback_sensitive_days_stay_clipless`).
+- **Memory updated:** `feedback_title_parser_cali_prefix.md` rewritten to reflect v2.17.1 (was claiming v2.17.0 fully resolved the issue — it didn't). MEMORY.md pointer line also updated.
 
 ## Decisions worth remembering
-- **Parser fix was MINOR not PATCH** — per CLAUDE.md versioning rule, "parser fix" is explicitly called out as MINOR. Bumped 2.16.1 → 2.17.0.
-- **Did NOT confirm Day 45 arrival** — at session start it was 5:55 AM EDT and Zay had just woken / stream LIVE but no walking yet. Set Day 45 as in-progress destination instead. Day 45 will get confirmed via the normal `tracker:from-title` rollover when title shows Day 46.
-- **Did NOT touch Day 42 date** ("May 5" likely off by ≥1 day too per same default-of-today bug, but not what the user asked for; CHANGELOG-frozen rule applies to past entries by extension — leave dates alone unless explicitly asked).
-- **Day 44 clip pick**: chose `FEET ON GROUND ROUTE !FAITHWALK` 33v over `Day 44 🙏🏽` 16v despite the latter's explicit Day-44 framing — higher view + walk-content theme aligned with the past pattern (`feedback_clip_selection`).
+- **Patch version, not minor.** v2.17.1 was a follow-on bug-fix to v2.17.0's parser, not a new feature — semver patch per CLAUDE.md's "PATCH — bug fix" rule.
+- **Picked the lower-view clip for Day 45.** 13v "32 MILES NO FOOD JUST GOD" beat 55v "day 45 end" because clip-selection follows the day's defining narrative beat (campsite arrival + fasted walking), not absolute view count. Pattern lines up with Day 28 (18v) and Day 29 (16v).
 
 ## Open threads / next session starts here
-- **Day 45 confirmation** — when Zay arrives at Danville, IN today (or title flips to Day 46), `tracker:from-title` will roll Day 45 → estimated arrival. Verify after run: destination should be the daily leg, not "CALI" or undefined.
-- **Day 45 clip needs attaching** post-rollover — query Twitch GQL for May 9 EDT clips (will appear as May 9 13:00 UTC onward in `LAST_DAY` queries). `clipsTitle: "..."` if multi-clip wall warranted.
-- **Date drift on older entries** — Day 42 (rest, currently May 5) and possibly others may carry the same `update-tracker date default` bug. Not user-flagged. Don't proactively fix unless asked.
-- **Parser caveat to watch:** when title uses bare `DAY N | CITY, ST` shape (no "X MILES TO" qualifier), `tracker-from-title` will skip in-progress. Pattern for manual set already shipped — see commit `116f408` for the inline `geocode + rebuildAndPush` recipe.
+- **Day 46 in-progress to MONTEZUMA, IN — needs to archive + get a clip on next run.** Run `npm run tracker:from-title` once Zay's stream title rolls to Day 47, then `node scripts/update-tracker.js --day 46 --clip "..."` with a May 10 clip. Query GQL with date filter `2026-05-10`.
+- **Bare-format caveat still unresolved** by design. If post-resume titles continue to ship as `DAY N | CITY, ST📍` without a "MILES FROM/TO" qualifier, in-progress annotation still requires the inline `geocode + estimatedRoadMiles + rebuildAndPush` pattern (no parser fix on the horizon — current behavior accepted per `feedback_title_parser_cali_prefix.md`'s "How to apply").
 
 ## Uncommitted work
 Clean working tree.

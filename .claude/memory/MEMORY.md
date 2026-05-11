@@ -42,6 +42,6 @@
 - [Zay handle map](reference_zay_handles.md) — `@hmblzayy` on TT/Twitch but `@ministerzay` on IG; not interchangeable
 - [AEO strategy](project_aeo_strategy.md) — AEO is primary intent across YouTube + web + JSON-LD; pinned identity strings must match verbatim everywhere; canonical YouTube spec at docs/aeo-youtube-description-spec.md
 - [Press kit](reference_press_kit.md) — faithwalklive.com/press is canonical press URL since May 7; spec in youtubeoptermizer; §6 assets still mailto-CTA fallback
-- [Title parser CALI prefix bug](feedback_title_parser_cali_prefix.md) — Resolved v2.17.0: parser skips CALI + accepts bare DAY N | CITY, ST. Bare format leaves milesFromNext null, manual in-progress still needed.
+- [Title parser CALI prefix bug](feedback_title_parser_cali_prefix.md) — Resolved v2.17.1: matchAll loop skips CALI hits + bare DAY N|CITY,ST fallback. Bare format still leaves milesFromNext null (manual in-progress needed).
 - [Persistent-profile login over .env creds](feedback_persistent_profile_login.md) — For browser-skill login walls (IG/FB/Twitch/etc.), recommend one-time interactive login persisting in `~/.meta-playwright-profile/`, NOT scripted creds
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
