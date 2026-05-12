@@ -434,6 +434,13 @@
     "miles": 863,
     "date": "May 11, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/PolishedTsundereCormorantRickroll-zuIdEAdVQdhZaRfC"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PolishedTsundereCormorantRickroll-zuIdEAdVQdhZaRfC",
+    "destinationLat": 39.7998585,
+    "destinationLng": -88.2884552,
+    "destination": "TUSCOLA, IL",
+    "inProgressDay": 48,
+    "milesRemaining": 35,
+    "estimatedSegmentMiles": 42,
+    "inProgressStartedAt": "2026-05-12T19:04:17.596Z"
   }
 ]
