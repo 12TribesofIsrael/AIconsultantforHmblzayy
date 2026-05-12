@@ -414,13 +414,26 @@
     "miles": 784,
     "date": "May 9, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.7928162,
-    "destinationLng": -87.3708497,
-    "destination": "MONTEZUMA, IN",
-    "inProgressDay": 46,
-    "milesRemaining": 18,
-    "estimatedSegmentMiles": 58,
-    "inProgressStartedAt": "2026-05-10T20:28:08.090Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/AssiduousBlatantApeMikeHogu-nXXlG52921Iquuws"
+  },
+  {
+    "day": 46,
+    "location": "Montezuma, IN",
+    "lat": 39.7928162,
+    "lng": -87.3708497,
+    "miles": 842,
+    "date": "May 10, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/DarkPiliableDuckDancingBanana-eavXb13ZBO9_NZdn"
+  },
+  {
+    "day": 47,
+    "location": "Chrisman, IL",
+    "lat": 39.8036467,
+    "lng": -87.673635,
+    "miles": 863,
+    "date": "May 11, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PolishedTsundereCormorantRickroll-zuIdEAdVQdhZaRfC"
   }
 ]
