@@ -446,13 +446,22 @@
     "miles": 905,
     "date": "May 12, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.8905912,
-    "destinationLng": -88.7281262,
-    "destination": "CERRO GORDO, IL",
-    "inProgressDay": 49,
-    "milesRemaining": 32,
-    "estimatedSegmentMiles": 31,
-    "inProgressStartedAt": "2026-05-13T19:04:46.231Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/PreciousEasyStorkPanicVis-NgIKxIdtqeS58gcv"
+  },
+  {
+    "day": 49,
+    "location": "CERRO GORDO, IL",
+    "lat": 39.8905912,
+    "lng": -88.7281262,
+    "miles": 936,
+    "date": "May 13, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.8454163,
+    "destinationLng": -88.9524151,
+    "destination": "DECATUR, IL",
+    "inProgressDay": 50,
+    "milesRemaining": 18,
+    "estimatedSegmentMiles": 16,
+    "inProgressStartedAt": "2026-05-14T22:49:59.589Z"
   }
 ]
