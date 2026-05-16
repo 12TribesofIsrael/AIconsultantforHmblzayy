@@ -456,13 +456,22 @@
     "miles": 936,
     "date": "May 13, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.8454163,
-    "destinationLng": -88.9524151,
-    "destination": "DECATUR, IL",
-    "inProgressDay": 50,
-    "milesRemaining": 18,
-    "estimatedSegmentMiles": 16,
-    "inProgressStartedAt": "2026-05-14T22:49:59.589Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/WonderfulPatientSnoodDoritosChip-mHHpuhk9V_mlwZeS"
+  },
+  {
+    "day": 50,
+    "location": "DECATUR, IL",
+    "lat": 39.8454163,
+    "lng": -88.9524151,
+    "miles": 952,
+    "date": "May 14, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.8094911,
+    "destinationLng": -89.3973121,
+    "destination": "MECHANICSBURG, IL",
+    "inProgressDay": 51,
+    "milesRemaining": 36,
+    "estimatedSegmentMiles": 31,
+    "inProgressStartedAt": "2026-05-16T02:58:24.604Z"
   }
 ]
