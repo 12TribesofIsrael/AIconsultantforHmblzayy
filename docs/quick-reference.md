@@ -1,9 +1,10 @@
 # Quick Reference — Links & Commands
 
 ## Live URLs
-- **Faith Walk Tracker:** https://tinyurl.com/y667pssw
-  - *Canonical:* https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
-- **Faith Walk Live (pivot site):** https://faithwalklive.com
+- **Faith Walk Tracker (canonical):** https://faithwalklive.com
+- **Short link (tinyurl, retarget when convenient):** https://faithwalklive.com
+  - Currently points at the legacy GH Pages URL which now meta-redirects to faithwalklive.com (works, two-hop). Retarget on tinyurl.com to point directly at faithwalklive.com to save a hop.
+- **Legacy GH Pages (redirect-only since v2.18.0):** https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html
 - **OBS Stream Overlay (for ShuggC):** https://faithwalklive.com/obs?bare=1
   - Add `&brand=0` to hide the AI Bible Gospels watermark
   - Drop `bare=1` to show Day / Miles / Percent stats panel
@@ -63,12 +64,12 @@ npm run discord:download
 
 ### Twitch Chat
 ```
-This Faith Walk is inspiring the world 🙏🏾 I built a live tracker so everyone can follow every step — Philly to Cali in real time: tinyurl.com/y667pssw
+This Faith Walk is inspiring the world 🙏🏾 I built a live tracker so everyone can follow every step — Philly to Cali in real time: faithwalklive.com
 ```
 
 ### TikTok (under 150 chars)
 ```
-Zay walking 3,000 miles Philly to Cali for the Most High 🙏🏾 Live tracker for every step 💯 tinyurl.com/y667pssw
+Zay walking 3,000 miles Philly to Cali for the Most High 🙏🏾 Live tracker for every step 💯 faithwalklive.com
 ```
 
 ### Discord (longer version)
@@ -79,7 +80,7 @@ This Faith Walk has been one of the most powerful things I've ever witnessed. Wa
 
 I wanted to do my part to support the mission, so I built a live interactive Faith Walk tracker. Every checkpoint from Day 1 in Philly to wherever he is right now — updated daily on a real map.
 
-tinyurl.com/y667pssw
+faithwalklive.com
 
 Every step is a prayer. All Praises to The Most High 🙏🏾
 ```

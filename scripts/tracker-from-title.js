@@ -205,7 +205,7 @@ async function main() {
         `Faith Walk: Day ${parsed.day} — rest day at ${latest.location}`
       );
       console.log(`\n✓ Rest day annotated.`);
-      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      console.log(`  Live at: https://faithwalklive.com/`);
       return;
     }
 
@@ -221,7 +221,7 @@ async function main() {
       `Faith Walk: Day ${parsed.day} in progress — ${parsed.milesFromNext} mi to ${parsed.nearLocation}`
     );
     console.log(`\n✓ In-progress updated.`);
-    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    console.log(`  Live at: https://faithwalklive.com/`);
     return;
   }
 
@@ -279,7 +279,7 @@ async function main() {
         `Faith Walk: Day ${parsed.day} in progress — ${parsed.milesFromNext} mi to ${parsed.nearLocation} (after rest)`
       );
       console.log(`\n✓ Rest-day rollover + Day ${parsed.day} annotated.`);
-      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      console.log(`  Live at: https://faithwalklive.com/`);
       return;
     }
 
@@ -351,7 +351,7 @@ async function main() {
       `Faith Walk: promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est), Day ${parsed.day} in progress`
     );
     console.log(`\n✓ Rollover applied + Day ${parsed.day} annotated.`);
-    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    console.log(`  Live at: https://faithwalklive.com/`);
     return;
   }
 }

@@ -28,7 +28,7 @@ const CHANNEL = 'hmblzayy';
 const BOT_USERNAME = process.env.TWITCH_BOT_USERNAME || 'hmbl_automations';
 const BOT_TOKEN = process.env.TWITCH_BOT_TOKEN || '';
 const CHECKPOINTS_PATH = path.join(__dirname, '..', 'src', 'faith-walk-tracker', 'checkpoints.json');
-const TRACKER_URL = 'https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html';
+const TRACKER_URL = 'https://faithwalklive.com';
 const TOTAL_MILES = 3000;
 
 // ==========================================

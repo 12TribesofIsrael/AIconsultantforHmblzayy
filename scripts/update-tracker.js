@@ -103,7 +103,7 @@ async function main() {
       );
 
       console.log(`\n✓ ${clipsArray && clipsArray.length > 1 ? 'Clips' : 'Clip'} added to Day ${day}!`);
-      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      console.log(`  Live at: https://faithwalklive.com/`);
       return;
     }
 
@@ -121,7 +121,7 @@ async function main() {
       );
 
       console.log(`\n✓ Rest-day clip added to Day ${day}!`);
-      console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+      console.log(`  Live at: https://faithwalklive.com/`);
       return;
     }
 
@@ -191,7 +191,7 @@ async function main() {
     );
 
     console.log(`\n✓ In-progress updated! → ${destination} (${milesRemaining} mi to go)`);
-    console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+    console.log(`  Live at: https://faithwalklive.com/`);
     return;
   }
 
@@ -283,7 +283,7 @@ async function main() {
   );
 
   console.log(`\n✓ Tracker updated! Day ${day}: ${location} — ${miles} miles`);
-  console.log(`  Live at: https://12tribesofisrael.github.io/AIconsultantforHmblzayy/docs/faith-walk-tracker.html`);
+  console.log(`  Live at: https://faithwalklive.com/`);
 }
 
 main().catch(err => {

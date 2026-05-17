@@ -1,7 +1,10 @@
 /**
- * Tracker file helpers — load / save checkpoints.json, build the
- * tracker HTML by injecting data into the existing template, and
- * orchestrate the rebuild + commit + push flow.
+ * Tracker file helpers — load / save checkpoints.json and orchestrate
+ * commit + push + faithwalklive sync.
+ *
+ * v2.18.0: Local HTML rebuild stripped. faithwalklive.com is the canonical
+ * public surface; docs/faith-walk-tracker.html + src/faith-walk-tracker/
+ * index.html are now static redirect pages preserved only for bookmarks.
  */
 
 const fs = require('fs');
@@ -11,8 +14,6 @@ const { syncToFaithWalkLive } = require('./faithwalklive-sync');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CHECKPOINTS_PATH = path.join(ROOT, 'src', 'faith-walk-tracker', 'checkpoints.json');
-const TRACKER_HTML_PATH = path.join(ROOT, 'src', 'faith-walk-tracker', 'index.html');
-const DOCS_HTML_PATH = path.join(ROOT, 'docs', 'faith-walk-tracker.html');
 
 const TOTAL_MILES = 3000;
 
@@ -30,64 +31,12 @@ function formatDate(d = new Date()) {
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
-// Inject checkpoints + stats into the tracker HTML template.
-// The display day is the in-progress day if set on the latest checkpoint,
-// otherwise the latest arrival day. Total miles always shows the last
-// confirmed cumulative total — never the estimate — so the headline
-// number is never a guess.
-function buildTrackerHTML(checkpoints) {
-  // Stats reflect walking progress only — rest-only entries share the
-  // previous walking day's position and shouldn't be treated as "current".
-  const walking = checkpoints.filter(cp => !cp.restOnly);
-  const current = walking[walking.length - 1];
-  // In-progress fields can sit on either the latest walking checkpoint
-  // or a trailing rest-only entry archived after a rest-day rollover.
-  // Walk tail-first so the rest-only entry's inProgressDay wins when it
-  // exists, keeping the stat bar in sync with the map's "heading-to" card.
-  const inProgressEntry = [...checkpoints].reverse().find(cp => cp.inProgressDay);
-  const displayDay = (inProgressEntry && inProgressEntry.inProgressDay) || current.day;
-  const remaining = TOTAL_MILES - current.miles;
-  const states = new Set(walking.map(cp => cp.location.split(', ')[1])).size;
-
-  let html = fs.readFileSync(TRACKER_HTML_PATH, 'utf8');
-
-  // Replace the CHECKPOINTS array
-  const checkpointsJson = JSON.stringify(checkpoints, null, 6);
-  html = html.replace(
-    /const CHECKPOINTS = \[[\s\S]*?\];/,
-    `const CHECKPOINTS = ${checkpointsJson};`
-  );
-
-  // Replace stat bar values. totalMiles gets a ~ prefix when the latest
-  // checkpoint's mileage is an auto-promoted estimate (cleared by manual
-  // --miles override).
-  const milesText = (current.estimatedMiles ? '~' : '') + current.miles;
-  html = html.replace(/id="currentDay">\d+/, `id="currentDay">${displayDay}`);
-  html = html.replace(/id="totalMiles">~?\d+/, `id="totalMiles">${milesText}`);
-  html = html.replace(/id="remaining">[\d,]+/, `id="remaining">${remaining.toLocaleString()}`);
-  // Steps (avg 2,200 per mile)
-  const totalSteps = current.miles * 2200;
-  const stepsText = totalSteps >= 1000000
-    ? (totalSteps / 1000000).toFixed(1) + 'M'
-    : Math.round(totalSteps / 1000) + 'K';
-  html = html.replace(/id="steps">[\d.]+[KM]/, `id="steps">${stepsText}`);
-  html = html.replace(/id="states">\d+\/10/, `id="states">${states}/10`);
-
-  return html;
-}
-
-// Save checkpoints, rebuild HTML, commit and push. After the consulting
-// repo is pushed, mirror checkpoints.json to the faithwalklive Next.js
-// repo and push there too so Vercel redeploys the public site. The
-// public sync is best-effort and never blocks the consulting commit.
+// Save checkpoints, commit + push, then mirror to faithwalklive.
+// The public site (Next.js on Vercel) reads checkpoints.json directly
+// and rebuilds itself — no local HTML render needed here.
 function rebuildAndPush(checkpoints, commitMessage) {
   saveCheckpoints(checkpoints);
   console.log('  Saved checkpoints.json');
-
-  const updatedHtml = buildTrackerHTML(checkpoints);
-  fs.writeFileSync(TRACKER_HTML_PATH, updatedHtml);
-  fs.writeFileSync(DOCS_HTML_PATH, updatedHtml);
-  console.log('  Rebuilt tracker HTML');
 
   const pushed = commitAndPush(commitMessage);
   syncToFaithWalkLive(commitMessage);
@@ -97,11 +46,8 @@ function rebuildAndPush(checkpoints, commitMessage) {
 module.exports = {
   loadCheckpoints,
   saveCheckpoints,
-  buildTrackerHTML,
   rebuildAndPush,
   formatDate,
   CHECKPOINTS_PATH,
-  TRACKER_HTML_PATH,
-  DOCS_HTML_PATH,
   TOTAL_MILES,
 };
