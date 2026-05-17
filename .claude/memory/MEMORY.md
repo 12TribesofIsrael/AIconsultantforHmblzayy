@@ -2,6 +2,7 @@
 - [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
 - [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
 - [Clip backfill mandatory](feedback_clip_backfill_mandatory.md) — Every tracker:from-title / tracker:update must end with a clip attached for the affected day; tracker:from-title doesn't auto-attach
+- [Tracker multi-day catchup](feedback_tracker_multiday_catchup.md) — When tracker is ≥2 days behind title, inline-script backfill of missing days (estimatedMiles + clips) first, then tracker:from-title for in-progress
 - [update-tracker date default](feedback_update_tracker_date_default.md) — `update-tracker.js --day N` writes `date: today` but Day N usually happened yesterday; verify against clip timestamp and edit JSON before push
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
