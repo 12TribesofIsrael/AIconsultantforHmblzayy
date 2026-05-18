@@ -37,6 +37,9 @@
 - [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
 - [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
+- [faithwalklive traffic baseline](reference_faithwalklive_traffic_baseline.md) — Real Vercel Analytics numbers (May 2026): 320 visitors/30d, Google #1 referrer at 29%. Anchor for "how is traffic" questions.
+- [Resend audience config](reference_resend_audience.md) — Faith Walk Live audience ID + Vercel env vars + sender (info@anointed.app). Set up May 17 with v2.19.0 email capture.
+- [Verify analytics surface](feedback_verify_analytics_surface.md) — Always name which dashboard a number came from. Don't conflate GH Pages GoatCounter (3-5/day) with faithwalklive Vercel (28/day) — they measure different URLs.
 - [Twitch chat forever post](reference_twitch_chat_forever_post.md) — Validated end-of-stream chat drop template (May 3, Day 39 resume); reverent register, self-routes Discord vs faithwalklive; full kit at docs/twitch-chat-forever-post.md
 - [Sensitive days stay clipless](feedback_sensitive_days_stay_clipless.md) — Paused/incident days get NO clip backfill on /clips; cards render as confirmed arrivals + create misleading framing. Day 34 strike-day backfill mistake of May 3 is the precedent.
 - [Post-pause day numbering](feedback_post_pause_day_numbering.md) — Walk resumes use calendar-cumulative day number (paused day + calendar days elapsed) + restOnly backfill for the gap, not next-sequential walking index. Honors Zay's stream-title convention.

@@ -1,6 +1,6 @@
 ---
-name: Remix funnel ROI check (Apr 25, re-checked Apr 27)
-description: 4-agent ROI check on IG Reels remix path — ran twice, both verdicts REFRAME, with Apr 27 escalating to a Remix-hijack frame that came back the same
+name: ROI checks on driving traffic to faithwalklive (Apr 25 → Apr 27 → May 17v1 → May 17v2)
+description: 4-agent ROI check on driving traffic to faithwalklive — ran 4 times across Apr 25, Apr 27, May 17v1 (on wrong 3.4/day baseline), May 17v2 (on corrected 28/day baseline with Google = 29% referrer). 16 total agent runs. First 3 unanimous REFRAME on "drive more traffic"; v2 pivoted the question to "what's next given Google is the unfair lever" and 3-of-4 agents said email capture is load-bearing.
 type: project
 originSessionId: 4aa3a849-bfc3-4e22-a92f-92fdd75963c3
 ---
@@ -39,3 +39,25 @@ Apr 25, 2026 — Ran the 4-agent ROI check (Reddit, YouTube, X, case-study blogs
 **Why:** all 4 reports converged on this; user (Thomas) was mid-edit on the wrong path (re-upload of Philly FAME clip with text overlay) and would have shipped a reach-penalized Reel pointing to a CTA that converts at <0.01%.
 
 **How to apply:** When Thomas asks about Reels distribution or remix tactics, default to Repost-first → Remix-fallback → Story-sticker-as-click-path. Don't recommend the re-upload-with-overlay path even if it looks "more polished" — it underperforms. Don't push ManyChat unless he asks (deferred Apr 25 due to overwhelm; can revisit when Reels cadence is steady).
+
+---
+
+**Re-check May 17, 2026 (v1)** — 4-agent ROI check on "how to drive traffic to faithwalklive" assuming 3.4 visits/day baseline (GoatCounter on GH Pages legacy URL). **Verdict: third unanimous REFRAME.** Same direction as Apr 25 + Apr 27. Stitched report at `docs/roi-traffic-drive-may17.md`. Convergent thesis: link-in-bio CTR 0.004%, Story sticker caps 0.5-2% of viewers requiring creator-owned account access, 76% misattributed direct (SparkToro), newsletter CTR 6-12x social. Reframe: convert what arrives via email capture + HARO + AI Bible Gospels owned-asset compound.
+
+---
+
+**Re-check May 17, 2026 (v2) — CORRECTED BASELINE** — Same day v1's premise was found wrong. Vercel Analytics showed faithwalklive was actually at **320 visitors/30d (~28/day), 848 PV, 2.6 PV/visitor, 52% bounce, Google = #1 referrer 93 visitors (29%)**, not the 3.4/day v1 used. The structured-data/JSON-LD/Speakable investment was already paying off in organic Google traffic. Ran the 4-agent check again on the corrected question: "given Google = 29%, what's highest-ROI NEXT move — A) AEO content velocity, B) email capture above-the-fold, C) HARO daily, or D) something else?" Verdict tally:
+- Reddit: B > C > D-Reddit > A (ship B as load-bearing prereq)
+- YouTube: B > A > C > D ("B unlocks A and C")
+- X: C > A > B > D ("28/day too small for B, ship C from existing playbook")
+- Blogs: A > B > C > D ("B first as 1-day prereq, then A schema-first")
+
+**3 of 4 say B is load-bearing 1-day prerequisite.** Sequence consensus: B → C → defer A. Hard corrections to prior math: 20% capture was 10x optimistic (Omnisend 2025 median is 2.1% across 1.24B popups; realistic ~250-300 emails in 12 months at this traffic, not 770). HARO degraded since Featured.com 2025 rebuild (0-3/mo not flood). AEO velocity has diminishing returns now that schema foundation in place. Reddit-native distribution surfaced as dark-horse D play (SISTRIX: Reddit = #2 Google SERP citizen behind Wikipedia).
+
+**Acted on v2:** v2.19.0 shipped email capture above-the-fold on faithwalklive (`EmailCapture.tsx` + `/api/subscribe` Resend backend, two CTAs on `/` per Unbounce CRO data, wired to live Resend Audience `00ffda58-4b96-4397-97f5-77f5dfef3106` — see [[reference_resend_audience]]). Full v2 report at `docs/roi-traffic-drive-may17-v2.md`.
+
+**Next per v2 sequence:** HARO operationalization (v2.15.0 playbook on disk) OR schema-first AEO sprint (one-shot vs daily routine tradeoff). Recommended schema-first at session end; Thomas didn't pick.
+
+**Standing rule for future re-asks:** 16 agent runs over 3 weeks (Apr 25 + Apr 27 + May 17v1 + May 17v2). The "how do we get faithwalklive more traffic / more engagement / more clicks" question is THREE-TIMES SETTLED + CORRECTED-DATA CONFIRMED. Don't reflexively spin up a 5th ROI check unless a new variable appears: Zay's team starts promoting, news event reopens search demand, traffic 5x's or 0.5x's, or Thomas pivots his goal frame. Point at this memory + the two docs first.
+
+**Why the v1→v2 mistake matters:** I conflated GoatCounter (GH Pages legacy URL, 3-5/day) with Vercel Analytics (faithwalklive, 28/day). That's an 8x error that almost shaped a strategy decision. Codified the rule at [[feedback_verify_analytics_surface]] — name the dashboard before drawing conclusions.
