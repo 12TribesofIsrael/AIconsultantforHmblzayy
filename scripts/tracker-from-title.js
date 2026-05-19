@@ -342,8 +342,20 @@ async function main() {
     console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
 
     // Re-target latest to the freshly promoted checkpoint and annotate
-    // it with the current title's in-progress state.
+    // it with the current title's state — rest day or in-progress walk.
     latest = promoted;
+
+    if (isRestUpdate) {
+      applyRestDay(latest, parsed);
+      rebuildAndPush(
+        checkpoints,
+        `Faith Walk: promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est), Day ${parsed.day} — rest day`
+      );
+      console.log(`\n✓ Rollover applied + Day ${parsed.day} rest day annotated.`);
+      console.log(`  Live at: https://faithwalklive.com/`);
+      return;
+    }
+
     await annotateInProgress(latest, parsed);
 
     rebuildAndPush(
