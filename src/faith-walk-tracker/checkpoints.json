@@ -494,10 +494,9 @@
     "miles": 1015,
     "date": "May 17, 2026",
     "estimatedMiles": true,
-    "destinationLat": 9.014304,
-    "destinationLng": 38.7255313,
     "inProgressDay": 54,
-    "estimatedSegmentMiles": 10048,
-    "inProgressStartedAt": "2026-05-19T10:34:20.634Z"
+    "inProgressStartedAt": "2026-05-19T10:34:20.634Z",
+    "restDay": true,
+    "restDayDate": "May 19, 2026"
   }
 ]
