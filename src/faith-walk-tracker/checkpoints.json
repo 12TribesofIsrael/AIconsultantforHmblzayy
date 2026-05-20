@@ -494,10 +494,22 @@
     "miles": 1015,
     "date": "May 17, 2026",
     "estimatedMiles": true,
-    "inProgressDay": 54,
+    "inProgressDay": 55,
     "inProgressStartedAt": "2026-05-19T10:34:20.634Z",
-    "restDay": true,
-    "restDayDate": "May 19, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/BrainyGleamingSwallowTF2John-c9qUvIrxNSo7h48Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/BrainyGleamingSwallowTF2John-c9qUvIrxNSo7h48Z",
+    "destinationLat": 40.0481033,
+    "destinationLng": -90.1551189,
+    "destination": "CHANDLERVILLE, IL",
+    "milesRemaining": 16,
+    "estimatedSegmentMiles": 18
+  },
+  {
+    "restOnly": true,
+    "date": "May 19, 2026",
+    "location": "TALLULA, IL",
+    "lat": 39.9444932,
+    "lng": -89.9373336,
+    "miles": 1015,
+    "day": 54
   }
 ]
