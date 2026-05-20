@@ -2,7 +2,6 @@
 - [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
 - [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
 - [Clip backfill mandatory](feedback_clip_backfill_mandatory.md) — Every tracker:from-title / tracker:update must end with a clip attached for the affected day; tracker:from-title doesn't auto-attach
-- [Tracker multi-day catchup](feedback_tracker_multiday_catchup.md) — When tracker is ≥2 days behind title, inline-script backfill of missing days (estimatedMiles + clips) first, then tracker:from-title for in-progress
 - [update-tracker date default](feedback_update_tracker_date_default.md) — `update-tracker.js --day N` writes `date: today` but Day N usually happened yesterday; verify against clip timestamp and edit JSON before push
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
@@ -37,9 +36,6 @@
 - [Live schema verification](feedback_live_schema_verification.md) — WebFetch strips script tags; use curl --ssl-no-revoke + grep to verify JSON-LD / Speakable schema on live sites
 - [AI Bible Gospels LinkedIn](reference_aibiblegospels_linkedin.md) — Canonical LinkedIn URL (personal /in/ profile, not /company/)
 - [faithwalklive analytics](reference_faithwalklive_analytics.md) — Vercel Analytics is wired (no GA/PostHog); which dashboard to point Thomas at for clicks vs. reach vs. conversion questions
-- [faithwalklive traffic baseline](reference_faithwalklive_traffic_baseline.md) — Real Vercel Analytics numbers (May 2026): 320 visitors/30d, Google #1 referrer at 29%. Anchor for "how is traffic" questions.
-- [Resend audience config](reference_resend_audience.md) — Faith Walk Live audience ID + Vercel env vars + sender (info@anointed.app). Set up May 17 with v2.19.0 email capture.
-- [Verify analytics surface](feedback_verify_analytics_surface.md) — Always name which dashboard a number came from. Don't conflate GH Pages GoatCounter (3-5/day) with faithwalklive Vercel (28/day) — they measure different URLs.
 - [Twitch chat forever post](reference_twitch_chat_forever_post.md) — Validated end-of-stream chat drop template (May 3, Day 39 resume); reverent register, self-routes Discord vs faithwalklive; full kit at docs/twitch-chat-forever-post.md
 - [Sensitive days stay clipless](feedback_sensitive_days_stay_clipless.md) — Paused/incident days get NO clip backfill on /clips; cards render as confirmed arrivals + create misleading framing. Day 34 strike-day backfill mistake of May 3 is the precedent.
 - [Post-pause day numbering](feedback_post_pause_day_numbering.md) — Walk resumes use calendar-cumulative day number (paused day + calendar days elapsed) + restOnly backfill for the gap, not next-sequential walking index. Honors Zay's stream-title convention.
@@ -49,3 +45,4 @@
 - [Title parser CALI prefix bug](feedback_title_parser_cali_prefix.md) — Resolved v2.17.1: matchAll loop skips CALI hits + bare DAY N|CITY,ST fallback. Bare format still leaves milesFromNext null (manual in-progress needed).
 - [Persistent-profile login over .env creds](feedback_persistent_profile_login.md) — For browser-skill login walls (IG/FB/Twitch/etc.), recommend one-time interactive login persisting in `~/.meta-playwright-profile/`, NOT scripted creds
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
+- [Node TLS workaround](reference_node_tls_workaround.md) — Desktop machine needs `$env:NODE_OPTIONS='--use-system-ca'` in PowerShell before tracker scripts; bundled Node CA store rejects Twitch GQL + Nominatim certs
