@@ -494,14 +494,7 @@
     "miles": 1015,
     "date": "May 17, 2026",
     "estimatedMiles": true,
-    "inProgressDay": 55,
-    "inProgressStartedAt": "2026-05-19T10:34:20.634Z",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/BrainyGleamingSwallowTF2John-c9qUvIrxNSo7h48Z",
-    "destinationLat": 40.0481033,
-    "destinationLng": -90.1551189,
-    "destination": "CHANDLERVILLE, IL",
-    "milesRemaining": 16,
-    "estimatedSegmentMiles": 18
+    "clip": "https://www.twitch.tv/hmblzayy/clip/BrainyGleamingSwallowTF2John-c9qUvIrxNSo7h48Z"
   },
   {
     "restOnly": true,
@@ -512,5 +505,21 @@
     "miles": 1015,
     "day": 54,
     "clip": "https://www.twitch.tv/hmblzayy/clip/HandsomeTiredBananaMVGame-xxsJu_8yZwRT3h-D"
+  },
+  {
+    "day": 55,
+    "location": "CHANDLERVILLE, IL",
+    "lat": 40.0481033,
+    "lng": -90.1551189,
+    "miles": 1033,
+    "date": "May 19, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 40.0167925,
+    "destinationLng": -90.4345418,
+    "destination": "BEARDSTOWN, IL",
+    "inProgressDay": 56,
+    "milesRemaining": 23,
+    "estimatedSegmentMiles": 19,
+    "inProgressStartedAt": "2026-05-21T14:07:25.194Z"
   }
 ]
