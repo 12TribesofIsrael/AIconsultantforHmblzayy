@@ -498,7 +498,7 @@
   },
   {
     "restOnly": true,
-    "date": "May 19, 2026",
+    "date": "May 18, 2026",
     "location": "TALLULA, IL",
     "lat": 39.9444932,
     "lng": -89.9373336,
@@ -514,12 +514,16 @@
     "miles": 1033,
     "date": "May 19, 2026",
     "estimatedMiles": true,
-    "destinationLat": 40.0167925,
-    "destinationLng": -90.4345418,
-    "destination": "BEARDSTOWN, IL",
-    "inProgressDay": 56,
-    "milesRemaining": 23,
-    "estimatedSegmentMiles": 19,
-    "inProgressStartedAt": "2026-05-21T14:07:25.194Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/GlutenFreeSpoopyArmadilloFrankerZ-YKSJCFLpyj1ZIHbn"
+  },
+  {
+    "day": 56,
+    "location": "BEARDSTOWN, IL",
+    "lat": 40.0167925,
+    "lng": -90.4345418,
+    "miles": 1052,
+    "date": "May 20, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SpinelessMildMochaKappa-lR_RYy_-UnCAomEs"
   }
 ]
