@@ -524,6 +524,13 @@
     "miles": 1052,
     "date": "May 20, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/SpinelessMildMochaKappa-lR_RYy_-UnCAomEs"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SpinelessMildMochaKappa-lR_RYy_-UnCAomEs",
+    "destinationLat": 41.788253,
+    "destinationLng": -89.6953656,
+    "destination": "STERLING, IL",
+    "inProgressDay": 57,
+    "milesRemaining": 23,
+    "estimatedSegmentMiles": 167,
+    "inProgressStartedAt": "2026-05-22T02:06:01.534Z"
   }
 ]
