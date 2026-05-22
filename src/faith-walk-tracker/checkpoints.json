@@ -524,13 +524,22 @@
     "miles": 1052,
     "date": "May 20, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/SpinelessMildMochaKappa-lR_RYy_-UnCAomEs",
-    "destinationLat": 41.788253,
-    "destinationLng": -89.6953656,
-    "destination": "STERLING, IL",
-    "inProgressDay": 57,
-    "milesRemaining": 23,
-    "estimatedSegmentMiles": 167,
-    "inProgressStartedAt": "2026-05-22T02:06:01.534Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SpinelessMildMochaKappa-lR_RYy_-UnCAomEs"
+  },
+  {
+    "day": 57,
+    "location": "STERLING, IL",
+    "lat": 41.788253,
+    "lng": -89.6953656,
+    "miles": 1219,
+    "date": "May 21, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.9356016,
+    "destinationLng": -91.4098727,
+    "destination": "QUINCY, IL",
+    "inProgressDay": 58,
+    "milesRemaining": 40,
+    "estimatedSegmentMiles": 203,
+    "inProgressStartedAt": "2026-05-22T18:17:11.094Z"
   }
 ]
