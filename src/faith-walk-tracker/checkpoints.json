@@ -534,13 +534,22 @@
     "miles": 1219,
     "date": "May 21, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.9356016,
-    "destinationLng": -91.4098727,
-    "destination": "QUINCY, IL",
-    "inProgressDay": 58,
-    "milesRemaining": 40,
-    "estimatedSegmentMiles": 203,
-    "inProgressStartedAt": "2026-05-22T18:17:11.094Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/AffluentFastStrawberryGivePLZ-JBKNqtcCfiEz6cXW"
+  },
+  {
+    "day": 58,
+    "location": "QUINCY, IL",
+    "lat": 39.9356016,
+    "lng": -91.4098727,
+    "miles": 1422,
+    "date": "May 22, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 38.7604815,
+    "destinationLng": -92.5617875,
+    "destination": "MISSOURI",
+    "inProgressDay": 59,
+    "milesRemaining": 11,
+    "estimatedSegmentMiles": 132,
+    "inProgressStartedAt": "2026-05-24T01:52:17.564Z"
   }
 ]
