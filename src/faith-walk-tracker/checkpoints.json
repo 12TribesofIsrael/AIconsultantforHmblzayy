@@ -528,10 +528,10 @@
   },
   {
     "day": 57,
-    "location": "STERLING, IL",
-    "lat": 41.788253,
-    "lng": -89.6953656,
-    "miles": 1219,
+    "location": "MT. STERLING, IL",
+    "lat": 39.9872707,
+    "lng": -90.763463,
+    "miles": 1082,
     "date": "May 21, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AffluentFastStrawberryGivePLZ-JBKNqtcCfiEz6cXW"
@@ -541,15 +541,16 @@
     "location": "QUINCY, IL",
     "lat": 39.9356016,
     "lng": -91.4098727,
-    "miles": 1422,
+    "miles": 1132,
     "date": "May 22, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.7604815,
-    "destinationLng": -92.5617875,
-    "destination": "MISSOURI",
+    "destinationLat": 39.7082498,
+    "destinationLng": -91.3587413,
+    "destination": "HANNIBAL, MO",
     "inProgressDay": 59,
     "milesRemaining": 11,
-    "estimatedSegmentMiles": 132,
-    "inProgressStartedAt": "2026-05-24T01:52:17.564Z"
+    "estimatedSegmentMiles": 20,
+    "inProgressStartedAt": "2026-05-24T01:52:17.564Z",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/FaithfulPopularTapirCclamChamp-3GArRNKwobNtkQ6_"
   }
 ]
