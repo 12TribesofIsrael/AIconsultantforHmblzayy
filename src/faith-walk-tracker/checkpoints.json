@@ -544,12 +544,12 @@
     "miles": 1122,
     "date": "May 22, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.7082498,
-    "destinationLng": -91.3587413,
-    "destination": "HANNIBAL, MO",
+    "destinationLat": 38.7604815,
+    "destinationLng": -92.5617875,
+    "destination": "MISSOURI",
     "inProgressDay": 59,
     "milesRemaining": 11,
-    "estimatedSegmentMiles": 20,
+    "estimatedSegmentMiles": 132,
     "inProgressStartedAt": "2026-05-24T01:52:17.564Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/FaithfulPopularTapirCclamChamp-3GArRNKwobNtkQ6_"
   }
