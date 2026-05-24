@@ -46,4 +46,3 @@
 - [Persistent-profile login over .env creds](feedback_persistent_profile_login.md) — For browser-skill login walls (IG/FB/Twitch/etc.), recommend one-time interactive login persisting in `~/.meta-playwright-profile/`, NOT scripted creds
 - [Prayer wall passed](project_prayer_wall_passed.md) — Apr 25 ROI check returned unanimous REFRAME; Thomas passed on both wall and reframe stack. Don't re-pitch.
 - [Node TLS workaround](reference_node_tls_workaround.md) — Desktop machine needs `$env:NODE_OPTIONS='--use-system-ca'` in PowerShell before tracker scripts; bundled Node CA store rejects Twitch GQL + Nominatim certs
-- [Tracker geocode plausibility](feedback_tracker_geocode_plausibility.md) — `tracker:from-title` silently pushes bad coords when titles have ambiguous city names (STERLING vs MT. STERLING) or state-only destinations (MISSOURI → state center); cross-reference clips + geographic distance before trusting the auto-push
