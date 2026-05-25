@@ -544,13 +544,22 @@
     "miles": 1122,
     "date": "May 22, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.7604815,
-    "destinationLng": -92.5617875,
-    "destination": "MISSOURI",
-    "inProgressDay": 59,
-    "milesRemaining": 11,
-    "estimatedSegmentMiles": 132,
-    "inProgressStartedAt": "2026-05-24T01:52:17.564Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/FaithfulPopularTapirCclamChamp-3GArRNKwobNtkQ6_"
+  },
+  {
+    "day": 59,
+    "location": "MISSOURI",
+    "lat": 38.7604815,
+    "lng": -92.5617875,
+    "miles": 1254,
+    "date": "May 23, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.6534911,
+    "destinationLng": -91.7345519,
+    "destination": "MONROE CITY,MO",
+    "inProgressDay": 61,
+    "milesRemaining": 43,
+    "estimatedSegmentMiles": 99,
+    "inProgressStartedAt": "2026-05-25T14:45:37.249Z"
   }
 ]
