@@ -548,10 +548,10 @@
   },
   {
     "day": 59,
-    "location": "MISSOURI",
-    "lat": 38.7604815,
-    "lng": -92.5617875,
-    "miles": 1254,
+    "location": "WEST QUINCY, MO",
+    "lat": 39.926157,
+    "lng": -91.4407074,
+    "miles": 1133,
     "date": "May 23, 2026",
     "estimatedMiles": true,
     "destinationLat": 39.6534911,
@@ -559,7 +559,17 @@
     "destination": "MONROE CITY,MO",
     "inProgressDay": 61,
     "milesRemaining": 43,
-    "estimatedSegmentMiles": 99,
-    "inProgressStartedAt": "2026-05-25T14:45:37.249Z"
+    "estimatedSegmentMiles": 32,
+    "inProgressStartedAt": "2026-05-25T14:45:37.249Z",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/RamshackleAbstruseOryxBibleThump-usvR98SKWCu57q6i"
+  },
+  {
+    "restOnly": true,
+    "date": "May 24, 2026",
+    "location": "WEST QUINCY, MO",
+    "lat": 39.926157,
+    "lng": -91.4407074,
+    "miles": 1133,
+    "day": 60
   }
 ]
