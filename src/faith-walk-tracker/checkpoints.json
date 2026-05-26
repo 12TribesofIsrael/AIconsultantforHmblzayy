@@ -564,13 +564,22 @@
     "lng": -91.4407074,
     "miles": 1133,
     "day": 60,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CoweringTolerantRabbitNinjaGrumpy-CK-nKDDQgiBZn-Y0",
-    "destinationLat": 39.5516467,
-    "destinationLng": -91.8577902,
-    "destination": "STOUTSVILLE,MO",
-    "inProgressDay": 61,
-    "milesRemaining": 43,
-    "estimatedSegmentMiles": 44,
-    "inProgressStartedAt": "2026-05-26T03:22:40.281Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CoweringTolerantRabbitNinjaGrumpy-CK-nKDDQgiBZn-Y0"
+  },
+  {
+    "day": 61,
+    "location": "STOUTSVILLE,MO",
+    "lat": 39.5516467,
+    "lng": -91.8577902,
+    "miles": 1177,
+    "date": "May 25, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.4808721,
+    "destinationLng": -92.0012811,
+    "destination": "PARIS,MO",
+    "inProgressDay": 62,
+    "milesRemaining": 24,
+    "estimatedSegmentMiles": 12,
+    "inProgressStartedAt": "2026-05-26T23:17:12.062Z"
   }
 ]
