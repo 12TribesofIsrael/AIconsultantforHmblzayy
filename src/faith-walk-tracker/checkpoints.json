@@ -554,13 +554,6 @@
     "miles": 1133,
     "date": "May 23, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.6534911,
-    "destinationLng": -91.7345519,
-    "destination": "MONROE CITY,MO",
-    "inProgressDay": 61,
-    "milesRemaining": 43,
-    "estimatedSegmentMiles": 32,
-    "inProgressStartedAt": "2026-05-25T14:45:37.249Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/RamshackleAbstruseOryxBibleThump-usvR98SKWCu57q6i"
   },
   {
