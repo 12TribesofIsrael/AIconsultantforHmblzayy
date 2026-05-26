@@ -571,6 +571,13 @@
     "lng": -91.4407074,
     "miles": 1133,
     "day": 60,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CoweringTolerantRabbitNinjaGrumpy-CK-nKDDQgiBZn-Y0"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CoweringTolerantRabbitNinjaGrumpy-CK-nKDDQgiBZn-Y0",
+    "destinationLat": 39.5516467,
+    "destinationLng": -91.8577902,
+    "destination": "STOUTSVILLE,MO",
+    "inProgressDay": 61,
+    "milesRemaining": 43,
+    "estimatedSegmentMiles": 44,
+    "inProgressStartedAt": "2026-05-26T03:22:40.281Z"
   }
 ]
