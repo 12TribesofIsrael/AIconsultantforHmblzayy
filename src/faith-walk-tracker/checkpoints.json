@@ -584,13 +584,22 @@
     "miles": 1189,
     "date": "May 26, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.4201137,
-    "destinationLng": -92.4364298,
-    "destination": "MOBERLY,MO",
-    "inProgressDay": 63,
-    "milesRemaining": 23,
-    "estimatedSegmentMiles": 31,
-    "inProgressStartedAt": "2026-05-28T00:59:56.519Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/SmoggyInventiveGuanacoPunchTrees-zfW9O73nazuIGGtJ"
+  },
+  {
+    "day": 63,
+    "location": "MOBERLY,MO",
+    "lat": 39.4201137,
+    "lng": -92.4364298,
+    "miles": 1220,
+    "date": "May 27, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.4239175,
+    "destinationLng": -92.8015773,
+    "destination": "SALISBURY,MO",
+    "inProgressDay": 64,
+    "milesRemaining": 23,
+    "estimatedSegmentMiles": 25,
+    "inProgressStartedAt": "2026-05-28T23:55:23.053Z"
   }
 ]
