@@ -574,13 +574,22 @@
     "miles": 1177,
     "date": "May 25, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.4808721,
-    "destinationLng": -92.0012811,
-    "destination": "PARIS,MO",
-    "inProgressDay": 62,
-    "milesRemaining": 24,
-    "estimatedSegmentMiles": 12,
-    "inProgressStartedAt": "2026-05-26T23:17:12.062Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/StormyGiftedMosquito4Head-TYvQBEJYnjqDIiQi"
+  },
+  {
+    "day": 62,
+    "location": "PARIS,MO",
+    "lat": 39.4808721,
+    "lng": -92.0012811,
+    "miles": 1189,
+    "date": "May 26, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.4201137,
+    "destinationLng": -92.4364298,
+    "destination": "MOBERLY,MO",
+    "inProgressDay": 63,
+    "milesRemaining": 23,
+    "estimatedSegmentMiles": 31,
+    "inProgressStartedAt": "2026-05-28T00:59:56.519Z"
   }
 ]
