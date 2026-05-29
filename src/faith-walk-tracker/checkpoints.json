@@ -594,13 +594,22 @@
     "miles": 1220,
     "date": "May 27, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.4239175,
-    "destinationLng": -92.8015773,
-    "destination": "SALISBURY,MO",
-    "inProgressDay": 64,
-    "milesRemaining": 23,
-    "estimatedSegmentMiles": 25,
-    "inProgressStartedAt": "2026-05-28T23:55:23.053Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/SwissNaivePeachCopyThis-seEe3HgpTvHQYG04"
+  },
+  {
+    "day": 64,
+    "location": "SALISBURY,MO",
+    "lat": 39.4239175,
+    "lng": -92.8015773,
+    "miles": 1245,
+    "date": "May 28, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.3657087,
+    "destinationLng": -93.4877553,
+    "destination": "CAROLLTON,MO",
+    "inProgressDay": 65,
+    "milesRemaining": 43,
+    "estimatedSegmentMiles": 48,
+    "inProgressStartedAt": "2026-05-29T22:17:56.666Z"
   }
 ]
