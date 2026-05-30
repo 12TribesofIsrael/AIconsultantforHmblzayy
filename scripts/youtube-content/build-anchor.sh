@@ -45,8 +45,9 @@ make_card() {
   [[ -n "$line2" ]] && vf+=",drawtext=fontfile='$FONT_REG':text='${line2}':fontcolor=${GOLD}:fontsize=${FONT_MED}:x=(w-text_w)/2:y=(h-text_h)/2+40"
   [[ -n "$line3" ]] && vf+=",drawtext=fontfile='$FONT_REG':text='${line3}':fontcolor=white:fontsize=${FONT_SM}:x=(w-text_w)/2:y=(h-text_h)/2+120"
 
-  ffmpeg -y -f lavfi -i "$vf" -t "$duration" \
+  ffmpeg -y -f lavfi -i "$vf" -f lavfi -i "aevalsrc=0:c=stereo:s=44100" -t "$duration" \
     -c:v libx264 -preset fast -crf 20 -pix_fmt yuv420p \
+    -c:a aac -b:a 128k -shortest \
     "$out" 2>/dev/null
   echo "  ✓ $out"
 }
