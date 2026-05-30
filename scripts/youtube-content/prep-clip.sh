@@ -19,7 +19,7 @@ DAY=""
 CITY=""
 MILES=""
 CLIP_URL=""
-FONT_DIR="C:/Windows/Fonts"
+FONT_DIR="C\\:/Windows/Fonts"
 OUT_DIR="assets/youtube"
 
 # Parse args
@@ -50,7 +50,7 @@ FONT_REG="$FONT_DIR/arial.ttf"
 mkdir -p "$OUT_DIR"
 
 echo "▶ Downloading clip..."
-yt-dlp --quiet -o "$TMP_RAW" "$CLIP_URL"
+python -m yt_dlp --quiet -o "$TMP_RAW" "$CLIP_URL"
 
 echo "▶ Rendering Short (1080×1920)..."
 ffmpeg -y -i "$TMP_RAW" \

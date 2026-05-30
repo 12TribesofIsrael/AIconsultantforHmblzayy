@@ -22,6 +22,10 @@ assets/*.mp4
 assets/*.mov
 assets/*.avi
 assets/footage/
+assets/youtube/raw/
+assets/youtube/shorts/
+assets/youtube/anchor/
+assets/youtube/*.mp4
 
 # Remotion public (copied media)
 src/intro-video/public/*.png
