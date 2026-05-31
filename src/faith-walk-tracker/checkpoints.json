@@ -604,13 +604,22 @@
     "miles": 1245,
     "date": "May 28, 2026",
     "estimatedMiles": true,
-    "destinationLat": 39.3657087,
-    "destinationLng": -93.4877553,
-    "destination": "CAROLLTON,MO",
-    "inProgressDay": 65,
-    "milesRemaining": 43,
-    "estimatedSegmentMiles": 48,
-    "inProgressStartedAt": "2026-05-29T22:17:56.666Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/FastExuberantBaconDogFace-v40O7pL-CfLvyz17"
+  },
+  {
+    "day": 65,
+    "location": "CAROLLTON,MO",
+    "lat": 39.3657087,
+    "lng": -93.4877553,
+    "miles": 1293,
+    "date": "May 29, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 39.278622,
+    "destinationLng": -93.9768876,
+    "destination": "RICHMOND,MO",
+    "inProgressDay": 67,
+    "milesRemaining": 32,
+    "estimatedSegmentMiles": 35,
+    "inProgressStartedAt": "2026-05-31T20:19:25.571Z"
   }
 ]
