@@ -614,13 +614,23 @@
     "miles": 1293,
     "date": "May 29, 2026",
     "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/HeadstrongSquareLardNinjaGrumpy-6yuZf2wIGlfRO-_P"
+  },
+  {
+    "restOnly": true,
+    "day": 66,
+    "date": "May 30, 2026",
+    "location": "CAROLLTON,MO",
+    "lat": 39.3657087,
+    "lng": -93.4877553,
+    "miles": 1293,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/AffluentAmazonianEndiveGrammarKing-_IKX1FI9xtdIYPzs",
     "destinationLat": 39.278622,
     "destinationLng": -93.9768876,
     "destination": "RICHMOND,MO",
     "inProgressDay": 67,
     "milesRemaining": 32,
     "estimatedSegmentMiles": 35,
-    "inProgressStartedAt": "2026-05-31T20:19:25.571Z",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/HeadstrongSquareLardNinjaGrumpy-6yuZf2wIGlfRO-_P"
+    "inProgressStartedAt": "2026-05-31T20:19:25.571Z"
   }
 ]
