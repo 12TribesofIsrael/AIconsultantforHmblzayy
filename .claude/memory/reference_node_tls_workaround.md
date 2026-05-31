@@ -1,26 +1,23 @@
 ---
 name: node-tls-workaround
-description: "On this Windows machine (desktop, user Claude/Deskt), Node's bundled CA store rejects Twitch GQL + Nominatim certs — use $env:NODE_OPTIONS='--use-system-ca' before any tracker script"
+description: "Running tracker scripts on Windows: CA trust + npm-wrapper quirks differ PER MACHINE. Deskt(Node22+) needs --use-system-ca; Owner(Node20) must run `node scripts/...` directly with NODE_EXTRA_CA_CERTS already set."
 metadata: 
   node_type: memory
   type: reference
   originSessionId: 2ed48b5a-9e3b-48e2-a9b5-2ab6eabd9462
 ---
 
-Node 18+ on Windows ships with its own CA store that doesn't trust some intermediate certs the Twitch GQL endpoint (`gql.twitch.tv`) and Nominatim geocoder use. Plain `npm run tracker:from-title` fails with:
+Tracker scripts hit external HTTPS (Twitch GQL `gql.twitch.tv`, Nominatim geocoder, faithwalklive push). Node's bundled CA store / Norton MITM interact differently on each of Thomas's machines — **the right invocation is machine-specific**:
 
-```
-Error: unable to verify the first certificate; if the root CA is installed locally, try running Node.js with --use-system-ca
-```
+**Deskt machine (user Claude/Deskt, Node 22+):**
+- Plain `npm run tracker:from-title` fails with `unable to verify the first certificate; ... try running Node.js with --use-system-ca`.
+- Fix (PowerShell): `$env:NODE_OPTIONS='--use-system-ca'; npm run tracker:from-title`
+- `--use-system-ca` points Node at the Windows trust store. Bash `NODE_OPTIONS=... npm run` form doesn't take; use PowerShell.
 
-**Fix — run in PowerShell, not bash:**
+**Owner machine (user Owner, Node v20.17.0) — confirmed 2026-05-31:**
+- `--use-system-ca` is **NOT supported** on Node 20 — both `$env:NODE_OPTIONS='--use-system-ca'` ("not allowed in NODE_OPTIONS") and `node --use-system-ca` ("bad option") error out. Do NOT use it here.
+- CA trust is already handled: USER env var `NODE_EXTRA_CA_CERTS=C:\Users\Owner\.claude\norton-root.pem` is set permanently (per global CLAUDE.md), so **plain `node scripts/<x>.js` just works** for the Twitch/Nominatim/sync calls.
+- `npm run tracker:from-title` (and other npm-script wrappers) fail here with `Could not determine Node.js install directory` — an npm-on-Windows wrapper issue, not a cert issue. **Run the script directly instead:** `node scripts/tracker-from-title.js`, `node scripts/update-tracker.js --day N --clip "..."`, etc.
+- Twitch GQL note: `sort:CREATED_AT_DESC` intermittently returns `server error` — use `sort:VIEWS_DESC` (also per CLAUDE.md). PowerShell mangles inline `node -e "...JSON with quotes..."`; write a tiny temp .js file instead (and delete it before running tracker scripts — the git-sync step aborts on untracked files).
 
-```powershell
-$env:NODE_OPTIONS='--use-system-ca'; npm run tracker:from-title
-```
-
-The env var tells Node to use the Windows system trust store instead of its bundled bundle. Works for every script that hits external HTTPS (tracker:from-title, tracker:update with geocoding, the GQL clip-query one-liner, faithwalk:sync, etc.).
-
-Bash form `NODE_OPTIONS=... npm run ...` does NOT work — it's a PowerShell env-var syntax issue, not a bash issue, but the npm script ultimately needs the env var set when Node spawns. Use PowerShell.
-
-**Permanent fix candidate (not yet wired):** add a `cross-env NODE_OPTIONS=--use-system-ca` prefix to the relevant npm scripts in `package.json` so it's not a per-command thing. Deferred — the workaround works fine session-by-session.
+**Permanent fix candidate (not wired):** add `cross-env NODE_OPTIONS=--use-system-ca` to npm scripts for Deskt, but that would break Owner (Node 20 rejects the flag). A machine-detecting prefix or a Node upgrade on Owner would be the real fix. Deferred. See [[memory-index-crossmachine-drift]].
