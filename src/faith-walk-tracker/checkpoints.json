@@ -614,22 +614,13 @@
     "miles": 1293,
     "date": "May 29, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/HeadstrongSquareLardNinjaGrumpy-6yuZf2wIGlfRO-_P"
-  },
-  {
-    "day": 67,
-    "location": "RICHMOND,MO",
-    "lat": 39.278622,
-    "lng": -93.9768876,
-    "miles": 1328,
-    "date": "May 31, 2026",
-    "estimatedMiles": true,
     "destinationLat": 39.278622,
     "destinationLng": -93.9768876,
     "destination": "RICHMOND,MO",
     "inProgressDay": 67,
     "milesRemaining": 32,
-    "estimatedSegmentMiles": 0,
-    "inProgressStartedAt": "2026-05-31T21:01:35.154Z"
+    "estimatedSegmentMiles": 35,
+    "inProgressStartedAt": "2026-05-31T20:19:25.571Z",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/HeadstrongSquareLardNinjaGrumpy-6yuZf2wIGlfRO-_P"
   }
 ]
