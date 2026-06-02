@@ -2,48 +2,54 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-06-02T00:00:00Z
-  project: ZayAutomations (AIconsultantforHmblzayy)
+  ended: 2026-05-29T00:00:00Z
+  project: ZayAutomations / faithwalkbook
   branch: main
   version: v2.20.0
-  originSessionId: 80a7ef83-8594-4e0d-b292-82c168ed87d9
+  originSessionId: e67e9080-2750-484a-89a1-22ece1fef051
 ---
 
-# Last Session — Jun 2, 2026
+# Last Session — May 29, 2026
 
 ## What the user wanted
-Build a full YouTube content strategy for the AI Bible Gospels channel to drive walk awareness, faithwalklive.com traffic, and GoFundMe donations — using Zay's Twitch clips as source material. Also keep the daily tracker current.
+Daily tracker updates for the Faith Walk (Days 62-64 live on Twitch), then a full session building out Thomas's personal weight-loss progress tracking system for the book — photos, weight chart, and master comparison grid.
 
 ## What we did
-- Ran 4-agent ROI check on "upload 73 Twitch VODs" → unanimous REFRAME: no raw VODs; do milestone episodes + anchor video + Shorts pipeline instead
-- Built full YouTube pipeline in `scripts/youtube-content/`: `prep-clip.sh`, `batch-shorts.sh`, `build-anchor.sh`, `gen-all-descriptions.sh`, `upload-faithwalk.py`
-- Downloaded Day 1 Instagram clip from `https://www.instagram.com/p/DWWOqvEknW8/` → `assets/footage/day01-philly-start.mp4`
-- Rendered 7 branded 1080×1920 YouTube Shorts (Days 17/30/39/40/52/59/64) → `assets/youtube/shorts/`
-- Built + rendered Day-34 anchor video (10 segments: 7 title cards + 3 Twitch clips) → `assets/youtube/day-34-anchor.mp4` (86 MB)
-- Fixed audio bug: title card segments had no audio stream (lavfi color source needs `aevalsrc=0:c=stereo:s=44100`); re-rendered and re-uploaded anchor
-- Generated all 16 YouTube descriptions → `assets/youtube/descriptions/` (anchor + 8 milestone + 7 short types)
-- Created YouTube playlist "Faith Walk Live — The 3,000-Mile Walk" (`PLFyw-nH_HYItWCe_QXt9SvaEHWx4i25_n`)
-- Uploaded anchor video (public now): https://youtu.be/nTYbT74qDJo
-- Uploaded 7 Shorts as Private+publishAt, scheduled weekly Jun 6 → Jul 18: f4fg-54U5SU / 9DGlOw9ycto / 17sKet2AVU8 / m5XzXKDo5uc / -Lcjba8juXE / 79K6HmZ61Cg / CY8odys9OXs
-- Saved GoFundMe URL to .env + memory: `https://www.gofundme.com/f/help-launch-hmbl-summer-camp-for-teens`
-- YouTube Channel ID confirmed: `UCq6hz1xEEd9kL95Kcuof2wQ` (from youtubeoptermizer)
-- Tracker backfilled Days 67–69: Day 67 Richmond MO clip, Day 68 Lexington MO (new checkpoint, Jun 1), Day 69 restOnly Kansas City MO (Jun 2)
-- Upload log at `assets/youtube/upload-log.json`; episode plan at `docs/youtube-content-plan.md`
+
+### Faith Walk tracker
+- Ran `tracker:from-title` twice: promoted Day 62 → PARIS,MO (~1189 mi) and Day 63 → MOBERLY,MO (~1220 mi); Day 64 in-progress to SALISBURY,MO (23 mi)
+- Attached clips: Day 62 = "DAY 61, 44 MILES WALKED AND CONQUERED" (93v, May 26); Day 63 = "GOD DID DEEJAY!!!!!!!" (95v, May 27)
+- Both repos pushed; Vercel rebuilt faithwalklive.com
+
+### Book — progress photo system (faithwalkbook repo)
+- Thomas added `personal/photos/5292026/` (May 29 session, 197.4 lbs) and `personal/photos/others/` (historical archive Nov 2022–Mar 2024)
+- Converted all HEIC files to JPG via ffmpeg (19 HEICs converted)
+- Built portrait rotator: `scripts/rotate_and_compare.py` — EXIF-safe, saves corrected portraits to `5292026/rotated/`
+- Built weight chart generator: `scripts/weight_chart.py` — PIL line chart, 11 confirmed sessions Nov 2022→May 2026, -23.6 lbs total; `personal/photos/weight_tracker.jpg`
+- Built session comparison grid: `scripts/progress_compare.py` — 8-panel front-view arc Dec 2023→May 29 2026; `personal/photos/progress_compare.jpg`
+- Built master archive grid: `scripts/master_grid.py` — ALL images ALL sessions in date order, 13 sessions, 4100×5936px; `personal/photos/master_progress_grid.jpg`
+- Committed everything: faithwalkbook commits `7f99e4b`, `205466e`; pushed to origin
+
+### Weight data confirmed this session
+- Nov 30, 2022: 221 lbs (scale screenshot)
+- Mar 28, 2023: 218.6 lbs (PhotoGrid collage with scale)
+- Dec 6, 2023 / Jan 1 / Feb 22, 2024: ~220 lbs (Thomas confirmed)
+- Jan 11, 2024: 218 lbs (Thomas confirmed)
+- Mar 2024 full-body shot (IMG_1817_converted.jpg): ~220 lbs (Thomas confirmed)
+- 192.6 lb Mar 5, 2024 scale reading: excluded from chart — conflicts with Thomas's memory of 220+ through 2025, EXIF date possibly wrong
+- Apr 22–May 29, 2026: 200.2→197.4 lbs (Smart Fitness Scale screenshots, all confirmed)
 
 ## Decisions worth remembering
-- `upload-faithwalk.py` imports YouTubeClient from youtubeoptermizer via `sys.path.insert` — read-only borrow, no edits to that repo
-- Anchor title cards use `aevalsrc=0:c=stereo:s=44100` for silent audio — concat fails if stream types mismatch across segments
-- Shorts scheduled 1/week (not bulk) to avoid YouTube spam-flag pattern
-- ShuggC Discord DM drafted for permission — Thomas said "I'm sure they won't mind" and proceeded with uploads
-- Day 69 REST in Kansas City is its own `restOnly` entry (not just an annotation on Day 68)
+- **192.6 lb data point removed** from weight chart — kept in repo (IMG_5648.jpg) as evidence but not plotted
+- **Landscape 2026 session photos need center-crop not rotation** — EXIF=1, raw pixels landscape with Thomas upright in center; May 29 pre-rotated and saved to `rotated/` subfolder
+- **No-date HEIC scale photos (215.2 / ~211 lbs) excluded** from chart — can't date them
+- **2025 gap**: Thomas has no photos from 2025; chart shows the gap cleanly
 
 ## Open threads / next session starts here
-- **ShuggC reply**: check HMBL University Discord — if any objection to the YouTube uploads, act on it; otherwise we're clear
-- **Anchor thumbnail**: `youtu.be/nTYbT74qDJo` has an auto-frame thumbnail — needs custom 1280×720 (gold-on-dark, Day 34 framing). Build in Canva or with DALL-E.
-- **Background music for anchor**: title card sections are clean silent. Thomas mentioned optionally adding gospel/ambient instrumental. If wanted: get royalty-free track, re-render cards with audio mix, re-upload.
-- **10 milestone episodes**: plan + descriptions ready in `docs/youtube-content-plan.md`. Need actual editing (cold open + clips + CTA per episode). Day 1 footage at `assets/footage/day01-philly-start.mp4`.
-- **GoFundMe on faithwalklive.com**: URL is in .env for YouTube but NOT yet wired into site CTAs — consider adding to the subscribe/support section.
-- **Tracker Day 70+**: Zay resting Day 69 in Kansas City. Nightly task (Owner machine) handles rollover. If it misses, run `tracker:from-title` manually.
+- **PRIORITY: combined master sheet for book** — user asked how to incorporate into Ch4; next step is one tall JPG (weight chart on top + photo arc below) then markdown image embed in `ch4/chp4.md` + caption line. Scripts are in `faithwalkbook/scripts/`.
+- **Tracker Day 64**: in-progress to SALISBURY,MO, no clip yet. Run Half 2 when Day 64 promotes.
+- **Clip gap audit**: run after Day 64 promotes — `node -e "const cps=require('./src/faith-walk-tracker/checkpoints.json'); const m=cps.filter(c=>!c.clip&&!(c.clips&&c.clips.length)); m.forEach(c=>console.log('Day '+(c.day||'?')+' — '+c.location))"`
+- **aibiblegospelscom** pulled new changes this session (subscribe form, Deuteronomy 28 cheatsheet, API route) — no review done
 
 ## Uncommitted work
-Clean working tree.
+Clean working tree on both repos. faithwalkbook pushed (commit 205466e). AIconsultantforHmblzayy clean.

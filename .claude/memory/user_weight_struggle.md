@@ -4,7 +4,7 @@ description: Canonical weight numbers for the book. Documented in handwritten lo
 type: user
 originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
 ---
-## Canonical numbers (locked Apr 21, 2026 — use these in prose)
+## Canonical numbers (updated May 29, 2026 — photo archive confirmed)
 
 | Marker | Value | Source |
 |---|---|---|
@@ -13,6 +13,8 @@ originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
 | **30-Day Lockin start weight** | **203 lb** (Mar 25, 2026) | Group text screenshot, 11:05 AM |
 | **Mar 20, 2026 scale peak** | **211.4 lb** | Scale app, Mar 20-Apr 20 chart |
 | **Current (Apr 20, 2026)** | **203.1 lb**, BMI 33.8, BF 33.3%, VF 16 | Scale app, 07:07 AM reading |
+| **May 29, 2026** | **197.4 lb**, BMI 32.9, BF 31.9%, SubQ 27.4% | Smart Fitness Scale screenshot |
+| **Photo archive low** | **197.4 lb** (May 29, 2026) | Confirmed via scale screenshot |
 | **Convergence-window drop** | **−8.3 lb** in 31 days (3/20 → 4/20) | Scale app chart |
 | **Distance down from peak** | **26.9 lb** (230 → 203.1) | Subtraction across 3.5 years |
 | **Near-term goal** | **190-195 lb by end of April** | Lockin text, Mar 25 |
