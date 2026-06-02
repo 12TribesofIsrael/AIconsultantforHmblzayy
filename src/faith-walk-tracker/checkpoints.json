@@ -634,8 +634,6 @@
     "miles": 1328,
     "date": "May 31, 2026",
     "estimatedMiles": true,
-    "restDay": true,
-    "restDayDate": "Jun 2, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/ElegantSilkySpaghettiYouDontSay-hyQEtgsRS7nnMPC4"
   },
   {
@@ -644,7 +642,17 @@
     "lat": 39.1851824,
     "lng": -93.8828515,
     "miles": 1353,
-    "date": "Jun 2, 2026",
+    "date": "Jun 1, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/GentleAttractiveLeopardDerp-wh5F5SMfn7h0rjtw"
+  },
+  {
+    "restOnly": true,
+    "day": 69,
+    "date": "Jun 2, 2026",
+    "location": "Kansas City, MO",
+    "lat": 39.0997265,
+    "lng": -94.5785667,
+    "miles": 1353,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/UnusualIncredulousClamItsBoshyTime-NqrGTRzaHaOfPB-o"
   }
 ]
