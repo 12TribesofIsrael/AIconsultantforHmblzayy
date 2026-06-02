@@ -2,33 +2,48 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-05-26T23:30:00Z
-  project: ZayAutomations
+  ended: 2026-06-02T00:00:00Z
+  project: ZayAutomations (AIconsultantforHmblzayy)
   branch: main
-  version: v2.19.0
-  originSessionId: a128621f-c638-4c35-ae49-34478e072c02
+  version: v2.20.0
+  originSessionId: 80a7ef83-8594-4e0d-b292-82c168ed87d9
 ---
 
-# Last Session — 2026-05-26 (desktop, second instance today)
+# Last Session — Jun 2, 2026
 
 ## What the user wanted
-"update tracker" + "commit". Quick tracker-from-title run. This was the desktop machine catching up; an earlier laptop session today had already advanced the public state (Day 61 archive + clip + Day 62 in-progress), so most of the work was bug-catching + memory hygiene rather than fresh tracker pushes.
+Build a full YouTube content strategy for the AI Bible Gospels channel to drive walk awareness, faithwalklive.com traffic, and GoFundMe donations — using Zay's Twitch clips as source material. Also keep the daily tracker current.
 
 ## What we did
-- `npm run tracker:from-title` — title destination had changed from MONROE CITY,MO → **STOUTSVILLE,MO** (still 43 mi). Script annotated Day 60 rest entry with new in-progress fields (Case 3, latest = Day 60 rest). Commit `b58aee1`.
-- **Caught state-coherence bug:** Day 59 walking row still held the prior STALE Day 61 in-progress (MONROE CITY) because `annotateInProgress` only mutates `latest` — never strips in-progress from other checkpoints. Tail-walk in Case 4 rollover would have hit Day 59's stale fields first and promoted Day 61 to MONROE CITY tomorrow. Surgically stripped 7 stale fields from Day 59 via inline `loadCheckpoints → mutate → rebuildAndPush`. Commit `54d8003`.
-- Wrote `feedback_tracker_inprogress_dedup.md` capturing the bug + the audit one-liner + how to apply. Indexed in MEMORY.md.
-- On `commit`: pulled in 3 laptop-session commits (`1e5eae5` Day 61 → STOUTSVILLE archive + `a346de8` Day 61 clip + `1b9532a` laptop session-end memory). Hit a `.claude/memory/MEMORY.md` conflict — laptop's session-end pushed a stale MEMORY.md missing both `feedback_tracker_geocode_plausibility` AND the new `feedback_tracker_multiday_catchup` lines. Resolved by re-adding all three (geocode plausibility, multiday catchup from laptop, dedup from me). Pushed as `bd31ff7`.
+- Ran 4-agent ROI check on "upload 73 Twitch VODs" → unanimous REFRAME: no raw VODs; do milestone episodes + anchor video + Shorts pipeline instead
+- Built full YouTube pipeline in `scripts/youtube-content/`: `prep-clip.sh`, `batch-shorts.sh`, `build-anchor.sh`, `gen-all-descriptions.sh`, `upload-faithwalk.py`
+- Downloaded Day 1 Instagram clip from `https://www.instagram.com/p/DWWOqvEknW8/` → `assets/footage/day01-philly-start.mp4`
+- Rendered 7 branded 1080×1920 YouTube Shorts (Days 17/30/39/40/52/59/64) → `assets/youtube/shorts/`
+- Built + rendered Day-34 anchor video (10 segments: 7 title cards + 3 Twitch clips) → `assets/youtube/day-34-anchor.mp4` (86 MB)
+- Fixed audio bug: title card segments had no audio stream (lavfi color source needs `aevalsrc=0:c=stereo:s=44100`); re-rendered and re-uploaded anchor
+- Generated all 16 YouTube descriptions → `assets/youtube/descriptions/` (anchor + 8 milestone + 7 short types)
+- Created YouTube playlist "Faith Walk Live — The 3,000-Mile Walk" (`PLFyw-nH_HYItWCe_QXt9SvaEHWx4i25_n`)
+- Uploaded anchor video (public now): https://youtu.be/nTYbT74qDJo
+- Uploaded 7 Shorts as Private+publishAt, scheduled weekly Jun 6 → Jul 18: f4fg-54U5SU / 9DGlOw9ycto / 17sKet2AVU8 / m5XzXKDo5uc / -Lcjba8juXE / 79K6HmZ61Cg / CY8odys9OXs
+- Saved GoFundMe URL to .env + memory: `https://www.gofundme.com/f/help-launch-hmbl-summer-camp-for-teens`
+- YouTube Channel ID confirmed: `UCq6hz1xEEd9kL95Kcuof2wQ` (from youtubeoptermizer)
+- Tracker backfilled Days 67–69: Day 67 Richmond MO clip, Day 68 Lexington MO (new checkpoint, Jun 1), Day 69 restOnly Kansas City MO (Jun 2)
+- Upload log at `assets/youtube/upload-log.json`; episode plan at `docs/youtube-content-plan.md`
 
 ## Decisions worth remembering
-- Cross-machine drift on MEMORY.md is a real recurring problem: each machine's `memory:push` overwrites the repo's MEMORY.md with that machine's local view. If the other machine hasn't pulled recently from central backup, its session-end will silently drop entries. The fix when this happens: rebase, take ours on MEMORY.md, manually re-merge missing lines. The proper fix would be a merge strategy on MEMORY.md or making `memory:push` additive-only for the index.
-- Did NOT push a script-level fix to `annotateInProgress` to auto-strip stale in-progress from non-latest checkpoints (the proper engineering fix). User asked "update tracker" not "fix the tracker engine" — memory captures the gotcha; script fix is deferred until explicitly asked.
+- `upload-faithwalk.py` imports YouTubeClient from youtubeoptermizer via `sys.path.insert` — read-only borrow, no edits to that repo
+- Anchor title cards use `aevalsrc=0:c=stereo:s=44100` for silent audio — concat fails if stream types mismatch across segments
+- Shorts scheduled 1/week (not bulk) to avoid YouTube spam-flag pattern
+- ShuggC Discord DM drafted for permission — Thomas said "I'm sure they won't mind" and proceeded with uploads
+- Day 69 REST in Kansas City is its own `restOnly` entry (not just an annotation on Day 68)
 
 ## Open threads / next session starts here
-- **Day 62 currently in-progress to PARIS, MO**, 24 mi remaining (started 2026-05-26 23:17 UTC, in-progress fields on Day 61 walking row).
-- **Geocode plausibility flag on Day 62:** `estimatedSegmentMiles=12` from Stoutsville → Paris but `milesRemaining=24` per title. 2x mismatch. Stoutsville coords (39.55, -91.86) and Paris coords (39.48, -92.00) are close (~10 mi crow-flies × 1.3 = 13 mi road) — title's "24 mi" suggests Zay isn't actually starting from Stoutsville, OR Paris MO geocoded to wrong Paris. **Cross-reference clips + verify Paris,MO geocode before next rollover trusts it.** Either it's a different town (Paris in Monroe County MO is the obvious one) or Day 61's STOUTSVILLE archive overshot the actual end-of-day location.
-- **Cross-machine memory hygiene:** the laptop instance had been working on the book today (Ch4 draft + Ch5 near-quit beat per commit `1b9532a`). When picking up book work from desktop, check `../faithwalkbook` for laptop's WIP first.
-- **Don't touch `annotateInProgress` script-level fix** unless explicitly asked. Memory captures the workaround.
+- **ShuggC reply**: check HMBL University Discord — if any objection to the YouTube uploads, act on it; otherwise we're clear
+- **Anchor thumbnail**: `youtu.be/nTYbT74qDJo` has an auto-frame thumbnail — needs custom 1280×720 (gold-on-dark, Day 34 framing). Build in Canva or with DALL-E.
+- **Background music for anchor**: title card sections are clean silent. Thomas mentioned optionally adding gospel/ambient instrumental. If wanted: get royalty-free track, re-render cards with audio mix, re-upload.
+- **10 milestone episodes**: plan + descriptions ready in `docs/youtube-content-plan.md`. Need actual editing (cold open + clips + CTA per episode). Day 1 footage at `assets/footage/day01-philly-start.mp4`.
+- **GoFundMe on faithwalklive.com**: URL is in .env for YouTube but NOT yet wired into site CTAs — consider adding to the subscribe/support section.
+- **Tracker Day 70+**: Zay resting Day 69 in Kansas City. Nightly task (Owner machine) handles rollover. If it misses, run `tracker:from-title` manually.
 
 ## Uncommitted work
 Clean working tree.
