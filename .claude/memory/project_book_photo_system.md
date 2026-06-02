@@ -27,6 +27,7 @@ Full progress photo system lives in `faithwalkbook/personal/photos/`. PIL-based 
 - `personal/photos/weight_tracker.jpg` — PIL line chart, update by adding row to `DATA` in `scripts/weight_chart.py`
 - `personal/photos/progress_compare.jpg` — 8-panel front-view arc
 - `personal/photos/master_progress_grid.jpg` — ALL images ALL sessions, 4100×5936px
+- `personal/photos/master_sheet.jpg` — **combined sheet** (weight chart stacked over 8-panel photo arc, 2400×1754, dark/gold), built by `scripts/combine_master_sheet.py`. Embedded in BOTH Ch1 (closing bookend) and Ch4. Re-run after refreshing the chart/arc.
 - `personal/photos/5292026/rotated/progress_sheet_5292026.jpg` — 5-angle sheet for May 29 session
 
 **Key technical notes:**
@@ -34,8 +35,10 @@ Full progress photo system lives in `faithwalkbook/personal/photos/`. PIL-based 
 - May 29 session photos pre-rotated via `scripts/rotate_and_compare.py` → `5292026/rotated/`
 - gitignore blocks `personal/photos/*.jpg` at top level — use `git add -f` for generated summary sheets
 
-**Open:** combined master sheet (weight chart on top + photo arc below) to embed in Ch4 (`ch4/chp4.md`). Not built yet as of May 29, 2026.
+**DONE (Jun 2, 2026):** combined master sheet built (`scripts/combine_master_sheet.py` → `master_sheet.jpg`), embedded in Ch1 (closing bookend) + Ch4. Ch1 opener photo = `personal/rewrite/heaviest-2022-3.jpg` (fullest front-on heaviest shot — Thomas's call; #1/#2 read less heavy).
+
+**Weekly cadence going forward (Thomas's plan, Jun 2):** Thomas adds a new weigh-in photo set each week when he weighs himself. The combined `master_sheet.jpg` is the **finalize-at-book-completion** artifact — keep regenerating it as data comes in, but the version that ships in the finished book is built once at the end from the full arc. Each new weekly set: drop photos in a `MMDDYYYY/` folder, add the weight row to `DATA` in `weight_chart.py`, re-run `weight_chart.py` + `progress_compare.py` + `master_grid.py`, then `combine_master_sheet.py`, then `git add -f` the summary JPGs.
 
 **Why:** Thomas's weight-loss memoir; Zay's Walk is the catalyst/turning point in the story. The photos + chart are the visual evidence arc for the book.
 
-**How to apply:** When Thomas says "update the weight chart / progress grid / photo session," work in faithwalkbook/scripts/. When he adds a new dated photo folder, run all three generators to refresh the outputs.
+**How to apply:** When Thomas says "update the weight chart / progress grid / photo session," work in faithwalkbook/scripts/. When he adds a new dated photo folder, run all four generators (chart, compare, grid, combine) to refresh the outputs and force-add the summary JPGs.

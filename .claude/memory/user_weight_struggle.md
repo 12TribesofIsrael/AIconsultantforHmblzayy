@@ -4,7 +4,19 @@ description: Canonical weight numbers for the book. Documented in handwritten lo
 type: user
 originSessionId: 55dd7ad2-f536-4c2e-9a8d-4d236edb01ef
 ---
-## Canonical numbers (updated May 29, 2026 — photo archive confirmed)
+## FULL NOTEBOOK DATASET (source of truth — transcribed + Thomas-confirmed Jun 2, 2026)
+
+Thomas's handwritten notebook is the canonical log for 2022–2025. The chart at `faithwalkbook/scripts/weight_chart.py` `DATA` now uses this verbatim + 2026 scale:
+
+`9/1/22=230` (heaviest 😞), `1/23/23=216`, `2/2/23=214`, `3/19/23=222` (circled face), `4/26/23=212` ("Let's f. GO"), `5/20/23=211`, `6/27/23=216`, `7/10/23=214`, `8/11/23=212`, `9/11/23=211`, `10/11/23=210`, `11/11/23=208`, `12/11/23=200`, `12/19/24=204`, `3/28/25=208`, `10/12/25=202`, `12/3/25=205`.
+Then **2026 Smart Scale:** `3/20/26=211.4` (regain peak / the slip), `4/20/26=203.1`, `4/22/26=200.2`, `4/26/26=200.8`, `5/2/26=197.7`, `5/22/26=199.5`, `5/29/26=197.4`.
+
+- **Heaviest = 230 (9/1/22), NOT 221.** The old chart's "221 heaviest" was a Nov 30 2022 scale screenshot (IMG_9915), which is a later/lower reading — the notebook's 9/1/22=230 is the true documented peak.
+- **Total drop = −32.6 lbs** (230 → 197.4), 24 logged entries.
+- **Photo EXIF confirms arc dates:** Dec 6 2023 (IMG_5247), Jan 1 2024 (IMG_5452), Feb 22 2024 (IMG_5595) all match. Walrus/heaviest pics (`personal/rewrite/heaviest-2022-*.jpg`) have no EXIF (HEIC→JPG stripped it); tied to the 9/1/22=230 entry.
+- **REMOVED as unverified** (no screenshot in repo, not in this record): June 4 2025=206.2, Dec 25 2025=210.0, Feb 13 2026=213.5, Mar 10 2026=207.1. Do NOT reintroduce into book prose unless Thomas produces the screenshots.
+
+## Earlier snapshot (Apr 20, 2026 — kept for the "down 10, 27 to go" math)
 
 | Marker | Value | Source |
 |---|---|---|

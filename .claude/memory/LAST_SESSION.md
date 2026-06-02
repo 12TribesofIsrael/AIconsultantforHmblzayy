@@ -2,54 +2,37 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-05-29T00:00:00Z
+  ended: 2026-06-02T00:00:00Z
   project: ZayAutomations / faithwalkbook
   branch: main
   version: v2.20.0
-  originSessionId: e67e9080-2750-484a-89a1-22ece1fef051
+  originSessionId: 130e7a1b-f175-4c4c-80c1-731f6e0b2133
 ---
 
-# Last Session — May 29, 2026
+# Last Session — June 2, 2026
 
 ## What the user wanted
-Daily tracker updates for the Faith Walk (Days 62-64 live on Twitch), then a full session building out Thomas's personal weight-loss progress tracking system for the book — photos, weight chart, and master comparison grid.
+Heavy book work in `faithwalkbook` (the memoir): rewrite Chapter 1 in Thomas's authentic spoken voice, build the combined "master sheet" visual, and — critically — correct the weight data after Thomas surfaced his real handwritten notebook. **Major change this session: Thomas made THIS instance the PRIMARY editor of the book repo with full write permissions** (retired the old "never touch faithwalkbook" rule).
 
-## What we did
-
-### Faith Walk tracker
-- Ran `tracker:from-title` twice: promoted Day 62 → PARIS,MO (~1189 mi) and Day 63 → MOBERLY,MO (~1220 mi); Day 64 in-progress to SALISBURY,MO (23 mi)
-- Attached clips: Day 62 = "DAY 61, 44 MILES WALKED AND CONQUERED" (93v, May 26); Day 63 = "GOD DID DEEJAY!!!!!!!" (95v, May 27)
-- Both repos pushed; Vercel rebuilt faithwalklive.com
-
-### Book — progress photo system (faithwalkbook repo)
-- Thomas added `personal/photos/5292026/` (May 29 session, 197.4 lbs) and `personal/photos/others/` (historical archive Nov 2022–Mar 2024)
-- Converted all HEIC files to JPG via ffmpeg (19 HEICs converted)
-- Built portrait rotator: `scripts/rotate_and_compare.py` — EXIF-safe, saves corrected portraits to `5292026/rotated/`
-- Built weight chart generator: `scripts/weight_chart.py` — PIL line chart, 11 confirmed sessions Nov 2022→May 2026, -23.6 lbs total; `personal/photos/weight_tracker.jpg`
-- Built session comparison grid: `scripts/progress_compare.py` — 8-panel front-view arc Dec 2023→May 29 2026; `personal/photos/progress_compare.jpg`
-- Built master archive grid: `scripts/master_grid.py` — ALL images ALL sessions in date order, 13 sessions, 4100×5936px; `personal/photos/master_progress_grid.jpg`
-- Committed everything: faithwalkbook commits `7f99e4b`, `205466e`; pushed to origin
-
-### Weight data confirmed this session
-- Nov 30, 2022: 221 lbs (scale screenshot)
-- Mar 28, 2023: 218.6 lbs (PhotoGrid collage with scale)
-- Dec 6, 2023 / Jan 1 / Feb 22, 2024: ~220 lbs (Thomas confirmed)
-- Jan 11, 2024: 218 lbs (Thomas confirmed)
-- Mar 2024 full-body shot (IMG_1817_converted.jpg): ~220 lbs (Thomas confirmed)
-- 192.6 lb Mar 5, 2024 scale reading: excluded from chart — conflicts with Thomas's memory of 220+ through 2025, EXIF date possibly wrong
-- Apr 22–May 29, 2026: 200.2→197.4 lbs (Smart Fitness Scale screenshots, all confirmed)
+## What we did (all pushed to faithwalkbook origin/main)
+- **Ch1 rewritten in Thomas's voice** (`chapters/ch01-the-pattern.md`) from `personal/rewrite/rewrite.md.txt` — Spark Book/2019 origin, Nipsey line, habitat/free-will/health-is-wealth/faith-without-works sermon. Commit `dd76c64`.
+- Converted 3 HEIC "walrus" photos → JPG in `personal/rewrite/` (heaviest-2022-1/2/3.jpg). Ch1 opener = **#3** (Thomas confirmed it's the walrus pic / fullest heaviest shot). Commit `7dbbbac`.
+- **Combined master sheet** built: `scripts/combine_master_sheet.py` → `personal/photos/master_sheet.jpg` (chart stacked over photo arc). Embedded in BOTH Ch1 (closing bookend) and Ch4 (`ch4/chp4.md`). Commits `ad731ef`, `f769a52`.
+- Arc now starts at the 2022 heaviest (prepended walrus pic as first panel of `progress_compare.py`). Commit `6f17f0b`.
+- **CHART REBUILT FROM THE REAL NOTEBOOK** (`scripts/weight_chart.py`) — Thomas photographed his handwritten log, I transcribed + he confirmed. 24 points: `9/1/22=230` (heaviest) → 2023 grind → 2024-25 drift → `3/20/26=211.4` regain spike → `5/29/26=197.4`. Heaviest corrected 221→**230**, total drop **−32.6 lbs**. Commits `9b93451`, `0d06bd2`.
+- Ch1 prose corrected to match notebook line-for-line; removed 4 unverified scale readings, restored the real 211.4 spike.
+- Memory updated: `feedback_book_repo_no_edits.md` (now "PRIMARY on book repo"), `user_weight_struggle.md` (full notebook dataset locked), `project_book_photo_system.md` (master sheet + weekly cadence), `MEMORY.md` index.
 
 ## Decisions worth remembering
-- **192.6 lb data point removed** from weight chart — kept in repo (IMG_5648.jpg) as evidence but not plotted
-- **Landscape 2026 session photos need center-crop not rotation** — EXIF=1, raw pixels landscape with Thomas upright in center; May 29 pre-rotated and saved to `rotated/` subfolder
-- **No-date HEIC scale photos (215.2 / ~211 lbs) excluded** from chart — can't date them
-- **2025 gap**: Thomas has no photos from 2025; chart shows the gap cleanly
+- **Notebook is now source of truth** for 2022-2025 weights. Full dataset in `user_weight_struggle.md`. Heaviest = 230 (9/1/22), NOT 221.
+- **REMOVED as unverified** (no screenshot, not in canonical record): June 2025=206.2, Christmas 2025=210.0, Feb 13 2026=213.5, Mar 10 2026=207.1. Do NOT reintroduce without screenshots.
+- **211.4 (Mar 20 2026) IS real** — Smart Scale app Mar 20-Apr 20 chart. I briefly over-removed it, then restored after checking canonical memory.
+- Generated summary JPGs must be `git add -f` (gitignore blocks `personal/photos/*.jpg`).
 
 ## Open threads / next session starts here
-- **PRIORITY: combined master sheet for book** — user asked how to incorporate into Ch4; next step is one tall JPG (weight chart on top + photo arc below) then markdown image embed in `ch4/chp4.md` + caption line. Scripts are in `faithwalkbook/scripts/`.
-- **Tracker Day 64**: in-progress to SALISBURY,MO, no clip yet. Run Half 2 when Day 64 promotes.
-- **Clip gap audit**: run after Day 64 promotes — `node -e "const cps=require('./src/faith-walk-tracker/checkpoints.json'); const m=cps.filter(c=>!c.clip&&!(c.clips&&c.clips.length)); m.forEach(c=>console.log('Day '+(c.day||'?')+' — '+c.location))"`
-- **aibiblegospelscom** pulled new changes this session (subscribe form, Deuteronomy 28 cheatsheet, API route) — no review done
+- **4 arc photo weights are my estimates** (between notebook points): Dec 6 '23→~200, Jan 1 '24→~200, Feb 22 '24→~204, Mar '24→~204. Thomas can correct if he remembers actuals.
+- **Weekly cadence going forward:** Thomas adds a weigh-in photo set each week → drop in `MMDDYYYY/` folder, add weight row to `DATA` in `weight_chart.py`, re-run weight_chart.py + progress_compare.py + master_grid.py + combine_master_sheet.py, `git add -f` the summary JPGs. The master_sheet is the **finalize-at-book-completion** artifact.
+- Ch1 frontmatter still lists `personal/context/*` sources that no longer exist (context/ is empty) — harmless, could clean up.
 
 ## Uncommitted work
-Clean working tree on both repos. faithwalkbook pushed (commit 205466e). AIconsultantforHmblzayy clean.
+faithwalkbook: clean (all pushed, at 0d06bd2). AIconsultantforHmblzayy: 4 memory files modified (being synced by session-end).

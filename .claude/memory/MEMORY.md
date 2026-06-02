@@ -23,7 +23,7 @@
 - [File transfer = Google Drive](feedback_file_transfer_google_drive.md) — PC↔iPhone file moves default to Google Drive (not OneDrive); Thomas's whole stack runs on Google account `aibiblegospels444@gmail.com`
 - [Branded vertical recipe](feedback_video_branded_vertical.md) — When OBS records 1920x1080 landscape, render branded vertical with text in letterbox bands; reusable ffmpeg pipeline + multi-surface split for daily distribution
 - [Book project](project_book.md) — PIVOTED Apr 21: Thomas's weight-loss memoir (Zay's specific ask), Faith Walk as catalyst, not a three-pillar parallel-journey book
-- [Never touch book repo from here](feedback_book_repo_no_edits.md) — A dedicated Claude instance handles `../faithwalkbook`; this instance must never edit/commit/push there to avoid colliding with that workflow
+- [PRIMARY on book repo (Jun 2)](feedback_book_repo_no_edits.md) — This instance is now primary on `../faithwalkbook` with full write perms; the old "never touch" rule is retired. Thomas's voice rewrite at faithwalkbook/personal/rewrite/rewrite.md.txt is canonical tone.
 - [youtubeoptermizer APIs available](reference_youtubeoptermizer_apis.md) — Sibling repo at C:\Users\Claude\youtubeoptermizer has live YouTube/Meta/X/TikTok/Anthropic creds + scripts
 - [youtubeoptermizer — read-only, ask first](feedback_youtubeoptermizer_no_edits.md) — Never edit that repo; explicit ask required before any API call or script run there, every time
 - [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; confirmed arc 221 lbs (Nov 2022) → 197.4 lbs (May 29, 2026); photo archive + PIL generators in faithwalkbook
