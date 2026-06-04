@@ -26,8 +26,9 @@
 - [PRIMARY on book repo (Jun 2)](feedback_book_repo_no_edits.md) — This instance is now primary on `../faithwalkbook` with full write perms; the old "never touch" rule is retired. Thomas's voice rewrite at faithwalkbook/personal/rewrite/rewrite.md.txt is canonical tone.
 - [youtubeoptermizer APIs available](reference_youtubeoptermizer_apis.md) — Sibling repo at C:\Users\Claude\youtubeoptermizer has live YouTube/Meta/X/TikTok/Anthropic creds + scripts
 - [youtubeoptermizer — read-only, ask first](feedback_youtubeoptermizer_no_edits.md) — Never edit that repo; explicit ask required before any API call or script run there, every time
-- [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; confirmed arc 221 lbs (Nov 2022) → 197.4 lbs (May 29, 2026); photo archive + PIL generators in faithwalkbook
+- [Lifelong weight struggle](user_weight_struggle.md) — Thomas's whole-life weight pattern; confirmed arc 221 lbs (Nov 2022) → 194.4 lbs (Jun 3, 2026); photo archive + PIL generators in faithwalkbook
 - [Book photo system](project_book_photo_system.md) — Full progress photo archive, weight chart + master grid generators in faithwalkbook/scripts/; confirmed weight data; next step: combined master sheet for Ch4
+- [Weight grid sync](feedback_weight_grid_sync.md) — Always update master_grid.py SESSIONS when adding weight_chart.py DATA; regenerate all 4 generators each session
 - [Session handoff](feedback_session_handoff.md) — User uses /session-end + /session-start workflow; never auto-invoke, wait for explicit trigger
 - [Repo architecture](project_repo_architecture.md) — This repo is source of truth; siblings outbound-only; main has branch protection (no force-push, no delete) since Apr 21
 - [Apr 20 incident](project_apr20_incident.md) — Day 26 appears to involve a vehicle incident (Twitch clips: "hit" 5033v, "CAR HIT"); verify before archiving Day 26 or promoting Day 27

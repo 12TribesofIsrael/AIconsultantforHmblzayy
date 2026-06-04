@@ -2,34 +2,37 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-06-04T00:00:00Z
-  project: ZayAutomations — AI Consulting for Minister Zay / HMBL
+  ended: 2026-06-02T00:00:00Z
+  project: ZayAutomations / faithwalkbook
   branch: main
   version: v2.20.0
-  originSessionId: 031171bc-d5f0-4144-b201-e7b05bc424c6
+  originSessionId: 130e7a1b-f175-4c4c-80c1-731f6e0b2133
 ---
 
-# Last Session — June 4, 2026
+# Last Session — June 2, 2026
 
 ## What the user wanted
-Wrap up and hand off. No substantive code/tracker/book work was done this session — it opened directly on `/session-end`.
+Heavy book work in `faithwalkbook` (the memoir): rewrite Chapter 1 in Thomas's authentic spoken voice, build the combined "master sheet" visual, and — critically — correct the weight data after Thomas surfaced his real handwritten notebook. **Major change this session: Thomas made THIS instance the PRIMARY editor of the book repo with full write permissions** (retired the old "never touch faithwalkbook" rule).
 
-## What we did
-- Captured session state only. Working tree clean, branch `main` up to date with `origin/main`.
-- No commits made this session. Latest commit at session start was `0bd405f` (Faith Walk: Day 70 — rest/collab day at Kansas City, MO, HMBL x RAUD), already pushed in a prior session.
+## What we did (all pushed to faithwalkbook origin/main)
+- **Ch1 rewritten in Thomas's voice** (`chapters/ch01-the-pattern.md`) from `personal/rewrite/rewrite.md.txt` — Spark Book/2019 origin, Nipsey line, habitat/free-will/health-is-wealth/faith-without-works sermon. Commit `dd76c64`.
+- Converted 3 HEIC "walrus" photos → JPG in `personal/rewrite/` (heaviest-2022-1/2/3.jpg). Ch1 opener = **#3** (Thomas confirmed it's the walrus pic / fullest heaviest shot). Commit `7dbbbac`.
+- **Combined master sheet** built: `scripts/combine_master_sheet.py` → `personal/photos/master_sheet.jpg` (chart stacked over photo arc). Embedded in BOTH Ch1 (closing bookend) and Ch4 (`ch4/chp4.md`). Commits `ad731ef`, `f769a52`.
+- Arc now starts at the 2022 heaviest (prepended walrus pic as first panel of `progress_compare.py`). Commit `6f17f0b`.
+- **CHART REBUILT FROM THE REAL NOTEBOOK** (`scripts/weight_chart.py`) — Thomas photographed his handwritten log, I transcribed + he confirmed. 24 points: `9/1/22=230` (heaviest) → 2023 grind → 2024-25 drift → `3/20/26=211.4` regain spike → `5/29/26=197.4`. Heaviest corrected 221→**230**, total drop **−32.6 lbs**. Commits `9b93451`, `0d06bd2`.
+- Ch1 prose corrected to match notebook line-for-line; removed 4 unverified scale readings, restored the real 211.4 spike.
+- Memory updated: `feedback_book_repo_no_edits.md` (now "PRIMARY on book repo"), `user_weight_struggle.md` (full notebook dataset locked), `project_book_photo_system.md` (master sheet + weekly cadence), `MEMORY.md` index.
 
 ## Decisions worth remembering
-- None this session.
+- **Notebook is now source of truth** for 2022-2025 weights. Full dataset in `user_weight_struggle.md`. Heaviest = 230 (9/1/22), NOT 221.
+- **REMOVED as unverified** (no screenshot, not in canonical record): June 2025=206.2, Christmas 2025=210.0, Feb 13 2026=213.5, Mar 10 2026=207.1. Do NOT reintroduce without screenshots.
+- **211.4 (Mar 20 2026) IS real** — Smart Scale app Mar 20-Apr 20 chart. I briefly over-removed it, then restored after checking canonical memory.
+- Generated summary JPGs must be `git add -f` (gitignore blocks `personal/photos/*.jpg`).
 
 ## Open threads / next session starts here
-- **Day 70 clip (Half 2) may still be owed.** Day 70 was a rest/collab day (KC, MO — HMBL x RAUD). Run the clip-gap audit before any new tracker work:
-  ```
-  node -e "const cps=require('./src/faith-walk-tracker/checkpoints.json');const missing=cps.filter(c=>!c.clip&&!(c.clips&&c.clips.length));console.log('Days missing clips:',missing.length);missing.forEach(c=>console.log('  Day '+(c.day||'?')+(c.restOnly?' (rest)':'')+' — '+c.location+' — '+c.date));"
-  ```
-- **Day 71+**: when Zay resumes walking out of Kansas City, run Half 1 (tracker promotion) then backfill the clip via `update-tracker.js --day N --clip`. Use the post-pause/cumulative day-numbering convention per memory `post_pause_day_numbering`.
-- **Nightly tracker task** ("FaithWalk Nightly Tracker", 9 PM, Owner machine) runs Half 1 only — eyeball faithwalklive each morning for mis-geocoded auto-pushes and confirm the clip half is backfilled.
-- Owner-machine Node invocation: run tracker scripts via `node scripts\...` directly, NOT `npm run` (npm wrapper fails with "Could not determine Node.js install directory"). See memory `node-tls-workaround`.
-- (Carried from prior session) faithwalkbook memoir: weekly weigh-in cadence — Thomas drops a photo set + adds a row to `DATA` in `weight_chart.py`, re-run the generators, `git add -f` the summary JPGs.
+- **4 arc photo weights are my estimates** (between notebook points): Dec 6 '23→~200, Jan 1 '24→~200, Feb 22 '24→~204, Mar '24→~204. Thomas can correct if he remembers actuals.
+- **Weekly cadence going forward:** Thomas adds a weigh-in photo set each week → drop in `MMDDYYYY/` folder, add weight row to `DATA` in `weight_chart.py`, re-run weight_chart.py + progress_compare.py + master_grid.py + combine_master_sheet.py, `git add -f` the summary JPGs. The master_sheet is the **finalize-at-book-completion** artifact.
+- Ch1 frontmatter still lists `personal/context/*` sources that no longer exist (context/ is empty) — harmless, could clean up.
 
 ## Uncommitted work
-Clean working tree.
+faithwalkbook: clean (all pushed, at 0d06bd2). AIconsultantforHmblzayy: 4 memory files modified (being synced by session-end).
