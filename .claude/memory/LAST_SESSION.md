@@ -2,33 +2,86 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-06-05T00:00:00Z
-  project: ZayAutomations (AIconsultantforHmblzayy)
+  ended: 2026-06-05T20:00:00Z
+  project: ZayAutomations / faithwalkbook (book build)
   branch: main
   version: v2.20.0
-  originSessionId: f6bd8111-7b28-44b1-969d-1f5d32ac823d
+  originSessionId: e054c4e0-d0c4-44f3-bba9-d610e3563e79
 ---
 
-# Last Session — 2026-06-05
+# Last Session — June 5, 2026
 
 ## What the user wanted
-"Update the tracker." Tracker was 2 days behind (last entry Day 70 / Jun 3). Catch it up correctly without broadcasting Zay's live position mid-walk.
+
+A single reference document showing exactly where the book is, what's next, and how we're building it. "I need something that I can go to and see where we are at so I can start. I need a visualization of how we're going to build the book out."
 
 ## What we did
-- Backfilled **Day 71 (Jun 4)** — rest/collab day at Kansas City, MO (mayor's office reception, rented Funplex, RAUD collab pt 2/3; zero walking clips). restOnly, 1353 mi, clip "mayor's Staff" 165v. Commit `2191d38` → faithwalklive `399cc11` → Vercel success.
-- Initially **deferred Day 72** because Zay was LIVE walking mid-day (stream started 14:48 UTC) — held off per [feedback_tracker_timing] + [feedback_public_copy_safety].
-- User then said "he stopped for the day" → recorded **Day 72 (Jun 5)** — **Kansas City, KS** at the Legends/Tanger Outlets (Village West), `39.1265203, -94.8257076`, ~1367 mi (estimatedMiles from announced "14 miles to" figure). Crossed MO→KS state line, start of "PHASE 2 of 3." Clip "Tanger Outlets We Here". Commit `567da60` → faithwalklive `7325323` → Vercel success.
-- Verified both Vercel deploys with GitHub Deployments API per [feedback_verify_vercel_deploy].
+
+**Weight + Photos:**
+- Added Jun 3, 2026 weight update: **194.4 lbs** (post 72-hour fast, −3 lbs from May 29 baseline)
+- Processed 6 new photos from 632026 folder (renamed, converted PNG→JPG)
+- Regenerated all 4 photo generators: weight_chart.py, progress_compare.py, master_grid.py, combine_master_sheet.py
+- Updated master_grid.py SESSIONS list with all 6 Jun 3 photos
+- Updated progress_compare.py SESSIONS list with representative Jun 3 photo
+- Committed to faithwalkbook `39b4bf0` → `6e1406b`
+
+**Book Documentation:**
+- Created **[BUILD-PLAN.md](../../faithwalkbook/BUILD-PLAN.md)** — master reference with:
+  - Chapter Status Dashboard (13 chapters: 4 complete, 9 queued/in-progress)
+  - Writing Order (Phase 1-4: serialize foundation → lock origin [Ch 9] → fill middle → finish line)
+  - Timeline & Milestones (weekly tasks, weight triggers at 175 lbs target, projected launch Aug–Nov 2026)
+  - Serialization Schedule (chapters drop to AI Bible Gospels channel as written)
+  - Open threads + blockers + success metrics
+  - **Architecture & Muses section** — three comparables (Morrie/Finding Ultra/Wild) + how we're following each
+  - Visual diagram (START → write Ch 9 → serialize Ch 4/1 → hit 175 → launch)
+  - Commit `5a6864f` → `b1aca3f`
+
+- Updated **[CLAUDE.md](../../faithwalkbook/CLAUDE.md)** with new "Writing Workflow" section:
+  - References BUILD-PLAN.md as single source of truth
+  - 4-phase plan spelled out (serialize → lock origin → fill middle → finish line)
+  - Daily/weekly habits (weight logs, photo folders, journal for Ch 11)
+  - Launch triggers (175 lbs primary, Zay reaches CA + manuscript complete fallback)
+  - Troubleshooting quick-ref
+  - Commit `1ba4b12`
+
+- Updated memory with new durable rule: `feedback_weight_grid_sync.md` (always sync weight photos into master_grid SESSIONS when adding weight_chart DATA)
+
+**Memory Sync:**
+- Pushed 83 files to in-repo `.claude/memory/` (weight_struggle.md updated + new weight_grid_sync.md)
+- All changes committed & pushed
 
 ## Decisions worth remembering
-- "Tanger Outlets, KC" in the title is NOT a real Tanger — it's the **Legends Outlets at Village West, Kansas City, KANSAS** (KCK). Nominatim returned nothing for "Tanger Outlets Kansas City". Confirmed KCK via clips "Views from KCK" + "Support is heavy in Kansas City, KA". Geocoded to Legends Outlets coords manually so the map didn't mis-place him ~12 mi east at downtown KCK.
-- Labeled location "Kansas City, KS" (clean City, ST) but used the western Village West coords — keeps the polyline moving west correctly and shows the MO→KS crossing.
-- PowerShell here-string `git commit -m @'...'@` mangled a multi-line message with embedded quotes (broke into pathspecs). Switched to writing `COMMIT_MSG.txt` + `git commit -F`. Use the file approach for any multi-line commit body on this Windows/PowerShell box.
+
+- **BUILD-PLAN.md as the hub** — every session starts here. Single source of truth for chapter status, writing order, serialization dates, weight milestones. Not scattered across CLAUDE.md, outline.md, and napkins.
+- **Phase 1 (serialize foundation) before Phase 2 (lock origin)** — decided to serialize Ch 4 + Ch 1 *while* writing Ch 9, not after. Keeps public momentum + gives audience context before the origin story lands. Ch 9 is the pivot but builds on 4/1 foundation.
+- **Three muses in BUILD-PLAN, not just outline.md** — user needed to *see* the architecture in their work reference, not buried in the specification. Verification checklist proves we're following it (all 8 boxes checked).
+- **Master grid SESSIONS requires progress_compare SESSIONS** — initial mistake was updating only master_grid and progress_compare got skipped. Memory rule now locks this dependency so it doesn't slip again.
 
 ## Open threads / next session starts here
-- **Day 73 (Jun 6)** not yet recorded — will need normal `tracker:from-title` + clip backfill once he walks/stops. Watch the title for the next "X MILES TO <DEST>".
-- Walk is now in **PHASE 2 of 3** and has crossed into Kansas, heading west (likely toward Lawrence/Topeka on the I-70 corridor next). Keep verifying ambiguous landmark destinations against clips before trusting geocode.
-- This is the Deskt (desktop) machine — the 9 PM nightly Scheduled Task runs on **Owner only**, so it will NOT auto-catch Day 73 here.
+
+**Immediate (next writing session):**
+- **Write Ch 9 (The Misread)** — this is the book origin moment. Zay says on Apr 19 stream: "Yo, AI Bible Gospel — I want you to write a book." You respond with two words. This chapter unlocks everything downstream. Source: Twitch stream Apr 19 title + chat logs (verify timestamp).
+- **Polish Ch 4 for serialization** — move from first-draft → revised status in BUILD-PLAN.md. Minor edits, receipt checks, then push to AI Bible Gospels + Substack.
+
+**Ongoing (daily):**
+- Weight logging — keep daily entries in `personal/weight-log.md` format
+- Photos — drop to `personal/photos/MMDDYYYY/` when taken
+- Journal observations for Ch 11 (the scale and the mile)
+
+**Next week:**
+- Serialize Ch 4 to public (AI Bible Gospels channel + Substack)
+- Start Ch 5 (Gatekeepers) while Ch 4 is live
+- Update BUILD-PLAN.md weekly with chapter progress
+
+**Contingency:**
+- If weight plateaus before 175: continue writing. Dual launch trigger (Zay reaches CA + manuscript complete) is fallback.
+- If Chapter 9 source material is unclear: pull exact Twitch stream title + chat timestamps from Apr 19; verify with ShuggC if needed.
 
 ## Uncommitted work
-Clean working tree.
+
+Clean working tree (AIconsultantforHmblzayy).  
+Clean working tree (faithwalkbook).
+
+## Focus note
+
+Session started with question "what book are we architecting after?" Delivered three comparables (Morrie/Roll/Strayed) + verification we're following the framework. User asked for this in BUILD-PLAN.md so they always see it. Framework locked.
