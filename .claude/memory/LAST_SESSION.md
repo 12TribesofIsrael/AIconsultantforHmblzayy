@@ -2,37 +2,33 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-06-02T00:00:00Z
-  project: ZayAutomations / faithwalkbook
+  ended: 2026-06-05T00:00:00Z
+  project: ZayAutomations (AIconsultantforHmblzayy)
   branch: main
   version: v2.20.0
-  originSessionId: 130e7a1b-f175-4c4c-80c1-731f6e0b2133
+  originSessionId: f6bd8111-7b28-44b1-969d-1f5d32ac823d
 ---
 
-# Last Session — June 2, 2026
+# Last Session — 2026-06-05
 
 ## What the user wanted
-Heavy book work in `faithwalkbook` (the memoir): rewrite Chapter 1 in Thomas's authentic spoken voice, build the combined "master sheet" visual, and — critically — correct the weight data after Thomas surfaced his real handwritten notebook. **Major change this session: Thomas made THIS instance the PRIMARY editor of the book repo with full write permissions** (retired the old "never touch faithwalkbook" rule).
+"Update the tracker." Tracker was 2 days behind (last entry Day 70 / Jun 3). Catch it up correctly without broadcasting Zay's live position mid-walk.
 
-## What we did (all pushed to faithwalkbook origin/main)
-- **Ch1 rewritten in Thomas's voice** (`chapters/ch01-the-pattern.md`) from `personal/rewrite/rewrite.md.txt` — Spark Book/2019 origin, Nipsey line, habitat/free-will/health-is-wealth/faith-without-works sermon. Commit `dd76c64`.
-- Converted 3 HEIC "walrus" photos → JPG in `personal/rewrite/` (heaviest-2022-1/2/3.jpg). Ch1 opener = **#3** (Thomas confirmed it's the walrus pic / fullest heaviest shot). Commit `7dbbbac`.
-- **Combined master sheet** built: `scripts/combine_master_sheet.py` → `personal/photos/master_sheet.jpg` (chart stacked over photo arc). Embedded in BOTH Ch1 (closing bookend) and Ch4 (`ch4/chp4.md`). Commits `ad731ef`, `f769a52`.
-- Arc now starts at the 2022 heaviest (prepended walrus pic as first panel of `progress_compare.py`). Commit `6f17f0b`.
-- **CHART REBUILT FROM THE REAL NOTEBOOK** (`scripts/weight_chart.py`) — Thomas photographed his handwritten log, I transcribed + he confirmed. 24 points: `9/1/22=230` (heaviest) → 2023 grind → 2024-25 drift → `3/20/26=211.4` regain spike → `5/29/26=197.4`. Heaviest corrected 221→**230**, total drop **−32.6 lbs**. Commits `9b93451`, `0d06bd2`.
-- Ch1 prose corrected to match notebook line-for-line; removed 4 unverified scale readings, restored the real 211.4 spike.
-- Memory updated: `feedback_book_repo_no_edits.md` (now "PRIMARY on book repo"), `user_weight_struggle.md` (full notebook dataset locked), `project_book_photo_system.md` (master sheet + weekly cadence), `MEMORY.md` index.
+## What we did
+- Backfilled **Day 71 (Jun 4)** — rest/collab day at Kansas City, MO (mayor's office reception, rented Funplex, RAUD collab pt 2/3; zero walking clips). restOnly, 1353 mi, clip "mayor's Staff" 165v. Commit `2191d38` → faithwalklive `399cc11` → Vercel success.
+- Initially **deferred Day 72** because Zay was LIVE walking mid-day (stream started 14:48 UTC) — held off per [feedback_tracker_timing] + [feedback_public_copy_safety].
+- User then said "he stopped for the day" → recorded **Day 72 (Jun 5)** — **Kansas City, KS** at the Legends/Tanger Outlets (Village West), `39.1265203, -94.8257076`, ~1367 mi (estimatedMiles from announced "14 miles to" figure). Crossed MO→KS state line, start of "PHASE 2 of 3." Clip "Tanger Outlets We Here". Commit `567da60` → faithwalklive `7325323` → Vercel success.
+- Verified both Vercel deploys with GitHub Deployments API per [feedback_verify_vercel_deploy].
 
 ## Decisions worth remembering
-- **Notebook is now source of truth** for 2022-2025 weights. Full dataset in `user_weight_struggle.md`. Heaviest = 230 (9/1/22), NOT 221.
-- **REMOVED as unverified** (no screenshot, not in canonical record): June 2025=206.2, Christmas 2025=210.0, Feb 13 2026=213.5, Mar 10 2026=207.1. Do NOT reintroduce without screenshots.
-- **211.4 (Mar 20 2026) IS real** — Smart Scale app Mar 20-Apr 20 chart. I briefly over-removed it, then restored after checking canonical memory.
-- Generated summary JPGs must be `git add -f` (gitignore blocks `personal/photos/*.jpg`).
+- "Tanger Outlets, KC" in the title is NOT a real Tanger — it's the **Legends Outlets at Village West, Kansas City, KANSAS** (KCK). Nominatim returned nothing for "Tanger Outlets Kansas City". Confirmed KCK via clips "Views from KCK" + "Support is heavy in Kansas City, KA". Geocoded to Legends Outlets coords manually so the map didn't mis-place him ~12 mi east at downtown KCK.
+- Labeled location "Kansas City, KS" (clean City, ST) but used the western Village West coords — keeps the polyline moving west correctly and shows the MO→KS crossing.
+- PowerShell here-string `git commit -m @'...'@` mangled a multi-line message with embedded quotes (broke into pathspecs). Switched to writing `COMMIT_MSG.txt` + `git commit -F`. Use the file approach for any multi-line commit body on this Windows/PowerShell box.
 
 ## Open threads / next session starts here
-- **4 arc photo weights are my estimates** (between notebook points): Dec 6 '23→~200, Jan 1 '24→~200, Feb 22 '24→~204, Mar '24→~204. Thomas can correct if he remembers actuals.
-- **Weekly cadence going forward:** Thomas adds a weigh-in photo set each week → drop in `MMDDYYYY/` folder, add weight row to `DATA` in `weight_chart.py`, re-run weight_chart.py + progress_compare.py + master_grid.py + combine_master_sheet.py, `git add -f` the summary JPGs. The master_sheet is the **finalize-at-book-completion** artifact.
-- Ch1 frontmatter still lists `personal/context/*` sources that no longer exist (context/ is empty) — harmless, could clean up.
+- **Day 73 (Jun 6)** not yet recorded — will need normal `tracker:from-title` + clip backfill once he walks/stops. Watch the title for the next "X MILES TO <DEST>".
+- Walk is now in **PHASE 2 of 3** and has crossed into Kansas, heading west (likely toward Lawrence/Topeka on the I-70 corridor next). Keep verifying ambiguous landmark destinations against clips before trusting geocode.
+- This is the Deskt (desktop) machine — the 9 PM nightly Scheduled Task runs on **Owner only**, so it will NOT auto-catch Day 73 here.
 
 ## Uncommitted work
-faithwalkbook: clean (all pushed, at 0d06bd2). AIconsultantforHmblzayy: 4 memory files modified (being synced by session-end).
+Clean working tree.
