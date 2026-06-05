@@ -674,5 +674,15 @@
     "lng": -94.5785667,
     "miles": 1353,
     "clip": "https://www.twitch.tv/hmblzayy/clip/CourteousHeadstrongJamHeyGuys-rIbtMQltPO3mDjfi"
+  },
+  {
+    "day": 72,
+    "location": "Kansas City, KS",
+    "lat": 39.1265203,
+    "lng": -94.8257076,
+    "miles": 1367,
+    "date": "Jun 5, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CuriousDeliciousSquidKappaClaus-GcuGyLBSR2SVxsi5"
   }
 ]
