@@ -683,14 +683,7 @@
     "miles": 1367,
     "date": "Jun 5, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CuriousDeliciousSquidKappaClaus-GcuGyLBSR2SVxsi5",
-    "destination": "Topeka, KS",
-    "destinationLat": 39.049011,
-    "destinationLng": -95.677556,
-    "inProgressDay": 76,
-    "milesRemaining": 28,
-    "estimatedSegmentMiles": 60,
-    "inProgressStartedAt": "2026-06-09T21:55:57.734Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CuriousDeliciousSquidKappaClaus-GcuGyLBSR2SVxsi5"
   },
   {
     "restOnly": true,
@@ -718,5 +711,21 @@
     "lat": 39.1265203,
     "lng": -94.8257076,
     "miles": 1367
+  },
+  {
+    "day": 76,
+    "location": "Topeka, KS",
+    "lat": 39.049011,
+    "lng": -95.677556,
+    "miles": 1427,
+    "date": "Jun 9, 2026",
+    "estimatedMiles": true,
+    "destination": "Carbondale, KS",
+    "destinationLat": 38.8186156,
+    "destinationLng": -95.6891498,
+    "inProgressDay": 77,
+    "milesRemaining": 15,
+    "estimatedSegmentMiles": 21,
+    "inProgressStartedAt": "2026-06-11T14:16:24.057Z"
   }
 ]
