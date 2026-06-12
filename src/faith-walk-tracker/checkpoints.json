@@ -720,13 +720,22 @@
     "miles": 1427,
     "date": "Jun 9, 2026",
     "estimatedMiles": true,
-    "destination": "Carbondale, KS",
-    "destinationLat": 38.8186156,
-    "destinationLng": -95.6891498,
-    "inProgressDay": 77,
-    "milesRemaining": 15,
-    "estimatedSegmentMiles": 21,
-    "inProgressStartedAt": "2026-06-11T14:16:24.057Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/ObliviousStylishPangolinMrDestructoid-RfDZx4OsVXS3XCmz"
+  },
+  {
+    "day": 77,
+    "location": "Carbondale, KS",
+    "lat": 38.8186156,
+    "lng": -95.6891498,
+    "miles": 1448,
+    "date": "Jun 11, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 38.7538947,
+    "destinationLng": -95.8349868,
+    "destination": "Burlingame, KS",
+    "inProgressDay": 78,
+    "milesRemaining": 15,
+    "estimatedSegmentMiles": 12,
+    "inProgressStartedAt": "2026-06-12T01:00:07.882Z"
   }
 ]
