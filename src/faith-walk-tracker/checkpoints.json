@@ -729,13 +729,22 @@
     "lng": -95.6891498,
     "miles": 1448,
     "date": "Jun 11, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 78,
+    "location": "Burlingame, KS",
+    "lat": 38.7538947,
+    "lng": -95.8349868,
+    "miles": 1460,
+    "date": "Jun 11, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.7538947,
-    "destinationLng": -95.8349868,
-    "destination": "Burlingame, KS",
-    "inProgressDay": 78,
-    "milesRemaining": 15,
-    "estimatedSegmentMiles": 12,
-    "inProgressStartedAt": "2026-06-12T01:00:07.882Z"
+    "destinationLat": 38.6397938,
+    "destinationLng": -96.103956,
+    "destination": "Admire, KS",
+    "inProgressDay": 79,
+    "milesRemaining": 22,
+    "estimatedSegmentMiles": 21,
+    "inProgressStartedAt": "2026-06-13T12:29:25.430Z"
   }
 ]
