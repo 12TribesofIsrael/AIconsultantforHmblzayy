@@ -740,13 +740,22 @@
     "miles": 1460,
     "date": "Jun 12, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.6397938,
-    "destinationLng": -96.103956,
-    "destination": "Admire, KS",
-    "inProgressDay": 79,
-    "milesRemaining": 22,
-    "estimatedSegmentMiles": 21,
-    "inProgressStartedAt": "2026-06-13T12:29:25.430Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/StrongRamshackleHerringTheThing-miES7wko97FVGZbL"
+  },
+  {
+    "day": 79,
+    "location": "Admire, KS",
+    "lat": 38.6397938,
+    "lng": -96.103956,
+    "miles": 1481,
+    "date": "Jun 13, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 38.671119,
+    "destinationLng": -96.9425139,
+    "destination": "Herington, KS",
+    "inProgressDay": 81,
+    "milesRemaining": 2,
+    "estimatedSegmentMiles": 59,
+    "inProgressStartedAt": "2026-06-15T00:22:57.872Z"
   }
 ]
