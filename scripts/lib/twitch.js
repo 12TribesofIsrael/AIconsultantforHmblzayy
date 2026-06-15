@@ -122,8 +122,8 @@ function parseStreamTitle(title) {
   if (/REST\s*DAY/i.test(title)) data.restDay = true;
 
   // Total miles walked: "214 MILES COMPLETED" / "DONE" / "WALKED"
-  const milesMatch = title.match(/(\d+)\s*MILES?\s*(COMPLETED|DONE|WALKED)/i);
-  if (milesMatch) data.miles = parseInt(milesMatch[1]);
+  const milesMatch = title.match(/(\d+(?:\.\d+)?)\s*MILES?\s*(COMPLETED|DONE|WALKED)/i);
+  if (milesMatch) data.miles = Math.round(parseFloat(milesMatch[1]));
 
   // "X MILES FROM/TO CITY[, ST]" — distance remaining to next destination.
   // Greedy capture stops naturally at any char outside [A-Za-z\s] (e.g.
@@ -133,10 +133,10 @@ function parseStreamTitle(title) {
   // branding prefix), never a daily leg destination — iterate through all
   // matches and pick the first non-CALI one (titles often have BOTH the
   // CALI branding prefix AND a real daily-leg segment in the same string).
-  const milesFromRegex = /(\d+)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
+  const milesFromRegex = /(\d+(?:\.\d+)?)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
   for (const m of title.matchAll(milesFromRegex)) {
     if (m[2].trim().toUpperCase() === 'CALI') continue;
-    data.milesFromNext = parseInt(m[1]);
+    data.milesFromNext = parseFloat(m[1]);
     data.nearLocation = (m[2].trim() + (m[3] || '')).trim();
     break;
   }
@@ -147,12 +147,12 @@ function parseStreamTitle(title) {
   // CALI branding number ("3000 MILES TO CALI") and the total-miles phrase
   // ("214 MILES COMPLETED"), same as the preposition path.
   if (!data.nearLocation) {
-    const bareMilesRegex = /(\d+)\s*MILES?\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
+    const bareMilesRegex = /(\d+(?:\.\d+)?)\s*MILES?\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
     for (const m of title.matchAll(bareMilesRegex)) {
       const city = m[2].trim();
       if (/\bCALI\b/i.test(city)) continue;
       if (/^(COMPLETED|DONE|WALKED)\b/i.test(city)) continue;
-      data.milesFromNext = parseInt(m[1]);
+      data.milesFromNext = parseFloat(m[1]);
       data.nearLocation = (city + (m[3] || '')).trim();
       break;
     }

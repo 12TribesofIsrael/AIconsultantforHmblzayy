@@ -749,13 +749,22 @@
     "lng": -96.103956,
     "miles": 1481,
     "date": "Jun 13, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 80,
+    "location": "Council Grove, KS",
+    "lat": 38.6609239,
+    "lng": -96.491958,
+    "miles": 1508,
+    "date": "Jun 14, 2026",
     "estimatedMiles": true,
     "destinationLat": 38.671119,
     "destinationLng": -96.9425139,
     "destination": "Herington, KS",
     "inProgressDay": 81,
-    "milesRemaining": 2,
-    "estimatedSegmentMiles": 59,
+    "milesRemaining": 25.2,
+    "estimatedSegmentMiles": 32,
     "inProgressStartedAt": "2026-06-15T00:22:57.872Z"
   }
 ]
