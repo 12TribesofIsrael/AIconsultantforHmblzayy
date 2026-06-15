@@ -1,6 +1,7 @@
 - [Project overview](project_zayautomations.md) — AI consulting for Minister Zay / HMBL, deliverables and current onboarding state
 - [Clip selection](feedback_clip_selection.md) — Always use 24hr Twitch clips for tracker days, not weekly top clips
 - [Clip auto-lookup + date verify](feedback_clip_lookup_and_date_verify.md) — Query Twitch GQL clips endpoint to backfill missing clips and cross-reference any date claim before publishing
+- [Date anchor = prayer clips](feedback_tracker_date_anchor_prayer_clips.md) — Zay leaves titles stale/forward-set; anchor checkpoint dates on his DAY-N morning prayer/arrival clip timestamps (UTC→CDT), not the title or run time
 - [Clip backfill mandatory](feedback_clip_backfill_mandatory.md) — Every tracker:from-title / tracker:update must end with a clip attached for the affected day; tracker:from-title doesn't auto-attach
 - [update-tracker date default](feedback_update_tracker_date_default.md) — `update-tracker.js --day N` writes `date: today` but Day N usually happened yesterday; verify against clip timestamp and edit JSON before push
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
