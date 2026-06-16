@@ -160,7 +160,7 @@ Every tracker update — title-driven OR manual — has **two halves**, and both
 
 **The rule:** *every promoted day, including rest days, must end up with a clip before the workflow is considered done.* If you can't find one, attach a placeholder note in the commit so the gap is obvious.
 
-> **Nightly automation (Owner machine, since v2.20.0):** a Windows Scheduled Task runs **Half 1 only** at 9:00 PM (`scripts/nightly-tracker.ps1` → `tracker-from-title.js`), so days no longer get missed/conflated. It does **not** attach clips. So on any day the nightly job ran, Half 2 (the clip) is still owed — run the clip-gap audit below and backfill. The nightly run can also push a mis-geocoded location unattended, so eyeball faithwalklive each morning and `Disable-ScheduledTask -TaskName 'FaithWalk Nightly Tracker'` during any incident/sensitive window.
+> **⚠️ Nightly automation does NOT work — assume the tracker is updated by hand (confirmed by Thomas, Jun 16 2026).** The "FaithWalk Nightly Tracker" Windows Scheduled Task (`scripts/nightly-tracker.ps1` → `tracker-from-title.js`, added v2.20.0) does not reliably keep the tracker current: Zay leaves his Twitch title stale/forward-set so the parser reads the wrong day, and the single 9 PM slot misses days when the title jumps two day-numbers (Day 80 was dropped entirely Jun 13). **Do both halves manually** — promote the day AND attach the clip — and don't tell Thomas "the nightly job will catch it." See memory `feedback_nightly_tracker_broken`. (The v2.20.0/v2.22.x changelog entries describing the task are left as historical record per `feedback_changelogs_are_frozen`; this note is the current reality.)
 
 ### Half 1 — promote / archive the day (location + miles)
 

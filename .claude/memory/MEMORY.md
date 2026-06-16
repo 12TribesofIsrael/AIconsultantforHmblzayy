@@ -5,6 +5,7 @@
 - [Clip backfill mandatory](feedback_clip_backfill_mandatory.md) — Every tracker:from-title / tracker:update must end with a clip attached for the affected day; tracker:from-title doesn't auto-attach
 - [update-tracker date default](feedback_update_tracker_date_default.md) — `update-tracker.js --day N` writes `date: today` but Day N usually happened yesterday; verify against clip timestamp and edit JSON before push
 - [Tracker timing](feedback_tracker_timing.md) — Only update tracker end-of-night or morning, never mid-day, for Zay's safety
+- [Nightly tracker is BROKEN — update manually](feedback_nightly_tracker_broken.md) — The "FaithWalk Nightly Tracker" Scheduled Task (v2.20.0) doesn't keep the tracker current; Thomas confirmed (Jun 16 2026) he does it by hand. Don't assume the 9 PM job ran.
 - [Public copy safety](feedback_public_copy_safety.md) — Public-facing copy on faithwalklive identifies UI markers; never narrates Zay's real-time location or movement
 - [NOW card logic](feedback_now_card_logic.md) — Priority: active rest > archived-rest-ahead-of-walking > latest walking. Never render in-progress walking days as cards.
 - [Present only optimal](feedback_present_only_optimal.md) — Don't surface A/B menus when I already know which wins. Recommend and ship; only present options when user explicitly asks or trade-offs genuinely require their call.
