@@ -16,6 +16,14 @@ Then **2026 Smart Scale:** `3/20/26=211.4` (regain peak / the slip), `4/20/26=20
 - **Photo EXIF confirms arc dates:** Dec 6 2023 (IMG_5247), Jan 1 2024 (IMG_5452), Feb 22 2024 (IMG_5595) all match. Walrus/heaviest pics (`personal/rewrite/heaviest-2022-*.jpg`) have no EXIF (HEIC→JPG stripped it); tied to the 9/1/22=230 entry.
 - **REMOVED as unverified** (no screenshot in repo, not in this record): June 4 2025=206.2, Dec 25 2025=210.0, Feb 13 2026=213.5, Mar 10 2026=207.1. Do NOT reintroduce into book prose unless Thomas produces the screenshots.
 
+## RECENT (Jun 2026) — pending screenshot verification
+
+Kept OUT of the screenshot-backed notebook DATA line above (which feeds `weight_chart.py`) until receipts land. Do NOT chart or quote as hard readings yet.
+
+- **6/3/26 = 194.4** — new arc low, post 72-hour fast. Sourced from `faithwalkbook/BUILD-PLAN.md` milestones; no scale-app screenshot logged.
+- **6/16/26 = 196** — journal-stated (`faithwalkbook/personal/journal/weeks/6162026/thelockin.md`). Slipped to ~201 on an Atlantic City trip with his wife (diet break), back under 200 at 196, starting another 72-hour fast to re-lock. Day 82 of the Faith Walk. 21 lb to the 175 goal. Names the home-environment friction (wife not into gym/fasting life) + the want for a "fasting workout community."
+- **Public arm of the journey:** Thomas created Instagram **@wealthishealth_215** (https://www.instagram.com/wealthishealth_215/) for the health/fasting transformation — the "fasting workout community" want made external. "Wealth is health"; 215 = Philly area code.
+
 ## Earlier snapshot (Apr 20, 2026 — kept for the "down 10, 27 to go" math)
 
 | Marker | Value | Source |
