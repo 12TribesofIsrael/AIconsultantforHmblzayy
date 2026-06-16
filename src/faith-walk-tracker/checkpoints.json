@@ -771,5 +771,15 @@
     "date": "Jun 14, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/ThoughtfulHungryPonyShadyLulu-X3AczWkB0S0b8xdm"
+  },
+  {
+    "day": 82,
+    "location": "Marion, KS",
+    "lat": 38.3734544,
+    "lng": -97.1305937,
+    "miles": 1563,
+    "date": "Jun 15, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ObedientEvilBurritoGrammarKing-_gwIF9Bt2HxrwLiT"
   }
 ]
