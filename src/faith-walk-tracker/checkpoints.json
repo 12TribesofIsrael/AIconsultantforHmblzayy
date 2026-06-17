@@ -780,6 +780,13 @@
     "miles": 1563,
     "date": "Jun 15, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/ObedientEvilBurritoGrammarKing-_gwIF9Bt2HxrwLiT"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ObedientEvilBurritoGrammarKing-_gwIF9Bt2HxrwLiT",
+    "destinationLat": 38.3659015,
+    "destinationLng": -97.6575171,
+    "destination": "Mcpherson, KS",
+    "inProgressDay": 83,
+    "milesRemaining": 28,
+    "estimatedSegmentMiles": 37,
+    "inProgressStartedAt": "2026-06-17T01:49:35.976Z"
   }
 ]
