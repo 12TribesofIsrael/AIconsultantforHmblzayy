@@ -780,13 +780,23 @@
     "miles": 1563,
     "date": "Jun 15, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/ObedientEvilBurritoGrammarKing-_gwIF9Bt2HxrwLiT",
-    "destinationLat": 38.3659015,
-    "destinationLng": -97.6575171,
-    "destination": "Mcpherson, KS",
-    "inProgressDay": 83,
-    "milesRemaining": 28,
-    "estimatedSegmentMiles": 37,
-    "inProgressStartedAt": "2026-06-17T01:49:35.976Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ObedientEvilBurritoGrammarKing-_gwIF9Bt2HxrwLiT"
+  },
+  {
+    "day": 83,
+    "location": "Mcpherson, KS",
+    "lat": 38.3659015,
+    "lng": -97.6575171,
+    "miles": 1592,
+    "date": "Jun 16, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/IronicPleasantDinosaurGivePLZ-RvlekTOjMbuHgGu-",
+    "destinationLat": 38.3450104,
+    "destinationLng": -98.2017268,
+    "destination": "Lyons, KS",
+    "inProgressDay": 84,
+    "milesRemaining": 34,
+    "estimatedSegmentMiles": 38,
+    "inProgressStartedAt": "2026-06-17T19:19:37.325Z"
   }
 ]
