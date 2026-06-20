@@ -790,13 +790,22 @@
     "miles": 1592,
     "date": "Jun 16, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/IronicPleasantDinosaurGivePLZ-RvlekTOjMbuHgGu-",
-    "destinationLat": 38.3450104,
-    "destinationLng": -98.2017268,
-    "destination": "Lyons, KS",
-    "inProgressDay": 84,
-    "milesRemaining": 34,
-    "estimatedSegmentMiles": 38,
-    "inProgressStartedAt": "2026-06-17T19:19:37.325Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/IronicPleasantDinosaurGivePLZ-RvlekTOjMbuHgGu-"
+  },
+  {
+    "day": 84,
+    "location": "Lyons, KS",
+    "lat": 38.3450104,
+    "lng": -98.2017268,
+    "miles": 1630,
+    "date": "Jun 17, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 38.19196,
+    "destinationLng": -99.5267844,
+    "destination": "Burdett, KS",
+    "inProgressDay": 87,
+    "milesRemaining": 23,
+    "estimatedSegmentMiles": 94,
+    "inProgressStartedAt": "2026-06-20T18:30:12.640Z"
   }
 ]
