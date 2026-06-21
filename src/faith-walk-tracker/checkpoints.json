@@ -1,5 +1,14 @@
 [
   {
+    "restOnly": true,
+    "date": "Mar 29, 2026",
+    "location": "Reading, PA",
+    "lat": 40.3357,
+    "lng": -75.9269,
+    "miles": 55,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
+  },
+  {
     "day": 1,
     "location": "Philadelphia, PA",
     "lat": 39.9526,
@@ -32,15 +41,6 @@
     "lng": -75.9269,
     "miles": 55,
     "date": "Mar 28, 2026"
-  },
-  {
-    "restOnly": true,
-    "date": "Mar 29, 2026",
-    "location": "Reading, PA",
-    "lat": 40.3357,
-    "lng": -75.9269,
-    "miles": 55,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
   },
   {
     "day": 5,
@@ -800,12 +800,36 @@
     "miles": 1630,
     "date": "Jun 17, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.19196,
-    "destinationLng": -99.5267844,
-    "destination": "Burdett, KS",
-    "inProgressDay": 87,
-    "milesRemaining": 23,
-    "estimatedSegmentMiles": 94,
-    "inProgressStartedAt": "2026-06-20T18:30:12.640Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CallousSwissWoodpeckerFunRun-3l00t1D0LbCiHPa8"
+  },
+  {
+    "day": 85,
+    "location": "Great Bend, KS",
+    "lat": 38.3625063,
+    "lng": -98.7804087,
+    "miles": 1671,
+    "date": "Jun 18, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/OpenDrabAmazonPRChase-BdSW9lnqF0kws3dB"
+  },
+  {
+    "day": 86,
+    "location": "Larned, KS",
+    "lat": 38.1805693,
+    "lng": -99.098713,
+    "miles": 1699,
+    "date": "Jun 19, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/FuriousBlushingKathyFeelsBadMan-193sfdFQAh8PyHI1"
+  },
+  {
+    "day": 87,
+    "location": "Burdett, KS",
+    "lat": 38.19196,
+    "lng": -99.5267844,
+    "miles": 1729,
+    "date": "Jun 20, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/FlirtyImportantDragonStoneLightning-76Bo8yryZ_ZYPhmr"
   }
 ]
