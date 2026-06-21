@@ -48,3 +48,6 @@ scout-*.png
 
 # Scratch / frame extraction working dir
 .tmp/
+
+# temp catch-up scaffolding
+scripts/backfill-*.js
