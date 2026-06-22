@@ -831,5 +831,14 @@
     "date": "Jun 20, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/FlirtyImportantDragonStoneLightning-76Bo8yryZ_ZYPhmr"
+  },
+  {
+    "day": 88,
+    "location": "Kinsley, KS",
+    "lat": 37.9230723,
+    "lng": -99.4098385,
+    "miles": 1755,
+    "date": "Jun 21, 2026",
+    "estimatedMiles": true
   }
 ]
