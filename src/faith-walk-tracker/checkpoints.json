@@ -839,6 +839,13 @@
     "lng": -99.4098385,
     "miles": 1755,
     "date": "Jun 21, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "destinationLat": 37.8064804,
+    "destinationLng": -100.3472559,
+    "destination": "Cimarron, KS",
+    "inProgressDay": 89,
+    "milesRemaining": 36,
+    "estimatedSegmentMiles": 67,
+    "inProgressStartedAt": "2026-06-22T15:41:00.740Z"
   }
 ]
