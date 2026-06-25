@@ -839,13 +839,22 @@
     "lng": -99.4098385,
     "miles": 1755,
     "date": "Jun 21, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 89,
+    "location": "Cimarron, KS",
+    "lat": 37.8064804,
+    "lng": -100.3472559,
+    "miles": 1822,
+    "date": "Jun 22, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.8064804,
-    "destinationLng": -100.3472559,
-    "destination": "Cimarron, KS",
-    "inProgressDay": 89,
-    "milesRemaining": 36,
-    "estimatedSegmentMiles": 67,
-    "inProgressStartedAt": "2026-06-22T15:41:00.740Z"
+    "destinationLat": 37.9805686,
+    "destinationLng": -101.752671,
+    "destination": "Syracuse, KS",
+    "inProgressDay": 92,
+    "milesRemaining": 29,
+    "estimatedSegmentMiles": 101,
+    "inProgressStartedAt": "2026-06-25T19:09:07.225Z"
   }
 ]
