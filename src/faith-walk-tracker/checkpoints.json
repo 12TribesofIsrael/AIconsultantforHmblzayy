@@ -866,6 +866,13 @@
     "lng": -101.254892,
     "miles": 1889,
     "date": "Jun 24, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "destinationLat": 37.9805686,
+    "destinationLng": -101.752671,
+    "destination": "Syracuse, KS",
+    "inProgressDay": 92,
+    "milesRemaining": 29,
+    "estimatedSegmentMiles": 35,
+    "inProgressStartedAt": "2026-06-26T10:48:57.399Z"
   }
 ]
