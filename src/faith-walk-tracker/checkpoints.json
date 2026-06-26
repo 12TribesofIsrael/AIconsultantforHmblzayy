@@ -848,13 +848,24 @@
     "lng": -100.3472559,
     "miles": 1822,
     "date": "Jun 22, 2026",
-    "estimatedMiles": true,
-    "destinationLat": 37.9805686,
-    "destinationLng": -101.752671,
-    "destination": "Syracuse, KS",
-    "inProgressDay": 92,
-    "milesRemaining": 29,
-    "estimatedSegmentMiles": 101,
-    "inProgressStartedAt": "2026-06-25T19:09:07.225Z"
+    "estimatedMiles": true
+  },
+  {
+    "day": 90,
+    "location": "Garden City, KS",
+    "lat": 37.9716898,
+    "lng": -100.8726618,
+    "miles": 1862,
+    "date": "Jun 23, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 91,
+    "location": "Lakin, KS",
+    "lat": 37.9405751,
+    "lng": -101.254892,
+    "miles": 1889,
+    "date": "Jun 24, 2026",
+    "estimatedMiles": true
   }
 ]
