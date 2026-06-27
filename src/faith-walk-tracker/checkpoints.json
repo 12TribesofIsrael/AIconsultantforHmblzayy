@@ -839,7 +839,8 @@
     "lng": -99.4098385,
     "miles": 1755,
     "date": "Jun 21, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/DeterminedAbstemiousAnteaterBloodTrail-Byq_69l_hqEkbLaJ"
   },
   {
     "day": 89,
@@ -848,7 +849,8 @@
     "lng": -100.3472559,
     "miles": 1822,
     "date": "Jun 22, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/EnjoyableRoundRamenPraiseIt-zJa7iAxLomzXDr6a"
   },
   {
     "day": 90,
@@ -857,7 +859,8 @@
     "lng": -100.8726618,
     "miles": 1862,
     "date": "Jun 23, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/WittyObeseCattleRalpherZ-qVUtfT3i_eKKlfgL"
   },
   {
     "day": 91,
@@ -866,7 +869,8 @@
     "lng": -101.254892,
     "miles": 1889,
     "date": "Jun 24, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SpeedyEagerEchidnaJonCarnage-KBRnLUlY_8RrKJQS"
   },
   {
     "day": 92,
@@ -874,14 +878,31 @@
     "lat": 37.9805686,
     "lng": -101.752671,
     "miles": 1924,
+    "date": "Jun 25, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/LuckyPleasantCocoaAMPEnergy-OL9qpXy3CTMTpeGm"
+  },
+  {
+    "day": 93,
+    "location": "Granada, CO",
+    "lat": 38.0633176,
+    "lng": -102.3103685,
+    "miles": 1964,
     "date": "Jun 26, 2026",
     "estimatedMiles": true,
-    "destinationLat": 6.1442998,
-    "destinationLng": -75.1844057,
-    "destination": "Granada, CO",
-    "inProgressDay": 93,
-    "milesRemaining": 32,
-    "estimatedSegmentMiles": 3587,
-    "inProgressStartedAt": "2026-06-27T05:05:15.036Z"
+    "clips": [
+      "https://www.twitch.tv/hmblzayy/clip/AdorableTsundereDiscPraiseIt-oQtbIJ2-i-8QDvXS",
+      "https://www.twitch.tv/hmblzayy/clip/TastyEntertainingMallardSwiftRage-3kLkJGcbd9lacicD",
+      "https://www.twitch.tv/hmblzayy/clip/CheerfulCharmingLocustDxAbomb-e_qMwGxe6LOXH6H6"
+    ],
+    "clipsTitle": "Colorado! · Phase 3 Begins 🏔️",
+    "clip": "https://www.twitch.tv/hmblzayy/clip/AdorableTsundereDiscPraiseIt-oQtbIJ2-i-8QDvXS",
+    "destination": "Wiley, CO",
+    "destinationLat": 38.1541748,
+    "destinationLng": -102.71964,
+    "inProgressDay": 94,
+    "milesRemaining": 27,
+    "estimatedSegmentMiles": 30,
+    "inProgressStartedAt": "2026-06-27T14:00:00.000Z"
   }
 ]
