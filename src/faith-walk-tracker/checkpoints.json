@@ -896,13 +896,22 @@
       "https://www.twitch.tv/hmblzayy/clip/CheerfulCharmingLocustDxAbomb-e_qMwGxe6LOXH6H6"
     ],
     "clipsTitle": "Colorado! · Phase 3 Begins 🏔️",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/AdorableTsundereDiscPraiseIt-oQtbIJ2-i-8QDvXS",
-    "destination": "Wiley, CO",
-    "destinationLat": 38.1541748,
-    "destinationLng": -102.71964,
-    "inProgressDay": 94,
-    "milesRemaining": 27,
-    "estimatedSegmentMiles": 30,
-    "inProgressStartedAt": "2026-06-27T14:00:00.000Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/AdorableTsundereDiscPraiseIt-oQtbIJ2-i-8QDvXS"
+  },
+  {
+    "day": 94,
+    "location": "Wiley, CO",
+    "lat": 38.1541748,
+    "lng": -102.71964,
+    "miles": 1994,
+    "date": "Jun 27, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 38.1124258,
+    "destinationLng": -102.9573667,
+    "destination": "Hasty, CO",
+    "inProgressDay": 95,
+    "milesRemaining": 18,
+    "estimatedSegmentMiles": 17,
+    "inProgressStartedAt": "2026-06-29T01:00:10.882Z"
   }
 ]
