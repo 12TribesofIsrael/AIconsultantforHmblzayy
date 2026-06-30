@@ -57,3 +57,5 @@
 - [YouTube pipeline](project_youtube_pipeline.md) — AI Bible Gospels channel, anchor video + 7 Shorts live, playlist PLFyw-nH_HYItWCe_QXt9SvaEHWx4i25_n, schedule Jun 6–Jul 18
 - [YouTube upload tooling](reference_youtube_upload.md) — channel UCq6hz1xEEd9kL95Kcuof2wQ, upload script + OAuth creds location
 - [FFmpeg concat audio fix](feedback_ffmpeg_audio_concat.md) — lavfi color cards must include aevalsrc=0 silent audio or concat produces silent sections
+- [Nightly tracker — fires but untrustworthy](feedback_nightly_tracker_broken.md) — The 9 PM nightly task DOES advance day-numbers, but mis-sets in-progress to the title's far waypoint (Day 96→La Junta when Zay stopped at Las Animas); verify the latest day's actual stop by clips every time
+- [Stale currentDate — verify](feedback_stale_currentdate_verify.md) — The injected currentDate can be days stale (read Jun 27 when it was Jun 29); for date-sensitive tracker work cross-check `date` + git commit timestamps before promoting days
