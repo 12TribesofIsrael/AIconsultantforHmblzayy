@@ -916,12 +916,16 @@
     "miles": 2011,
     "date": "Jun 28, 2026",
     "estimatedMiles": true,
-    "destinationLat": 33.411656,
-    "destinationLng": -105.6830156,
-    "destination": "Lajunta, CO",
-    "inProgressDay": 96,
-    "milesRemaining": 38,
-    "estimatedSegmentMiles": 467,
-    "inProgressStartedAt": "2026-06-30T01:00:08.721Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/AgitatedTastySrirachaDuDudu-Eh1plAo_eJ15lvy1"
+  },
+  {
+    "day": 96,
+    "location": "Las Animas, CO",
+    "lat": 37.3096626,
+    "lng": -104.0591427,
+    "miles": 2117,
+    "date": "Jun 29, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ToughSpinelessRabbitSuperVinlin-kF6gE0_9QY60Akjs"
   }
 ]
