@@ -903,9 +903,10 @@
     "location": "Wiley, CO",
     "lat": 38.1541748,
     "lng": -102.71964,
-    "miles": 1994,
+    "miles": 1991,
     "date": "Jun 27, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ReliableProudPigBabyRage-oPhYfOCELNVQgAqA"
   },
   {
     "day": 95,
