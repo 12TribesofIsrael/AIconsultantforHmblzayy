@@ -905,13 +905,22 @@
     "lng": -102.71964,
     "miles": 1994,
     "date": "Jun 27, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 95,
+    "location": "Hasty, CO",
+    "lat": 38.1124258,
+    "lng": -102.9573667,
+    "miles": 2011,
+    "date": "Jun 28, 2026",
     "estimatedMiles": true,
-    "destinationLat": 38.1124258,
-    "destinationLng": -102.9573667,
-    "destination": "Hasty, CO",
-    "inProgressDay": 95,
-    "milesRemaining": 18,
-    "estimatedSegmentMiles": 17,
-    "inProgressStartedAt": "2026-06-29T01:00:10.882Z"
+    "destinationLat": 33.411656,
+    "destinationLng": -105.6830156,
+    "destination": "Lajunta, CO",
+    "inProgressDay": 96,
+    "milesRemaining": 38,
+    "estimatedSegmentMiles": 467,
+    "inProgressStartedAt": "2026-06-30T01:00:08.721Z"
   }
 ]
