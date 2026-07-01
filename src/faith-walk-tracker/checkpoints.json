@@ -926,6 +926,13 @@
     "miles": 2030,
     "date": "Jun 29, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/ToughSpinelessRabbitSuperVinlin-kF6gE0_9QY60Akjs"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ToughSpinelessRabbitSuperVinlin-kF6gE0_9QY60Akjs",
+    "destinationLat": 38.1305732,
+    "destinationLng": -104.0237797,
+    "destination": "Fowler, CO",
+    "inProgressDay": 97,
+    "milesRemaining": 37,
+    "estimatedSegmentMiles": 57,
+    "inProgressStartedAt": "2026-07-01T01:00:09.581Z"
   }
 ]
