@@ -2,34 +2,30 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-06-29T21:10:00Z
+  ended: 2026-07-02T00:00:00Z
   project: ZayAutomations (AI consulting for Minister Zay / HMBL)
   branch: main
   version: v2.22.1
-  originSessionId: 1cf34187-13f6-4912-8006-9d948e29bdba
+  originSessionId: 75a58cb5-a005-47a8-812a-02f32859129d
 ---
 
-# Last Session — Jun 29, 2026
+# Last Session — Jul 2, 2026
 
 ## What the user wanted
-Catch the Faith Walk tracker up after several missed days, then log that Zay stopped/finished for the day. Pure daily-tracker operations — no code/feature work.
+Confirm whether the tracker automation is actually running, then backfill any missing clips it left behind.
 
 ## What we did
-- **Backfilled Days 84–87** (Lyons, Great Bend, Larned, Burdett, KS) — fixed a broken in-progress on Day 84 that had jumped to Day 87 (skipping 85/86), attached clips, est miles. Commit `545f064`.
-- **Caught up Days 88–94** — clips for 88–93, fixed Day 92 date drift (Jun 26→Jun 25), Day 93 = Granada, CO (Colorado/Phase 3 crossing, 3-clip Love Wall), re-geocoded Granada (Nominatim had returned Granada **Colombia**), promoted Day 94 → Wiley, CO. Commits `0e695d2`, `2e39454`.
-- **Logged Day 96** — promoted Day 96 → **Las Animas, CO** (Jun 29, today, ~2030 mi) after clips ("WELCOME TO LAS ANIMAS COLORADO") showed Zay stopped there, NOT at La Junta (the nightly had set Day 96 in-progress → La Junta, the 38-mi *next* waypoint). Attached Day 95 Hasty clip. Commits `441135c`, `d1cd86e`.
-- **Caught & fixed a geocode bug**: "Las Animas, Colorado" → Las Animas *County* centroid (near Trinidad, +106-mi phantom segment). Re-pinned to the town via "Las Animas, Bent County, Colorado".
-- Used a gitignored `scripts/backfill-*.js` one-shot pattern (added `scripts/backfill-*.js` to .gitignore, commit `7cf9069`) for each multi-day catch-up — one rebuildAndPush per batch instead of many pushes.
+- Checked the **FaithWalk Nightly Tracker** scheduled task: State=Ready, LastRun 2026-07-02 07:54 (exit 0 — a `StartWhenAvailable` catch-up of the missed 9 PM slot), NextRun 21:00, 0 missed. That morning run promoted **Day 97 → Fowler, CO (~2087 mi est)** and annotated **Day 98 in-progress → Walsenburg, CO (37 mi)** — matches commit `2b22b9e`.
+- Audited clip gaps (12 missing). All but one intentional/old: Days 34–38 Lewisville stay clipless (sensitive), Days 73–75 KC rest, Days 1/4/15 old backlog.
+- Verified date anchor via DAY-N clips: "DAY 93 PHASE 3" clip = Jun 26 matches Day 93 Granada → **Day 97 = Jun 30** confirmed.
+- Backfilled **Day 97 clip** = "how u walk 36 miles???" (97v, Jun 30 top clip, walk/mileage-themed) via `update-tracker.js --day 97 --clip …`. Committed + pushed as `14ea2d8`, mirrored to faithwalklive. Working tree clean, in sync with origin.
 
 ## Decisions worth remembering
-- Was initially fed a **stale currentDate (Jun 27); real date was Jun 29** — caught it via system `date` + git commit timestamps. Nearly promoted the wrong day. (Saved as `[[stale-currentdate-verify]]`.)
-- Asked the user (AskUserQuestion) what "Zay stopped" meant — disambiguates logging an arrival vs. setting a paused/incident state; answer was "done for the day."
-- Marked all reconstructed days `estimatedMiles: true` (clip-anchored, not confirmed Strava numbers).
+- Picked the highest-view walk-themed Jun 30 clip ("how u walk 36 miles" 97v) over the lower-view "37.32 Strava" proof clip — matches the established highest-view-among-themed pattern.
 
 ## Open threads / next session starts here
-- **Day 97 → La Junta, CO** is the next leg (title's 38-mi waypoint; Las Animas→La Junta ~18 mi). Run the tracker tomorrow once Zay sets out / arrives.
-- **Day 89 mileage looks high**: Day 88 Kinsley 1755 → Day 89 Cimarron 1822 (+67 mi) but the "22.17 Strava Day 89" clip implies ~22 mi. Came from the other machine's "fix Day 89 gap" commit (`e6a6508`). Offered to recompute Days 89–93 from geocoded road distances — user hasn't taken it up. Pick up if asked.
-- The nightly task IS firing (Jun 28/29 21:00) and advancing day-numbers, but mis-sets the in-progress destination to the title's far waypoint, not the actual daily stop — will need correcting again next time.
+- **Tracker is ~1 day behind the real walk.** Day 98 (Walsenburg) is still marked in-progress, but Zay's own "POLICE AGAIN, DAY 98" clip is timestamped **Jul 1** → Day 98 was walked Jul 1 and he's likely on **Day 99** today (Jul 2). The 7:54 AM nightly run only promoted Day 97. Offered to advance Day 98 → confirmed arrival + promote Day 99; user did not act on it this session. **Pick this up first:** promote Day 98 arrival (Walsenburg), attach its clip (Jul 1 set has the "DAY 98" police clip + others), then handle Day 99.
+- Tonight's 9 PM nightly run may or may not catch Day 98/99 (stale-title risk per `feedback_nightly_tracker_broken`) — don't assume it will; verify manually next session.
 
 ## Uncommitted work
-Clean working tree. All commits pushed to origin/main + mirrored to faithwalklive.
+Clean working tree. Everything committed and pushed (origin/main at `14ea2d8`).
