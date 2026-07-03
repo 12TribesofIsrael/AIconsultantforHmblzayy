@@ -2,30 +2,32 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-07-02T00:00:00Z
+  ended: 2026-07-02T23:59:00Z
   project: ZayAutomations (AI consulting for Minister Zay / HMBL)
   branch: main
   version: v2.22.1
   originSessionId: 75a58cb5-a005-47a8-812a-02f32859129d
 ---
 
-# Last Session — Jul 2, 2026
+# Last Session — Jul 2, 2026 (evening)
 
 ## What the user wanted
-Confirm whether the tracker automation is actually running, then backfill any missing clips it left behind.
+"Update tracker" — routine daily Faith Walk tracker update, closing the ~1-day-behind gap flagged in the prior session.
 
 ## What we did
-- Checked the **FaithWalk Nightly Tracker** scheduled task: State=Ready, LastRun 2026-07-02 07:54 (exit 0 — a `StartWhenAvailable` catch-up of the missed 9 PM slot), NextRun 21:00, 0 missed. That morning run promoted **Day 97 → Fowler, CO (~2087 mi est)** and annotated **Day 98 in-progress → Walsenburg, CO (37 mi)** — matches commit `2b22b9e`.
-- Audited clip gaps (12 missing). All but one intentional/old: Days 34–38 Lewisville stay clipless (sensitive), Days 73–75 KC rest, Days 1/4/15 old backlog.
-- Verified date anchor via DAY-N clips: "DAY 93 PHASE 3" clip = Jun 26 matches Day 93 Granada → **Day 97 = Jun 30** confirmed.
-- Backfilled **Day 97 clip** = "how u walk 36 miles???" (97v, Jun 30 top clip, walk/mileage-themed) via `update-tracker.js --day 97 --clip …`. Committed + pushed as `14ea2d8`, mirrored to faithwalklive. Working tree clean, in sync with origin.
+- Ran `tracker:from-title` (Half 1). Live title = DAY 99 → LA Veta, CO (18 mi). Promoted **Day 98 → Walsenburg, CO (~2157 mi est)** and annotated **Day 99 in-progress → La Veta, CO**. Pushed + faithwalklive synced (commit `9d89354`).
+- **Fixed Day 98 date** Jul 2 → **Jul 1** — the rollover defaults `date: today`, but the "POLICE AGAIN, DAY 98" clip is timestamped Jul 1 (per `feedback_update_tracker_date_default` + `feedback_tracker_date_anchor_prayer_clips`). Manual JSON edit + commit `0bd148a`.
+- **Attached Day 98 clip** (Half 2) = "WWWW SUPPORT MZJUJUBELL" (25v) — deliberately skipped the day's incident clips (police / driver-no-regard / wildfire / snake) for the cleanest support-themed pick. Commit `709112b`.
+- (Earlier in the day, separate session) backfilled Day 97 Fowler clip = "how u walk 36 miles" (97v), commit `14ea2d8`.
 
 ## Decisions worth remembering
-- Picked the highest-view walk-themed Jun 30 clip ("how u walk 36 miles" 97v) over the lower-view "37.32 Strava" proof clip — matches the established highest-view-among-themed pattern.
+- Kept skipping negative/incident clips for the daily card even when they're the day-labeled or top-view clip — support/faith/milestone framing wins (consistent with sensitive-days restraint, though these weren't formal sensitive days).
+- Editing checkpoints.json manually leaves the tree dirty and `update-tracker.js` refuses to run — so commit the manual edit FIRST, then run the clip attach (which does its own commit+push+faithwalklive sync).
 
 ## Open threads / next session starts here
-- **Tracker is ~1 day behind the real walk.** Day 98 (Walsenburg) is still marked in-progress, but Zay's own "POLICE AGAIN, DAY 98" clip is timestamped **Jul 1** → Day 98 was walked Jul 1 and he's likely on **Day 99** today (Jul 2). The 7:54 AM nightly run only promoted Day 97. Offered to advance Day 98 → confirmed arrival + promote Day 99; user did not act on it this session. **Pick this up first:** promote Day 98 arrival (Walsenburg), attach its clip (Jul 1 set has the "DAY 98" police clip + others), then handle Day 99.
-- Tonight's 9 PM nightly run may or may not catch Day 98/99 (stale-title risk per `feedback_nightly_tracker_broken`) — don't assume it will; verify manually next session.
+- **Day 99 (La Veta, CO) is in-progress with NO clip yet** — by design. Next update: `tracker:from-title` promotes it, then backfill its clip. La Veta clips will be dated ~Jul 2.
+- Tracker is now current with the live stream (Day 99 in progress as of Jul 2 evening). The ~1-day-behind drift from last session is closed.
+- Nightly automation still unreliable (`feedback_nightly_tracker_broken`) — keep doing both halves by hand; verify each morning.
 
 ## Uncommitted work
-Clean working tree. Everything committed and pushed (origin/main at `14ea2d8`).
+Clean working tree. origin/main at `709112b`.
