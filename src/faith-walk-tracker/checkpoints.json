@@ -936,13 +936,22 @@
     "miles": 2087,
     "date": "Jun 30, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.6235234,
-    "destinationLng": -104.780995,
-    "destination": "Walsenburg, CO",
-    "inProgressDay": 98,
-    "milesRemaining": 37,
-    "estimatedSegmentMiles": 70,
-    "inProgressStartedAt": "2026-07-02T11:54:51.841Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/AggressiveHandsomePigeonResidentSleeper-PRXJi2fM-0UyfTjM"
+  },
+  {
+    "day": 98,
+    "location": "Walsenburg, CO",
+    "lat": 37.6235234,
+    "lng": -104.780995,
+    "miles": 2157,
+    "date": "Jul 2, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 37.5050118,
+    "destinationLng": -105.0077747,
+    "destination": "LA Veta, CO",
+    "inProgressDay": 99,
+    "milesRemaining": 18,
+    "estimatedSegmentMiles": 19,
+    "inProgressStartedAt": "2026-07-03T00:05:59.103Z"
   }
 ]
