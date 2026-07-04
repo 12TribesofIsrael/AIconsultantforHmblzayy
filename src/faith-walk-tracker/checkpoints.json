@@ -1,14 +1,5 @@
 [
   {
-    "restOnly": true,
-    "date": "Mar 29, 2026",
-    "location": "Reading, PA",
-    "lat": 40.3357,
-    "lng": -75.9269,
-    "miles": 55,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
-  },
-  {
     "day": 1,
     "location": "Philadelphia, PA",
     "lat": 39.9526,
@@ -946,13 +937,35 @@
     "miles": 2157,
     "date": "Jul 1, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.5050118,
-    "destinationLng": -105.0077747,
-    "destination": "LA Veta, CO",
-    "inProgressDay": 99,
-    "milesRemaining": 18,
-    "estimatedSegmentMiles": 19,
-    "inProgressStartedAt": "2026-07-03T00:05:59.103Z",
     "clip": "https://www.twitch.tv/hmblzayy/clip/ColdGoldenPoxEleGiggle-pnaqeyv77SjikEcW"
+  },
+  {
+    "day": 99,
+    "location": "La Veta, CO",
+    "lat": 37.5050118,
+    "lng": -105.0077747,
+    "miles": 2176,
+    "date": "Jul 2, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/TsundereObliqueAuberginePRChase-RtT69P7E0IlkQZkW"
+  },
+  {
+    "day": 100,
+    "location": "Fort Garland, CO",
+    "lat": 37.4281735,
+    "lng": -105.436074,
+    "miles": 2207,
+    "date": "Jul 3, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq"
+  },
+  {
+    "restOnly": true,
+    "date": "Mar 29, 2026",
+    "location": "Reading, PA",
+    "lat": 40.3357,
+    "lng": -75.9269,
+    "miles": 55,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
   }
 ]
