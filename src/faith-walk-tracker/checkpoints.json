@@ -1,5 +1,14 @@
 [
   {
+    "restOnly": true,
+    "date": "Mar 29, 2026",
+    "location": "Reading, PA",
+    "lat": 40.3357,
+    "lng": -75.9269,
+    "miles": 55,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
+  },
+  {
     "day": 1,
     "location": "Philadelphia, PA",
     "lat": 39.9526,
@@ -957,15 +966,13 @@
     "miles": 2207,
     "date": "Jul 3, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq"
-  },
-  {
-    "restOnly": true,
-    "date": "Mar 29, 2026",
-    "location": "Reading, PA",
-    "lat": 40.3357,
-    "lng": -75.9269,
-    "miles": 55,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/PuzzledBoxyTitanSpicyBoy-Zf2Qz33Jh_3c40J1"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq",
+    "destination": "Alamosa, CO",
+    "destinationLat": 37.5780995,
+    "destinationLng": -105.7890452,
+    "inProgressDay": 101,
+    "milesRemaining": 26,
+    "estimatedSegmentMiles": 29,
+    "inProgressStartedAt": "2026-07-04T13:00:05.773Z"
   }
 ]
