@@ -966,13 +966,22 @@
     "miles": 2207,
     "date": "Jul 3, 2026",
     "estimatedMiles": true,
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq",
-    "destination": "Alamosa, CO",
-    "destinationLat": 37.5780995,
-    "destinationLng": -105.7890452,
-    "inProgressDay": 101,
-    "milesRemaining": 26,
-    "estimatedSegmentMiles": 29,
-    "inProgressStartedAt": "2026-07-04T13:00:05.773Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq"
+  },
+  {
+    "day": 101,
+    "location": "Alamosa, CO",
+    "lat": 37.5780995,
+    "lng": -105.7890452,
+    "miles": 2236,
+    "date": "Jul 4, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 54.5623365,
+    "destinationLng": -5.6022885,
+    "destination": "Fort Del Norte, CO",
+    "inProgressDay": 102,
+    "milesRemaining": 32,
+    "estimatedSegmentMiles": 5878,
+    "inProgressStartedAt": "2026-07-05T19:53:50.092Z"
   }
 ]
