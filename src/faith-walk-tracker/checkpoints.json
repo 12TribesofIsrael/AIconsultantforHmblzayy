@@ -975,13 +975,22 @@
     "lng": -105.7890452,
     "miles": 2236,
     "date": "Jul 4, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 102,
+    "location": "Fort Del Norte, CO",
+    "lat": 54.5623365,
+    "lng": -5.6022885,
+    "miles": 8114,
+    "date": "Jul 5, 2026",
     "estimatedMiles": true,
-    "destinationLat": 54.5623365,
-    "destinationLng": -5.6022885,
-    "destination": "Fort Del Norte, CO",
-    "inProgressDay": 102,
-    "milesRemaining": 32,
-    "estimatedSegmentMiles": 5878,
-    "inProgressStartedAt": "2026-07-05T19:53:50.092Z"
+    "destinationLat": 37.2695661,
+    "destinationLng": -107.010816,
+    "destination": "Pagosa Springs, CO",
+    "inProgressDay": 104,
+    "milesRemaining": 34,
+    "estimatedSegmentMiles": 5954,
+    "inProgressStartedAt": "2026-07-08T01:00:09.971Z"
   }
 ]
