@@ -23,7 +23,16 @@
 
 const { syncWithRemote } = require('./lib/git-sync');
 const { fetchStreamTitle, parseStreamTitle } = require('./lib/twitch');
-const { geocode, estimatedRoadMiles } = require('./lib/geo');
+const { geocode, estimatedRoadMiles, haversineMiles } = require('./lib/geo');
+
+// Sanity ceiling for a single walking leg's straight-line distance from the
+// previous confirmed checkpoint. Real legs run ~15-30 mi/day; even a 2-3 day
+// gap tops out well under this. A geocode that lands in the wrong state (or
+// wrong country — "Fort Del Norte, CO" once matched Northern Ireland, ~4,500
+// mi away, inflating the tracker to 14,068 mi / 468.9%) blows past it. When
+// exceeded we abort rather than push bad coords — the nightly task fails safe
+// and logs, and a human re-runs with a corrected title/location.
+const MAX_LEG_STRAIGHT_MILES = 100;
 const { loadCheckpoints, rebuildAndPush, formatDate } = require('./lib/tracker');
 
 // Convert "Apr 11, 2026" or ISO date to display string
@@ -48,6 +57,25 @@ async function annotateInProgress(latest, parsed) {
     console.log(`  Geocoding "${parsed.nearLocation}"...`);
     const coords = await geocode(parsed.nearLocation);
     console.log(`    ${coords.lat}, ${coords.lng}`);
+
+    // Plausibility guard: reject a geocode that lands implausibly far from
+    // the last confirmed checkpoint (ambiguous/typo'd place name → wrong
+    // state or country). Straight-line, so it never trips a real leg.
+    const straightLine = haversineMiles(
+      latest.lat, latest.lng, coords.lat, coords.lng
+    );
+    if (straightLine > MAX_LEG_STRAIGHT_MILES) {
+      throw new Error(
+        `Geocode plausibility check failed for "${parsed.nearLocation}" ` +
+        `(${coords.lat}, ${coords.lng}): ${Math.round(straightLine)} mi ` +
+        `straight-line from Day ${latest.day} ${latest.location} ` +
+        `(${latest.lat}, ${latest.lng}) exceeds the ${MAX_LEG_STRAIGHT_MILES} ` +
+        `mi single-leg ceiling. Likely a wrong-state/country geocode match — ` +
+        `aborting instead of pushing bad coords. Verify the location and ` +
+        `re-run, or set it manually with update-tracker.js.`
+      );
+    }
+
     if (latest.destinationLat !== coords.lat) didChange = true;
     if (latest.destinationLng !== coords.lng) didChange = true;
     latest.destinationLat = coords.lat;
