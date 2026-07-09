@@ -2,32 +2,34 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-07-02T23:59:00Z
-  project: ZayAutomations (AI consulting for Minister Zay / HMBL)
+  ended: 2026-07-08T00:00:00Z
+  project: ZayAutomations — AI Consulting for Minister Zay / HMBL
   branch: main
-  version: v2.22.1
-  originSessionId: 75a58cb5-a005-47a8-812a-02f32859129d
+  version: v2.23.1
+  originSessionId: ba8e960e-521a-4b28-b8c6-8065c343bd27
 ---
 
-# Last Session — Jul 2, 2026 (evening)
+# Last Session — 2026-07-08
 
 ## What the user wanted
-"Update tracker" — routine daily Faith Walk tracker update, closing the ~1-day-behind gap flagged in the prior session.
+faithwalklive.com stat bar was showing garbage — "Miles Walked 14,068 / 3,000 = 468.9%" — and the daily verse was stuck on Philippians 4:13. Thomas wanted the miles fixed and the verse to be a random daily pick pulled from the 1611 KJV in the codebase. Then he asked for a guard so the miles bug can't recur.
 
 ## What we did
-- Ran `tracker:from-title` (Half 1). Live title = DAY 99 → LA Veta, CO (18 mi). Promoted **Day 98 → Walsenburg, CO (~2157 mi est)** and annotated **Day 99 in-progress → La Veta, CO**. Pushed + faithwalklive synced (commit `9d89354`).
-- **Fixed Day 98 date** Jul 2 → **Jul 1** — the rollover defaults `date: today`, but the "POLICE AGAIN, DAY 98" clip is timestamped Jul 1 (per `feedback_update_tracker_date_default` + `feedback_tracker_date_anchor_prayer_clips`). Manual JSON edit + commit `0bd148a`.
-- **Attached Day 98 clip** (Half 2) = "WWWW SUPPORT MZJUJUBELL" (25v) — deliberately skipped the day's incident clips (police / driver-no-regard / wildfire / snake) for the cleanest support-themed pick. Commit `709112b`.
-- (Earlier in the day, separate session) backfilled Day 97 Fowler clip = "how u walk 36 miles" (97v), commit `14ea2d8`.
+- **Diagnosed the miles corruption**: Day 102's `tracker:from-title` geocoded the title's `Fort Del Norte, CO` and Nominatim returned a **Northern Ireland** match (`lat 54.56, lng -5.60`), inflating the Alamosa→Day102 leg by ~5,878 mi (8,114 total); Day 104 Pagosa Springs inherited it (14,068). Real town is **Del Norte, CO** on US-160.
+- **Fixed miles** in `src/faith-walk-tracker/checkpoints.json`: Day 102 Del Norte re-geocoded to `37.6789, -106.3534`, recomputed cumulative `estimatedRoadMiles` from Day 101 Alamosa (2236): **Day 102 = 2277**, **Day 104 Pagosa Springs = 2337** (77.9%). Synced to `../faithwalklivecom/src/data/checkpoints.json`.
+- **Rewrote the daily verse** in `../faithwalklivecom/src/lib/scripture.ts`: expanded to a **14-verse walk/faith/strength pool**, each verified verbatim against `docs/1611KjvW_apocrypha.pdf` using the exact first-60-char normalized check `scripts/x-daily-post.js` uses (`pdftotext -enc UTF-8`). `getVerseOfDay` now picks per-calendar-day via an FNV-1a hash of the UTC `YYYY-MM-DD` (deterministic within a day, shuffled across days). Optional `date` param, backward compatible; only caller is `ScriptureCard.tsx`.
+- **Added a geocode plausibility guard** in `scripts/tracker-from-title.js` `applyInProgress`: after geocoding, computes `haversineMiles` from the previous checkpoint; if > `MAX_LEG_STRAIGHT_MILES` (100) straight-line, **throws and aborts** instead of writing bad coords. Verified: Ireland (4,522 mi) → ABORT, real Del Norte (32 mi) → passes.
+- **Commits**: consulting `841ec8c` (v2.23.0 miles+verse), faithwalklive `6496031` (miles+verse), consulting `c07339c` (v2.23.1 guard). All pushed to `main`. Vercel deploy for `6496031` confirmed **success** via GitHub Deployments API; live homepage verified showing **2,337 mi** and rotating verse (Proverbs 3:5 at build time).
 
 ## Decisions worth remembering
-- Kept skipping negative/incident clips for the daily card even when they're the day-labeled or top-view clip — support/faith/milestone framing wins (consistent with sensitive-days restraint, though these weren't formal sensitive days).
-- Editing checkpoints.json manually leaves the tree dirty and `update-tracker.js` refuses to run — so commit the manual edit FIRST, then run the clip attach (which does its own commit+push+faithwalklive sync).
+- Kept only the 14 verses that pass the repo's OWN first-60-char PDF verification (the 1611's archaic spelling breaks modern-spelling matches for ~24 candidates like Isaiah 40:31, Psalm 119:105, James 1:12 — dropped rather than ship unverified text). 14 is enough for a well-shuffled daily rotation.
+- Guard threshold 100 mi straight-line: real legs are 15-30 mi/day, a 2-3 day gap tops ~70 mi straight-line, so no false positives; catches gross wrong-state/country matches decisively.
+- Guarded only the in-progress annotation point (single entry for bad coords) — the rollover-promotion path reuses the already-validated `estimatedSegmentMiles`, so one guard covers both.
 
 ## Open threads / next session starts here
-- **Day 99 (La Veta, CO) is in-progress with NO clip yet** — by design. Next update: `tracker:from-title` promotes it, then backfill its clip. La Veta clips will be dated ~Jul 2.
-- Tracker is now current with the live stream (Day 99 in progress as of Jul 2 evening). The ~1-day-behind drift from last session is closed.
-- Nightly automation still unreliable (`feedback_nightly_tracker_broken`) — keep doing both halves by hand; verify each morning.
+- **Day 103 is still missing** from checkpoints (walk went Day 102 Del Norte → Day 104 Pagosa Springs with a skipped day; the 60-mi Del Norte→Pagosa cumulative absorbs it). If Thomas wants Day 103 reconstructed (likely South Fork, CO on US-160 over Wolf Creek Pass), that's a backfill task.
+- **walk-verses.json latent issue**: its Day 33-40 entries (Isaiah 40:31, 2 Cor 5:7, Psalm 119:105, James 1:12) would FAIL the current x-daily-post 60-char PDF check against the 1611's archaic spelling — if `x:post` ever runs for those days it may throw. Not touched this session; flag if X posting resumes.
+- Clip backfill for recent days not addressed this session (out of scope for the ask).
 
 ## Uncommitted work
-Clean working tree. origin/main at `709112b`.
+Clean working tree.
