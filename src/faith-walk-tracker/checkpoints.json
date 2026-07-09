@@ -979,10 +979,10 @@
   },
   {
     "day": 102,
-    "location": "Fort Del Norte, CO",
-    "lat": 54.5623365,
-    "lng": -5.6022885,
-    "miles": 8114,
+    "location": "Del Norte, CO",
+    "lat": 37.6788919,
+    "lng": -106.353368,
+    "miles": 2277,
     "date": "Jul 5, 2026",
     "estimatedMiles": true
   },
@@ -991,7 +991,7 @@
     "location": "Pagosa Springs, CO",
     "lat": 37.2695661,
     "lng": -107.010816,
-    "miles": 14068,
+    "miles": 2337,
     "date": "Jul 7, 2026",
     "estimatedMiles": true,
     "destinationLat": 37.194448,
