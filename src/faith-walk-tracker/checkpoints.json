@@ -984,13 +984,22 @@
     "lng": -5.6022885,
     "miles": 8114,
     "date": "Jul 5, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 104,
+    "location": "Pagosa Springs, CO",
+    "lat": 37.2695661,
+    "lng": -107.010816,
+    "miles": 14068,
+    "date": "Jul 7, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.2695661,
-    "destinationLng": -107.010816,
-    "destination": "Pagosa Springs, CO",
-    "inProgressDay": 104,
-    "milesRemaining": 34,
-    "estimatedSegmentMiles": 5954,
-    "inProgressStartedAt": "2026-07-08T01:00:09.971Z"
+    "destinationLat": 37.194448,
+    "destinationLng": -107.3011576,
+    "destination": "Chimney Rock, CO",
+    "inProgressDay": 105,
+    "milesRemaining": 17,
+    "estimatedSegmentMiles": 22,
+    "inProgressStartedAt": "2026-07-09T01:17:51.890Z"
   }
 ]
