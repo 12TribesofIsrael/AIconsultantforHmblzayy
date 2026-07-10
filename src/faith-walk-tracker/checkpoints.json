@@ -993,13 +993,22 @@
     "lng": -107.010816,
     "miles": 2337,
     "date": "Jul 7, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 105,
+    "location": "Chimney Rock, CO",
+    "lat": 37.194448,
+    "lng": -107.3011576,
+    "miles": 2359,
+    "date": "Jul 8, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.194448,
-    "destinationLng": -107.3011576,
-    "destination": "Chimney Rock, CO",
-    "inProgressDay": 105,
-    "milesRemaining": 17,
-    "estimatedSegmentMiles": 22,
-    "inProgressStartedAt": "2026-07-09T01:17:51.890Z"
+    "destinationLat": 37.2769484,
+    "destinationLng": -107.8766,
+    "destination": "Durango, CO",
+    "inProgressDay": 106,
+    "milesRemaining": 36,
+    "estimatedSegmentMiles": 42,
+    "inProgressStartedAt": "2026-07-10T01:00:13.959Z"
   }
 ]
