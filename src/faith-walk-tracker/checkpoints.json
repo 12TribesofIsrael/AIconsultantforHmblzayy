@@ -1002,13 +1002,22 @@
     "lng": -107.3011576,
     "miles": 2359,
     "date": "Jul 8, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 106,
+    "location": "Durango, CO",
+    "lat": 37.2769484,
+    "lng": -107.8766,
+    "miles": 2401,
+    "date": "Jul 9, 2026",
     "estimatedMiles": true,
-    "destinationLat": 37.2769484,
-    "destinationLng": -107.8766,
-    "destination": "Durango, CO",
-    "inProgressDay": 106,
-    "milesRemaining": 36,
-    "estimatedSegmentMiles": 42,
-    "inProgressStartedAt": "2026-07-10T01:00:13.959Z"
+    "destinationLat": 36.918902,
+    "destinationLng": -109.0796273,
+    "destination": "Teec Nos Pos, AZ",
+    "inProgressDay": 109,
+    "milesRemaining": 28,
+    "estimatedSegmentMiles": 92,
+    "inProgressStartedAt": "2026-07-13T01:00:09.779Z"
   }
 ]
