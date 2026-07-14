@@ -1011,13 +1011,22 @@
     "lng": -107.8766,
     "miles": 2401,
     "date": "Jul 9, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 109,
+    "location": "Teec Nos Pos, AZ",
+    "lat": 36.918902,
+    "lng": -109.0796273,
+    "miles": 2493,
+    "date": "Jul 12, 2026",
     "estimatedMiles": true,
     "destinationLat": 36.918902,
     "destinationLng": -109.0796273,
     "destination": "Teec Nos Pos, AZ",
-    "inProgressDay": 109,
-    "milesRemaining": 28,
-    "estimatedSegmentMiles": 92,
-    "inProgressStartedAt": "2026-07-13T01:00:09.779Z"
+    "inProgressDay": 110,
+    "milesRemaining": 22,
+    "estimatedSegmentMiles": 0,
+    "inProgressStartedAt": "2026-07-14T01:00:13.615Z"
   }
 ]
