@@ -987,6 +987,15 @@
     "estimatedMiles": true
   },
   {
+    "day": 103,
+    "location": "Creede, CO",
+    "lat": 37.8483224,
+    "lng": -106.925476,
+    "miles": 2320,
+    "date": "Jul 6, 2026",
+    "estimatedMiles": true
+  },
+  {
     "day": 104,
     "location": "Pagosa Springs, CO",
     "lat": 37.2695661,
@@ -1011,6 +1020,24 @@
     "lng": -107.8766,
     "miles": 2401,
     "date": "Jul 9, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 107,
+    "location": "Mancos, CO",
+    "lat": 37.345192,
+    "lng": -108.2890013,
+    "miles": 2431,
+    "date": "Jul 10, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 108,
+    "location": "Towaoc, CO",
+    "lat": 37.211302,
+    "lng": -108.7234467,
+    "miles": 2464,
+    "date": "Jul 11, 2026",
     "estimatedMiles": true
   },
   {
