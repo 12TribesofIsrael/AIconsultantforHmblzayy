@@ -109,6 +109,19 @@ function fetchStreamTitle() {
 //      FROM/TO preposition; "KC" typo for KS auto-corrected via normalizeStateCode)
 //
 // Returns: { day, miles?, milesFromNext?, nearLocation?, location? } or null
+// The title's branding prefix names the overall walk goal, not a daily leg:
+// "WALKING 3000 MILES TO CALI" (Phase 2) → "...TO STREAMER U" (Phase 3, the
+// Streamer University finish). Two independent signals catch it so a future
+// goal rename still can't leak into the tracker: (1) the branding mileage is
+// always the full ~3000 goal, and no real daily leg is anywhere near that —
+// anything >= 200 mi is the branding number; (2) the known goal tokens by
+// name. Either one disqualifies the match.
+const MAX_DAILY_LEG_MILES = 200;
+function isBrandingLeg(cityRaw, milesRaw) {
+  if (parseFloat(milesRaw) >= MAX_DAILY_LEG_MILES) return true;
+  return /\b(CALI|STREAMER)\b/i.test(cityRaw);
+}
+
 function parseStreamTitle(title) {
   if (!title) return null;
 
@@ -129,13 +142,14 @@ function parseStreamTitle(title) {
   // Greedy capture stops naturally at any char outside [A-Za-z\s] (e.g.
   // pipe separator, emoji, period). Optional state code is appended via
   // a separate group so geocoding doesn't hit a same-named city in the
-  // wrong state. CALI is the overall walk goal ("WALKING 3000 MILES TO CALI"
-  // branding prefix), never a daily leg destination — iterate through all
-  // matches and pick the first non-CALI one (titles often have BOTH the
-  // CALI branding prefix AND a real daily-leg segment in the same string).
+  // wrong state. The title always carries a branding prefix naming the
+  // overall walk goal ("WALKING 3000 MILES TO CALI" in Phase 2, "WALKING
+  // 3000 MILES TO STREAMER U" in Phase 3), never a daily leg — iterate
+  // through all matches and pick the first real daily-leg one (titles carry
+  // BOTH the branding prefix AND a real daily-leg segment in one string).
   const milesFromRegex = /(\d+(?:\.\d+)?)\s*MILES?\s+(?:AWAY\s+FROM|FROM|TO)\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
   for (const m of title.matchAll(milesFromRegex)) {
-    if (m[2].trim().toUpperCase() === 'CALI') continue;
+    if (isBrandingLeg(m[2], m[1])) continue;
     data.milesFromNext = parseFloat(m[1]);
     data.nearLocation = (m[2].trim() + (m[3] || '')).trim();
     break;
@@ -150,7 +164,7 @@ function parseStreamTitle(title) {
     const bareMilesRegex = /(\d+(?:\.\d+)?)\s*MILES?\s+([A-Z][A-Za-z\s]+?)(,\s*[A-Z]{2,})?\s*(?=\||$|[^A-Za-z\s,])/gi;
     for (const m of title.matchAll(bareMilesRegex)) {
       const city = m[2].trim();
-      if (/\bCALI\b/i.test(city)) continue;
+      if (isBrandingLeg(city, m[1])) continue;
       if (/^(COMPLETED|DONE|WALKED)\b/i.test(city)) continue;
       data.milesFromNext = parseFloat(m[1]);
       data.nearLocation = (city + (m[3] || '')).trim();
