@@ -1092,13 +1092,22 @@
     "lng": -111.2422089,
     "miles": 2669,
     "date": "Jul 17, 2026",
+    "estimatedMiles": true
+  },
+  {
+    "day": 115,
+    "location": "Cameron, AZ",
+    "lat": 35.8493135,
+    "lng": -111.4153876,
+    "miles": 2697,
+    "date": "Jul 18, 2026",
     "estimatedMiles": true,
-    "destination": "Cameron, AZ",
-    "destinationLat": 35.8493135,
-    "destinationLng": -111.4153876,
-    "inProgressDay": 115,
+    "destinationLat": 35.1987522,
+    "destinationLng": -111.651822,
+    "destination": "Flagstaff, AZ",
+    "inProgressDay": 116,
     "milesRemaining": 26,
-    "estimatedSegmentMiles": 28,
-    "inProgressStartedAt": "2026-07-18T22:03:16.508Z"
+    "estimatedSegmentMiles": 61,
+    "inProgressStartedAt": "2026-07-20T01:00:07.581Z"
   }
 ]
