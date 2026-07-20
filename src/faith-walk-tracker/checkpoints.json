@@ -1105,10 +1105,10 @@
   },
   {
     "day": 116,
-    "location": "Flagstaff, AZ",
-    "lat": 35.1987522,
-    "lng": -111.651822,
-    "miles": 2758,
+    "location": "En route to Flagstaff, AZ",
+    "lat": 35.529,
+    "lng": -111.5317,
+    "miles": 2727,
     "date": "Jul 19, 2026",
     "estimatedMiles": true,
     "destinationLat": 35.1987522,
@@ -1116,7 +1116,7 @@
     "destination": "Flagstaff, AZ",
     "inProgressDay": 117,
     "milesRemaining": 31,
-    "estimatedSegmentMiles": 0,
+    "estimatedSegmentMiles": 31,
     "inProgressStartedAt": "2026-07-20T17:01:29.178Z"
   }
 ]
