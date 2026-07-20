@@ -35,6 +35,13 @@ const { geocode, estimatedRoadMiles, haversineMiles } = require('./lib/geo');
 const MAX_LEG_STRAIGHT_MILES = 100;
 const { loadCheckpoints, rebuildAndPush, formatDate } = require('./lib/tracker');
 
+// Loose place-name compare for the overshoot guard — case/whitespace/period
+// insensitive so "Flagstaff, AZ" and "flagstaff,  az." match.
+function samePlace(a, b) {
+  const norm = s => String(s || '').toLowerCase().replace(/[.\s]+/g, ' ').trim();
+  return !!a && !!b && norm(a) === norm(b);
+}
+
 // Convert "Apr 11, 2026" or ISO date to display string
 function dateFromIso(iso) {
   if (!iso) return null;
@@ -341,6 +348,50 @@ async function main() {
       date: dateFromIso(ipSource.inProgressStartedAt) || formatDate(),
       estimatedMiles: true,
     };
+    // Overshoot guard: the rollover assumes he ARRIVED at the destination.
+    // When he doesn't make it, today's title still names that same destination
+    // — and promoting him there records a false arrival (the promoted entry's
+    // `location` ends up equal to its own `destination`, with a 0-mile
+    // segment). The v2.23.1 plausibility guard can't catch this: the coords
+    // are a real place a short hop away. Relabel as an en-route point instead
+    // and back the mileage out by what's still left to walk. Burn: Day 116 was
+    // written as arriving in Flagstaff, AZ while Day 117 read "31 MILES TO
+    // FLAGSTAFF".
+    const destName = ipSource.destination;
+    const overshot =
+      isWalkingUpdate && samePlace(parsed.nearLocation, destName);
+
+    if (overshot) {
+      const segment = Math.round(ipSource.estimatedSegmentMiles || 0);
+      const remaining = Math.round(parsed.milesFromNext || 0);
+      const walked = Math.max(0, segment - remaining);
+      const fraction = segment > 0 ? Math.min(1, walked / segment) : 0;
+
+      promoted.location = `En route to ${destName}`;
+      promoted.miles = ipSource.miles + walked;
+
+      // Interpolate along the leg rather than inventing a town name — VOD
+      // titles lag 2+ days and clips are not location sources, so there's no
+      // authority for a real place here.
+      const haveCoords =
+        ipSource.lat != null && ipSource.lng != null &&
+        ipSource.destinationLat != null && ipSource.destinationLng != null;
+      if (haveCoords) {
+        const round6 = n => Math.round(n * 1e6) / 1e6;
+        promoted.lat = round6(ipSource.lat + (ipSource.destinationLat - ipSource.lat) * fraction);
+        promoted.lng = round6(ipSource.lng + (ipSource.destinationLng - ipSource.lng) * fraction);
+      }
+
+      console.log(
+        `  Overshoot guard: Day ${parsed.day} still reads "${remaining} mi to ` +
+        `${parsed.nearLocation}" — Day ${promoted.day} did NOT arrive.`
+      );
+      console.log(
+        `  Logging en route instead (~${walked} of ${segment} mi walked` +
+        `${haveCoords ? ', position interpolated along the leg' : ', coords unchanged'}).`
+      );
+    }
+
     // Promote stashed clip data to the new entry. Multi (inProgressClips)
     // takes priority over single (inProgressClip) — symmetrical with the
     // explicit --clips vs --clip handling in update-tracker.js.
@@ -367,7 +418,10 @@ async function main() {
     delete ipSource.inProgressClipsTitle;
 
     checkpoints.push(promoted);
-    console.log(`Promoted Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
+    const promoSummary = overshot
+      ? `logged Day ${promoted.day} en route to ${destName} (~${promoted.miles} mi est — did not arrive)`
+      : `promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est)`;
+    console.log(`${overshot ? 'Logged' : 'Promoted'} Day ${promoted.day} → ${promoted.location} (~${promoted.miles} mi est)`);
 
     // Re-target latest to the freshly promoted checkpoint and annotate
     // it with the current title's state — rest day or in-progress walk.
@@ -377,7 +431,7 @@ async function main() {
       applyRestDay(latest, parsed);
       rebuildAndPush(
         checkpoints,
-        `Faith Walk: promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est), Day ${parsed.day} — rest day`
+        `Faith Walk: ${promoSummary}, Day ${parsed.day} — rest day`
       );
       console.log(`\n✓ Rollover applied + Day ${parsed.day} rest day annotated.`);
       console.log(`  Live at: https://faithwalklive.com/`);
@@ -388,7 +442,7 @@ async function main() {
 
     rebuildAndPush(
       checkpoints,
-      `Faith Walk: promoted Day ${promoted.day} to ${promoted.location} (~${promoted.miles} mi est), Day ${parsed.day} in progress`
+      `Faith Walk: ${promoSummary}, Day ${parsed.day} in progress`
     );
     console.log(`\n✓ Rollover applied + Day ${parsed.day} annotated.`);
     console.log(`  Live at: https://faithwalklive.com/`);
