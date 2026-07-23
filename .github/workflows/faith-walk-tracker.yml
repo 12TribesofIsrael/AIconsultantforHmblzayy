@@ -20,7 +20,11 @@ name: Faith Walk Tracker
 
 on:
   schedule:
-    - cron: '0 13-23 * * *' # hourly, ~6 AM - 4 PM local (UTC-7)
+    # Dense in the morning, where the flip actually happens: every 30 min from
+    # 7:00 AM to 12:30 PM local = 12 checks straddling the ~9-10 AM update.
+    - cron: '0,30 14-19 * * *'
+    # Sparse afternoon safety net for a late title update: hourly 1-4 PM local.
+    - cron: '0 20-23 * * *'
   workflow_dispatch: # manual "Run workflow" button for testing
 
 concurrency:
