@@ -1137,6 +1137,13 @@
     "lng": -112.4913858,
     "miles": 2820,
     "date": "Jul 22, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CarefulRenownedDiamondTTours-TwOpO0zNcdUoZZC2"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CarefulRenownedDiamondTTours-TwOpO0zNcdUoZZC2",
+    "destinationLat": 35.325434,
+    "destinationLng": -112.8508201,
+    "destination": "Seligman, AZ",
+    "inProgressDay": 120,
+    "milesRemaining": 24,
+    "estimatedSegmentMiles": 28,
+    "inProgressStartedAt": "2026-07-23T13:19:04.368Z"
   }
 ]
