@@ -1,0 +1,102 @@
+name: Faith Walk Tracker
+
+# Why polling instead of one nightly run:
+#
+# Zay's team sets the Twitch title to the new day in the MORNING (~9-10 AM
+# local) and never touches it again that day. The title only ever reads
+# "N MILES TO <destination>" — it never confirms arrival. So the one moment
+# new information exists is that once-daily flip, and the old 9:00 PM slot
+# read the exact same string a 10 AM run would have: it was structurally
+# incapable of learning anything. Worse, if nothing is watching when the
+# number flips and it later jumps by two, that walking day is lost for good
+# (see Day 80 / Council Grove, and the Days 117-120 gap on Jul 23 2026).
+#
+# So: poll hourly across a wide window instead of guessing an hour. This is
+# free — tracker-from-title.js is idempotent and logs "No semantic change —
+# skipping push" when the title hasn't moved, so ~11 checks a day produce at
+# most one commit. It also survives him walking west: 9 AM local is 16:00 UTC
+# in both Arizona (MST) and Pacific (PDT), but the wide window means the
+# schedule never has to be re-tuned as he crosses time zones.
+
+on:
+  schedule:
+    - cron: '0 13-23 * * *' # hourly, ~6 AM - 4 PM local (UTC-7)
+  workflow_dispatch: # manual "Run workflow" button for testing
+
+concurrency:
+  group: faith-walk-tracker
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      # Until TRACKER_PAT exists the scheduled runs no-op quietly instead of
+      # emailing a failure every hour.
+      - name: Check credentials
+        id: creds
+        env:
+          PAT: ${{ secrets.TRACKER_PAT }}
+        run: |
+          if [ -z "$PAT" ]; then
+            echo "::warning::TRACKER_PAT secret is not set — skipping run."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Both repos must land as SIBLINGS: faithwalklive-sync.js resolves the
+      # public repo as ../faithwalklivecom from the consulting repo root.
+      - name: Checkout consulting repo
+        if: steps.creds.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: 12TribesofIsrael/AIconsultantforHmblzayy
+          path: AIconsultantforHmblzayy
+          token: ${{ secrets.TRACKER_PAT }}
+          fetch-depth: 0
+
+      - name: Checkout faithwalklive repo
+        if: steps.creds.outputs.ready == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: 12TribesofIsrael/faithwalklive
+          path: faithwalklivecom
+          token: ${{ secrets.TRACKER_PAT }}
+          fetch-depth: 0
+
+      - name: Set up Node
+        if: steps.creds.outputs.ready == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configure git identity
+        if: steps.creds.outputs.ready == 'true'
+        run: |
+          git config --global user.name "FaithWalk Tracker Bot"
+          git config --global user.email "actions@github.com"
+
+      - name: Update tracker from Twitch title
+        if: steps.creds.outputs.ready == 'true'
+        working-directory: AIconsultantforHmblzayy
+        run: node scripts/tracker-from-title.js
+
+      # Fail LOUD on silent drift. tracker-from-title exits 0 when it can't
+      # parse the title ("Title incomplete — skipping"), which is exactly how
+      # the tracker went four days stale without anyone noticing. If the newest
+      # checkpoint is more than 3 days old, fail the job so GitHub emails.
+      - name: Staleness alarm
+        if: steps.creds.outputs.ready == 'true'
+        working-directory: AIconsultantforHmblzayy
+        run: |
+          node -e "
+          const cps = require('./src/faith-walk-tracker/checkpoints.json');
+          const latest = cps[cps.length - 1];
+          const age = Math.floor((Date.now() - new Date(latest.date + ' UTC')) / 86400000);
+          console.log('Latest: Day ' + latest.day + ' — ' + latest.location + ' (' + latest.date + '), ' + age + ' days old');
+          if (age > 3) {
+            console.error('STALE: tracker has not advanced in ' + age + ' days. Twitch title likely unparseable — check it by hand.');
+            process.exit(1);
+          }
+          "
