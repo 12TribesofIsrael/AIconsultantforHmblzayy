@@ -944,7 +944,7 @@
     "location": "Walsenburg, CO",
     "lat": 37.6235234,
     "lng": -104.780995,
-    "miles": 2157,
+    "miles": 2123,
     "date": "Jul 1, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/ColdGoldenPoxEleGiggle-pnaqeyv77SjikEcW"
@@ -954,7 +954,7 @@
     "location": "La Veta, CO",
     "lat": 37.5050118,
     "lng": -105.0077747,
-    "miles": 2176,
+    "miles": 2141,
     "date": "Jul 2, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/TsundereObliqueAuberginePRChase-RtT69P7E0IlkQZkW"
@@ -964,7 +964,7 @@
     "location": "Fort Garland, CO",
     "lat": 37.4281735,
     "lng": -105.436074,
-    "miles": 2207,
+    "miles": 2175,
     "date": "Jul 3, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/CooperativeComfortableStarlingCopyThis-k6rg8rpJi2rDr9Sq"
@@ -974,7 +974,7 @@
     "location": "Alamosa, CO",
     "lat": 37.5780995,
     "lng": -105.7890452,
-    "miles": 2236,
+    "miles": 2202,
     "date": "Jul 4, 2026",
     "estimatedMiles": true
   },
@@ -983,7 +983,7 @@
     "location": "Del Norte, CO",
     "lat": 37.6788919,
     "lng": -106.353368,
-    "miles": 2277,
+    "miles": 2234,
     "date": "Jul 5, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/ReliableOriginalSamosaJebaited-DpKQW3gwUhm0_IZ6"
@@ -993,7 +993,7 @@
     "location": "Creede, CO",
     "lat": 37.8483224,
     "lng": -106.925476,
-    "miles": 2320,
+    "miles": 2255,
     "date": "Jul 6, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/SmoothMoldyHedgehogBatChest-OFVe-4zgvTMRIJbd"
@@ -1003,7 +1003,7 @@
     "location": "Pagosa Springs, CO",
     "lat": 37.2695661,
     "lng": -107.010816,
-    "miles": 2337,
+    "miles": 2295,
     "date": "Jul 7, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/PerfectSmallNeanderthalTwitchRaid-eZj1gIeflfKcpO9Y"
@@ -1013,7 +1013,7 @@
     "location": "Chimney Rock, CO",
     "lat": 37.194448,
     "lng": -107.3011576,
-    "miles": 2359,
+    "miles": 2314,
     "date": "Jul 8, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/CourageousCreativeWoodpeckerTBTacoRight-JqPWKOOPJMUiSXvA"
@@ -1023,7 +1023,7 @@
     "location": "Durango, CO",
     "lat": 37.2769484,
     "lng": -107.8766,
-    "miles": 2401,
+    "miles": 2350,
     "date": "Jul 9, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/CloudyAgitatedQuailHassaanChop-L4qPxgI6HVAxFH5x"
@@ -1033,7 +1033,7 @@
     "location": "Mancos, CO",
     "lat": 37.345192,
     "lng": -108.2890013,
-    "miles": 2431,
+    "miles": 2385,
     "date": "Jul 10, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AgreeableBlightedDonkeyTheTarFu-f2SITlIbdWoTVa_u"
@@ -1043,7 +1043,7 @@
     "location": "Towaoc, CO",
     "lat": 37.211302,
     "lng": -108.7234467,
-    "miles": 2464,
+    "miles": 2415,
     "date": "Jul 11, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/EntertainingBrightButterBuddhaBar-Q1SCUXRUvNsJcdlx"
@@ -1053,27 +1053,27 @@
     "location": "Teec Nos Pos, AZ",
     "lat": 36.918902,
     "lng": -109.0796273,
-    "miles": 2493,
+    "miles": 2443,
     "date": "Jul 12, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/CorrectTalentedPelicanCorgiDerp-HkkDlrtCMMgTYcYK"
   },
   {
     "day": 110,
-    "location": "Teec Nos Pos, AZ",
-    "lat": 36.918902,
-    "lng": -109.0796273,
-    "miles": 2493,
+    "location": "En route to Kayenta, AZ",
+    "lat": 36.862966,
+    "lng": -109.399636,
+    "miles": 2464,
     "date": "Jul 13, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/SpotlessIntelligentRhinocerosPipeHype-79WpB8_bBleR3NPy"
   },
   {
     "day": 111,
-    "location": "Teec Nos Pos, AZ",
-    "lat": 36.918902,
-    "lng": -109.0796273,
-    "miles": 2493,
+    "location": "En route to Kayenta, AZ",
+    "lat": 36.779786,
+    "lng": -109.875508,
+    "miles": 2496,
     "date": "Jul 14, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/TameClearBeaverRedCoat-_mitXGLo0fxrv7yY"
@@ -1083,7 +1083,7 @@
     "location": "Kayenta, AZ",
     "lat": 36.7150095,
     "lng": -110.2460908,
-    "miles": 2579,
+    "miles": 2521,
     "date": "Jul 15, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AuspiciousAntsySalmonVoHiYo-htsOQ1YoMMDONKG5"
@@ -1093,7 +1093,7 @@
     "location": "Tonalea, AZ",
     "lat": 36.3262285,
     "lng": -110.9649156,
-    "miles": 2642,
+    "miles": 2595,
     "date": "Jul 16, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AstuteDullDonutAMPTropPunch-I-W5kxNeUTaMv9c_"
@@ -1103,7 +1103,7 @@
     "location": "Tuba City, AZ",
     "lat": 36.1232458,
     "lng": -111.2422089,
-    "miles": 2669,
+    "miles": 2636,
     "date": "Jul 17, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/FreezingSingleCroissantSuperVinlin-RN0DgnQc5FZF80vf"
@@ -1113,7 +1113,7 @@
     "location": "Cameron, AZ",
     "lat": 35.8493135,
     "lng": -111.4153876,
-    "miles": 2697,
+    "miles": 2657,
     "date": "Jul 18, 2026",
     "estimatedMiles": true,
     "clip": "https://www.twitch.tv/hmblzayy/clip/AggressiveEndearingAsparagusAMPTropPunch-z0NVcnx5GaPeNRvG"
@@ -1123,7 +1123,7 @@
     "location": "En route to Flagstaff, AZ",
     "lat": 35.529,
     "lng": -111.5317,
-    "miles": 2727,
+    "miles": 2681,
     "date": "Jul 19, 2026",
     "estimatedMiles": true
   },
@@ -1132,7 +1132,7 @@
     "location": "Flagstaff, AZ",
     "lat": 35.1987522,
     "lng": -111.651822,
-    "miles": 2758,
+    "miles": 2708,
     "date": "Jul 20, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/ShySpotlessPresidentAsianGlow-njBrqpXjKrJ12gPq"
   },
@@ -1141,7 +1141,7 @@
     "location": "Williams, AZ",
     "lat": 35.2508504,
     "lng": -112.187294,
-    "miles": 2798,
+    "miles": 2745,
     "date": "Jul 21, 2026",
     "clip": "https://www.twitch.tv/hmblzayy/clip/CleverRichNeanderthalBuddhaBar-uTlMUtw8sfN5tCEw"
   },
@@ -1150,15 +1150,16 @@
     "location": "Ash Fork, AZ",
     "lat": 35.216333,
     "lng": -112.4913858,
-    "miles": 2820,
+    "miles": 2763,
     "date": "Jul 22, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/CarefulRenownedDiamondTTours-TwOpO0zNcdUoZZC2",
-    "destinationLat": 35.325434,
-    "destinationLng": -112.8508201,
-    "destination": "Seligman, AZ",
-    "inProgressDay": 120,
-    "milesRemaining": 24,
-    "estimatedSegmentMiles": 28,
-    "inProgressStartedAt": "2026-07-23T13:19:04.368Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/CarefulRenownedDiamondTTours-TwOpO0zNcdUoZZC2"
+  },
+  {
+    "day": 120,
+    "location": "Seligman, AZ",
+    "lat": 35.3268815,
+    "lng": -112.876307,
+    "miles": 2786,
+    "date": "Jul 23, 2026"
   }
 ]
