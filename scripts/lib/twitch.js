@@ -28,6 +28,14 @@ const US_STATES = new Set([
 // so this is an unambiguous fix. Revisit when the walk leaves KS.
 const STATE_TYPOS = { KC: 'KS' };
 
+// Known city-name typos in Zay's titles → correct spelling. "KINGSMAN" recurs
+// on the Arizona home stretch for Kingman, AZ (his last major city before CA);
+// Nominatim matches the misspelling to a "Kingsman" place ~114 mi away near
+// Phoenix, which trips the tracker-from-title 100-mi plausibility guard and
+// aborts the whole run. Key is uppercased for case-insensitive lookup. Same
+// spirit as STATE_TYPOS — a known, unambiguous fix, not a blind guess.
+const CITY_TYPOS = { KINGSMAN: 'Kingman' };
+
 // Normalize a captured state token: keep valid USPS codes, fix known typos,
 // pass through everything else (incl. full state names) unchanged.
 function normalizeStateCode(code) {
@@ -35,6 +43,13 @@ function normalizeStateCode(code) {
   const up = code.toUpperCase();
   if (up.length === 2 && !US_STATES.has(up) && STATE_TYPOS[up]) return STATE_TYPOS[up];
   return up;
+}
+
+// Correct a known city-name typo; pass everything else through unchanged.
+function normalizeCityName(city) {
+  if (!city) return city;
+  const fixed = CITY_TYPOS[city.trim().toUpperCase()];
+  return fixed || city;
 }
 
 // Title-case a "City, ST" string so auto-parsed locations match the
@@ -199,7 +214,8 @@ function parseStreamTitle(title) {
   // Phase-2 typo regardless of which regex captured it).
   if (data.nearLocation) {
     const mm = data.nearLocation.match(/^(.*?),\s*([A-Za-z]{2,})$/);
-    if (mm) data.nearLocation = `${mm[1].trim()}, ${normalizeStateCode(mm[2])}`;
+    if (mm) data.nearLocation = `${normalizeCityName(mm[1].trim())}, ${normalizeStateCode(mm[2])}`;
+    else data.nearLocation = normalizeCityName(data.nearLocation.trim());
     data.nearLocation = titleCaseLocation(data.nearLocation);
   }
 
