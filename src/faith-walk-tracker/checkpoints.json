@@ -1161,13 +1161,22 @@
     "lng": -112.876307,
     "miles": 2786,
     "date": "Jul 23, 2026",
-    "clip": "https://www.twitch.tv/hmblzayy/clip/RepleteScrumptiousGrassFUNgineer-pliA6FskPZH-HHz6",
-    "destinationLat": 35.1895921,
-    "destinationLng": -114.0532996,
-    "destination": "Kingman, AZ",
-    "inProgressDay": 121,
-    "milesRemaining": 36,
-    "estimatedSegmentMiles": 87,
-    "inProgressStartedAt": "2026-07-24T12:19:56.569Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/RepleteScrumptiousGrassFUNgineer-pliA6FskPZH-HHz6"
+  },
+  {
+    "day": 121,
+    "location": "Kingman, AZ",
+    "lat": 35.1895921,
+    "lng": -114.0532996,
+    "miles": 2873,
+    "date": "Jul 24, 2026",
+    "estimatedMiles": true,
+    "destinationLat": 34.8726671,
+    "destinationLng": -114.149858,
+    "destination": "Yucca, AZ",
+    "inProgressDay": 122,
+    "milesRemaining": 38,
+    "estimatedSegmentMiles": 29,
+    "inProgressStartedAt": "2026-07-25T17:33:50.681Z"
   }
 ]
