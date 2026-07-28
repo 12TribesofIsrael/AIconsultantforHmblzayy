@@ -18,13 +18,28 @@ name: Faith Walk Tracker
 # in both Arizona (MST) and Pacific (PDT), but the wide window means the
 # schedule never has to be re-tuned as he crosses time zones.
 
+# ─────────────────────────────────────────────────────────────────────────────
+# WALK COMPLETE — schedule retired 2026-07-28.
+#
+# Zay crossed the California state line on Jul 27, 2026 (Day 124), finishing the
+# walk. There is no next day to poll for, so the cron is commented out and the
+# workflow is also disabled in the GitHub UI (`gh workflow disable`). Kept in the
+# repo rather than deleted: it is the working record of how the automation ran,
+# and workflow_dispatch still works if a checkpoint ever needs re-deriving.
+#
+# For the record, the last scheduled runs all FAILED, correctly: his final title
+# read "17 MILES TO CALIFORNIA", the geocoder returned the state centroid 292 mi
+# away, and the v2.23.1 plausibility guard aborted rather than write it. The
+# guard was right — a state name is not a checkpoint.
+# ─────────────────────────────────────────────────────────────────────────────
+
 on:
-  schedule:
-    # Dense in the morning, where the flip actually happens: every 30 min from
-    # 7:00 AM to 12:30 PM local = 12 checks straddling the ~9-10 AM update.
-    - cron: '0,30 14-19 * * *'
-    # Sparse afternoon safety net for a late title update: hourly 1-4 PM local.
-    - cron: '0 20-23 * * *'
+  # schedule:
+  #   # Dense in the morning, where the flip actually happens: every 30 min from
+  #   # 7:00 AM to 12:30 PM local = 12 checks straddling the ~9-10 AM update.
+  #   - cron: '0,30 14-19 * * *'
+  #   # Sparse afternoon safety net for a late title update: hourly 1-4 PM local.
+  #   - cron: '0 20-23 * * *'
   workflow_dispatch: # manual "Run workflow" button for testing
 
 concurrency:
