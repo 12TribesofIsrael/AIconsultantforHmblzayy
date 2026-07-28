@@ -1170,7 +1170,8 @@
     "lng": -114.0532996,
     "miles": 2873,
     "date": "Jul 24, 2026",
-    "estimatedMiles": true
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/ColdbloodedPunchyClipsdadNinjaGrumpy-DH2Exhuca0W2fzqV"
   },
   {
     "day": 122,
@@ -1180,12 +1181,35 @@
     "miles": 2902,
     "date": "Jul 25, 2026",
     "estimatedMiles": true,
-    "destinationLat": 34.4755537,
-    "destinationLng": -114.3285898,
-    "destination": "Lake Havasu City, AZ",
-    "inProgressDay": 123,
-    "milesRemaining": 38,
-    "estimatedSegmentMiles": 38,
-    "inProgressStartedAt": "2026-07-26T15:09:19.158Z"
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SparklyEncouragingSpiderGrammarKing-QNQ0J1KeH1o6xNXA"
+  },
+  {
+    "day": 123,
+    "location": "Lake Havasu City, AZ",
+    "lat": 34.4755537,
+    "lng": -114.3285898,
+    "miles": 2940,
+    "date": "Jul 26, 2026",
+    "estimatedMiles": true,
+    "clip": "https://www.twitch.tv/hmblzayy/clip/SmokyFancyGuanacoSoBayed-dfHJZqkgiWTobfBB"
+  },
+  {
+    "day": 124,
+    "location": "Parker Dam, CA",
+    "lat": 34.2959784,
+    "lng": -114.1403757,
+    "miles": 2957,
+    "date": "Jul 27, 2026",
+    "estimatedMiles": true,
+    "completed": true,
+    "completedNote": "He made it. On July 27, 2026 — Day 124 — Minister Zay crossed the California state line, finishing a 3,000-mile walk from Philadelphia on foot. Struck by a car and back on the road five days later, he kept the promise he made to God and to the kids HMBL University is being built for. Thank you to everyone who walked a mile of it with him.",
+    "clips": [
+      "https://www.twitch.tv/hmblzayy/clip/TardyQuaintHummingbirdKeepo-wZtEEluyZxJQ3v1e",
+      "https://www.twitch.tv/hmblzayy/clip/StrongSmoggyDogNononoCat-9V9splE47mbJuyfN",
+      "https://www.twitch.tv/hmblzayy/clip/ShyResoluteAardvarkPoooound-SkrDh050JarxlKzY",
+      "https://www.twitch.tv/hmblzayy/clip/CrowdedAwkwardPresidentDoubleRainbow-LztFlFmyWGUkXL2Z"
+    ],
+    "clip": "https://www.twitch.tv/hmblzayy/clip/TardyQuaintHummingbirdKeepo-wZtEEluyZxJQ3v1e",
+    "clipsTitle": "The day he made it — Day 124, California"
   }
 ]
