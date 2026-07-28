@@ -2,34 +2,86 @@
 name: ""
 metadata: 
   node_type: memory
-  ended: 2026-07-08T00:00:00Z
+  ended: 2026-07-28T14:30:00Z
   project: ZayAutomations — AI Consulting for Minister Zay / HMBL
   branch: main
-  version: v2.23.1
-  originSessionId: ba8e960e-521a-4b28-b8c6-8065c343bd27
+  version: v2.27.0
+  originSessionId: 59c4e4b3-f053-46c0-aa9c-073684b66d5f
+  modified: 2026-07-28T15:21:11.174Z
 ---
 
-# Last Session — 2026-07-08
+# Last Session — 2026-07-28
 
 ## What the user wanted
-faithwalklive.com stat bar was showing garbage — "Miles Walked 14,068 / 3,000 = 468.9%" — and the daily verse was stuck on Philippians 4:13. Thomas wanted the miles fixed and the verse to be a random daily pick pulled from the 1611 KJV in the codebase. Then he asked for a guard so the miles bug can't recur.
+Thomas opened with `git pull` / `session-start`, then: *"the walk is complete, I think he walked to
+California already — check and see, he's all over social media, we need to pivot and update the map."*
+He was right. The session was the closeout: verify the finish, record it, retire the automation, and
+turn faithwalklive.com from a live tracker into the record of a finished journey — while national
+press was actively linking to it. He then asked for Discord copy to send the community back through
+the archive during Zay's rest.
 
 ## What we did
-- **Diagnosed the miles corruption**: Day 102's `tracker:from-title` geocoded the title's `Fort Del Norte, CO` and Nominatim returned a **Northern Ireland** match (`lat 54.56, lng -5.60`), inflating the Alamosa→Day102 leg by ~5,878 mi (8,114 total); Day 104 Pagosa Springs inherited it (14,068). Real town is **Del Norte, CO** on US-160.
-- **Fixed miles** in `src/faith-walk-tracker/checkpoints.json`: Day 102 Del Norte re-geocoded to `37.6789, -106.3534`, recomputed cumulative `estimatedRoadMiles` from Day 101 Alamosa (2236): **Day 102 = 2277**, **Day 104 Pagosa Springs = 2337** (77.9%). Synced to `../faithwalklivecom/src/data/checkpoints.json`.
-- **Rewrote the daily verse** in `../faithwalklivecom/src/lib/scripture.ts`: expanded to a **14-verse walk/faith/strength pool**, each verified verbatim against `docs/1611KjvW_apocrypha.pdf` using the exact first-60-char normalized check `scripts/x-daily-post.js` uses (`pdftotext -enc UTF-8`). `getVerseOfDay` now picks per-calendar-day via an FNV-1a hash of the UTC `YYYY-MM-DD` (deterministic within a day, shuffled across days). Optional `date` param, backward compatible; only caller is `ScriptureCard.tsx`.
-- **Added a geocode plausibility guard** in `scripts/tracker-from-title.js` `applyInProgress`: after geocoding, computes `haversineMiles` from the previous checkpoint; if > `MAX_LEG_STRAIGHT_MILES` (100) straight-line, **throws and aborts** instead of writing bad coords. Verified: Ireland (4,522 mi) → ABORT, real Del Norte (32 mi) → passes.
-- **Commits**: consulting `841ec8c` (v2.23.0 miles+verse), faithwalklive `6496031` (miles+verse), consulting `c07339c` (v2.23.1 guard). All pushed to `main`. Vercel deploy for `6496031` confirmed **success** via GitHub Deployments API; live homepage verified showing **2,337 mi** and rotating verse (Proverbs 3:5 at build time).
+- **Confirmed the finish three independent ways** before writing anything. Twitch clips Jul 27:
+  `DAY 124 - 17 MILES TO GO` 12:03 UTC → `FIRST SPEECH` → `will officially be in cali in 2-3 miles`
+  → `Zay finally makes it to California` 15:59 → `hmbl zay signing out` 16:46, and no stream since.
+  Press same day (Complex, The Source, Dexerto, Hollywood Unlocked, Express Tribune, Philadelphia
+  Tribune, NBC10 Philadelphia): 3,000 mi, **124 days**, ~$154K–$200K raised. His own TikTok posted
+  the completion video plus a Jul 26 "17 miles from California, crossing over tomorrow 07/27".
+- **Recorded the last two days** (`71e9998`): Day 123 Lake Havasu City, AZ (Jul 26); **Day 124 the
+  finish** (Jul 27) with `completed: true` + `completedNote`, a 4-clip arrival wall, and clips
+  backfilled on Days 121–122. Day 122's in-progress annotation stripped.
+- **Retired the automation** (`faeeb1d`, v2.27.0): `gh workflow disable` **and** the `schedule:`
+  commented out in `.github/workflows/faith-walk-tracker.yml` with the reason recorded in-file.
+  `workflow_dispatch` kept for re-derivation.
+- **Pivoted the public site** (faithwalklive `d7aabdd`): `Checkpoint` gains `completed`/`completedNote`
+  (same contract as `paused`/`pausedNote`); `getStats` gains `isComplete`, `completedDate`,
+  `finishLocation`, `startDate`, `totalDays`. Homepage completion banner + GoFundMe CTA, past-tense
+  hero, `124 days · DONE` / `Finished at` stat bar, email capture repointed to the school breaking
+  ground. `/map`: complete banner, 100% bar, **FINISH** card with the arrival clip wall, checkered
+  gold medallion replacing the pulsing beacon. `/press` + `/philly` status lines. Event JSON-LD gains
+  `endDate: 2026-07-27` plus completion keywords.
+- **Found his real Instagram — `@hmblzay`, ONE `y`** (Thomas supplied it after I struck out on both
+  `ministerzay` and `hmblzayy`, which return "page isn't available"). 533K followers. His finish Reel
+  is captioned **"GOD DIDDDDDD"** — now quoted in the site's completion banner.
+- **Relabelled the finish** (`96e924b` / faithwalklive `e867bc2`) — see decisions below.
+- **Wrote `docs/discord-walk-complete-post.md`** (`4ce9bd3`): long + short Discord posts, Mark 9:23
+  pulled verbatim from `docs/1611KjvW_apocrypha.pdf` via `pdftotext -enc UTF-8` (Matthew 19:26 as
+  alternate), four milestone days to click through, all numbers verified against `checkpoints.json`.
+- Verified live via `curl --ssl-no-revoke`: `Walk Complete · Day 124`, `124 days · DONE`,
+  `3,000 / 3,000`, `100%`, `"endDate":"2026-07-27"`, `California state line` ×8, `GOD DIDDDDDD`.
+  Vercel deploy succeeded.
 
 ## Decisions worth remembering
-- Kept only the 14 verses that pass the repo's OWN first-60-char PDF verification (the 1611's archaic spelling breaks modern-spelling matches for ~24 candidates like Isaiah 40:31, Psalm 119:105, James 1:12 — dropped rather than ship unverified text). 14 is enough for a well-shuffled daily rotation.
-- Guard threshold 100 mi straight-line: real legs are 15-30 mi/day, a 2-3 day gap tops ~70 mi straight-line, so no false positives; catches gross wrong-state/country matches decisively.
-- Guarded only the in-progress annotation point (single entry for bad coords) — the rollover-promotion path reuses the already-validated `estimatedSegmentMiles`, so one guard covers both.
+- **Reported mileage switches to the stated 3,000 on completion.** Our chain of haversine × 1.3
+  estimates lands at 2,957, which would have rendered a *finished* walk as **98.6%**. `getStats`
+  swaps in 3,000 when `isComplete` and still returns the raw figure as `estimatedMiles`; the
+  checkpoint keeps its honest number. The reasoning is in a comment in `src/lib/checkpoints.ts` so
+  nobody "fixes" it back.
+- **The finish is labelled "California state line", not a town — deliberately.** I first published
+  `Parker Dam, CA`, reasoning from his own title (`17 MILES TO CALIFORNIA`, and Parker Dam is 16.4 mi
+  straight-line from Lake Havasu City vs Needles 29.5 and Earp 21.5). Then his IG finish Reel turned
+  out to be **geotagged "Needles, California"** — two of his own statements disagreeing. Every outlet
+  that covered the finish names **no town at all**. So the site asserts only what's verified;
+  coordinates stayed at the mileage-consistent crossing to keep the map leg sane against Day 123.
+- **Day 34 (the Indiana strike) is deliberately absent from the Discord milestone list.** The comeback
+  is told through Day 39 instead — sending people to click the crash day reads as entertainment. Per
+  `feedback_sensitive_days_stay_clipless`.
+- Kept the workflow file rather than deleting it: it's the working record of how the automation ran.
 
 ## Open threads / next session starts here
-- **Day 103 is still missing** from checkpoints (walk went Day 102 Del Norte → Day 104 Pagosa Springs with a skipped day; the 60-mi Del Norte→Pagosa cumulative absorbs it). If Thomas wants Day 103 reconstructed (likely South Fork, CO on US-160 over Wolf Creek Pass), that's a backfill task.
-- **walk-verses.json latent issue**: its Day 33-40 entries (Isaiah 40:31, 2 Cor 5:7, Psalm 119:105, James 1:12) would FAIL the current x-daily-post 60-char PDF check against the 1611's archaic spelling — if `x:post` ever runs for those days it may throw. Not touched this session; flag if X posting resumes.
-- Clip backfill for recent days not addressed this session (out of scope for the ask).
+- **The exact crossing point is unresolved and only Zay or ShuggC can settle it** — his geotag says
+  Needles, his title mileage says Parker Dam. Not a bug and not blocking; the site names no town. If
+  it gets confirmed, it's a one-line change to `location` on Day 124 plus coords.
+- **The walk is over — the next work is the school, not the map.** The site's email capture and CTAs
+  were already repointed to "HMBL University isn't built yet". Nothing is scheduled against that yet;
+  it's the open question for the next session, and it's Thomas's call what shape it takes.
+- Untouched by choice, carried from Jul 8: **Day 103 is still missing** from checkpoints (Day 102
+  Del Norte → Day 104 Pagosa Springs, the 60-mi cumulative absorbs it; likely South Fork, CO). And
+  `docs/walk-verses.json` Days 33–40 would fail the x-daily-post 60-char PDF check against the 1611's
+  archaic spelling — only matters if X posting ever resumes.
+- 14 days still carry no clip (4 rest days, plus Days 101 and 116). Low value now that the walk is a
+  static archive, but it's the only remaining gap in the record.
 
 ## Uncommitted work
-Clean working tree.
+Clean working tree. Both repos level with origin, 0 ahead / 0 behind — consulting at `4ce9bd3`,
+sibling `../faithwalklivecom` on `main` at `e867bc2`.
