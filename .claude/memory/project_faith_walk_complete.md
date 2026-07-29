@@ -5,10 +5,10 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 59c4e4b3-f053-46c0-aa9c-073684b66d5f
-  modified: 2026-07-28T13:26:18.547Z
+  modified: 2026-07-29T01:04:07.574Z
 ---
 
-**Minister Zay completed the 3,000-mile Philadelphia→California Faith Walk on July 27, 2026 — Day 124**, crossing the state line at the **Parker Dam, CA** crossing out of Lake Havasu City, AZ. Raised roughly $154K–$200K toward HMBL University. Covered same-day by Complex, The Source, Hollywood Unlocked, Unheard Voices, the Philadelphia Tribune, R&B Philly, and NBC10 Philadelphia. His last Twitch stream ended 16:46 UTC that day (`hmbl zay signing out`).
+**Minister Zay completed the 3,000-mile Philadelphia→California Faith Walk on July 27, 2026 — Day 124**, crossing out of Lake Havasu City, AZ. **The exact crossing town is unresolved and the site deliberately names none** — Day 124 is labelled "California state line". His IG finish Reel geotags *Needles*, his own stream title's mileage points at *Parker Dam*, and every outlet names no town at all; only Zay or ShuggC can settle it. Raised roughly $154K–$200K toward HMBL University. Covered same-day by Complex, The Source, Hollywood Unlocked, Unheard Voices, the Philadelphia Tribune, R&B Philly, and NBC10 Philadelphia. His last Twitch stream ended 16:46 UTC that day (`hmbl zay signing out`).
 
 **Why:** the whole tracker system — nightly task, GitHub Actions cron, `tracker:from-title`, in-progress annotations, the pulsing map beacon — existed to answer "where is he today." That question is closed. faithwalklive.com is now a **record of a finished journey**, not a live feed.
 
@@ -21,3 +21,5 @@ metadata:
 - Instagram is currently unresolvable for him — see [[reference_zay_handles]].
 
 **What's live now, if the work continues:** the walk is over but HMBL University is not built. The site's email capture and CTAs were repointed from "follow the walk" to the school breaking ground. That's the open thread, not the map.
+
+**The pivot was not exhaustive — expect stale present-tense copy.** On Jul 28 Thomas spotted a leftover "Get daily walk updates / one short email a day — the checkpoint, the clip, the verse" signup card still live in the homepage footer; it was removed (faithwalklive `7838ccc`). The *hero* capture is the one live signup and points at the school — keep it. Nobody has swept `/subscribe`, `/why`, `/faq`, or `/clips` for the same problem. Do that before assuming the site reads correctly as an archive.
