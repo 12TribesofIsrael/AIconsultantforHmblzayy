@@ -3,7 +3,7 @@ name: Zay handle map across platforms
 description: Minister Zay's social handles differ across platforms — @hmblzayy on TT/Twitch vs @ministerzay on IG. Don't assume one handle works everywhere.
 type: reference
 originSessionId: 658350e4-0c5c-414d-bf11-3cdbafb30c35
-modified: 2026-07-28T14:43:47.511Z
+modified: 2026-07-30T14:49:49.524Z
 ---
 Minister Zay (Isaiah M. Thomas) does NOT use the same handle everywhere:
 
@@ -29,6 +29,8 @@ Reel is tagged "Needles, California" — but treat geotags as soft evidence, not
 
 **Why this matters:** I burned a scrape pass on `instagram.com/hmblzayy` (Apr 26 session) and hit a "Profile isn't available" page before checking `research/instagram/profile.md`. The IG handle is in the research repo — read it first. Don't assume the TikTok handle works for IG.
 
-When asked for "his IG" or to scout/repost on IG, use `@ministerzay`. When asked for TT/Twitch, use `@hmblzayy`. The Faith Walk content lives on both, but the handles are not interchangeable.
+When asked for "his IG" or to scout/repost on IG, use **`@hmblzay`** (one `y`). When asked for TT/Twitch, use `@hmblzayy` (two). The Faith Walk content lives on both, but the handles are not interchangeable.
 
-His IG also links `@stayhumblestayhungryclothing` and `@hmblkicks` (brand accounts — different audiences than his personal `@ministerzay`).
+His IG also links `@stayhumblestayhungryclothing` and `@hmblkicks` (brand accounts — different audiences than his personal account).
+
+**Burn (2026-07-30):** faithwalklive.com had been shipping `instagram.com/ministerzay/` in the `Person` `sameAs` of its root JSON-LD, on `/press`, and in the RV update copy — a dead URL in the exact field search engines use to resolve an entity across platforms. Fixed in faithwalklive `27e5f6f`. If a handle turns out to be wrong, grep the sibling sites for it, not just the doc you were reading.
